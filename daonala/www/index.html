@@ -1,41 +1,512 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+<head>
+    <title>到哪啦</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <link href="assets/libs/af/css/af.ui.base.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="assets/libs/af/css/af.ui.css" rel="stylesheet" type="text/css"/>-->
+    <link href="assets/libs/af/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/mobiscroll/css/mobiscroll.core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/mobiscroll/css/mobiscroll.android-ics.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/plugin.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/comm.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/font.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/swiper/swiper.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/animate/animate.min.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/jquery/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/js/jq.appframework.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/ui/af.ui.jquery.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/swiper/swiper.js"></script>
+
+    <script src="assets/libs/mobiscroll/js/mobiscroll.core.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.datetime.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.select.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.list.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.android-ics.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/i18n/mobiscroll.i18n.zh.js" type="text/javascript"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/plugins/af.8tiles.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/plugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/setting.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/ready.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/event.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/main.js"></script>
+
+</head>
+<body>
+<div id="afui" class="af">
+<!-- this is the splashscreen you see. -->
+<div id="splashscreen" class='ui-loader heavy'>
+    <br>
+    <br><br>
+    <br>
+    到哪啦
+    <br>
+    <br>    <span class='ui-icon ui-icon-loading spin'></span>
+    <h1>正在加载应用..</h1>
+</div>
+
+<div id="content">
+<!--
+data-header:设置页面头部,
+data-load:每次页面加载js函数
+data-unload: 每次页面离开的时候调用的JS函数
+data-footer: 设置页面底部
+data-tab:指定页面底部的具体一项，设置高亮
+data-defer:加载一个html进来
+    -->
+<div class="panel p0"
+     title="首页" id="home" data-defer="assets/panel/home.html"
+     data-header="homeHeader"
+     data-load="init_home_ad"
+     data-tab="welcome">
+</div>
+
+<div class="panel p0"
+     title="我" id="mine" data-defer="assets/panel/mine.html"
+     data-load=""
+     data-unload=""
+     data-tab="navbar_mine">
+</div>
+
+
+<div class="panel p0"
+     title="到哪啦" id="portal" data-defer="assets/panel/portal.html"
+     data-load=""
+     data-unload=""
+     data-footer="none"
+        >
+</div>
+
+
+
+<div class="panel"
+     title="用户登入" id="login" data-defer="assets/panel/login.html"
+     data-load=""
+     data-unload=""
+     data-footer="login-footer"
+        >
+</div>
+<div class="panel "
+     title="用户注册" id="register" data-defer="assets/panel/register.html"
+     data-load=""
+     data-unload=""
+     data-footer="register-footer">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+
+<div class="panel "
+     title="设置" id="setup" data-defer="assets/panel/setup.html"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+
+<div class="panel "
+     title="关于" id="about" data-defer="assets/panel/about.html"
+     data-load=""
+     data-unload=""
+     data-footer="register-footer">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+     title="我的订单" id="selfOrder" data-defer="assets/panel/selforder.html"
+     data-load=""
+     data-unload=""
+     data-header="selfOrderHeader"
+     data-footer="none">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+     title="订单详情" id="selfOrderOffer" data-defer="assets/panel/selfOrderOffer.html"
+     data-load="myOrderInfoPanleLoad"
+     data-unload=""
+     data-header="offerHeader"
+     data-footer="none">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+     title="推广APP" id="qrcode" data-defer="assets/panel/qrcode.html"
+     data-load="qrcode_load"
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="用户注册" id="role" data-defer="assets/panel/role.html"
+     data-load=""
+     data-unload=""
+     data-footer="role-footer">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+     title="找回密码" id="findPwd" data-defer="assets/panel/findPwd.html"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<!--<div class="panel p0"
+     title="竞价记录" id="biddingRecord" data-defer="assets/panel/biddingRecord.html"
+     data-header="biddingRecodeHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>-->
+
+<div class="panel p0"
+     title="任务" id="todo" data-defer="assets/panel/todo.html"
+     data-header="todoHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel"
+     title="任务详情" id="todoInfo" data-defer="assets/panel/todoInfo.html"
+     data-load=""
+     data-unload=""
+     data-header="todoInfoHeader"
+     data-footer="register-footer">
+</div>
+
+
+<div class="panel "
+     title="任务操作" id="operateguide" data-defer="assets/panel/operateguide.html"
+     data-header="operateguideHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="订单选择" id="chocieorders" data-defer="assets/panel/chocieorders.html"
+     data-header="chocieordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="提取订单" id="deliverorders" data-defer="assets/panel/deliverorders.html"
+     data-header="deliverordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+<div class="panel "
+     title="在途跟踪" id="followorder" data-defer="assets/panel/followorder.html"
+     data-header="followorderHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+<div class="panel "
+     title="交接订单" id="handoverorders" data-defer="assets/panel/handoverorders.html"
+     data-header="handoverordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+
+<!--<div title='首页' id="main" class="panel"  data-defer="http://fatcoder.com/weixin.html"-->
+<!--data-nav="navList" data-tab="navbar_home" data-load="allPanelLoaded" >-->
+
+<!--</div>-->
+
+
+</div>
+
+
+
+<header id="searchHeader">
+    <a id='postionButton' href="javascript:;" onclick="changeMyLocation();"
+            >我的位置</a>
+    <h1 id="pageTitle" class="">竞价抢单</h1>
+    <div>
+        <a id='searchButton' onclick="search_panel();"
+                >查找</a></div>
+    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+</header>
+
+<header id="homeHeader" style="background-color:white;">
+    <div class="homeLeftButton">
+        <span id="homeTitle" class="" style="color:#EF8305;text-shadow:1px 1px 2px #FEFEFE;">到哪啦</span>
+    </div>
+    <div class="homeRightButton animated 5s flash daiyufont">让订单交付更简单</div>
+</header>
+
+<header id="operateguideHeader">
+    <a class="backButton button"  onclick="$.ui.loadContent('#todo', false, false, 'slide')" >
+        返回
+    </a>
+    <h1 id="operateguideTitle" class="">任务操作</h1>
+    <div><a style="margin-right: 0px;" class="searchButton" id='operateguideTelButton' href="tel:" >联系客服</a></div>
+</header>
+
+<header id="chocieordersHeader">
+    <a class="backButton button"  onclick="$.ui.loadContent('#currenttask', false, false, 'slide')">返回</a>
+    <h1 id="orderTitle" class="">订单选择</h1>
+    <div><a style="margin-right: 0px;" class="searchButton"  id='chocieordersTelButton' href="tel:" >联系客服</a></div>
+</header>
+
+<header id="offerHeader">
+    <a class="backButton button" >竞价抢单</a>
+    <h1 id="offerTitle" class="">订单报价</h1>
+    <div><a class="searchButton" id='offerTelButton' href="tel:" >联系客服</a></div>
+    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+</header>
+<header id="todoInfoHeader">
+    <a class="backButton button" >任务</a>
+    <h1 id="odoInfoTitle" class="">任务详情</h1>
+    <div><a style="margin-right: 0px;" class="searchButton" id='odoInfoTelButton' href="tel:" >联系客服</a></div>
+</header>
+<!--跟踪订单HEAD-->
+<header id="deliverordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="deliverordersTitle" class="">提取订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='deliverordersTelButton' href="tel:" >联系客服</a></div>
+    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+</header>
+
+<header id="followorderHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
+    <h1 id="followorderTitle" class="">在途跟踪</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='followorderTelButton' href="tel:" >联系客服</a></div>
+    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+</header>
+
+<header id="handoverordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="handoverordersTitle" class="">交接订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='handoverordersTelButton' href="tel:" >联系客服</a></div>
+    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+</header>
+
+<header id="biddingRecodeHeader">
+
+</header>
+<header id="selfOrderHeader">
+
+</header>
+<header id="todoHeader">
+
+</header>
+
+<header id="noneHeader">
+</header>
+
+
+
+</div>
+
+<div style="display: none">
+    <select id="province_select" data-role="none">
+        <option value="粤">粤</option>
+        <option value="苏">苏</option>
+        <option value="浙">浙</option>
+        <option value="鄂">鄂</option>
+        <option value="皖">皖</option>
+        <option value="辽">辽</option>
+        <option value="京">京</option>
+        <option value="津">津</option>
+        <option value="沪">沪</option>
+        <option value="豫">豫</option>
+        <option value="鲁">鲁</option>
+        <option value="湘">湘</option>
+        <option value="渝">渝</option>
+        <option value="冀">冀</option>
+        <option value="云">云</option>
+        <option value="黑">黑</option>
+        <option value="新">新</option>
+        <option value="赣">赣</option>
+        <option value="桂">桂</option>
+        <option value="甘">甘</option>
+        <option value="晋">晋</option>
+        <option value="蒙">蒙</option>
+        <option value="陕">陕</option>
+        <option value="吉">吉</option>
+        <option value="闽">闽</option>
+        <option value="贵">贵</option>
+        <option value="青">青</option>
+        <option value="藏">藏</option>
+        <option value="川">川</option>
+        <option value="宁">宁</option>
+        <option value="琼">琼</option>
+    </select>
+
+    <select id="area_select" data-role="none">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="C">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+        <option value="H">H</option>
+        <option value="I">I</option>
+        <option value="J">J</option>
+        <option value="K">K</option>
+        <option value="L">L</option>
+        <option value="M">M</option>
+        <option value="N">N</option>
+        <option value="O">O</option>
+        <option value="P">P</option>
+        <option value="Q">Q</option>
+        <option value="R">R</option>
+        <option value="S">S</option>
+        <option value="T">T</option>
+        <option value="U">U</option>
+        <option value="V">V</option>
+        <option value="W">W</option>
+        <option value="X">X</option>
+        <option value="Y">Y</option>
+        <option value="Z">Z</option>
+    </select>
+
+    <select id="usertype_select" data-role="none">
+        <option value="1">个人用户</option>
+        <option value="2">企业用户</option>
+    </select>
+
+    <select id="cartype_select" data-role="none">
+        <option value="平板">平板</option>
+        <option value="半封闭">半封闭</option>
+        <option value="高栏">高栏</option>
+        <option value="厢车">厢车</option>
+
+    </select>
+
+    <select id="vehicletype_select" data-role="none">
+        <option value="货车">货车</option>
+        <option value="卡车">卡车</option>
+    </select>
+
+    <select id="load_select" data-role="none">
+        <option value="0.5">0.5</option>
+        <option value="1">1</option>
+        <option value="1.5">1.5</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+    </select>
+
+
+    <select id="bank_select" data-role="none">
+        <option value="中国银行">中国银行</option>
+        <option value="中国农业银行">中国农业银行</option>
+        <option value="中国工商银行">中国工商银行</option>
+        <option value="中国建设银行">中国建设银行</option>
+        <option value="中国民生银行">中国民生银行</option>
+        <option value="中国光大银行">中国光大银行</option>
+        <option value="中信银行">中信银行</option>
+        <option value="交通银行">交通银行</option>
+        <option value="兴业银行">兴业银行</option>
+        <option value="招商银行">招商银行</option>
+        <option value="浦发银行">浦发银行</option>
+        <option value="光大银行">光大银行</option>
+        <option value="平安银行">平安银行</option>
+        <option value="上海浦东发展银行">上海浦东发展银行</option>
+        <option value="中国人民银行">中国人民银行</option>
+        <option value="华夏银行">华夏银行</option>
+        <option value="深圳发展银行">深圳发展银行</option>
+        <option value="广东发展银行">广东发展银行</option>
+        <option value="国家开发银行">国家开发银行</option>
+        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+
+    </select>
+
+    <select id="pay_select" data-role="none">
+        <option value="未结算">未结算</option>
+        <option value="已对帐">已对帐</option>
+        <option value="已付款">已付款</option>
+    </select>
+
+    <select id="deliverremark_select" data-role="none">
+        <option value="提取顺利">提货顺利</option>
+        <option value="提货异常">提货异常</option>
+    </select>
+
+
+    <select id="followstatus_select" data-role="none">
+        <option value="正常反馈">正常反馈</option>
+        <option value="异常反馈">异常反馈</option>
+    </select>
+
+    <select id="followremark_select" data-role="none">
+        <!--<option value="在途正常">在途正常</option>-->
+        <option value="货物丢失">货物丢失</option>
+        <option value="货物损坏">货物损坏</option>
+        <option value="天气恶劣">天气恶劣</option>
+        <option value="交通堵塞">交通堵塞</option>
+        <option value="车辆故障">车辆故障</option>
+        <option value="车辆事故">车辆事故</option>
+    </select>
+
+
+    <!--  在途正常,货物丢失,货物损坏,天气恶劣,交通堵塞,车辆故障,车辆事故
+
+    交接正常,货物短少,货物损坏,客户拒收,客户强退,窜货,压车不卸货-->
+
+    <select id="handoverremark_select" data-role="none">
+        <option value="交接正常">交接正常</option>
+        <option value="货物短少">货物短少</option>
+        <option value="货物损坏">货物损坏</option>
+        <option value="客户拒收">客户拒收</option>
+        <option value="客户强退">客户强退</option>
+        <option value="窜货">窜货</option>
+        <option value="压车不卸货">压车不卸货</option>
+    </select>
+
+    <ul id="departure_select">
+        <li>重庆<ul><li>重庆</li></ul></li><li>安徽<ul><li>安庆</li><li>蚌埠</li><li>亳州</li><li>巢湖</li><li>池州</li><li>滁州</li><li>阜阳</li><li>合肥</li><li>淮北</li><li>淮南</li><li>黄山</li><li>六安</li><li>马鞍山</li><li>宿州</li><li>铜陵</li><li>芜湖</li><li>宣城</li></ul></li><li>河南<ul><li>安阳</li><li>巩义</li><li>鹤壁</li><li>济源</li><li>焦作</li><li>开封</li><li>洛阳</li><li>漯河</li><li>南阳</li><li>平顶山</li><li>濮阳</li><li>三门峡</li><li>商丘</li><li>新乡</li><li>信阳</li><li>许昌</li><li>郑州</li><li>周口</li><li>驻马店</li></ul></li><li>湖北<ul><li>鄂州</li><li>恩施土家族苗族自治州</li><li>黄冈</li><li>黄石</li><li>荆门</li><li>荆州</li><li>潜江</li><li>神农架</li><li>十堰</li><li>随州</li><li>天门</li><li>武汉</li><li>仙桃</li><li>咸宁</li><li>襄樊</li><li>孝感</li><li>宜昌</li></ul></li><li>青海<ul><li>果洛藏族自治州</li><li>海北藏族自治州</li><li>海东地区</li><li>海南藏族自治州</li><li>海西蒙古族藏族自治州</li><li>黄南藏族自治州</li><li>西宁</li><li>玉树藏族自治州</li></ul></li><li>陕西<ul><li>安康</li><li>宝鸡</li><li>汉中</li><li>商洛</li><li>铜川</li><li>渭南</li><li>西安</li><li>咸阳</li><li>延安</li><li>榆林</li></ul></li><li>台湾<ul><li>台湾省</li></ul></li><li>香港特别行政区<ul><li>香港</li></ul></li><li>贵州<ul><li>安顺</li><li>毕节地区</li><li>贵阳</li><li>六盘水</li><li>黔东南州</li><li>黔南州</li><li>黔西南州</li><li>铜仁地区</li><li>遵义</li></ul></li><li>海南<ul><li>白沙黎族自治县</li><li>保亭黎族苗族自治县</li><li>昌江黎族自治县</li><li>澄迈县</li><li>儋州</li><li>定安县</li><li>东方</li><li>海口</li><li>乐东黎族自治县</li><li>临高县</li><li>陵水黎族自治县</li><li>琼海</li><li>琼中黎族苗族自治县</li><li>三沙</li><li>三亚</li><li>屯昌县</li><li>万宁</li><li>文昌</li><li>五指山</li><li>洋浦经济开发区</li></ul></li><li>黑龙江<ul><li>大庆</li><li>大兴安岭地区</li><li>哈尔滨</li><li>鹤岗</li><li>黑河</li><li>鸡西</li><li>佳木斯</li><li>牡丹江</li><li>七台河</li><li>齐齐哈尔</li><li>双鸭山</li><li>绥化</li><li>伊春</li></ul></li><li>山东<ul><li>滨州</li><li>德州</li><li>东营</li><li>菏泽</li><li>济南</li><li>济宁</li><li>莱芜</li><li>聊城</li><li>临沂</li><li>青岛</li><li>日照</li><li>泰安</li><li>威海</li><li>潍坊</li><li>烟台</li><li>枣庄</li><li>淄博</li></ul></li><li>北京<ul><li>北京</li></ul></li><li>福建<ul><li>福州</li><li>龙岩</li><li>南平</li><li>宁德</li><li>莆田</li><li>泉州</li><li>三明</li><li>厦门</li><li>漳州</li></ul></li><li>吉林<ul><li>白城</li><li>白山</li><li>长春</li><li>吉林</li><li>辽源</li><li>四平</li><li>松原</li><li>通化</li><li>延边朝鲜族自治州</li></ul></li><li>上海<ul><li>上海</li></ul></li><li>四川<ul><li>阿坝藏族羌族自治州</li><li>巴中</li><li>成都</li><li>达州</li><li>德阳</li><li>甘孜藏族自治州</li><li>广安</li><li>广元</li><li>乐山</li><li>凉山彝族自治州</li><li>泸州</li><li>眉山</li><li>绵阳</li><li>内江</li><li>南充</li><li>攀枝花</li><li>遂宁</li><li>雅安</li><li>宜宾</li><li>资阳</li><li>自贡</li></ul></li><li>云南<ul><li>保山</li><li>楚雄彝族自治州</li><li>大理白族自治州</li><li>德宏傣族景颇族自治州</li><li>迪庆藏族自治州</li><li>红河哈尼族彝族自治州</li><li>昆明</li><li>丽江</li><li>临沧</li><li>怒江傈僳族自治州</li><li>普洱</li><li>曲靖</li><li>文山壮族苗族自治州</li><li>西双版纳傣族自治州</li><li>玉溪</li><li>昭通</li></ul></li><li>浙江<ul><li>杭州</li><li>湖州</li><li>嘉兴</li><li>金华</li><li>丽水</li><li>宁波</li><li>衢州</li><li>绍兴</li><li>台州</li><li>温州</li><li>舟山</li></ul></li><li>广东<ul><li>潮州</li><li>东莞</li><li>佛山</li><li>广州</li><li>河源</li><li>惠州</li><li>江门</li><li>揭阳</li><li>茂名</li><li>梅州</li><li>清远</li><li>汕头</li><li>汕尾</li><li>韶关</li><li>深圳</li><li>阳江</li><li>云浮</li><li>湛江</li><li>肇庆</li><li>中山</li><li>珠海</li></ul></li><li>河北<ul><li>保定</li><li>沧州</li><li>承德</li><li>邯郸</li><li>衡水</li><li>廊坊</li><li>秦皇岛</li><li>石家庄</li><li>唐山</li><li>邢台</li><li>张家口</li></ul></li><li>江苏<ul><li>常州</li><li>淮安</li><li>连云港</li><li>南京</li><li>南通</li><li>苏州</li><li>宿迁</li><li>泰州</li><li>无锡</li><li>徐州</li><li>盐城</li><li>扬州</li><li>镇江</li></ul></li><li>江西<ul><li>抚州</li><li>赣州</li><li>吉安</li><li>景德镇</li><li>九江</li><li>南昌</li><li>萍乡</li><li>上饶</li><li>新余</li><li>宜春</li><li>鹰潭</li></ul></li><li>新疆维吾尔自治区<ul><li>阿克苏地区</li><li>阿拉尔</li><li>阿勒泰地区</li><li>巴音郭楞蒙古自治州</li><li>博尔塔拉蒙古自治州</li><li>昌吉回族自治州</li><li>哈密地区</li><li>和田地区</li><li>喀什地区</li><li>克拉玛依</li><li>克孜勒苏柯尔克孜自治</li><li>石河子</li><li>塔城地区</li><li>图木舒克</li><li>吐鲁番地区</li><li>乌鲁木齐</li><li>五家渠</li><li>伊犁哈萨克自治州</li></ul></li><li>甘肃<ul><li>白银</li><li>定西</li><li>甘南藏族自治州</li><li>嘉峪关</li><li>金昌</li><li>酒泉</li><li>兰州</li><li>临夏回族自治州</li><li>陇南</li><li>平凉</li><li>庆阳</li><li>天水</li><li>武威</li><li>张掖</li></ul></li><li>广西壮族自治区<ul><li>百色</li><li>北海</li><li>崇左</li><li>防城港</li><li>贵港</li><li>桂林</li><li>河池</li><li>贺州</li><li>来宾</li><li>柳州</li><li>南宁</li><li>钦州</li><li>梧州</li><li>玉林</li></ul></li><li>湖南<ul><li>长沙</li><li>常德</li><li>郴州</li><li>衡阳</li><li>怀化</li><li>娄底</li><li>邵阳</li><li>湘潭</li><li>湘西土家族苗族自治州</li><li>益阳</li><li>永州</li><li>岳阳</li><li>张家界</li><li>株洲</li></ul></li><li>辽宁<ul><li>鞍山</li><li>本溪</li><li>朝阳</li><li>大连</li><li>丹东</li><li>抚顺</li><li>阜新</li><li>葫芦岛</li><li>锦州</li><li>辽阳</li><li>盘锦</li><li>沈阳</li><li>铁岭</li><li>营口</li></ul></li><li>内蒙古自治区<ul><li>阿拉善盟</li><li>巴彦淖尔</li><li>包头</li><li>赤峰</li><li>鄂尔多斯</li><li>呼和浩特</li><li>呼伦贝尔</li><li>通辽</li><li>乌海</li><li>乌兰察布</li><li>锡林郭勒盟</li><li>兴安盟</li></ul></li><li>西藏自治区<ul><li>阿里地区</li><li>昌都地区</li><li>拉萨</li><li>林芝地区</li><li>那曲地区</li><li>日喀则地区</li><li>山南地区</li></ul></li><li>澳门特别行政区<ul><li>澳门特别行政区</li></ul></li><li>宁夏回族自治区<ul><li>固原</li><li>石嘴山</li><li>吴忠</li><li>银川</li><li>中卫</li></ul></li><li>山西<ul><li>长治</li><li>大同</li><li>晋城</li><li>晋中</li><li>临汾</li><li>吕梁</li><li>朔州</li><li>太原</li><li>忻州</li><li>阳泉</li><li>运城</li></ul></li><li>天津<ul><li>天津</li></ul></li>
+    </ul>
+
+    <ul id="destination_select">
+        <li>重庆<ul><li>重庆</li></ul></li><li>安徽<ul><li>安庆</li><li>蚌埠</li><li>亳州</li><li>巢湖</li><li>池州</li><li>滁州</li><li>阜阳</li><li>合肥</li><li>淮北</li><li>淮南</li><li>黄山</li><li>六安</li><li>马鞍山</li><li>宿州</li><li>铜陵</li><li>芜湖</li><li>宣城</li></ul></li><li>河南<ul><li>安阳</li><li>巩义</li><li>鹤壁</li><li>济源</li><li>焦作</li><li>开封</li><li>洛阳</li><li>漯河</li><li>南阳</li><li>平顶山</li><li>濮阳</li><li>三门峡</li><li>商丘</li><li>新乡</li><li>信阳</li><li>许昌</li><li>郑州</li><li>周口</li><li>驻马店</li></ul></li><li>湖北<ul><li>鄂州</li><li>恩施土家族苗族自治州</li><li>黄冈</li><li>黄石</li><li>荆门</li><li>荆州</li><li>潜江</li><li>神农架</li><li>十堰</li><li>随州</li><li>天门</li><li>武汉</li><li>仙桃</li><li>咸宁</li><li>襄樊</li><li>孝感</li><li>宜昌</li></ul></li><li>青海<ul><li>果洛藏族自治州</li><li>海北藏族自治州</li><li>海东地区</li><li>海南藏族自治州</li><li>海西蒙古族藏族自治州</li><li>黄南藏族自治州</li><li>西宁</li><li>玉树藏族自治州</li></ul></li><li>陕西<ul><li>安康</li><li>宝鸡</li><li>汉中</li><li>商洛</li><li>铜川</li><li>渭南</li><li>西安</li><li>咸阳</li><li>延安</li><li>榆林</li></ul></li><li>台湾<ul><li>台湾省</li></ul></li><li>香港特别行政区<ul><li>香港</li></ul></li><li>贵州<ul><li>安顺</li><li>毕节地区</li><li>贵阳</li><li>六盘水</li><li>黔东南州</li><li>黔南州</li><li>黔西南州</li><li>铜仁地区</li><li>遵义</li></ul></li><li>海南<ul><li>白沙黎族自治县</li><li>保亭黎族苗族自治县</li><li>昌江黎族自治县</li><li>澄迈县</li><li>儋州</li><li>定安县</li><li>东方</li><li>海口</li><li>乐东黎族自治县</li><li>临高县</li><li>陵水黎族自治县</li><li>琼海</li><li>琼中黎族苗族自治县</li><li>三沙</li><li>三亚</li><li>屯昌县</li><li>万宁</li><li>文昌</li><li>五指山</li><li>洋浦经济开发区</li></ul></li><li>黑龙江<ul><li>大庆</li><li>大兴安岭地区</li><li>哈尔滨</li><li>鹤岗</li><li>黑河</li><li>鸡西</li><li>佳木斯</li><li>牡丹江</li><li>七台河</li><li>齐齐哈尔</li><li>双鸭山</li><li>绥化</li><li>伊春</li></ul></li><li>山东<ul><li>滨州</li><li>德州</li><li>东营</li><li>菏泽</li><li>济南</li><li>济宁</li><li>莱芜</li><li>聊城</li><li>临沂</li><li>青岛</li><li>日照</li><li>泰安</li><li>威海</li><li>潍坊</li><li>烟台</li><li>枣庄</li><li>淄博</li></ul></li><li>北京<ul><li>北京</li></ul></li><li>福建<ul><li>福州</li><li>龙岩</li><li>南平</li><li>宁德</li><li>莆田</li><li>泉州</li><li>三明</li><li>厦门</li><li>漳州</li></ul></li><li>吉林<ul><li>白城</li><li>白山</li><li>长春</li><li>吉林</li><li>辽源</li><li>四平</li><li>松原</li><li>通化</li><li>延边朝鲜族自治州</li></ul></li><li>上海<ul><li>上海</li></ul></li><li>四川<ul><li>阿坝藏族羌族自治州</li><li>巴中</li><li>成都</li><li>达州</li><li>德阳</li><li>甘孜藏族自治州</li><li>广安</li><li>广元</li><li>乐山</li><li>凉山彝族自治州</li><li>泸州</li><li>眉山</li><li>绵阳</li><li>内江</li><li>南充</li><li>攀枝花</li><li>遂宁</li><li>雅安</li><li>宜宾</li><li>资阳</li><li>自贡</li></ul></li><li>云南<ul><li>保山</li><li>楚雄彝族自治州</li><li>大理白族自治州</li><li>德宏傣族景颇族自治州</li><li>迪庆藏族自治州</li><li>红河哈尼族彝族自治州</li><li>昆明</li><li>丽江</li><li>临沧</li><li>怒江傈僳族自治州</li><li>普洱</li><li>曲靖</li><li>文山壮族苗族自治州</li><li>西双版纳傣族自治州</li><li>玉溪</li><li>昭通</li></ul></li><li>浙江<ul><li>杭州</li><li>湖州</li><li>嘉兴</li><li>金华</li><li>丽水</li><li>宁波</li><li>衢州</li><li>绍兴</li><li>台州</li><li>温州</li><li>舟山</li></ul></li><li>广东<ul><li>潮州</li><li>东莞</li><li>佛山</li><li>广州</li><li>河源</li><li>惠州</li><li>江门</li><li>揭阳</li><li>茂名</li><li>梅州</li><li>清远</li><li>汕头</li><li>汕尾</li><li>韶关</li><li>深圳</li><li>阳江</li><li>云浮</li><li>湛江</li><li>肇庆</li><li>中山</li><li>珠海</li></ul></li><li>河北<ul><li>保定</li><li>沧州</li><li>承德</li><li>邯郸</li><li>衡水</li><li>廊坊</li><li>秦皇岛</li><li>石家庄</li><li>唐山</li><li>邢台</li><li>张家口</li></ul></li><li>江苏<ul><li>常州</li><li>淮安</li><li>连云港</li><li>南京</li><li>南通</li><li>苏州</li><li>宿迁</li><li>泰州</li><li>无锡</li><li>徐州</li><li>盐城</li><li>扬州</li><li>镇江</li></ul></li><li>江西<ul><li>抚州</li><li>赣州</li><li>吉安</li><li>景德镇</li><li>九江</li><li>南昌</li><li>萍乡</li><li>上饶</li><li>新余</li><li>宜春</li><li>鹰潭</li></ul></li><li>新疆维吾尔自治区<ul><li>阿克苏地区</li><li>阿拉尔</li><li>阿勒泰地区</li><li>巴音郭楞蒙古自治州</li><li>博尔塔拉蒙古自治州</li><li>昌吉回族自治州</li><li>哈密地区</li><li>和田地区</li><li>喀什地区</li><li>克拉玛依</li><li>克孜勒苏柯尔克孜自治</li><li>石河子</li><li>塔城地区</li><li>图木舒克</li><li>吐鲁番地区</li><li>乌鲁木齐</li><li>五家渠</li><li>伊犁哈萨克自治州</li></ul></li><li>甘肃<ul><li>白银</li><li>定西</li><li>甘南藏族自治州</li><li>嘉峪关</li><li>金昌</li><li>酒泉</li><li>兰州</li><li>临夏回族自治州</li><li>陇南</li><li>平凉</li><li>庆阳</li><li>天水</li><li>武威</li><li>张掖</li></ul></li><li>广西壮族自治区<ul><li>百色</li><li>北海</li><li>崇左</li><li>防城港</li><li>贵港</li><li>桂林</li><li>河池</li><li>贺州</li><li>来宾</li><li>柳州</li><li>南宁</li><li>钦州</li><li>梧州</li><li>玉林</li></ul></li><li>湖南<ul><li>长沙</li><li>常德</li><li>郴州</li><li>衡阳</li><li>怀化</li><li>娄底</li><li>邵阳</li><li>湘潭</li><li>湘西土家族苗族自治州</li><li>益阳</li><li>永州</li><li>岳阳</li><li>张家界</li><li>株洲</li></ul></li><li>辽宁<ul><li>鞍山</li><li>本溪</li><li>朝阳</li><li>大连</li><li>丹东</li><li>抚顺</li><li>阜新</li><li>葫芦岛</li><li>锦州</li><li>辽阳</li><li>盘锦</li><li>沈阳</li><li>铁岭</li><li>营口</li></ul></li><li>内蒙古自治区<ul><li>阿拉善盟</li><li>巴彦淖尔</li><li>包头</li><li>赤峰</li><li>鄂尔多斯</li><li>呼和浩特</li><li>呼伦贝尔</li><li>通辽</li><li>乌海</li><li>乌兰察布</li><li>锡林郭勒盟</li><li>兴安盟</li></ul></li><li>西藏自治区<ul><li>阿里地区</li><li>昌都地区</li><li>拉萨</li><li>林芝地区</li><li>那曲地区</li><li>日喀则地区</li><li>山南地区</li></ul></li><li>澳门特别行政区<ul><li>澳门特别行政区</li></ul></li><li>宁夏回族自治区<ul><li>固原</li><li>石嘴山</li><li>吴忠</li><li>银川</li><li>中卫</li></ul></li><li>山西<ul><li>长治</li><li>大同</li><li>晋城</li><li>晋中</li><li>临汾</li><li>吕梁</li><li>朔州</li><li>太原</li><li>忻州</li><li>阳泉</li><li>运城</li></ul></li><li>天津<ul><li>天津</li></ul></li>
+    </ul>
+
+    <ul id="address_select">
+        <li>湖南省<ul><li>郴州市<ul><li>临武县</li></ul></li><li>长沙市<ul><li>长沙县</li></ul></li></ul></li>
+        <li>广东省<ul><li>深圳市<ul><li>南山区</li></ul></li><li>广州市<ul><li>白云区</li></ul></li></ul></li>
+    </ul>
+
+
+
+</div>
+</body>
 </html>
