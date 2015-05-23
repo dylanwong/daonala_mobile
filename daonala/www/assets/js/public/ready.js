@@ -152,6 +152,29 @@ $.ui.ready(function(){
             $("#deliverremarks").val(v);
         }
     });
+
+    jQuery('#roletype_select').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
+
+        },
+        onClose: function () {
+
+        },
+        onCancel: function () {
+
+        },
+        onSelect: function (v, inst) {
+            $("#role").val(v);
+        }
+    });
+
+
     jQuery('#followremark_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default

@@ -1,12 +1,47 @@
 <div id="" style="margin-top: -2px">
+
+    <div style="height:15px;width:100%;background-color:#F2F2F2;margin-top:-2px;"></div>
+
+    <div style="width:100%;background-color:white;" align="center" id="switchDiv">
+        <div style="width:90%;border-bottom:1px solid #EEEEEE;overflow:hidden;line-height:55px;height:55px; margin:0px 10px;">
+            <div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">
+               接收消息自动提示
+            </div>
+            <div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;">
+                <input id="automessage" type="checkbox" name="my-checkbox"  >
+            </div>
+        </div>
+        <div style="width:90%;border-bottom:1px solid #EEEEEE;overflow:hidden;line-height:55px;height:55px; margin:0px 10px;">
+            <div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">
+                震动推送
+            </div>
+            <div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;">
+                <input id="vibrateFlag" type="checkbox" name="my-checkbox"  >
+            </div>
+        </div>
+        <div style="width:90%;border-bottom:1px solid #EEEEEE;overflow:hidden;line-height:55px;height:55px; margin:0px 10px;">
+            <div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">
+                语音提示
+            </div>
+            <div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;">
+                  <input id="soundFlag" type="checkbox" name="my-checkbox" >
+            </div>
+        </div>
+
+    </div>
+
+    <div style="height:15px;width:100%;background-color:#F2F2F2;"></div>
+
     <div class="p10">
         <ul class="list">
             <li>
-                <a href="#about" ><span class="icon-head">&nbsp;</span>关于我们</a>
+                <a href="javascript:;" onclick="feedback_panel()" >
+                    <span class="icon-head">&nbsp;</span>意见反馈</a>
             </li>
             <li>
-                <a href="javascript:;" onclick="qrcode_panel()" ><span class="icon-head">&nbsp;</span>推广APP</a>
+                <a href="#about" ><span class="icon-head">&nbsp;</span>关于我们</a>
             </li>
+
             <li>
                 <a href="javascript:;" onclick="iosUpdatePlugin(1)" >
                     <span class="icon-head">&nbsp;</span>版本检查

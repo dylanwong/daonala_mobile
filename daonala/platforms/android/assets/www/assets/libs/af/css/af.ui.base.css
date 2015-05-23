@@ -145,6 +145,7 @@ body {
     z-index:250;
     -webkit-box-sizing:border-box; box-sizing:border-box;
     height:44px;
+    background-image:'assets/img/demo/logo_3.png';
     left:0; right:0;
 
 } /* This is masthead bar that appears at the top of the UI */
@@ -679,9 +680,10 @@ body {
 }
 
 #afui .header{
-    background:#F6842B;
+    background:#00B2EE;
     border:none;
-    border-bottom:1px solid #F6842B;
+
+    border-bottom:1px solid #00B2EE;
     color:white;
 }
 

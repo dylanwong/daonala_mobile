@@ -1,58 +1,46 @@
-<div id="" style="margin-top: -2px">
-    <div style="" >
-         <div style="float: left;padding: 20px 10px 0px 30px;" >
-             <img src="assets/img/user_icon.png" />
-         </div>
-         <div style="float: left;padding: 25px 10px 5px 5px;">
-             <div id="username_label"></div>
-             <div>
-                 <a href="javascript:;" onclick="qrcode_panel()">
-                     <div style="clear:both;"></div>
-                     <div style="float:left;color: #53575E;">推广二维码：</div>
-                     <div style="float:left; ">
-                         <img style="margin-bottom:6px;"
-                              src="assets/img/qrcode_mini.png" height="16" width="16" />
-                     </div>
-                     <div style="clear:both;"></div>
-                 </a>
-             </div>
-             <div>电话：<span id="tel_label"></span></div>
+<div id="" style="margin-top: -2px;align:center;">
+    <table style="text-align:center;
+        width:100%;height:150px;background:#F6842B;">
+        <tr style="height: 80%;border-top:5px solid #F6842B;">
+            <td></td>
+            <td>
+                <div style="" >
+                    <img onclick="login_panel()" id="user_img" src="assets/img/user1.png" />
+                </div></td>
+        <td></td>
+        </tr>
+        <tr><td></td>
+            <td>
+                <div style="" >
+                    <font id="userAlias" style="text-align: center;"></font>
+                </div></td>
+            <td></td></tr>
+    </table>
 
-             <!--<h1 class="text-center" style="padding:20px">未登陆</h1>-->
-         </div>
-         <div style="clear:both;"></div>
     </div>
-    <br>
+    <br><br>
     <div class="p10">
-        <ul class="list" id="car_list">
-            <li>
-                <a href="javascript:;" onclick="idinfo_panel(1)" >
-                    <span class="icon-head">&nbsp;</span>身份认证</a>
-            </li>
-            <li>
-                <a href="javascript:;" onclick="carinfo_panel()" ><span class="icon-head">&nbsp;</span>车辆资料</a>
-            </li>
-            <li>
-                <a href="javascript:;" onclick="bank_panel()" ><span class="icon-head">&nbsp;</span>银行帐号</a>
-            </li>
-            <li>
-                <a href="javascript:;" onclick="address_panel()"><span class="icon-head">&nbsp;</span>我的资料</a>
-            </li>
-            <li>
-                <a href="javascript:;" onclick="selfOrder_panel()" ><span class="icon-head">&nbsp;</span>我的订单</a>
-            </li>
-            <li>
-                <a href="#setup" ><span class="icon-head">&nbsp;</span>软件设置</a>
-            </li>
-            <!--<li>
-                <a href="javascript:;" onclick="mine();"><span class="icon-head">&nbsp;</span>我</a>
-            </li>-->
-        </ul>
+    <table style="text-align:center;
+        width:100%;height:100%;">
+        <tr style="height: 50%;border-top:5px solid #FFFFFF;">
+            <td>
+            <a href="tel:4001110005"  style="width: 50%" class="btn">
+                <img src="assets/img/servicer.png" />
+                <p style="font-size:16px;font-weight:bold;">
+                    呼叫客服
+                </p>
+                </a>
+            </td>
+            <td>
+            <a href="#setup"  style="width: 50%" class="btn">
+                <img src="assets/img/setup.png" />
+                <p style="font-size:16px;font-weight:bold;">
+                    软件设置
+                </p></a>
+        </td>
+    </table>
         <br>
 
-        <div align="center">
-            <a href="tel:4001110005"  style="width: 90%" class="btn btn-success">呼叫客服</a>
-        </div>
 
     </div>
 

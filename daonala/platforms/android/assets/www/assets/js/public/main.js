@@ -5,7 +5,9 @@ function include(path){
     var head=document.getElementsByTagName("head")[0];
     head.appendChild(a);
 }
-include("assets/js/.js");
+include("assets/js/login.js");
+include("assets/js/register.js");
+//include("assets/js/.js");
 
 
 function mainPanleUnLoad(){
@@ -26,6 +28,25 @@ function main_panel()
 function home_panel()
 {
     $.ui.loadContent("#home", false, false, "slide");
+}
+
+function login_panel()
+{
+    $.ui.loadContent("#login", false, false, "slide");
+}
+
+function register_panel()
+{
+    $.ui.loadContent("#register", false, false, "slide");
+}
+
+function feedback_panel()
+{
+    $.ui.loadContent("#feedback", false, false, "slide");
+}
+
+function findPwd_panel(){
+    $.ui.loadContent("#fingPwd", false, false, "slide");
 }
 
 function init_home_ad()

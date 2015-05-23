@@ -173,8 +173,8 @@
 .homeLeftButton
 {
     position: relative;
-    top: 10px;
-    width: 100px;
+  /*  top: 10px;
+*/    width: 100px;
     height: 36px;
     z-index: 2;
     float: left;
@@ -186,7 +186,7 @@
 .homeRightButton
 {
     position: relative;
-    top: 10px;
+    /*top: 10px;*/
     right: -10px;
     width: 180px;
     height: 36px;

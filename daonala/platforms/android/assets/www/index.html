@@ -70,49 +70,51 @@ data-defer:加载一个html进来
      title="首页" id="home" data-defer="assets/panel/home.html"
      data-header="homeHeader"
      data-load="init_home_ad"
-     data-tab="welcome">
+     data-tab="nabar_welcome">
 </div>
 
 <div class="panel p0"
      title="我" id="mine" data-defer="assets/panel/mine.html"
      data-load=""
+     data-header="homeHeader"
      data-unload=""
      data-tab="navbar_mine">
 </div>
 
-
-<div class="panel p0"
-     title="到哪啦" id="portal" data-defer="assets/panel/portal.html"
-     data-load=""
-     data-unload=""
-     data-footer="none"
-        >
-</div>
-
-
-
 <div class="panel"
-     title="用户登入" id="login" data-defer="assets/panel/login.html"
+     title="" id="login" data-defer="assets/panel/login.html"
      data-load=""
+     data-header="allHeader"
      data-unload=""
      data-footer="login-footer"
         >
 </div>
 <div class="panel "
-     title="用户注册" id="register" data-defer="assets/panel/register.html"
+     title="" id="register" data-defer="assets/panel/register.html"
      data-load=""
      data-unload=""
+     data-header="allHeader"
      data-footer="register-footer">
     <!--data-load="loginPageLoad"-->
 </div>
 
 
 <div class="panel "
-     title="设置" id="setup" data-defer="assets/panel/setup.html"
+     title="" id="setup" data-defer="assets/panel/setup.html"
      data-load=""
      data-unload=""
+     data-header="allHeader"
      data-footer="none">
     <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+         title="设置" id="feedback" data-defer="assets/panel/feedback.html"
+         data-load=""
+         data-unload=""
+         data-header="allHeader"
+         data-footer="none">
+        <!--data-load="loginPageLoad"-->
 </div>
 
 
@@ -124,13 +126,13 @@ data-defer:加载一个html进来
     <!--data-load="loginPageLoad"-->
 </div>
 
-<div class="panel "
+<!--<div class="panel "
      title="我的订单" id="selfOrder" data-defer="assets/panel/selforder.html"
      data-load=""
      data-unload=""
      data-header="selfOrderHeader"
      data-footer="none">
-    <!--data-load="loginPageLoad"-->
+    &lt;!&ndash;data-load="loginPageLoad"&ndash;&gt;
 </div>
 
 <div class="panel "
@@ -139,28 +141,33 @@ data-defer:加载一个html进来
      data-unload=""
      data-header="offerHeader"
      data-footer="none">
-    <!--data-load="loginPageLoad"-->
-</div>
+    &lt;!&ndash;data-load="loginPageLoad"&ndash;&gt;
+</div>-->
 
+<!--
 <div class="panel "
      title="推广APP" id="qrcode" data-defer="assets/panel/qrcode.html"
      data-load="qrcode_load"
      data-unload=""
      data-footer="none">
 </div>
+-->
 
-<div class="panel "
+<!--<div class="panel "
      title="用户注册" id="role" data-defer="assets/panel/role.html"
      data-load=""
      data-unload=""
+     data-header="baseHeader"
      data-footer="role-footer">
-    <!--data-load="loginPageLoad"-->
-</div>
+    &lt;!&ndash;data-load="loginPageLoad"&ndash;&gt;
+</div>-->
 
 <div class="panel "
      title="找回密码" id="findPwd" data-defer="assets/panel/findPwd.html"
      data-load=""
      data-unload=""
+     data-header="allHeader"
+
      data-footer="none">
 </div>
 
@@ -172,6 +179,7 @@ data-defer:加载一个html进来
      data-footer="none">
 </div>-->
 
+<!--
 <div class="panel p0"
      title="任务" id="todo" data-defer="assets/panel/todo.html"
      data-header="todoHeader"
@@ -179,7 +187,9 @@ data-defer:加载一个html进来
      data-unload=""
      data-footer="none">
 </div>
+-->
 
+<!--
 <div class="panel"
      title="任务详情" id="todoInfo" data-defer="assets/panel/todoInfo.html"
      data-load=""
@@ -231,6 +241,7 @@ data-defer:加载一个html进来
      data-footer="none">
 </div>
 
+-->
 
 
 <!--<div title='首页' id="main" class="panel"  data-defer="http://fatcoder.com/weixin.html"-->
@@ -243,24 +254,34 @@ data-defer:加载一个html进来
 
 
 
-<header id="searchHeader">
-    <a id='postionButton' href="javascript:;" onclick="changeMyLocation();"
-            >我的位置</a>
-    <h1 id="pageTitle" class="">竞价抢单</h1>
-    <div>
-        <a id='searchButton' onclick="search_panel();"
-                >查找</a></div>
-    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
-</header>
-
-<header id="homeHeader" style="background-color:white;">
-    <div class="homeLeftButton">
-        <span id="homeTitle" class="" style="color:#EF8305;text-shadow:1px 1px 2px #FEFEFE;">到哪啦</span>
+<header id="homeHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton" style="top:0px;">
+        <span id="homeTitle" class="" style="color:#EF8305;text-shadow:1px 1px 2px #FEFEFE;"></span>
     </div>
-    <div class="homeRightButton animated 5s flash daiyufont">让订单交付更简单</div>
+    <div style="padding-top:10px;padding-left:10px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+   <!-- <div class="homeRightButton animated 5s flash daiyufont">让订单交付更简单</div>-->
 </header>
 
-<header id="operateguideHeader">
+<header id="mineHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton">
+        <span id="mineTitle" class="" style=""><a  class="backButton button" >我</a></span>
+    </div>
+    <div style="padding-top:10px;padding-left:10px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+
+</header>
+
+<header id="allHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton">
+        <span id="allTitle" class="" style=""><a  class="backButton button" >返回</a></span>
+    </div>
+    <div style="padding-top:10px;padding-left:100px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+
+</header>
+
+<!--<header id="operateguideHeader">
     <a class="backButton button"  onclick="$.ui.loadContent('#todo', false, false, 'slide')" >
         返回
     </a>
@@ -278,34 +299,34 @@ data-defer:加载一个html进来
     <a class="backButton button" >竞价抢单</a>
     <h1 id="offerTitle" class="">订单报价</h1>
     <div><a class="searchButton" id='offerTelButton' href="tel:" >联系客服</a></div>
-    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+    &lt;!&ndash;<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>&ndash;&gt;
 </header>
 <header id="todoInfoHeader">
     <a class="backButton button" >任务</a>
     <h1 id="odoInfoTitle" class="">任务详情</h1>
     <div><a style="margin-right: 0px;" class="searchButton" id='odoInfoTelButton' href="tel:" >联系客服</a></div>
 </header>
-<!--跟踪订单HEAD-->
+&lt;!&ndash;跟踪订单HEAD&ndash;&gt;
 <header id="deliverordersHeader">
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
     <h1 id="deliverordersTitle" class="">提取订单</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='deliverordersTelButton' href="tel:" >联系客服</a></div>
-    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+    &lt;!&ndash;<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>&ndash;&gt;
 </header>
 
 <header id="followorderHeader">
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
     <h1 id="followorderTitle" class="">在途跟踪</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='followorderTelButton' href="tel:" >联系客服</a></div>
-    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
+    &lt;!&ndash;<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>&ndash;&gt;
 </header>
 
 <header id="handoverordersHeader">
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
     <h1 id="handoverordersTitle" class="">交接订单</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='handoverordersTelButton' href="tel:" >联系客服</a></div>
-    <!--<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>-->
-</header>
+    &lt;!&ndash;<a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>&ndash;&gt;
+</header>-->
 
 <header id="biddingRecodeHeader">
 
@@ -320,7 +341,13 @@ data-defer:加载一个html进来
 <header id="noneHeader">
 </header>
 
-
+<div id="navbar">
+    <a href="#home" id='nabar_welcome' class='icon icon-home' style="height:100%;">首页</a>
+    <a href="javascript:;" onclick="search_panel()"
+       id='navbar_order' class='icon icon-local-shipping' style="height:100%;">搜索</a>
+    <!--<a href="#bbs" id='navbar_bbs' class="icon icon-forum">司机帮</a>-->
+    <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle" style="height:100%;">我</a>
+</div>
 
 </div>
 
@@ -359,102 +386,16 @@ data-defer:加载一个html进来
         <option value="琼">琼</option>
     </select>
 
-    <select id="area_select" data-role="none">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="C">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="G">G</option>
-        <option value="H">H</option>
-        <option value="I">I</option>
-        <option value="J">J</option>
-        <option value="K">K</option>
-        <option value="L">L</option>
-        <option value="M">M</option>
-        <option value="N">N</option>
-        <option value="O">O</option>
-        <option value="P">P</option>
-        <option value="Q">Q</option>
-        <option value="R">R</option>
-        <option value="S">S</option>
-        <option value="T">T</option>
-        <option value="U">U</option>
-        <option value="V">V</option>
-        <option value="W">W</option>
-        <option value="X">X</option>
-        <option value="Y">Y</option>
-        <option value="Z">Z</option>
-    </select>
 
-    <select id="usertype_select" data-role="none">
-        <option value="1">个人用户</option>
-        <option value="2">企业用户</option>
-    </select>
 
-    <select id="cartype_select" data-role="none">
-        <option value="平板">平板</option>
-        <option value="半封闭">半封闭</option>
-        <option value="高栏">高栏</option>
-        <option value="厢车">厢车</option>
+    <select id="roletype_select" data-role="none">
+        <option value="0">物流商</option>
+        <option value="1">货主</option>
+        <option value="2">货主客户</option>
+        <option value="3">司机</option>
 
     </select>
 
-    <select id="vehicletype_select" data-role="none">
-        <option value="货车">货车</option>
-        <option value="卡车">卡车</option>
-    </select>
-
-    <select id="load_select" data-role="none">
-        <option value="0.5">0.5</option>
-        <option value="1">1</option>
-        <option value="1.5">1.5</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="50">50</option>
-        <option value="60">60</option>
-    </select>
-
-
-    <select id="bank_select" data-role="none">
-        <option value="中国银行">中国银行</option>
-        <option value="中国农业银行">中国农业银行</option>
-        <option value="中国工商银行">中国工商银行</option>
-        <option value="中国建设银行">中国建设银行</option>
-        <option value="中国民生银行">中国民生银行</option>
-        <option value="中国光大银行">中国光大银行</option>
-        <option value="中信银行">中信银行</option>
-        <option value="交通银行">交通银行</option>
-        <option value="兴业银行">兴业银行</option>
-        <option value="招商银行">招商银行</option>
-        <option value="浦发银行">浦发银行</option>
-        <option value="光大银行">光大银行</option>
-        <option value="平安银行">平安银行</option>
-        <option value="上海浦东发展银行">上海浦东发展银行</option>
-        <option value="中国人民银行">中国人民银行</option>
-        <option value="华夏银行">华夏银行</option>
-        <option value="深圳发展银行">深圳发展银行</option>
-        <option value="广东发展银行">广东发展银行</option>
-        <option value="国家开发银行">国家开发银行</option>
-        <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
-
-    </select>
-
-    <select id="pay_select" data-role="none">
-        <option value="未结算">未结算</option>
-        <option value="已对帐">已对帐</option>
-        <option value="已付款">已付款</option>
-    </select>
 
     <select id="deliverremark_select" data-role="none">
         <option value="提取顺利">提货顺利</option>

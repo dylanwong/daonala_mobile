@@ -1,7 +1,7 @@
 <div id="login-main" class="pt-page-moveFromBottom">
     <br><br>
-    <h1 style="text-align: center">货源通</h1>
-    <br><br>
+
+
     <!--<form>-->
         <!--<div>-->
             <!--<input id="username" type="text" placeholder="用户名/手机/邮箱">-->
@@ -9,17 +9,28 @@
  <!---->
         <!--</div>-->
     <!--</form>-->
+
     <div class="login-box">
+        <div><table style="width:100%;"><tr>
+            <td>
+                <div><img src="assets/img/register.png" /></div>
+            </td>
+            <td style="float:right;text-align:center;"><a><font onclick="register_panel()" style="color:#00B2EE;">注册用户</font></a></td>
+        </tr></table></div>
         <div class="input-box input-top icon-head username">
-            <input id="username" name="" type="tel" placeholder="请输入手机号" ></div>
+            <input id="username" name="" type="tel" placeholder="请输入用户名/手机号/邮箱" ></div>
         <div class="input-box input-bot icon-lock-outline password">
             <input id="pwd" name="" type="password" placeholder="请输入密码" ></div>
+        <div>
+            <div style="float:right;"><font onclick="findPwd_panel()" style="color:#00B2EE;" horiz-adv-x="">忘记密码？</font></div>
+        </div>
         <br />
         <br />
+        <div align="center">
         <button role="button" id="loginButton"
-                style="font-size:x-large;" onclick="login()"
-                class="btn btn-primary btn-lg btn-block">登陆</button>
-
+                style="width:80%;background:#00B2EE;font-size:x-large;" onclick="login()"
+                class="btn  btn-block">登陆</button>
+        </div>
 
         <br>
 
