@@ -10,8 +10,19 @@ function register() {
     var phone = $("#phone").val();
     var messageCode = $("#messageCode").val();
     var password = $("#password").val();
-    var invitePopularizeCode = $("#popularizeCode").val();
-
+    //var invitePopularizeCode = $("#popularizeCode").val();
+    var  roleType = $("#role").val();
+    if(roleType=='物流商'){
+        roleType='0';
+    }else if(roleType=='货主'){
+        roleType='1';
+    }else if(roleType=='货主客户'){
+        roleType='2';
+    }else if(roleType=='司机'){
+        roleType='3';
+    }else{
+        errorPopup('请填写正确的角色!');
+    }
     if(phone.trim()=='' || messageCode.trim()=='' || password.trim()=='')
     {
         errorPopup('请填写完全输入项!');
@@ -22,8 +33,8 @@ function register() {
     {
         if(checkMobile('phone'))
         {
-            var data = "?phone="+phone+"&pwd="+password+"&smsNo="+messageCode+
-                "&userType="+ISSELROLE+"&invitePopularizeCode="+invitePopularizeCode;
+            var data = "?phone="+phone+"&pwd="+password+"&checkNum="+messageCode+
+                "&roleType="+roleType;
             $.jsonP({
                 url: baseUrl+"account/save_user.action"+data,
                 success: function (data) {
@@ -50,6 +61,7 @@ function register() {
                             }
                         });*/
                         loginStatus = 2;
+                        login_panel();
                     }else
                     {
                         errorPopup(data.msg.substring(data.msg.indexOf('-')+1,data.msg.length));
@@ -124,7 +136,7 @@ function verify_phone(elementId,callback,flag) {
         if (checkMobile(elementId)) {
 
             $.jsonP({
-                url: baseUrl+"msg/send_msg.action?phone=" + phone,
+                url: baseUrl+"account/verify_phone.action?phone=" + phone,
                 success: function (data) {
                     if(flag == 1)
                     {

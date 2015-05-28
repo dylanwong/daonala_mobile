@@ -18,11 +18,16 @@ var loginStatus = 0;//0未登录1登陆界面登陆2注册登陆
 var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面打开页面
 //var fileUrl ="http://app.gongsuda.com:8051/smsfile/";
 var fileUrl ="http://192.168.16.98:8080/fileserver/uploadFiles/sms/";
-var baseUrl = "http://192.168.16.70:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.116:8080/daonala_mobile/";
 var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var queryOrderList=baseUrl+"order/query_order_list.action";
 var queryMyOrderList=baseUrl+"order/query_order_bidding_list.action";
-
+var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
+var queryMySet = baseUrl + "base/query_device_set.action";
+var updateOrUpdateMySet = baseUrl + "base/save_device_set.action";
+var queryMsgList = baseUrl + "msg/query_msg_list.action";
+var searchUrl = baseUrl +"order/query_suborderlist.action";
+var searchTraceUrl = baseUrl+"order/query_deliverordertrace.action";
 //event target ID
 var ETID = null;
 //选中的任务ID
@@ -64,13 +69,58 @@ function onDeviceReadySettingEvents() {
     }, 3000);
     checkVersion();
 
+    init_homepage();
+
     //设备启动完毕发起 获取消息内容请求
-    var HuoYuanTongRoute = cordova.require('com.sealink.huoyuntong.cordova.HuoYunTongRoute');
-    HuoYuanTongRoute.route(function(message) {
+    var DaoNaLaRoute = cordova.require('com.sealink.daonala.cordova.DaoNaLaRoute');
+    DaoNaLaRoute.route(function(message) {
         alert(message);
     }, function(message) {
         alert(message);
     });
+
+}
+
+function init_homepage(){
+    var user =  localStorage.getItem('user');
+    user = JSON.parse(user);
+    if(user==null)
+    {
+        $('#myboard').unbind('click');
+        $('#myboard').attr('click','login_panel()');
+        $('#myboard').bind('click',function(){
+
+            login_panel();//login_panel();
+        });
+        $('#myboardText').html('我的订单');
+    }else{
+        if(user.obj.userType=='0'){
+            $('#myboard').unbind('click');
+
+            $('#myboard').bind('click',function(){
+                logisticboard_panel();
+            });
+            $('#myboardText').html('看板');
+        }else if(user.obj.userType=='1'){
+            $('#myboard').unbind('click');
+            $('#myboard').bind('click',function(){
+                ownerboard_panel();
+            });
+            $('#myboardText').html('看板');
+        }else if(user.obj.userType=='2'){
+            $('#myboard').unbind('click');
+            $('#myboard').bind('click',function(){
+                custboard_panel();
+            });
+            $('#myboardText').html('看板');
+        }else if(user.obj.userType=='3'){
+            $('#myboard').unbind('click');
+            $('#myboard').bind('click',function(){
+                driverboard_panel();
+            });
+            $('#myboardText').html('我的任务');
+        }
+    }
 }
 
 function onBackKeyDown(e) {

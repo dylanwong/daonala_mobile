@@ -55,6 +55,7 @@ function save_login_succ(data)
         $('#user_img').attr('src','assets/img/person.png');
 
         $('#userAlias').text(data.obj.userName+" 用户");
+        init_homepage();
         home_panel();
         //$.ui.loadContent("#main", false, false, "slide");
     }else
@@ -91,8 +92,9 @@ function logout()
 function logoutSucc()
 {
     var url = baseUrl + "account/logout.action";
+    loginStatus = 0;
     var user = JSON.parse(localStorage.getItem('user'));
-    var workerNo = user.obj.userNo;
+    var userNo = user.obj.userNo;
     var deviceNo = getDeviceNo();
     var os = getOs();
     var option = {
@@ -105,7 +107,7 @@ function logoutSucc()
     localStorage.removeItem('user');
     sessionStorage.removeItem("mainList");
     sessionStorage.removeItem("myList");
-    $('#user_img').attr('src','assets/img/user_img.png');
+    $('#user_img').attr('src','assets/img/user1.png');
     $('#userAlias').text('');
 }
 
@@ -148,3 +150,64 @@ function resetPwd()
     errorPopup("" +
         "<a href='tel:4001110005'  style='width: 90%' class='btn btn-warning'>呼叫客服找回密码</a>");
 }
+
+/**
+ * Created by wyy on 2015/5/25.
+ */
+function findPwdPanel()
+{
+    $.ui.loadContent("#findPwd", false, false, "slide");
+}
+
+function saveUpdatePwd()
+{
+    var phone = $("#findPhone").val();
+    var messageCode = $("#findMessageCode").val();
+    var password = $("#findPassword").val();
+
+    if(phone.trim()=='' || messageCode.trim()=='' || password.trim()=='')
+    {
+        errorPopup('请填写完全输入项!');
+    }
+    else if(password.trim().length<6 || password.trim().length>15)
+    {
+        errorPopup('请填写合法密码(6-15英文数字)!');
+    }
+    else
+    {
+        if (checkMobile('findPhone'))
+        {
+
+            var url = baseUrl + "account/updatePwd.action";
+            var option =
+            {
+                phone:phone,
+                pwd:password,
+                checkNum:messageCode
+            };
+            getAjax(url,option,'updatePwdsucc(data)');
+        }
+    }
+}
+
+/**
+ *
+ */
+function updatePwdsucc(data)
+{
+    var msgText=data.msg.split("-")
+    if(data.isSucc)
+    {
+        errorPopup(msgText[1]);
+        login_panel();
+        $("#findPhone").val("");
+        $("#findMessageCode").val("");
+        $("#findPassword").val("");
+        countdown=0;
+        $("#findGetVerifyCode").attr('disabled','false');
+    }else
+    {
+        errorPopup(msgText[1]);
+    }
+}
+

@@ -1,5 +1,5 @@
 /**
- * Created by 翔 on 2015/5/11.
+ * Created by wyy on 2015/5/25.
  */
 function getMySetup()
 {
@@ -7,7 +7,7 @@ function getMySetup()
    if(user!=null)
    {
        //如果是IOS的设备 device全部改为cloudId
-       var deviceNo = device.uuid;
+       var deviceNo = 'nokia';//device.uuid;
        if(window.OSInfo!= null && window.OSInfo.os.toLocaleUpperCase()=="IOS")
        {
            deviceNo = window.OSInfo.push;
@@ -15,7 +15,7 @@ function getMySetup()
 
        user = JSON.parse(user);
        var options = {
-           workerNo:user.obj.workerNo,
+           userNo:user.obj.userNo,
            deviceNo:deviceNo,
            enterpriseNo:user.obj.enterpriseNo
        };
@@ -64,8 +64,8 @@ function getMySetupSucc(data)
             '<input id="vibrateFlag" type="checkbox" name="my-checkbox" '+vibrateFlagCheck+' >' +
             '</div></div><div style="width:90%;border-bottom:1px solid #EEEEEE;' +
             'overflow:hidden;line-height:55px;height:55px; margin:0px 10px;">' +
-            '<div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">运单推送' +
-            '<span style="font-size:12px;color:#A1A1A1;">&nbsp;&nbsp;(强烈建议开启)</span></div>' +
+            '<div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">接收消息自动提示' +
+            '<span style="font-size:12px;color:#A1A1A1;">&nbsp;&nbsp;</span></div>' +
             '<div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;">' +
             '<input id="movementFlag" type="checkbox" name="my-checkbox" '+movementFlagCheck+' ></div></div>';
 
@@ -90,8 +90,8 @@ function getMySetupError(data){
         '<input id="vibrateFlag" type="checkbox" name="my-checkbox"  >' +
         '</div></div><div style="width:90%;border-bottom:1px solid #EEEEEE;' +
         'overflow:hidden;line-height:55px;height:55px; margin:0px 10px;">' +
-        '<div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">运单推送' +
-        '<span style="font-size:12px;color:#A1A1A1;">&nbsp;&nbsp;(强烈建议开启)</span></div>' +
+        '<div class="fl" style="color:#696969;font-size:16px;font-weight:bold;">接收消息自动提示' +
+        '<span style="font-size:12px;color:#A1A1A1;">&nbsp;&nbsp;</span></div>' +
         '<div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;">' +
         '<input id="movementFlag" type="checkbox" name="my-checkbox"  ></div></div>';
     $("#switchDiv").empty();
@@ -109,7 +109,7 @@ function updateMySetup(data)
     if(user!=null)
     {
         //如果是IOS的设备 device全部改为cloudId
-        var deviceNo = device.uuid;
+        var deviceNo = 'nokia';//device.uuid;
         if(window.OSInfo!= null && window.OSInfo.os.toLocaleUpperCase()=="IOS")
         {
             deviceNo = window.OSInfo.push;
@@ -117,7 +117,7 @@ function updateMySetup(data)
 
         user = JSON.parse(user);
         var options = {
-            workerNo:user.obj.workerNo,
+            userNo:user.obj.userNo,
             deviceNo:deviceNo,
             soundFlag:data[0],
             vibrateFlag:data[1],
@@ -144,7 +144,7 @@ function initSetup()
 /**
  * 保存反馈建议
  */
-function saveFeedBack()
+function saveFeedBack ()
 {
     var content = $("#feedbackContent").val();
     if($.trim(content)=="")
@@ -158,12 +158,52 @@ function saveFeedBack()
 
             user = JSON.parse(user);
             var options = {
-                workerNo:user.obj.workerNo,
+                feedbackName:user.obj.userNo,
+                phone:user.obj.phone,
+                email:'',
                 content:content,
                 enterpriseNo:user.obj.enterpriseNo
             };
-            getAjax(saveFeedbackUrl,options,'saveFeedBackSucc(data)','saveFeedBackError(data)');
+
+        }else{
+            var feedbacker = $('#feedbacker').val();
+            var reyx= /^([a-za-z0-9_-])+@([a-za-z0-9_-])+(.[a-za-z0-9_-])+/;//使用正则
+          //  return(reyx.test(yx));
+            if((/^1\d{10}$/.test(feedbacker))){
+                //feedbacker
+                var options = {
+                    feedbackName: '',
+                    phone: feedbacker,
+                    email: '',
+                    content: content
+                  //  enterpriseNo: ''
+                };
+            }else if(reyx.test(feedbacker) ){
+                var options = {
+                    feedbackName: '',
+                    phone: '',
+                    email: feedbacker,
+                    content: content
+                  //  enterpriseNo: ''
+                };
+            }else{
+                var options = {
+                    feedbackName: feedbacker,
+                    phone: '',
+                    email: '',
+                    content: content
+                };
+                  //  enterpriseNo: ''
+            }
+//            var options = {
+//                feedbackName: $('#feedbacker').val(),
+//                phone: $('#feedbacker').val(),
+//                email: $('#feedbacker').val(),
+//                content: content,
+//                enterpriseNo: ''
+//            };
         }
+        getAjax(saveFeedbackUrl,options,'saveFeedBackSucc(data)','saveFeedBackError(data)');
     }
 }
 

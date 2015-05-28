@@ -7,6 +7,11 @@ function include(path){
 }
 include("assets/js/login.js");
 include("assets/js/register.js");
+include("assets/js/public/setup.js");
+include("assets/js/order/search.js");
+include("assets/js/order/orderlist.js");
+include("assets/js/order/trace.js");
+
 //include("assets/js/.js");
 
 
@@ -14,7 +19,14 @@ function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
 function message_panel(){
-    $.ui.loadContent("#message", false, false, "slide");
+    var user = localStorage.getItem('user');
+    user = JSON.parse(user);
+    getMessageList(user);
+    if(user!=null){
+        $.ui.loadContent("#message", false, false, "slide");
+    }else{
+        $.ui.loadContent("#login", false, false, "slide");
+    }
 }
 function mine_panel()
 {
@@ -46,7 +58,77 @@ function feedback_panel()
 }
 
 function findPwd_panel(){
-    $.ui.loadContent("#fingPwd", false, false, "slide");
+    $.ui.loadContent("#findPwd", false, false, "slide");
+}
+
+function about_panel(){
+    $.ui.loadContent("#about", false, false, "slide");
+}
+function setup(){
+    initSetup();
+    $.ui.loadContent("#setup", false, false, "slide");
+}
+
+function myorders_panel(){
+    $.ui.loadContent("#myorders", false, false, "slide");
+}
+function logisticboard_panel(){
+    $.ui.loadContent("#logisticboard", false, false, "slide");
+}
+function ownerboard_panel(){
+    $.ui.loadContent("#ownerboard", false, false, "slide");
+}
+function custboard_panel(){
+    $.ui.loadContent("#custboard", false, false, "slide");
+}
+function driverboard_panel(){
+    $.ui.loadContent("#driverboard", false, false, "slide");
+}
+
+/*订单查询*/
+function searchorder_panel(){
+    init_search_panel();
+    $.ui.loadContent("#search", false, false, "slide");
+}
+/*订单跟踪 未登录*/
+function traceInfo(elm){
+    /*init_search_panel();*/
+  //  $(elm).attr('data-todo-detail')
+    if(elm!=null){
+    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+    initTraceInfo();
+    $.ui.loadContent("#ordertrace", false, false, "slide");
+    }else{
+
+        initTraceInfo();
+        $.ui.loadContent("#ordertrace", false, false, "slide");
+    }
+}
+/*订单跟踪 登录*/
+function traceInfo2(elm){
+    /*init_search_panel();*/
+    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+    initTraceInfo2();
+    $.ui.loadContent("#ordertrace2", false, false, "slide");
+}
+
+
+function init_search_panel(){
+
+    if(localStorage.getItem("user")!=null) {
+        var user = JSON.parse(localStorage.getItem("user"));
+        if(user.obj.userType=='0'){
+            $('#searchText').attr("placeholder", "请输入单号/货主名称模糊查找");
+        }else if(user.obj.userType=='1'){
+            $('#searchText').attr("placeholder", "请输入单号/客户名称/子客户名称模糊查找");
+        }else if(user.obj.userType=='2'){
+            $('#searchText').attr("placeholder", "请输入单号模糊查找");
+        }else if(user.obj.userType=='3'){
+            $('#searchText').attr("placeholder", "请输入单号/客户名称/子客户名称模糊查找");
+        }
+    }else{
+        $('#searchText').attr("placeholder", "请输入单号查找");
+    }
 }
 
 function init_home_ad()
@@ -201,6 +283,17 @@ function search_panel()
     $.ui.loadContent('#search', false, false, 'down');
 }
 
+
+function msgdetail_panel(elm){
+    TDID = $(elm).attr('id');
+    var t = $(elm).attr('title');
+    var c = $(elm).attr('content');
+   // var titles = $(this).attr('title');
+    $('#msgtitle').text(t);
+   // $('#msgtitle').html('<p>'+t+'</p>');
+    $('#msgcontent').text(c);
+    $.ui.loadContent('#messagedetail', false, false, 'slide');
+}
 function getArea(){
     $('#area_select').mobiscroll('show');
 
@@ -212,87 +305,33 @@ function getLoad(){
     $('#load_select').mobiscroll('show');
 }
 
-function biddingRecode_panel(){
-    $.ui.loadContent("#biddingRecord", false, false, "slide");
-    $("#biddingRecodeHeader").html("<div style='float:left;width:10%;cursor:pointer;'><a onclick='$.ui.goBack()' >" +
-        "<img src='assets/img/back.png' /></a></div>" +
-        "<div style='float:left;width:80%;text-align:center;margin:5px auto;' " +
-        " ><div class='btn-group' role='group'><button type='button' " +
-        "class='btn btn-default'>竞价成功</button> <button type='button' " +
-        "class='btn btn-default'  style='background-color: #EF8305;color:#FFFFFF;'>" +
-        "竞价中</button> <button type='button' class='btn btn-default' " +
-        "style='background-color: #EF8305;color:#FFFFFF;'>竞价失败</button></div></div>" +
-        "<div style='clear:both;width:10%'></div>");
-    //$("#biddingRecodeHeader").css('text-align','center');
+
+
+/*获取消息列表*/
+function getMessageList(user){
+   // user = JSON.parse(user);
+    var options = {
+        userNo:user.obj.userNo
+    };
+    getAjax(queryMsgList,options,'getMsgListSucc(data)','getMsgListError(data)');
+}
+function getMsgListSucc(data){
+
+    var msgliststr="";
+    for(var i = 0 ;i<data.obj.length;i++){
+       // data.obj[i].noticeTitle;
+        var t = data.obj[i].noticeTitle;
+        var c = data.obj[i].noticeContent;
+        msgliststr += " <tr><td onclick='msgdetail_panel(this)' title='"+data.obj[i].noticeTitle+"' content='"+data.obj[i].noticeContent+"'>"
+            +data.obj[i].noticeTitle+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
+    }
+    $("#msglist").empty();
+    $('#msglist').append(msgliststr);
+}
+function getMsgListError(data){
+
 }
 
-
-function updateMainPanel(data,prepend){
-    //判断有没有传入第二个参数 没传入给false为默认值
-    // 这个值是用来判断新加载的信息添加的原有信息之上还是之下
-    var prependFlag = arguments[1] ? arguments[1] :false ;
-    var oldLocationFilter = JSON.parse(localStorage.getItem("locationFilter"));
-    var containNode = $("<div class='containNode'></div>");
-    var list=data.obj.data;
-    var liNode = null;
-    if(list.length == 0){//如果没数据
-        if($("#nullOrderHome").length == 0)
-        {
-            $("<div id='nullOrderHome' class='nullOrder nullOrderHome'><p style='text-align: center;text-color:orange;'>暂无剩余订单..</p></div>").appendTo("#orderList");
-        }
-
-    }else{
-        //数据正常
-        //如果有暂无剩余订单删除
-    $('#nullOrderHome').remove();
-        //绘制页面
-    for (var i in list) {
-        liNode = $('<li id="'+list[i].consignNo+'" data-order-detail=\''+JSON.stringify(list[i])+'\';><div  class="lh4 f16 f2 p0-6">'+
-        '<div class="fl f18">'+list[i].nOriginCity +'<span class="icon-arrow-forward order-arrow-color"></span>'+list[i].nDesCity+'' +
-        '</div>'+
-        '<div class="fl f12"><span style="width:auto; margin-left:10px; ' +
-        ' padding: 2px; border:1px solid #E3E3E3;">'+list[i].vehicleTypeDesc+'</span></div>' +
-        '<div class="fr f14">距离结束  <span class="order-arrow-color">'+list[i].surplusDate+'</span></span></div></div><div  class="lh7 p0-6"><div class="fl width6 lh7"><div >'+
-        '<p class="lh2 order-detail-text mt10">'+list[i].articleGroup+' '+
-        list[i].goodsWt+'吨 '+list[i].goodsVol+'m³ </p>'+
-        '<p class="lh2 order-detail-text">'+'接货时间：'+list[i].deliveryTimeDesc+'</p></div></div><div class="fr width3 lh7 text-right get-order">'+
-        '<p class="lh2 mb10 order-detail-text">标价 <span class="f16">'+list[i].basePrice+'</span> 元</p><p class="lh5"><a class="p6 f18 order-btn" style="padding: 5px 30px">抢</a></p>'+
-        '</div></div></li>');
-        $(liNode).appendTo(containNode);
-    }
-
-        if(prependFlag){
-            //添加新数据到列表顶上
-            $("#orderList").prepend(containNode);
-        }else{
-            if(list.length<(oldLocationFilter.length-=0)){
-                if($("#nullOrderHome").length == 0)
-                {
-                //如果新数据不够10条调添加暂无剩余订单
-                $("<div id='nullOrderHome' class='nullOrder nullOrderHome'><p style='text-align: center;text-color:orange;'>暂无剩余订单..</p></div>").appendTo(containNode);
-                }
-           }
-            //常规添加到底部
-            $(containNode).appendTo("#orderList");
-
-
-        }
-
-    }
-    //更新头部信息
-    var pageTitleText
-    if(oldLocationFilter.vOriginAddrCity == undefined || oldLocationFilter.vOriginAddrCity == ""){
-        pageTitleText="竞价抢单"
-    }else{
-        pageTitleText=oldLocationFilter.vOriginAddrCity
-        if(oldLocationFilter.vDesAddrCity != undefined && oldLocationFilter.vDesAddrCity != ""){
-            pageTitleText+=' — '+oldLocationFilter.vDesAddrCity;
-        }
-    }
-    $("#pageTitle").html(pageTitleText);
-    //覆盖缓存
-    setCacheData("locationFilter",mergeJson(oldLocationFilter,{'start':(oldLocationFilter.start-=0)+data.obj.data.length,'queryDate':data.obj.queryDate},true),true);
-}
 
 function getPullToRefresh(that){
     setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),{'queryType':'1'},true),true);

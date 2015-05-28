@@ -19,6 +19,8 @@
     <link href="assets/css/font.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/swiper/swiper.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/animate/animate.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
@@ -42,6 +44,11 @@
     <script type="text/javascript" charset="utf-8" src="assets/js/public/ready.js"></script>
     <script type="text/javascript" charset="utf-8" src="assets/js/public/event.js"></script>
     <script type="text/javascript" charset="utf-8" src="assets/js/public/main.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/toastr/toastr.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/bootstrap/js/bootstrap.js"></script>
+
 
 </head>
 <body>
@@ -73,6 +80,8 @@ data-defer:加载一个html进来
      data-tab="nabar_welcome">
 </div>
 
+
+
 <div class="panel p0"
      title="我" id="mine" data-defer="assets/panel/mine.html"
      data-load=""
@@ -81,12 +90,70 @@ data-defer:加载一个html进来
      data-tab="navbar_mine">
 </div>
 
+<div class="panel p0"
+     title="" id="search" data-defer="assets/panel/order/search.html"
+     data-load=""
+     data-header="homeHeader"
+     data-unload=""
+     data-tab="navbar_search">
+</div>
+
+<div class="panel p0"
+     title="" id="orderlist" data-defer="assets/panel/order/orderlist.html"
+     data-load=""
+     data-header="homeHeader"
+     data-unload=""
+     >
+</div>
+
+<div class="panel p0"
+     title="" id="ordertrace" data-defer="assets/panel/order/ordertrace.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+        >
+</div>
+
+
+<div class="panel p0"
+     title="" id="ordertrace2" data-defer="assets/panel/order/ordertrace2.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+        >
+</div>
+
+<div class="panel p0"
+     title="" id="orderchoice" data-defer="assets/panel/order/chociedeliverorder.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+    >
+</div>
+
+
+<div class="panel p0"
+     title="" id="message" data-defer="assets/panel/message.html"
+     data-header="allHeader"
+     data-load="init_home_ad"
+     data-tab="nabar_welcome">
+</div>
+
+<div class="panel p0"
+     title="" id="messagedetail" data-defer="assets/panel/detailmsg.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+
 <div class="panel"
      title="" id="login" data-defer="assets/panel/login.html"
      data-load=""
      data-header="allHeader"
      data-unload=""
-     data-footer="login-footer"
+     data-tab="navbar_mine">
         >
 </div>
 <div class="panel "
@@ -94,7 +161,7 @@ data-defer:加载一个html进来
      data-load=""
      data-unload=""
      data-header="allHeader"
-     data-footer="register-footer">
+     data-footer="none">
     <!--data-load="loginPageLoad"-->
 </div>
 
@@ -119,9 +186,10 @@ data-defer:加载一个html进来
 
 
 <div class="panel "
-     title="关于" id="about" data-defer="assets/panel/about.html"
+     title="" id="about" data-defer="assets/panel/about.html"
      data-load=""
      data-unload=""
+     data-header="allHeader"
      data-footer="register-footer">
     <!--data-load="loginPageLoad"-->
 </div>
@@ -343,8 +411,8 @@ data-defer:加载一个html进来
 
 <div id="navbar">
     <a href="#home" id='nabar_welcome' class='icon icon-home' style="height:100%;">首页</a>
-    <a href="javascript:;" onclick="search_panel()"
-       id='navbar_order' class='icon icon-local-shipping' style="height:100%;">搜索</a>
+    <a href="javascript:;" onclick="searchorder_panel()"
+       id='navbar_search' class='icon icon-local-shipping' style="height:100%;">搜索</a>
     <!--<a href="#bbs" id='navbar_bbs' class="icon icon-forum">司机帮</a>-->
     <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle" style="height:100%;">我</a>
 </div>

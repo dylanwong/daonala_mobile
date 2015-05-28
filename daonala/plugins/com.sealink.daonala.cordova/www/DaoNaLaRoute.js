@@ -1,5 +1,5 @@
 var exec = require('cordova/exec');
 
 exports.route = function(success, error) {
-    exec(success, error, "HuoYunTongRoute", "route", []);
+    exec(success, error, "DaoNaLaRoute", "route", []);
 };

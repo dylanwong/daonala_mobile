@@ -69,10 +69,34 @@
 .f20{font-size: 20px}
 .f24{font-size: 24px}
 .f32{font-size: 32px !important;}
+.fb{font-weight:bold;}
 
+.fco{color: #999;}
 
 .fl{float: left}
 .fr{float: right}
+
+li{ position:relative; }
+.rs{ position:absolute; right:190px; }
+
+.leftslide{
+    position:absolute;
+    float:left;
+    width:20%;
+    padding-top:25px;
+}
+.centerslide{
+    margin:0px 50px 0px 30px;
+
+    height:100%;
+}
+.rightslide{
+
+    float:right;
+    width:80%;
+   /* padding-top:25px;*/
+}
+
 
 .width7{width: 70%}
 .width6{width: 60%}
