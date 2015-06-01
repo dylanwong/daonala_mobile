@@ -15,4 +15,7 @@
     <access launch-external="yes" origin="mailto:*" />
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
 </widget>
