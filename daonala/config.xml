@@ -2,7 +2,7 @@
 <widget id="com.sealinkin.daonala" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>daonala</name>
     <description>
-        到哪啦是一款OMS平台，由海联天下出品.
+        到哪啦是一款订单管理应用，由海联天下出品.
     </description>
     <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
         深圳市海联天下科技有限公司
@@ -14,9 +14,7 @@
     <access origin="mailto:*" launch-external="yes"/>
     <access origin="sms:*" launch-external="yes"/>
     <access origin="market:*" launch-external="yes"/>
-    <feature name="DaoNaLaRoute">
-        <param name="android-package" value="com.sealink.daonala.cordova.DaoNaLaRoute" />
-    </feature>
+
 
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />

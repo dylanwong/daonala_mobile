@@ -18,6 +18,18 @@ function initTraceInfo(){
     //enterpriseNo, systemNo,dispatchNo,sendNo
 }
 
+function initTraceInfoAgain(elm){
+    var sendno = $(elm).attr('sendno');
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    $.ui.loadContent("#ordertrace", false, false, "slide");
+    $('#topdeliverNo').html('运输单号   '+sendno);
+    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo,
+            'sendNo':sendno},
+        "updateTracePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    //enterpriseNo, systemNo,dispatchNo,sendNo
+}
+
 function initTraceInfo2(){
 
 }
@@ -63,7 +75,7 @@ function updateTracePanel(datas){
             {
                 alert = "";
             }
-            html += '<div style="overflow:hidden;"><div class="fl" style="width:25%;margin:25px auto;">' +
+            html += '<div style="overflow:hidden;"><div class="fl" style="width:25%;margin:12px auto;">' +
                 '<div style="width:60px;height:60px;background:'+color+';border: 4px solid #fffff;border-radius:60px;' +
                 'font-size:24px;color:#FFFFFF;font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">'+title+'' +
                 '</div></div><div class="fl" style="width:75%;"><div style="'+height+'" class="send"><div class="arrow"></div>' +
@@ -81,9 +93,63 @@ function updateTracePanel(datas){
 
 function changeTraceOrder()
 {
-   $.ui.loadContent("#orderchoice", false, false, "slide");
-}
+    $.ui.blockUI(.3);
+    $.ui.showMask("获取运输单列表..");
+    $("ul#choicedeliveroders").empty();
+    var data = JSON.parse(localStorage.getItem("currentorder"));
 
+    getAjax(choicedeliverOrdersUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo},
+        "updateChoicePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+
+
+
+}
+function updateChoicePanel(datas){
+    var nullTrace = "<div align='center' style='margin: 10px;'>查无多条订单...</div>";
+    var result='';
+    if(datas.isSucc){
+        var obj = datas.obj;
+        $(obj).each(function (index,data) {
+            result += '  <li onclick="initTraceInfoAgain(this)" sendno="'+data.sendNo+'" class="f2" style="margin-top:4px;"> ' +
+                '<div class="f2" style="height: 70px;"> ' +
+                '<div class="" style="float:left;width: 90%"> ' +
+                '<div> <div style="float:left;">' +
+                '<span class="fontCb f1 f14  p0-6 fd" >运输单号:</span>' +
+                '<span class="fontCb f1 f14  p0-6 fd" >'+data.sendNo+'</span>' +
+                '</div><div style="float:right;width:40%;">' +
+                '<span class="fontCb" >'+data.fromAdr+'</span>' +
+                '<span class="fontCb " ><img src=""/>'+showAddr(data.endAdr)+'</span>' +
+                '<span class="fontCb f12" >'+data.endAdr+'</span>' +
+                '</div><div style="clear:both;"></div></div>' +
+                '<div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">' +
+                '</div><div><span class="f12 fco p0-6"  >司机:</span>' +
+                '<span class=" f12 fco" >'+data.driverName+'</span>' +
+                '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;车牌号:</span>' +
+                '<span class=" f12 fco">'+data.licensePlate+'</span> <br>' +
+                '<span class="ownerName f12 fco p0-6"  >发车:</span>' +
+                '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.deliveryDate+'</span><br>' +
+                '</div> </div><div style="float:right;">' +
+                '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">' +
+                '<div align="center" style="">' +
+                '<img style="width:16px;height: 16px;" src="assets/img/right.png" />' +
+                '</div> </div></div><div style="clear:both;"></div> </div></li>';
+        });
+    }else{
+        result=nullTrace;
+    }
+    $("ul#choicedeliveroders").append(result);
+    $.ui.loadContent("#orderchoice", false, false, "slide");
+    $.ui.hideMask();
+}
+function showAddr(d){
+    if( d=='' || d == null ){
+        return  '';
+    }else{
+        return '->';
+    }
+}
 function selTraceOrder(elm)
 {
     var orderNo = $(elm).attr('dataId');

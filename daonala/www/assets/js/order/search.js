@@ -23,7 +23,7 @@ function search(){
 
 function updateOrderlistPanel(data){
 
-    debugger
+
    var nullTrace = "<div align='center' style='margin: 10px;'>查无订单...</div>";
    if(data.isSucc){
         var result = '';

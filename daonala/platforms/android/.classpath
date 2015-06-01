@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CordovaApp-CordovaLib"/>
+	<classpathentry kind="lib" path="libs/android-async-http-1.4.6.jar"/>
+	<classpathentry kind="lib" path="libs/avoscloud-v2.6.8.2.jar"/>
+	<classpathentry kind="lib" path="libs/avospush-v2.6.8.2.jar"/>
+	<classpathentry kind="lib" path="libs/avossns-v2.6.8.2.jar"/>
+	<classpathentry kind="lib" path="libs/avosstatistics-v2.6.8.2.jar"/>
+	<classpathentry kind="lib" path="libs/com.google.zxing.client.android.captureactivity.jar"/>
+	<classpathentry kind="lib" path="libs/fastjson.jar"/>
+	<classpathentry kind="lib" path="libs/httpmime-4.2.4.jar"/>
+	<classpathentry kind="lib" path="libs/Msc.jar"/>
+	<classpathentry kind="lib" path="libs/Sunflower.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
