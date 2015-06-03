@@ -52,33 +52,33 @@ public class CordovaApp extends CordovaActivity
         super.onCreate(savedInstanceState);
         super.init();
         
-        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55239db0"); 
-        
-        PushService.setDefaultPushCallback(this, CordovaApp.class);//这里不回调的话   不能接收消息
-        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
-            public void done(AVException e) {
-                if (e == null) {
-                	
-                    // 保存成功
-                    loadUrl("javascript:window.OSInfo ={os:'android',push:'"+AVInstallation.getCurrentInstallation().getInstallationId()+"'}");
-                    // 关联  installationId 到用户表等操作……
-                } else {
-                    // 保存失败，输出错误信息
-                }
-            }
-        });
-        
-        //监控打开情况
-        AVAnalytics.trackAppOpened(getIntent());
+//        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=55239db0"); 
+//        
+//        PushService.setDefaultPushCallback(this, CordovaApp.class);//这里不回调的话   不能接收消息
+//        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+//            public void done(AVException e) {
+//                if (e == null) {
+//                	
+//                    // 保存成功
+//                    loadUrl("javascript:window.OSInfo ={os:'android',push:'"+AVInstallation.getCurrentInstallation().getInstallationId()+"'}");
+//                    // 关联  installationId 到用户表等操作……
+//                } else {
+//                    // 保存失败，输出错误信息
+//                }
+//            }
+//        });
+//        
+//        //监控打开情况
+//        AVAnalytics.trackAppOpened(getIntent());
         // Set by <content src="index.html" /> in config.xml
         
         
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-          //SDK > 9 的时候主线程发HTTP请求
-        	Log.i("out",android.os.Build.VERSION.SDK_INT+"");
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (android.os.Build.VERSION.SDK_INT > 9) {
+//          //SDK > 9 的时候主线程发HTTP请求
+//        	Log.i("out",android.os.Build.VERSION.SDK_INT+"");
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
         //动态注册广播接收器（用于推送来了如果应用是运行状态）
         registerMessageReceiver();
         
@@ -101,29 +101,30 @@ public class CordovaApp extends CordovaActivity
 //        }
         loadUrl(launchUrl);
         
-        try {
-        Bundle bundle = getIntent().getExtras();
-    	if (bundle != null && bundle.containsKey("com.avos.avoscloud.Data")){
-    		JSONObject	json = new JSONObject(getIntent().getExtras().getString("com.avos.avoscloud.Data"));
-    		String message = json.getString("alert");
-    		String method = json.getString("method");
-    		String parameter = json.getString("parameter");
-    		
-    		Cons.IS_OPEN = true;
-    		Cons.TRIGGER_FUNC = method;
-    		Cons.PARAMETER=parameter;
-    		Cons.MESSAGE = message;
-    		
-    		System.out.println("alert===================="+message);
-    		//method(message);
+//        try {
+//        Bundle bundle = getIntent().getExtras();
+//    	if (bundle != null && bundle.containsKey("com.avos.avoscloud.Data")){
+//    		JSONObject	json = new JSONObject(getIntent().getExtras().getString("com.avos.avoscloud.Data"));
+//    		String message = json.getString("alert");
+//    		String method = json.getString("method");
+//    		String parameter = json.getString("parameter");
+//    		
+//    		Cons.IS_OPEN = true;
+//    		Cons.TRIGGER_FUNC = method;
+//    		Cons.PARAMETER=parameter;
+//    		Cons.MESSAGE = message;
+//    		
+//    		System.out.println("alert===================="+message);
+//    		//method(message);
     		
     		//loadUrl("javascript:pushMsg('"+message+"','"+msgType+"')");
     	}    		
-    	} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+//    	} 
+//			catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+ //   }
     
     
     public void method(String message)

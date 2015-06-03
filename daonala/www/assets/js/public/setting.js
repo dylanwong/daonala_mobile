@@ -18,7 +18,7 @@ var loginStatus = 0;//0未登录1登陆界面登陆2注册登陆
 var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面打开页面
 //var fileUrl ="http://app.gongsuda.com:8051/smsfile/";
 var fileUrl ="http://192.168.16.98:8080/fileserver/uploadFiles/sms/";
-var baseUrl = "http://192.168.16.118:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.83:8080/daonala_mobile/";
 var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var queryOrderList=baseUrl+"order/query_order_list.action";
 var queryMyOrderList=baseUrl+"order/query_order_bidding_list.action";
@@ -29,6 +29,7 @@ var queryMsgList = baseUrl + "msg/query_msg_list.action";
 var searchUrl = baseUrl +"order/query_suborderlist.action";
 var searchTraceUrl = baseUrl+"order/query_deliverordertrace.action";
 var choicedeliverOrdersUrl = baseUrl+"order/query_deliverorderlist.action";
+var taskqueryUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
 //event target ID
 var ETID = null;
 //选中的任务ID
@@ -49,7 +50,7 @@ var isPullorInfinite =false;
 var visitor=false
 var myLocationFlag = false;
 var lOCATIONID='currentlocation';
-
+var taskTabStatus = 0;
 var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接页面
 
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】

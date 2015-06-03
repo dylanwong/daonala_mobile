@@ -4,5 +4,4 @@
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
     <string name="server_url">http://192.168.16.98:8080/daonala_mobile/base/query_new_version.action?version=1.9&amp;os=android</string>
-    
 </resources>

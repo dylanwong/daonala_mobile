@@ -11,7 +11,7 @@ include("assets/js/public/setup.js");
 include("assets/js/order/search.js");
 include("assets/js/order/orderlist.js");
 include("assets/js/order/trace.js");
-
+include("assets/js/driver/task.js");
 //include("assets/js/.js");
 
 
@@ -82,7 +82,29 @@ function custboard_panel(){
     $.ui.loadContent("#custboard", false, false, "slide");
 }
 function driverboard_panel(){
-    $.ui.loadContent("#driverboard", false, false, "slide");
+   // $.ui.loadContent("#driverboard", false, false, "slide");
+
+
+    if(localStorage.getItem('user')==null){
+        $.ui.loadContent("#portal", false, false, "slide");
+    }else
+    {
+        $.ui.loadContent("#driverboard", false, false, "slide");
+        $("#taskHeader").html("<div style='float:left;width:15%;cursor:pointer;'>" +
+            "<a onclick='home_panel()'>" +
+            "<img src='assets/img/back.png' />" +
+            "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
+            "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
+            " ><div class='btn-group' role='group'><button" +
+            " onclick='toggleTaskTabs(this)' status='0' type='button' " +
+            "class='btn btn-default tabTaskCurrent'>当前任务</button>" +
+            " <button onclick='toggleTaskTabs(this)' status='1'  type='button' " +
+            "class='btn btn-default tabTaskHistory'  >" +
+            "历史任务</button></div></div>" +
+            "<div style='clear:both;width:10%'></div>");
+        taskTabStatus = 0;
+        taskPanelLoad();
+    }
 }
 
 /*订单查询*/

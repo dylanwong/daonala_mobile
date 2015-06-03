@@ -366,11 +366,11 @@ a:focus,input:focus{
     color:#FFFFFF;
 }
 
-.tabTodoSelYes
+.tabTaskY
 {
     color: #F6842B;
 }
-.tabTodoSelNo
+.tabTaskN
 {
     background-color: #EF8305;
     color:#FFFFFF;
