@@ -34,10 +34,10 @@ function biddingfolloworder(){
     $('#chocieordertable').html('');
     $.ui.loadContent("#chocieorders", false, false, "slide");
     var data = JSON.parse(localStorage.getItem("currenttask"));
-    $("#ownercity").text(data.nOriginProvince+data.nOriginCity);
-    $("#custcity").text(data.nDesProvince+data.nDesCity);
-    $("#articleweight").text(data.goodsVol+"立方米 "+data.goodsWt+"吨");
-    $("#articlename").text(data.articleGroup);
+    $("#c_ownercity").text(data.fromAdr);
+    $("#c_custcity").text(data.endAdr);
+    $('#c_sendNo').text(data.sendNo);
+    $('#c_licensePlate').text(data.licensePlate);
     $("#nextstup").attr("onclick","nextstup(1);");
     queryfollowchioceorderlist();
 }
@@ -45,10 +45,10 @@ function biddinghandoverorder(){
     $('#chocieordertable').html('');
     $.ui.loadContent("#chocieorders", false, false, "slide");
     var data = JSON.parse(localStorage.getItem("currenttask"));
-    $("#ownercity").text(data.nOriginProvince+data.nOriginCity);
-    $("#custcity").text(data.nDesProvince+data.nDesCity);
-    $("#articleweight").text(data.goodsVol+"立方米 "+data.goodsWt+"吨");
-    $("#articlename").text(data.articleGroup);
+    $("#c_ownercity").text(data.fromAdr);
+    $("#c_custcity").text(data.endAdr);
+    $('#c_sendNo').text(data.sendNo);
+    $('#c_licensePlate').text(data.licensePlate);
     $("#nextstup").attr("onclick","nextstup(2);");
     queryhandoverchioceorderlist();
 }
@@ -60,9 +60,9 @@ function querydeliverchioceorderlist(){
     var url = baseUrl+"order/query_orderbytraceorder.action";
     var user = JSON.parse( localStorage.getItem('user') );
     var option = {
-        enterpriseno:data.enterpriseNo,
-        systemNo:data.systemNo,
-        dispatchNo:data.dispatchNo,
+        enterpriseNo:data.enterpriseNo,
+        /*systemNo:data.systemNo,
+        dispatchNo:data.dispatchNo,*/
         deliveryNo:data.deliveryNo,
         status:'',
         type:'0'   //提取订单
@@ -76,9 +76,9 @@ function queryfollowchioceorderlist(){
     var url = baseUrl+"order/query_orderbytraceorder.action";
     var data = JSON.parse(localStorage.getItem("currenttask"));
     var option = {
-        enterpriseno:data.enterpriseNo,
-        systemNo:data.systemNo,
-        dispatchNo:data.dispatchNo,
+        enterpriseNo:data.enterpriseNo,
+    /*    systemNo:data.systemNo,
+        dispatchNo:data.dispatchNo,*/
         deliveryNo:data.deliveryNo,
         status:'',
         type:'1'   //在途订单
@@ -92,9 +92,9 @@ function queryhandoverchioceorderlist(){
     var url = baseUrl+"order/query_orderbytraceorder.action";
     var data = JSON.parse(localStorage.getItem("currenttask"));
     var option = {
-        enterpriseno:data.enterpriseNo,
-        systemNo:data.systemNo,
-        dispatchNo:data.dispatchNo,
+        enterpriseNo:data.enterpriseNo,
+      /*  systemNo:data.systemNo,
+        dispatchNo:data.dispatchNo,*/
         deliveryNo:data.deliveryNo,
         status:'',
         type:'2'   //交接订单
@@ -107,12 +107,12 @@ function queryhandoverchioceorderlist(){
     var url = baseUrl+"order/query_orderbytraceorder.action";
     var data = JSON.parse(localStorage.getItem("currenttask"));
     var option = {
-        enterpriseno:data.enterpriseNo,
-        systemNo:data.systemNo,
-        dispatchNo:data.dispatchNo,
+        enterpriseNo:data.enterpriseNo,
+      //  systemNo:data.systemNo,
+      //  dispatchNo:data.dispatchNo,
         deliveryNo:data.deliveryNo,
         status:'',
-        type:'4'   //签收订单
+        type:'3'   //签收订单
     };
     getAjax(url,option,'queryorders_result_succ(data,2)');
 }
@@ -120,6 +120,7 @@ function queryhandoverchioceorderlist(){
 function queryorders_result_succ(data,type){
 
     if(data.isSucc){
+        if(data.msg.split('-')[0] == 'S00001'){
         var obj = data.obj;
         var trs ='';
         if(obj.length==0&&type=='0'){
@@ -135,11 +136,11 @@ function queryorders_result_succ(data,type){
         else{
         for(var i=0;i<obj.length;i++)
          trs += "<tr><th width='20%'><input type='checkbox' name='checkbox' checked='true' " +
-             " style='display:block;' ownerNo='"+obj[i].ownerno+"' systemNo='"+obj[i].systemno+"' enterpriseNo='"+obj[i].enterpriseno+"' suborderNo='"+obj[i].suborderno+"' " +
-             "transNo='"+obj[i].transno+"' value='"+obj[i].orderno+"' /></th>"+
-        "<th  width='25%' value='"+obj[i].consignno+"' style='color:#A0A0A0;line-height:14px;'>"+obj[i].orderno+"</th>"+
-        "<th width='35%' ownercity='"+obj[i].owneraddr+"' custcity='"+obj[i].custaddr+"'" +
-             " style='color:#A0A0A0;line-height:14px;'>"+obj[i].owneraddr+"->"+obj[i].custaddr+"</th>"+
+             " style='display:block;' ownerNo='"+obj[i].ownerNo+"' systemNo='"+obj[i].systemNo+"' enterpriseNo='"+obj[i].enterpriseNo+"' suborderNo='"+obj[i].suborderNo+"' " +
+             "transNo='"+obj[i].sendNo+"' value='"+obj[i].orderNo+"' /></th>"+
+        "<th  width='25%' value='"+obj[i].deliveryNo+"' style='color:#A0A0A0;line-height:14px;'>"+obj[i].orderNo+"</th>"+
+        "<th width='35%' ownercity='"+obj[i].fromAdr+"' custcity='"+obj[i].endAdr+"'" +
+             " style='color:#A0A0A0;line-height:14px;'>"+obj[i].fromAdr+"->"+obj[i].endAdr+"</th>"+
         "<th width='20%' status='"+obj[i].status+"' style='color:#EF8407;line-height:14px;'>"+changestatus(obj[i].status)+"</th>"+
         "</tr>";
             $.ui.hideMask();
@@ -154,6 +155,9 @@ function queryorders_result_succ(data,type){
                     $(this).children('th').find("input[type='checkbox']").prop('checked',true);
                 }
             });
+        }
+        }else{
+            errorPopup(data.msg.split('-')[1]);
         }
     }else{
         errorPopup('获取数据失败');
@@ -225,26 +229,33 @@ function nextstup(nexttype){
         var data = JSON.parse(localStorage.getItem("currenttask"));
         if(nexttype=='0'){
             $.ui.loadContent("#deliverorders", false, false, "slide");
-            $("#deliverownercity").text(data.nOriginCity);
-            $("#delivercustcity").text(data.nDesCity);
-            $("#deliverconsignno").text(data.consignNo);
+            $("#deliverownercity").text(data.fromAdr);
+            $("#delivercustcity").text(data.endAdr);
+            $("#deliverconsignno").text(data.sendNo);
             imgLocation='0';
      //       $("#deliverarticlename").text(localStorage.getItem("articlename"));
         }else if(nexttype=='1'){
             $.ui.loadContent("#followorder", false, false, "slide");
-            $("#followownercity").text(data.nOriginCity);
-            $("#followcustcity").text(data.nDesCity);
-            $("#followconsignno").text(data.consignNo);
+            $("#followownercity").text(data.fromAdr);
+            $("#followcustcity").text(data.endAdr);
+            $("#followconsignno").text(data.sendNo);
             imgLocation='1';
             lOCATIONID = 'currentlocation';
             getCurrentPositionAddress();
            // $("#followarticlename").text(localStorage.getItem("articlename"));
         }else if(nexttype=='2'){
             $.ui.loadContent("#handoverorders", false, false, "slide");
-            $("#handoverownercity").text(data.nOriginCity);
-            $("#handovercustcity").text(data.nDesCity);
-            $("#handoverconsignno").text(data.consignNo);
+            $("#handoverownercity").text(data.fromAdr);
+            $("#handovercustcity").text(data.endAdr);
+            $("#handoverconsignno").text(data.sendNo);
             imgLocation='2';
+            //$("#handoverarticlename").text(localStorage.getItem("articlename"));
+        }else if(nexttype=='3'){
+            $.ui.loadContent("#signorders", false, false, "slide");
+            $("#handoverownercity").text(data.fromAdr);
+            $("#handovercustcity").text(data.endAdr);
+            $("#handoverconsignno").text(data.sendNo);
+            imgLocation='3';
             //$("#handoverarticlename").text(localStorage.getItem("articlename"));
         }else{
             errorPopup('next stup dismiss parm ;error');

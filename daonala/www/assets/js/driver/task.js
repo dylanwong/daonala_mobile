@@ -215,6 +215,9 @@ function taskInfo(elm)
     $.ui.loadContent("#operateguide", false, false, "slide");
     $('#startplace').text(data.fromAdr);
     $('#endplace').text(data.endAdr);
+    $('#o_sendNo').text(data.sendNo);
+    $('#o_licensePlate').text(data.licensePlate);
+
 
 
     localStorage.setItem("currenttask",$(elm).attr('data-task-detail'));

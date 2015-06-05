@@ -349,19 +349,23 @@ data-defer:加载一个html进来
 </header>
 
 <header id="taskHeader">
-
+    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
+        返回
+    </a>
+    <h1 id="taskTitle" class="">任务列表</h1>
+    <div></div>
 </header>
 
 <header id="operateguideHeader">
-    <a class="backButton button"  onclick="$.ui.loadContent('#todo', false, false, 'slide')" >
+    <a class="backButton button"  onclick="$.ui.loadContent('#driverboard', false, false, 'slide')" >
         返回
     </a>
     <h1 id="operateguideTitle" class="">任务操作</h1>
-    <div><a style="margin-right: 0px;" class="searchButton" id='operateguideTelButton' href="tel:" >联系客服</a></div>
+    <div></div>
 </header>
 
 <header id="chocieordersHeader">
-    <a class="backButton button"  onclick="$.ui.loadContent('#currenttask', false, false, 'slide')">返回</a>
+    <a class="backButton button"  onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
     <h1 id="orderTitle" class="">订单选择</h1>
     <div><a style="margin-right: 0px;" class="searchButton"  id='chocieordersTelButton' href="tel:" >联系客服</a></div>
 </header>
@@ -376,22 +380,21 @@ data-defer:加载一个html进来
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
     <h1 id="deliverordersTitle" class="">提取订单</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='deliverordersTelButton' href="tel:" >联系客服</a></div>
-    <a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>
+
 </header>
 
 <header id="followorderHeader">
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
     <h1 id="followorderTitle" class="">在途跟踪</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='followorderTelButton' href="tel:" >联系客服</a></div>
-    <a id='menubadge' onclick='af.ui.toggleSideMenu()'
-                   class='searchButton icon-search'></a>
+
 </header>
 
 <header id="handoverordersHeader">
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
     <h1 id="handoverordersTitle" class="">交接订单</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='handoverordersTelButton' href="tel:" >联系客服</a></div>
-    <a id='menubadge' onclick='af.ui.toggleSideMenu()' class='searchButton icon-search'></a>
+
 </header>
 
 <header id="biddingRecodeHeader">

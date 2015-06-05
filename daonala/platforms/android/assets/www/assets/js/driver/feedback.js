@@ -27,23 +27,27 @@ function deliveryorder() {
 
 
             var data = JSON.parse(localStorage.getItem("currenttask"));
-            var url = baseUrl + "feedback/addorderstatus.action";
+            var url = baseUrl + "driver/update_trace_status.action";
             var user = JSON.parse(localStorage.getItem('user'));
             var option = {
                 operator: $("#deliveroperater").val(),
-                enterpriseno: data.enterpriseNo,
-                consignno: data.consignNo,
-                ordernos: localStorage.getItem("chocieorders"),
+                enterpriseNo: data.enterpriseNo,
+                deliveryNo: data.deliveryNo,
+                orders: localStorage.getItem("chocieorders"),
                 imgurls: fileList,
-                status: '',
+                substatus: '',
                 location: '',
                 remarks: $("#deliverremarks").val(),
                 type: '0',
                 plateno: user.obj.plateNo,
                 tel: user.obj.phone,
-                transtatus: '40',
-                rgstname: user.obj.workerName
+                status: '40',
+                userNo:user.obj.userNo,
+                userName: user.obj.userName
             };
+//        enterpriseNo,
+//            deliverNo, orders, imgurls, remarks, operater, userName,
+//            subStatus, type, userNo, status, location
             getAjax(url, option, 'addorderstatus_result_succ(data)');
             localStorage.removeItem("chocieorders");
     }
@@ -84,17 +88,16 @@ function confirmfolloworder(){
         var option = {
             operator: '',
             enterpriseno: data.enterpriseNo,
-            consignno: data.consignNo,
-            ordernos: localStorage.getItem("chocieorders"),
+            deliveryNo: data.deliveryNo,
+            orders: localStorage.getItem("chocieorders"),
             imgurls: fileList,
-            status: substatus,
+            substatus: substatus,
             location: $('#currentlocation').val(),
             remarks: $('#followremarks').val(),
             type: '1',
-            plateno: user.obj.plateNo,
-            tel: user.obj.phone,
-            transtatus: '70',
-            rgstname: user.obj.workerName
+            status: '70',
+            userName: user.obj.userName,
+            userNo: user.obj.userNo
         };
         getAjax(url, option, 'addorderstatus_result_succ(data)');
         localStorage.removeItem("chocieorders");
@@ -125,21 +128,60 @@ function confirmhandoverorder(){
     var user = JSON.parse( localStorage.getItem('user') );
     var option = {
         operator:$('#handoveroperater').val(),
-        enterpriseno:data.enterpriseNo,
-        consignno:data.consignNo,
-        ordernos: localStorage.getItem("chocieorders"),
+        enterpriseNo:data.enterpriseNo,
+        deliveryNo:data.deliveryNo,
+        orders: localStorage.getItem("chocieorders"),
         imgurls:fileList,
-        status:'',
+        substatus:'',
         location:'',
         remarks:$('#handoverremarks').val(),
         type:'2',
-        plateno:user.obj.plateNo,
         tel:user.obj.phone,
-        transtatus:'80',
-        rgstname:user.obj.workerName
+        status:'80',
+        userName:user.obj.userName,
+        userNo:user.obj.userNo
     };
     getAjax(url,option,'addorderstatus_result_succ(data)');
     localStorage.removeItem("chocieorders");
+    }
+}
+
+/**交接货物确认**/
+function confirmsignorder(){
+    if($("#signoperater").val()==''||$("#signoperater")==undefined){
+        errorPopup('请输入签收人');
+    }else if($("#signremarks").val() == '' || $("#signremarks") == undefined){
+        errorPopup('请输入备注');
+    }else{
+        var chk_value = [];
+        $("img[name=picture]").each(function() {
+            var newfileName=$(this).attr("fileName");
+            //var strings = newfileName.replace("/uploadFiles/temp/", "");
+            chk_value.push(newfileName);
+        });
+
+        var fileList=JSON.stringify(chk_value);
+        var data = JSON.parse(localStorage.getItem("currenttask"));
+        //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
+        var url = baseUrl+"feedback/addorderstatus.action";
+        var user = JSON.parse( localStorage.getItem('user') );
+        var option = {
+            operator:$('#handoveroperater').val(),
+            enterpriseNo:data.enterpriseNo,
+            deliveryNo:data.deliveryNo,
+            orders: localStorage.getItem("chocieorders"),
+            imgurls:fileList,
+            substatus:'',
+            location:'',
+            remarks:$('#handoverremarks').val(),
+            type:'3',
+            tel:user.obj.phone,
+            status:'80',
+            userName:user.obj.userName,
+            userNo:user.obj.userNo
+        };
+        getAjax(url,option,'addorderstatus_result_succ(data)');
+        localStorage.removeItem("chocieorders");
     }
 }
 
@@ -151,8 +193,7 @@ function addorderstatus_result_succ(data){
     else{
         errorPopup(data.msg);
     }
-
-    todo_panel();
+    task_panel();
     clearthispage();
 }
 
