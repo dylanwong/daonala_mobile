@@ -49,7 +49,7 @@ function deliveryorder() {
 //            deliverNo, orders, imgurls, remarks, operater, userName,
 //            subStatus, type, userNo, status, location
             getAjax(url, option, 'addorderstatus_result_succ(data)');
-            localStorage.removeItem("chocieorders");
+
     }
 }
 
@@ -83,7 +83,7 @@ function confirmfolloworder(){
         var fileList = JSON.stringify(chk_value);
 
         var data = JSON.parse(localStorage.getItem("currenttask"));
-        var url = baseUrl + "feedback/addorderstatus.action";
+        var url = baseUrl + "driver/update_trace_status.action";
         var user = JSON.parse(localStorage.getItem('user'));
         var option = {
             operator: '',
@@ -124,7 +124,7 @@ function confirmhandoverorder(){
     var fileList=JSON.stringify(chk_value);
     var data = JSON.parse(localStorage.getItem("currenttask"));
     //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
-    var url = baseUrl+"feedback/addorderstatus.action";
+    var url = baseUrl+"driver/update_trace_status.action";
     var user = JSON.parse( localStorage.getItem('user') );
     var option = {
         operator:$('#handoveroperater').val(),
@@ -142,7 +142,7 @@ function confirmhandoverorder(){
         userNo:user.obj.userNo
     };
     getAjax(url,option,'addorderstatus_result_succ(data)');
-    localStorage.removeItem("chocieorders");
+   /* localStorage.removeItem("chocieorders");*/
     }
 }
 
@@ -163,10 +163,10 @@ function confirmsignorder(){
         var fileList=JSON.stringify(chk_value);
         var data = JSON.parse(localStorage.getItem("currenttask"));
         //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
-        var url = baseUrl+"feedback/addorderstatus.action";
+        var url = baseUrl+"driver/update_trace_status.action";
         var user = JSON.parse( localStorage.getItem('user') );
         var option = {
-            operator:$('#handoveroperater').val(),
+            operator:$('#signoperater').val(),
             enterpriseNo:data.enterpriseNo,
             deliveryNo:data.deliveryNo,
             orders: localStorage.getItem("chocieorders"),
@@ -186,14 +186,16 @@ function confirmsignorder(){
 }
 
 
-function addorderstatus_result_succ(data){
 
+
+function addorderstatus_result_succ(data){
+    localStorage.removeItem("chocieorders");
     if(data.isSuc)
         errorPopup(data.msg);
     else{
         errorPopup(data.msg);
     }
-    task_panel();
+    driverboard_panel();
     clearthispage();
 }
 

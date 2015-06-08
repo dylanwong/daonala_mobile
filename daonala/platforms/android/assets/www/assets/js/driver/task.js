@@ -155,16 +155,16 @@ function updateTaskPanel(data, prepend) {
             if(taskTabStatus == 0)
             {
                 timeline = '<div class="fr f10"><div class="fl">' +
-                    '<p class="f10 " style="'+statusSelStyle10+'">提货</p><div style="margin: -5px auto;" ' +
+                    '<p class="f10 " style="'+statusSelStyle10+'">未完成</p><div style="margin: -5px auto;" ' +
                     'class="circle '+statusSelCss10+'">' +
                     '</div></div><div class="fl"><p></p><div style="margin: 10px auto; height:10px;" ' +
                     'class="">—</div></div><div class="fl">' +
-                    '<p class="f10" style="'+statusSelStyle70+'">在途</p>' +
+                    '<p class="f10" style="'+statusSelStyle70+'">完成</p>' +
                     '<div style="margin: -5px auto;" class="circle '+statusSelCss70+'"></div></div>' +
-                    '<div class="fl"><p></p><div style="margin: 10px auto; height:10px;">—</div>' +
+                    /*'<div class="fl"><p></p><div style="margin: 10px auto; height:10px;">—</div>' +
                     '</div><div class="fl">' +
                     '<p class="f10" style="'+statusSelStyle99+'">交接</p><div style="margin: -5px auto;" ' +
-                    'class="circle '+statusSelCss99+'"></div></div><div style="clear:both;"></div></div>';
+                    'class="circle '+statusSelCss99+'"></div></div>*/'<div style="clear:both;"></div></div>';
             }else
             {
                 timeline = '<div class="fr f10 yellowColor"> '+list[i].surplusDate+'</div>';

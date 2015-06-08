@@ -53,6 +53,17 @@ function biddinghandoverorder(){
     queryhandoverchioceorderlist();
 }
 
+function biddingsignorder(){
+    $('#chocieordertable').html('');
+    $.ui.loadContent("#chocieorders", false, false, "slide");
+    var data = JSON.parse(localStorage.getItem("currenttask"));
+    $("#c_ownercity").text(data.fromAdr);
+    $("#c_custcity").text(data.endAdr);
+    $('#c_sendNo').text(data.sendNo);
+    $('#c_licensePlate').text(data.licensePlate);
+    $("#nextstup").attr("onclick","nextstup(3);");
+    querysignchioceorderlist();
+}
 function querydeliverchioceorderlist(){
     $.ui.unblockUI();
     $.ui.showMask("我们正在拼命的加载数据...");
@@ -101,7 +112,7 @@ function queryhandoverchioceorderlist(){
     };
     getAjax(url,option,'queryorders_result_succ(data,2)');
 }
-function queryhandoverchioceorderlist(){
+function querysignchioceorderlist(){
     $.ui.unblockUI();
     $.ui.showMask("我们正在拼命的加载数据...");
     var url = baseUrl+"order/query_orderbytraceorder.action";
@@ -136,7 +147,7 @@ function queryorders_result_succ(data,type){
         else{
         for(var i=0;i<obj.length;i++)
          trs += "<tr><th width='20%'><input type='checkbox' name='checkbox' checked='true' " +
-             " style='display:block;' ownerNo='"+obj[i].ownerNo+"' systemNo='"+obj[i].systemNo+"' enterpriseNo='"+obj[i].enterpriseNo+"' suborderNo='"+obj[i].suborderNo+"' " +
+             " style='display:block;' ownerNo='"+obj[i].ownerNo+"' systemNo='"+obj[i].systemNo+"'dispatchNo='"+obj[i].dispatchNo+"' enterpriseNo='"+obj[i].enterpriseNo+"' suborderNo='"+obj[i].suborderNo+"' " +
              "transNo='"+obj[i].sendNo+"' value='"+obj[i].orderNo+"' /></th>"+
         "<th  width='25%' value='"+obj[i].deliveryNo+"' style='color:#A0A0A0;line-height:14px;'>"+obj[i].orderNo+"</th>"+
         "<th width='35%' ownercity='"+obj[i].fromAdr+"' custcity='"+obj[i].endAdr+"'" +
@@ -158,6 +169,7 @@ function queryorders_result_succ(data,type){
         }
         }else{
             errorPopup(data.msg.split('-')[1]);
+            $.ui.loadContent("#operateguide", false, false, "slide");
         }
     }else{
         errorPopup('获取数据失败');
@@ -207,17 +219,18 @@ function nextstup(nexttype){
             .each(
             function() {
                 var orderno={
-                consignno:$(this).parent().next().children().val(),
-                orderno:$(this).val(),
-                suborderno:$(this).attr('suborderNo'),
+                //consignno:$(this).parent().next().children().val(),
+                orderNo:$(this).val(),
+                subOrderNo:$(this).attr('suborderNo'),
+                dispatchNo:$(this).attr('dispatchNo'),
                 transno:$(this).attr('transNo'),
-                enterpriseno:$(this).attr('enterpriseNo'),
-                ownercity:$(this).parent().next().next().children().attr('ownercity'),
-                custcity:$(this).parent().next().next().children().attr('custcity'),
+                enterpriseNo:$(this).attr('enterpriseNo'),
+                ownerCity:$(this).parent().next().next().children().attr('ownercity'),
+                custCity:$(this).parent().next().next().children().attr('custcity'),
                 status:$(this).parent().next().next().next().children().attr('status'),
                 remarks:'',
-                systemno:$(this).attr('systemNo'),
-                ownerno:$(this).attr('ownerNo')
+                systemNo:$(this).attr('systemNo'),
+                ownerNo:$(this).attr('ownerNo')
 
 
                 }
@@ -252,9 +265,9 @@ function nextstup(nexttype){
             //$("#handoverarticlename").text(localStorage.getItem("articlename"));
         }else if(nexttype=='3'){
             $.ui.loadContent("#signorders", false, false, "slide");
-            $("#handoverownercity").text(data.fromAdr);
-            $("#handovercustcity").text(data.endAdr);
-            $("#handoverconsignno").text(data.sendNo);
+            $("#signownercity").text(data.fromAdr);
+            $("#signcustcity").text(data.endAdr);
+            $("#signconsignno").text(data.sendNo);
             imgLocation='3';
             //$("#handoverarticlename").text(localStorage.getItem("articlename"));
         }else{

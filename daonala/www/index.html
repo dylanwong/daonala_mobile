@@ -42,7 +42,6 @@
     <script type="text/javascript" charset="utf-8" src="assets/js/public/plugin.js"></script>
     <script type="text/javascript" charset="utf-8" src="assets/js/public/setting.js"></script>
     <script type="text/javascript" charset="utf-8" src="assets/js/public/ready.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/js/public/event.js"></script>
     <script type="text/javascript" charset="utf-8" src="assets/js/public/main.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="assets/libs/toastr/toastr.min.js"></script>
@@ -308,6 +307,29 @@ data-defer:加载一个html进来
      data-unload=""
      data-footer="none">
 </div>
+<div class="panel "
+     title="签收订单" id="signorders" data-defer="assets/panel/driver/signorders.html"
+     data-header="signordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="签收订单明细列表" id="signorderslist" data-defer="assets/panel/driver/signorderlist.html"
+     data-header="signorderdetailHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="签收订单明细" id="signorderdetail" data-defer="assets/panel/driver/signdetail.html"
+     data-header="signorderdetailHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
 
 
 
@@ -394,6 +416,26 @@ data-defer:加载一个html进来
     <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
     <h1 id="handoverordersTitle" class="">交接订单</h1>
     <div><a class="searchButton" style="margin-right: 0px;" id='handoverordersTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="signordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="signordersHeaderordersTitle" class="">签收订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signordersHeaderordersTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+<header id="signorderdetailHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="signorderdetailTitle" class="">明细</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signorderdetailTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="signorderlistHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#signorders', false, false, 'slide')" >返回</a>
+    <h1 id="signorderlistTitle" class="">选择订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signorderlistTelButton' href="tel:" >联系客服</a></div>
 
 </header>
 

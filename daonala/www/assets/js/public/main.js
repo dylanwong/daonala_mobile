@@ -135,6 +135,13 @@ function traceInfo2(elm){
     initTraceInfo2();
     $.ui.loadContent("#ordertrace2", false, false, "slide");
 }
+/**/
+function signorderslist_panel(){
+    $.ui.loadContent("#signorderslist", false, false, "slide");
+}
+function signorderdetail_panel(){
+    $.ui.loadContent("#signorderdetail", false, false, "slide");
+}
 
 
 function init_search_panel(){
@@ -246,16 +253,9 @@ function register_panel()
 }
 
 
-function qrcode_panel()
-{
-    if(localStorage.getItem("user")!=null)
-    {
-        var user = JSON.parse(localStorage.getItem("user"));
-        $("#myPopularizeCode").html("我的推广码："+user.obj.popularizeCode);
-    }
-    $.ui.loadContent("#qrcode", false, false, "slide");
-}
 
+
+/*
 function search_panel()
 {
     var locationObj = localStorage.getItem("locationObj");
@@ -284,6 +284,7 @@ function search_panel()
 
     $.ui.loadContent('#search', false, false, 'down');
 }
+*/
 
 
 function msgdetail_panel(elm){
