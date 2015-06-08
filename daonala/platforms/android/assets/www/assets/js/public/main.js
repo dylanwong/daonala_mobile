@@ -15,7 +15,10 @@ include("assets/js/driver/task.js");
 include("assets/js/board/boards.js");
 include("assets/js/order/orderdetail.js");
 //include("assets/js/.js");
+include("assets/js/driver/feedback.js");
+include("assets/js/driver/operateguide.js");
 
+//include("assets/js/.js");
 
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
@@ -185,29 +188,7 @@ function qrcode_load()
 
 
 
-function todo_panel() {
-    if(localStorage.getItem('user')==null){
-        $.ui.loadContent("#portal", false, false, "slide");
-    }else
-    {
-        $.ui.loadContent("#todo", false, false, "slide");
-        $("#todoHeader").html("<div style='float:left;width:15%;cursor:pointer;'>" +
-            "<a onclick='home_panel()'>" +
-            "<img src='assets/img/back.png' />" +
-            "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
-            "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
-            " ><div class='btn-group' role='group'><button" +
-            " onclick='toggleTodoTabs(this)' status='0' type='button' " +
-            "class='btn btn-default tabTodoSelYes'>当前任务</button>" +
-            " <button onclick='toggleTodoTabs(this)' status='1'  type='button' " +
-            "class='btn btn-default tabTodoSelNo'  >" +
-            "历史任务</button></div></div>" +
-            "<div style='clear:both;width:10%'></div>");
-        todoTabStatus = 0;
-        todoPanleLoad();
-    }
 
-}
 
 function trace_panel(elm)
 {

@@ -30,7 +30,7 @@ $(document).ready(function(){
             'queryType':'2',
             'start':'1',
             'length':'10',
-            "workerNo":""
+            "userNo":""
         }
         localStorage.setItem("myFilter",JSON.stringify(myOption))
     }
@@ -302,13 +302,13 @@ $.ui.ready(function(){
 
 
 
-    $("#afui").delegate(".arrow","click",function(event){
-        event.stopPropagation()
-        event.preventDefault()
-        $('#'+$(this).data('selete')).mobiscroll('show');
-        ETID=$(this).prev()[0].id;
-        return false;
-    });
+//    $("#afui").delegate(".arrow","click",function(event){
+//        event.stopPropagation()
+//        event.preventDefault()
+//        $('#'+$(this).data('selete')).mobiscroll('show');
+//        ETID=$(this).prev()[0].id;
+//        return false;
+//    });
 
     //#pics
     var gallery = $("#lightGallery").lightGallery({
@@ -505,7 +505,7 @@ $.ui.ready(function(){
     });
 
 
-    todoScroller = $("#todo").scroller(); //Fetch the scroller from cache
+    todoScroller = $("#task").scroller(); //Fetch the scroller from cache
     todoScroller.addInfinite();
     todoScroller.addPullToRefresh();
     todoScroller.runCB=true;
@@ -558,97 +558,15 @@ $.ui.ready(function(){
     });
 
 
-    /*paySheetMoreScroller = $("#paySheetMore").scroller(); //Fetch the scroller from cache
-    paySheetMoreScroller.addInfinite();
-    paySheetMoreScroller.addPullToRefresh();
-    paySheetMoreScroller.runCB=true;
-    $.bind(paySheetMoreScroller, 'scrollend', function () {
-        console.log("scroll end");
-    });
-    $.bind(paySheetMoreScroller, 'scrollstart', function () {
-        console.log("scroll start");
-    });
-    $.bind(paySheetMoreScroller,"scroll",function(position){
-    })
-    $.bind(paySheetMoreScroller, "refresh-trigger", function () {
-        console.log("Refresh trigger");
-    });
-    $.bind(paySheetMoreScroller, "refresh-release", function () {
-        var that = this;
-        getPaySheetMorePullToRefresh(that);
-        return false; //tells it to not auto-cancel the refresh
-    });
-    $.bind(paySheetMoreScroller, "refresh-cancel", function () {
-    });
-    paySheetMoreScroller.enable();
-    $.bind(paySheetMoreScroller, "infinite-scroll", function () {
-        var self = this;
-        if($("#nullPaySheetMoreSelf").length) {
-            self.clearInfinite();
-        }else{
-            if($("#infinite").length == 0)
-            {
-                $(this.el).append("<div id='paySheetMoreInfinite' style='margin-top:10px;width:100%;" +
-                    "height:40px;font-size: 20px;text-align: center'>获取账单中 ...</div>");
-            }
-            $.bind(paySheetMoreScroller, "infinite-scroll-end", function () {
-                $.unbind(paySheetMoreScroller, "infinite-scroll-end");
-                if (ajaxFlag) {
-                    ajaxFlag = false;
-                    getRequestFromPaySheetMoreInfinite(self)
-                }
-            });
-        }
-    });*/
 
-    $("#todo").css("overflow", "auto");
+
+
     $("#selfOrder").css("overflow", "auto");
     //$("#paySheetMore").css("overflow", "auto");
     $("#main").css("overflow", "auto");
 });
 
-//
-function verify_query_succ(data)
-{
 
-    if(data.isSucc)
-    {
-        $.ui.loadContent('#offer', false, false, 'slide')
-    }else
-    {
-        var error_msg_array = data.msg.split('-');
-        var error_msg = error_msg_array[1];
-        //跳转ID 1：身份认证未完善 2：车辆资料未完善 3：银行账号信息未完善 4：您的资料未完善
-        var forward_id = error_msg_array[2];
-        //错误ID 1：资料未完善 2：用户不符合竞价 3：已经竞价  4：该订单需要箱车接单 5：货主撤单
-        var error_id = error_msg_array[3];
-
-        errorPopup(error_msg);
-
-        if(error_id == 1)
-        {
-            loginStatus = 2;
-            var user = JSON.parse(localStorage.getItem('user'));
-            var workerType = user.obj.workerType;
-            switch(Number(forward_id))
-            {
-                case 1:
-                    idinfo_panel(0);
-                    break;
-                case 2:
-                    carinfo_panel(0);
-                    break;
-                case 3:
-                    bank_panel(0);
-                    break;
-                case 4:
-                    address_panel(0);
-                    break;
-            }
-        }
-    }
-
-}
 
 //tools.js
 
@@ -779,7 +697,7 @@ function getCurrentPositionAddressSuccess(position)
 {
     $.ui.unblockUI();
     $.ui.showMask("我们正在定位...");
-    var url = baseUrl + "register/query_address_info.action";
+    var url = baseUrl + "base/query_address_info.action";
     var option =
     {
         latitude:position.coords.latitude,
@@ -805,8 +723,8 @@ function errorSessionPopup() {
     setTimeout(function(){$.ui.blockUI(.5);},10);
     $.ui.popup({
         title: "温馨提示",
-        message: "用户未登入",
-        cancelText: "登入",
+        message: "用户未登录",
+        cancelText: "登录",
         cancelClass: 'popup-btn',
         cancelCallback: function () {
             $.ui.loadContent("#portal", false, false, "slide");
@@ -821,7 +739,7 @@ function goToPortalPanelPopup() {
     $.ui.popup({
         title: "温馨提示",
         message: "亲,您需要登录才能查看完整功能.",
-        cancelText: "登入",
+        cancelText: "登录",
         cancelClass: 'popup-btn',
         cancelCallback: function () {
             $.ui.loadContent("#portal", false, false, "slide");
