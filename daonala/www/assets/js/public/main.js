@@ -12,6 +12,8 @@ include("assets/js/order/search.js");
 include("assets/js/order/orderlist.js");
 include("assets/js/order/trace.js");
 include("assets/js/driver/task.js");
+include("assets/js/board/boards.js");
+include("assets/js/order/orderdetail.js");
 //include("assets/js/.js");
 
 

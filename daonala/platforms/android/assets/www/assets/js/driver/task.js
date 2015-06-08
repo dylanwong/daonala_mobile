@@ -22,22 +22,22 @@ function taskPanelLoad(taskStatus) {
     $.ui.blockUI(.3);
     $.ui.showMask("获取我的任务..");
     $("ul#taskList").empty();
-    setCacheData("todoFilter",
+    setCacheData("taskFilter",
         {'start': '1', 'length':'10', 'queryDate': '', 'status': tdStatus,'phone':phone}, true);
-    getAjax(taskqueryUrl, JSON.parse(localStorage.getItem("todoFilter")),
+    getAjax(taskqueryUrl, JSON.parse(localStorage.getItem("taskFilter")),
         "updateTaskPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 
 
 function getTodoPullToRefresh(that){
 
-    setCacheData("todoFilter",mergeJson(JSON.parse(localStorage.getItem("todoFilter")),
+    setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
         {'queryType':'1'},true),true);
     jQuery.ajax({
         url: queryTodoList,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
-        data:JSON.parse(localStorage.getItem("todoFilter"))
+        data:JSON.parse(localStorage.getItem("taskFilter"))
     }).done(
         function (data) {
             if(data!=null)
@@ -68,7 +68,7 @@ function getTodoPullToRefresh(that){
             };
         }).always(function () {
             setTimeout(function () {
-                setCacheData("todoFilter",mergeJson(JSON.parse(localStorage.getItem("todoFilter")),
+                setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
                     {'queryType':'2'},true),true);
                 that.hideRefresh();
             }, 1000);
@@ -81,7 +81,7 @@ function getRequestFromTodoInfinite(self) {
         url: queryTodoList,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
-        data:JSON.parse(localStorage.getItem("todoFilter"))
+        data:JSON.parse(localStorage.getItem("taskFilter"))
     }).done(
         function (data) {
             if(data!=null)
@@ -112,7 +112,7 @@ function updateTaskPanel(data, prepend) {
     var prependFlag = arguments[1] ? arguments[1] : false;
     var oldmyFilter = JSON.parse(localStorage.getItem("taskFilter"));
     var containNode = $("<div class='containNode'></div>");
-    var list = data.obj.data;
+    var obj = data.obj;
     var liNode = null;
 
     if (!data.isSucc) {
@@ -136,14 +136,14 @@ function updateTaskPanel(data, prepend) {
 
         taskTabStatus == 0 ? todoTriFuc = 'todoInfo(this);' : todoTriFuc = 'trace_panel(this);';
         taskTabStatus == 0 ? buttonHtml = '任务反馈' : buttonHtml = '查看任务';
-        for (var i in list) {
+        $(obj).each(function (index,data) {
             var statusSelStyle10 = "";
             var statusSelCss10 = "bg_black";
             var statusSelStyle70 = "";
             var statusSelCss70 = "bg_black";
             var statusSelStyle99 = "";
             var statusSelCss99 = "bg_black";
-            var status = list[i].taskStatus;
+            var status = data.status;
             if(status <= 40)
             {
                 statusSelStyle10 = "color:#EE9837";
@@ -178,19 +178,19 @@ function updateTaskPanel(data, prepend) {
 
 
 
-            liNode = $('<li id="todo_' + list[i].consignNo + '"  onclick="'+todoTriFuc+'"  ' +
-                'data-todo-detail=\'' + JSON.stringify(list[i]) + '\'><div  class="lh4 f16 f2 p0-6">' +
+            liNode = $('<li id="todo_' + data.sendNO + '"  onclick="'+todoTriFuc+'"  ' +
+                'data-todo-detail=\'' + JSON.stringify(data) + '\'><div  class="lh4 f16 f2 p0-6">' +
                 '<div class="fl f18">' + list[i].nOriginCity + '<span' +
                 ' class="icon-arrow-forward order-arrow-color"></span>' + list[i].nDesCity + '</div>' +
                 timeline+'</div>' +
                 '<div class="lh7 p0-6"><div class="fl width5 lh4"><div><p class="lh2 order-detail-text' +
-                ' mt10">'+list[i].goodsWt+'吨 '+list[i].articleGroup+'</p>' +
-                '<p class="lh2 order-detail-text">'+'接货时间：'+list[i].deliveryTimeDesc+'</p></div></div>' +
+                ' mt10">'+data.fromAdr+' -> '+data.endAdr+'</p>' +
+                '<p class="lh2 order-detail-text">'+'接货时间：'+deliveryDate+'</p></div></div>' +
                 '<div class="fr width3 lh7 text-right get-order">  <p class="lh2 mb10 order-detail-text">' +
-                '标价 <span class="f16">'+list[i].basePrice+'</span> 元</span> </p>' +
+                '车牌号 <span class="f16">'+list[i].basePrice+'</span> '+data.licensePlate +'</span> </p>' +
                 '<p class="lh5"><a class="p6 f18 order-btn" style="padding: 5px 5px">'+buttonHtml+'</a></p></div></div></li>');
             $(liNode).appendTo(containNode);
-        }
+        });
         if (prependFlag) {
             $("#taskList").prepend(containNode);
         } else {
@@ -204,7 +204,7 @@ function updateTaskPanel(data, prepend) {
 
     }
 
-    setCacheData("todoFilter", mergeJson(oldmyFilter, {'start': (oldmyFilter.start -= 0) +
+    setCacheData("taskFilter", mergeJson(oldmyFilter, {'start': (oldmyFilter.start -= 0) +
         data.obj.data.length, 'queryDate': data.obj.queryDate}, true), true);
 }
 

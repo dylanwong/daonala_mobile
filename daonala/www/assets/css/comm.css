@@ -433,3 +433,88 @@ a:focus,input:focus{
     border: solid 8px;
     border-color: #FFFFFF #ECF0F1 #FFFFFF #FFFFFF;
 }
+.percent10{height:10%;}
+.percent20{height:20%;}
+.percent30{height:30%;}
+.percent40{height:40%;}
+.percent50{height:50%;}
+.percent60{height:60%;}
+.percent70{height:70%;}
+.percent80{height:80%;}
+.percent90{height:90%;}
+.percent100{height:100%;}
+
+.fs18{font-size: 18px;}
+.fs20{font-size: 20px;}
+.fs24{font-size: 24px;}
+.fs32{font-size: 32px;}
+
+.width45{width:45%}
+.width100{width:100%}
+.width90{width:90%}
+.width95{width:95%}
+.width70{width:70%}
+.width30{width:30%}
+.width33{width:33%}
+
+.margin10{margin:10px;}
+.margin18{margin:18px;}
+.marginRight10{margin-right: 10px;}
+
+.paddingTop3{padding-top: 3px;}
+.overflowHidden{
+    overflow: hidden;
+}
+
+.block{
+    display:block;
+}
+.none{
+    display: none;
+}
+
+.line-height-30{line-height:30px;}
+li {list-style-type:none;}
+
+/** 物流商看板 **/
+.logicBoradTotal
+{
+    background-color: #F3F3F3;
+    border-top: 1px solid #CECECE;
+    border-bottom: 1px solid #CECECE;
+    line-height: 30px;
+    padding-left: 10px;
+    color: #06ABD4;
+}
+#logicTable{
+    text-align:center;
+}
+#logicTable tr td{
+    width:45%;
+    border:1px solid #E7E7E7;
+    border-radius:5px;
+}
+#logicTable tr td b{
+    font-size:32px;
+    font-weight:bold;
+    color:#06ABD4;
+}
+#logicTable tr td p{
+    font-size:16px;
+    font-weight:bold;
+    color:#383838;
+}
+.selectTotalDay{background-color:#06ABD4;color:white;}
+#searchHref a{
+    color: #00B2EE;
+}
+
+/**订单详情**/
+#orderDetailInfos li{
+    overflow: hidden;
+    margin: 5px;
+}
+#orderDetailTrace img{
+    padding-right: 5px;
+    padding-top: 5px;
+}
