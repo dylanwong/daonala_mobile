@@ -17,11 +17,18 @@ var myScroller;
 var loginStatus = 0;//0未登录1登陆界面登陆2注册登陆
 var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面打开页面
 //var fileUrl ="http://app.gongsuda.com:8051/smsfile/";
+<<<<<<< HEAD
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 var baseUrl = "http://192.168.16.97:8080/daonala_mobile/";
 
 var queryOrderList=baseUrl+"order/query_deliverorderlistfordirver.action";
 
+=======
+var fileUrl ="http://192.168.16.98:8080/fileserver/uploadFiles/sms/";
+var omsUrl="http://192.168.16.79:8081/oms1.0/";
+var baseUrl = "http://192.168.16.67:8080/daonala_mobile/";
+var queryOrderList=baseUrl+"order/query_order_list.action";
+>>>>>>> 0e1aa70601126fb009c43e1fcd734456099b0fb7
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
 var queryMySet = baseUrl + "base/query_device_set.action";
 var updateOrUpdateMySet = baseUrl + "base/save_device_set.action";
