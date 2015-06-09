@@ -53,7 +53,21 @@ function biddinghandoverorder(){
     queryhandoverchioceorderlist();
 }
 
+function biddingaddInfoorder(elm){
+    localStorage.setItem("currenttask",$(elm).attr('data-task-detail'));
+    $('#chocieordertable').html('');
+    $.ui.loadContent("#chocieorders", false, false, "slide");
+    var data = JSON.parse(localStorage.getItem("currenttask"));
+    $("#c_ownercity").text(data.fromAdr);
+    $("#c_custcity").text(data.endAdr);
+    $('#c_sendNo').text(data.sendNo);
+    $('#c_licensePlate').text(data.licensePlate);
+    $("#nextstup").attr("onclick","nextstup(3);");
+    queryallchioceorderlist();
+}
+
 function biddingsignorder(){
+  //  localStorage.setItem("currenttask",$(elm).attr('data-task-detail'));
     $('#chocieordertable').html('');
     $.ui.loadContent("#chocieorders", false, false, "slide");
     var data = JSON.parse(localStorage.getItem("currenttask"));
@@ -125,9 +139,23 @@ function querysignchioceorderlist(){
         status:'',
         type:'3'   //签收订单
     };
-    getAjax(url,option,'queryorders_result_succ(data,2)');
+    getAjax(url,option,'queryorders_result_succ(data,3)');
 }
-
+function queryallchioceorderlist(){
+    $.ui.unblockUI();
+    $.ui.showMask("我们正在拼命的加载数据...");
+    var url = baseUrl+"order/query_orderbytraceorder.action";
+    var data = JSON.parse(localStorage.getItem("currenttask"));
+    var option = {
+        enterpriseNo:data.enterpriseNo,
+        //  systemNo:data.systemNo,
+        //  dispatchNo:data.dispatchNo,
+        deliveryNo:data.deliveryNo,
+        status:'',
+        type:'4'   //补录订单
+    };
+    getAjax(url,option,'queryorders_result_succ(data,3)');
+}
 function queryorders_result_succ(data,type){
 
     if(data.isSucc){
@@ -152,7 +180,7 @@ function queryorders_result_succ(data,type){
         "<th  width='25%' value='"+obj[i].deliveryNo+"' style='color:#A0A0A0;line-height:14px;'>"+obj[i].orderNo+"</th>"+
         "<th width='35%' ownercity='"+obj[i].fromAdr+"' custcity='"+obj[i].endAdr+"'" +
              " style='color:#A0A0A0;line-height:14px;'>"+obj[i].fromAdr+"->"+obj[i].endAdr+"</th>"+
-        "<th width='20%' status='"+obj[i].status+"' style='color:#EF8407;line-height:14px;'>"+changestatus(obj[i].status)+"</th>"+
+        "<th width='20%' status='"+obj[i].status+"' style='color:#06ABD4;line-height:14px;'>"+changestatus(obj[i].status)+"</th>"+
         "</tr>";
             $.ui.hideMask();
             $('#chocieordertable').html(trs);
@@ -169,7 +197,11 @@ function queryorders_result_succ(data,type){
         }
         }else{
             errorPopup(data.msg.split('-')[1]);
-            $.ui.loadContent("#operateguide", false, false, "slide");
+            if(type=='4'){
+                $.ui.loadContent("#driverboard", false, false, "slide");
+            }else{
+                $.ui.loadContent("#operateguide", false, false, "slide");
+            }
         }
     }else{
         errorPopup('获取数据失败');

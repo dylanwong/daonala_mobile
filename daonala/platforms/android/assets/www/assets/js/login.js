@@ -51,7 +51,7 @@ function save_login_succ(data)
         setCacheData('user',data,1);
         loginStatus = 1;
         visitor=false;
-        getNewMainList();
+
         $('#user_img').attr('src','assets/img/person.png');
 
         $('#userAlias').text(data.obj.userName+" 用户");

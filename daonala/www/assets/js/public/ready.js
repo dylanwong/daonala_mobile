@@ -198,6 +198,23 @@ $.ui.ready(function(){
             $("#handoverremarks").val(v);
         }
     });
+    jQuery('#signremark_select').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
+        },
+        onClose: function () {
+        },
+        onCancel: function () {
+        },
+        onSelect: function (v, inst) {
+            $("#signremarks").val(v);
+        }
+    });
     jQuery('#roletype_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
@@ -335,11 +352,11 @@ $.ui.ready(function(){
     $.bind(mainScroller, "refresh-release", function () {
         var that = this;
         if(!visitor){
-            getPullToRefresh(that);
+            getTodoPullToRefresh(that);
         }else{
             setTimeout(function () {
                 that.hideRefresh();
-                goToPortalPanelPopup();
+                getRequestFromTaskInfinite();
             }, 1000);
 
 
@@ -814,12 +831,7 @@ function mergeJson(jsonbject1, jsonbject2,needString)
     }
 };
 //设置为绘画完成,清除列表，清除session缓存，请求数据，返回数据放到缓存
-function getNewMainList(){
-$("ul#orderList").data("launch",false);
-$("ul#orderList").empty();
-sessionStorage.removeItem("mainList");
-getAjax(queryOrderList,JSON.parse(localStorage.getItem("locationFilter")),"setCacheData('mainList',data,false)","errorPopup('网络请求超时,请检查网络后再尝试..')");
-}
+
 
 function offerDone(data,consignNo){
     var msgText=data.msg.split("-")

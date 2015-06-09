@@ -30,7 +30,8 @@
 
                         </div>
                         <div style="float:right;margin:0px 5px;">
-                             <span onclick="signorderslist_panel();" style="font-size:18px;color:#EF8407;">签收明细</span>
+                             <span onclick="querygoodlist();"
+                                   style="font-size:18px;color:#06ABD4;">签收明细</span>
                         </div>
                         <div style="clear:both;"></div>
                     </div>
@@ -51,7 +52,7 @@
 
                 </div>
                 <div style="height: 20px;"></div>
-                <div style="float:left;padding-top:5px;margin:0px 5px;"> <span style="float:left;color:#F6842B;line-height:18px">附件列表</span></div>
+                <div style="float:left;padding-top:5px;margin:0px 5px;"> <span style="float:left;color:#06ABD4;line-height:18px">附件列表</span></div>
                 <div style="float:right">
                     <a href="javascript:;" onclick="upload_oms(this)">
                         <img src="assets/img/demo/no_photo.png"
@@ -76,8 +77,8 @@
             <br>
             <br>
             <button role="button" id="submitRegister"
-                    style="font-size:x-large;"  onclick="confirmhandoverorder()"
-                    class="btn btn-lg btn-block" >交接确认</button>
+                    style="font-size:x-large;"  onclick="confirmsignorder()"
+                    class="btn btn-lg btn-block bg_blue" >交接确认</button>
             <br>
 
 

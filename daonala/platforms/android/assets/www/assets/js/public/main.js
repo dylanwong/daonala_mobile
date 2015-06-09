@@ -17,7 +17,7 @@ include("assets/js/order/orderdetail.js");
 //include("assets/js/.js");
 include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
-
+include("assets/js/public/filetooms.js");
 //include("assets/js/.js");
 
 function mainPanleUnLoad(){
@@ -140,7 +140,8 @@ function traceInfo2(elm){
 }
 /**/
 function signorderslist_panel(){
-    $.ui.loadContent("#signorderslist", false, false, "slide");
+    queryDetailList();
+    //$.ui.loadContent("#signorderslist", false, false, "slide");
 }
 function signorderdetail_panel(){
     $.ui.loadContent("#signorderdetail", false, false, "slide");
@@ -167,6 +168,8 @@ function init_search_panel(){
 
 function init_home_ad()
 {
+    $("#ad").height($("#home").height()/3);
+    $("#home-module").height($("#home").height()-$("#ad").height());
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
         '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
         '</div>' +
@@ -257,37 +260,6 @@ function register_panel()
 
 
 
-
-/*
-function search_panel()
-{
-    var locationObj = localStorage.getItem("locationObj");
-    var user = localStorage.getItem("user");
-
-    if(locationObj != null)
-    {
-        locationObj = JSON.parse(locationObj);
-        $("#search-departure").val(locationObj.provinceName+" "+locationObj.cityName);
-    }
-
-    user = JSON.parse(user);
-    $("#search-cartype").val('');
-    //1:企业2:个人
-    if(user.obj.workerType == 1)
-    {
-        $(".destination_class").removeClass('input-bot');
-        $(".destination_class").addClass('input-mid');
-        $(".cartype_class").show();
-    }else
-    {
-        $(".destination_class").removeClass('input-mid');
-        $(".destination_class").addClass('input-bot');
-        $(".cartype_class").hide();
-    }
-
-    $.ui.loadContent('#search', false, false, 'down');
-}
-*/
 
 
 function msgdetail_panel(elm){
