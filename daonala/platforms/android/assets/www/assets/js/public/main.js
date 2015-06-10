@@ -35,6 +35,8 @@ function message_panel(){
 }
 function mine_panel()
 {
+    $("#userpart").height($("#mine").height()/2);
+    $("#mine_module").height($("#mine").height()-$("#userpart").height());
     $.ui.loadContent("#mine", false, false, "slide");
 }
 function main_panel()
