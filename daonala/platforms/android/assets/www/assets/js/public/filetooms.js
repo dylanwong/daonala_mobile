@@ -47,16 +47,22 @@ function onPhotoUrlSuccess2_tooms(imageURI) {
 
 function uploadPhoto_tooms() {
     var options = new FileUploadOptions();
-    options.fileKey="fileName";
+    options.fileKey="file";
     options.fileName=picUrl.substr(picUrl.lastIndexOf('/')+1);
 
     options.mimeType="image/jpeg";
     var user = JSON.parse(localStorage.getItem('user'));
     var params = new Object();
-//    params.fileContentType = 'feedbackImg';
-//    //params.workerNo = user.obj.workerNo;
-////    params.token=user.obj.token;
-//    options.params = params;
+    params.fileContentType = 'DaonalaImg';
+    //params.workerNo = user.obj.workerNo;
+  //  params.token=user.obj.token;
+    params.signCode="2a04af4be5737268a51a37849dbd4de5";
+    params.systemNo= "10001";
+    params.thumbnails= "[{'size':'1L'},{'size':'600X400'}]";
+    params.isWateMark= "1";
+    params.fileType="1";
+    params.createName="admin";
+    options.params = params;
 
    // options.chunkedMode = false;
     var ft = new FileTransfer();
@@ -74,10 +80,13 @@ function win_oms(r) {
     if(msgRes.isSucc)
     {
     //    errorPopup(msgRes.msg);
-        imgurl=omsUrl+"uploadFiles/"+msgRes.msg+"";
+       // imgurl=omsUrl+"uploadFiles/"+msgRes.msg+"";
+        imgurl=msgRes.obj[0].url+"";
+
+        //alert(imgurl);
         var resultimg = "<div  class='gallery-item' name='fhotoDiv'>" +
             "<a  >" +
-            "<img src='" + imgurl+ "' ownlocation='feedbackimg' fileName='"+msgRes.msg+"' style='width:33%; height:100%;float:left;margin:5px;' " +
+            "<img src='" + imgurl+ "' ownlocation='feedbackimg' fileName='"+imgurl+"' style='width:33%; height:100%;float:left;margin:5px;' " +
             "name='picture'/>" +
             "</a>" +
             "</div>";

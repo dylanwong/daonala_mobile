@@ -2,17 +2,17 @@
         <div align="center" id="orderdetail-buttons">
             <div class="btn-group btn-group-justified width90 margin10" role="group">
                 <div class="btn-group" role="group">
-                    <button target="orderDetailInfo" type="button" class="btn btn-default
+                    <button target="orderDetailInfo"  type="button" class="btn btn-default
                     selectTotalDay">订单</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailProduct" type="button" class="btn btn-default">产品</button>
+                    <button target="orderDetailProduct"  type="button" class="btn btn-default">产品</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailTrace" type="button" class="btn btn-default">轨迹</button>
+                    <button target="orderDetailTrace"  type="button" class="btn btn-default">轨迹</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailEvaluate" type="button" class="btn btn-default">评价</button>
+                    <button target="orderDetailEvaluate"  type="button" class="btn btn-default">评价</button>
                 </div>
             </div>
         </div>
@@ -23,23 +23,23 @@
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
                             <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">单据信息</div>
-                            <div class="fl" style="margin-left: 10px;color: #FB7046;font-size: 16px;">状态：下单</div>
+                            <div class="fl" style="margin-left: 10px;color: #FB7046;font-size: 16px;" id="status_d" >状态：下单</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">物流商单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">AF2015012365410</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="transNo_d">AF2015012365410</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">货主单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">AF2015012365410</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerNo_d">AF2015012365410</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">货主客户单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">AF2015012365410</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="custNo_d">AF2015012365410</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">下单时间</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">2015-02-12</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="orderDate_d">2015-02-12</div>
                         </li>
                     </ul>
                 </div>
@@ -52,18 +52,19 @@
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">发货人</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">深圳旺旺科技有限公司</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerName_d">深圳旺旺科技有限公司</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">地  址</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">深圳旺旺科技有限公司CCCCCC</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerAddr_d">深圳旺旺科技有限公司CCCCCC</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">发货人</div>
+                            <div class="fl width30" align="right" style="color:#7C7B78;">联系人</div>
                             <div class="fl width70"
                                  style="padding-left: 10px;padding-right:20px;color: #000;">
-                                <div class="fl">刘总-1388888888</div>
-                                <div class="fr"><i class="icon-local-phone fs24"></i></div>
+                                <div class="fl" id="ownerContacts_d" >刘总-1388888888</div>
+                                <div class="fr"><i class="icon-local-phone fs24">
+                                    <a id="ownerPhone_d" href=""></a></i></div>
                             </div>
                         </li>
                     </ul>
@@ -77,22 +78,22 @@
                                 收货人</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">发货人</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">深圳旺旺科技有限公司</div>
+                            <div class="fl width30" align="right" style="color:#7C7B78;">收货人</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="custName_d">深圳旺旺科技有限公司</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">地  址</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">深圳旺旺科技有限公司CCCCCC</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="custAddr_d">深圳旺旺科技有限公司CCCCCC</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">子客户名称</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">华润万家子公司</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="addrName_d">华润万家子公司</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">发货人</div>
+                            <div class="fl width30" align="right" style="color:#7C7B78;">联系人</div>
                             <div class="fl width70"
                                  style="padding-left: 10px;padding-right:20px;color: #000;">
-                                <div class="fl">彭总-1388888888</div>
+                                <div class="fl" id="custContacts_d">彭总-1388888888</div>
                                 <div class="fr"><i class="icon-local-phone fs24"></i></div>
                             </div>
                         </li>
@@ -109,13 +110,13 @@
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">承运商</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;">深圳市共速达股份有限公司</div>
+                            <div class="fl" style="margin-left: 10px;color: #000;" id="shipNo_d">深圳市共速达股份有限公司</div>
                         </li>
                         <li>
                             <div class="fl width30" align="right" style="color:#7C7B78;">电 话</div>
                             <div class="fl width70"
                                  style="padding-left: 10px;padding-right:20px;color: #000;">
-                                <div class="fl">1388888888</div>
+                                <div class="fl" id="shipPhone_d">1388888888</div>
                                 <div class="fr"><i class="icon-local-phone fs24"></i></div>
                             </div>
                         </li>
@@ -124,10 +125,10 @@
             </div>
 
             <div id="orderDetailProduct" class="none">
-                <div style="border-top: 10px solid #EFEFEF;">
+             <!--   <div style="border-top: 10px solid #EFEFEF;">
                     <ul>
                         <li>
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">电子产品</div>
+                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;" id="articleName"></div>
                         </li>
                         <li style="height: 80px;padding-top: 10px;">
                             <div class="fl width33 overflowHidden percent80"
@@ -198,7 +199,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div>-->
             </div>
 
             <div id="orderDetailTrace" class="none">
@@ -206,7 +207,7 @@
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
                             <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;">运输单号：A5210000000</div>
+                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;">运输单号：<span id="topdeliverNo_d"></span></div>
                             <div class="fr width20" align="right"
                                  style="color:#26B6D9;font-size:16px;">
                                 <i style="display:block;" class="icon-expand-more fs32"></i>

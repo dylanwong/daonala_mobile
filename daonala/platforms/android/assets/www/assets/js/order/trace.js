@@ -29,9 +29,56 @@ function initTraceInfoAgain(elm){
         "updateTracePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     //enterpriseNo, systemNo,dispatchNo,sendNo
 }
-
+/*登陆初始化订单详情页面*/
 function initTraceInfo2(){
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    $('#shipPhone_d').html(data.orderNo);
+    $('#shipNo_d').html(data.ownerName);
 
+    $('#custAddr_d').html(data.custAddr);
+    $('#custName_d').html(data.custName);
+    $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
+    $('#addrName_d').html(data.addrName);
+    $('#ownerPhone_d').attr('href','tel:'+data.custPhone);
+
+    $('#ownerName_d').html(data.ownerName);
+    $('#ownerAddr_d').html(data.ownerAddr);
+    $('#ownerContacts_d').html(data.orderNo);
+
+
+    $('#status_d').html(data.status);
+    $('#transNo_d').html(data.transNo);
+    $('#ownerNo_d').html(data.ownerNo);
+    $('#custNo_d').html(data.custNo);
+    $('#orderDate_d').html(data.orderDate);
+
+
+    $('#topdeliverNo_d').html('运输单号'+data.topsendNo);
+
+    queryDetailProduct();
+    queryDetailTrace_login();
+//    $.ui.blockUI(.3);
+//    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+//            'dispatchNo':data.dispatchNo,
+//            'sendNo':data.topsendNo},
+//        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+ }
+
+
+
+
+function initTraceInfo2forAgain(elm){
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    $('#trace_orderNo').html(data.orderNo);
+    $('#trace_sender').html(data.ownerName);
+    $('#trace_reciever').html(data.custName);
+
+
+    $('#topdeliverNo').html('运输单号'+data.topsendNo);
+    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo,
+            'sendNo':data.topsendNo},
+        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 var nullTrace = "<div align='center' style='margin: 10px;'>暂无物流跟踪信息...</div>";
 function updateTracePanel(datas){
@@ -101,10 +148,6 @@ function changeTraceOrder()
     getAjax(choicedeliverOrdersUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo},
         "updateChoicePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-
-
-
-
 }
 function updateChoicePanel(datas){
     var nullTrace = "<div align='center' style='margin: 10px;'>查无多条订单...</div>";
@@ -156,3 +199,5 @@ function selTraceOrder(elm)
     $("#traceOrderSelNo").html(orderNo);
     queryTraceDesc(traceSelNo,orderNo);
 }
+
+

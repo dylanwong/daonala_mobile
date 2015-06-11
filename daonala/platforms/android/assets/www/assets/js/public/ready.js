@@ -43,20 +43,20 @@ $(document).ready(function(){
     //if(1==1){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
-        var swiperDiv = $.create("div", {
-            className: "swiper-container",
-            id:"screenWrapper",
-            html: '<div class="swiper-wrapper">' +
-            '<div class="swiper-slide"><div class="slide1"></div></div>' +
-            '<div class="swiper-slide"><div class="slide2"></div></div>' +
-            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
-            '<div class="pagination"></div>'
-        });
-        $(swiperDiv.get(0)).appendTo("#splashscreen");
-        var mySwiper = new Swiper('#screenWrapper',{
-            pagination: '.pagination',
-            paginationClickable: true
-        })
+//        var swiperDiv = $.create("div", {
+//            className: "swiper-container",
+//            id:"screenWrapper",
+//            html: '<div class="swiper-wrapper">' +
+//            '<div class="swiper-slide"><div class="slide1"></div></div>' +
+//            '<div class="swiper-slide"><div class="slide2"></div></div>' +
+//            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
+//            '<div class="pagination"></div>'
+//        });
+//        $(swiperDiv.get(0)).appendTo("#splashscreen");
+//        var mySwiper = new Swiper('#screenWrapper',{
+//            pagination: '.pagination',
+//            paginationClickable: true
+//        })
     }else{
         $.ui.launch();
         alertLocationPopup = true;
@@ -380,7 +380,7 @@ $.ui.ready(function(){
         }else{
             if($("#infinite").length == 0){
                 $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
-                    "height:40px;font-size: 20px;text-align: center'>获取任务中 ...</div>");
+                    "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
             }
 
             $.bind(mainScroller, "infinite-scroll-end", function () {
@@ -428,7 +428,7 @@ $.ui.ready(function(){
     var hideClose;
     $.bind(orderlistScroller, "refresh-release", function () {
         var that = this;
-        getTodoPullToRefresh(that);
+        getOrderListPullToRefresh(that);
         return false; //tells it to not auto-cancel the refresh
     });
 
@@ -446,7 +446,7 @@ $.ui.ready(function(){
             if($("#infinite").length == 0)
             {
                 $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
-                    "height:40px;font-size: 20px;text-align: center'>获取任务中 ...</div>");
+                    "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
             }
 
             $.bind(orderlistScroller, "infinite-scroll-end", function () {
@@ -454,7 +454,7 @@ $.ui.ready(function(){
 
                 if (ajaxFlag) {
                     ajaxFlag = false
-                    getRequestFromTodoInfinite(self)
+                    getRequestFromOrderListinite(self)
                 }
             });
         }
@@ -481,7 +481,8 @@ function getAjax(ajaxURL,option,successFunction,failFunction){
     if(user!=null)
     {
         user = JSON.parse(user);
-        args = mergeJson(option,{lastTime:user.obj.lastTime,workerNo:user.obj.workerNo},true);
+        args = mergeJson(option,{lastTime:user.obj.lastTime,
+            userNo:user.obj.userNo,userType:user.obj.userType ,enterpriseNo:user.obj.enterpriseNo},true);
         args = JSON.parse(args);
     }
 
@@ -689,46 +690,7 @@ function loginTimeoutPopup(msg) {
         cancelOnly: true
     });
 }
-function changeLocationPopup(province,city) {
-    setTimeout(function(){$.ui.blockUI(.5);},10);
-    $.ui.popup({
-        title: "当前城市"+city,
-        message: "切换查询始发地为"+city,
-        cancelText: "取消",
-        cancelCallback: function () { alertLocationPopup =false},
-        cancelClass:"popup-btn",
-        doneText: "切换",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),{'vOriginAddrProvince':province,'vOriginAddrCity':city,'start':'1','queryDate':'','vehicleType':'','vDesAddrProvince':'','vDesAddrCity':''},true),true);
-            getNewMainList();
-            if($.ui.activeDiv.id=="main"){
-                mainPanleLoad();
-            }else{
-                $.ui.loadContent('#main', false, false, 'slide');
-            }
-        },
-        cancelOnly: false
-    });
-}
 
-//msg内容 msgType类型
-function pushMsg(message,method)
-{
-    $.ui.popup({
-        title: "您有一条新消息",
-        message: message,
-        cancelText: "忽略",
-        cancelCallback: function () {},
-        cancelClass:"popup-btn",
-        doneText: "立即查看",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            eval(method);
-        },
-        cancelOnly: false
-    });
-}
 //确定 or  取消
 
 function delImg(message,method){
@@ -764,29 +726,7 @@ function orderBuySuccPopup(msg) {
     });
 }
 
-function pushPopup(msg) {
-    setTimeout(function(){$.ui.blockUI(.5);},10);
-    $.ui.popup({
-        title: "有新订单",
-        message: msg,
-        cancelText: "取消",
-        cancelCallback: function () {},
-        cancelClass:"popup-btn",
-        doneText: "抢单",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),{'start':'1'},true),true);
-            getNewMainList();
-            if($.ui.activeDiv.id=="main"){
-                mainPanleLoad();
-            }else{
-                $.ui.loadContent('#main', false, false, 'slide');
-            }
 
-        },
-        cancelOnly: false
-    });
-}
 
 function checkMobile(elementId){
     var number = $("#"+elementId).val();
@@ -807,7 +747,7 @@ function setCacheData(key,value,ever){
     }
 }
 
-function getWorkerNo(){
+function getUserNo(){
     return JSON.parse(localStorage.getItem("user")).obj.workerNo ;
 }
 

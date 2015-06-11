@@ -19,6 +19,7 @@ include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
 include("assets/js/public/filetooms.js");
 //include("assets/js/.js");
+include("assets/js/order/logistboard.js");
 
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
@@ -80,7 +81,9 @@ function myorders_panel(){
     $.ui.loadContent("#myorders", false, false, "slide");
 }
 function logisticboard_panel(){
-    $.ui.loadContent("#logisticboard", false, false, "slide");
+    init_orderboard();
+    initLogisticBoard();
+
 }
 function ownerboard_panel(){
     $.ui.loadContent("#ownerboard", false, false, "slide");
@@ -124,21 +127,23 @@ function traceInfo(elm){
     /*init_search_panel();*/
   //  $(elm).attr('data-todo-detail')
     if(elm!=null){
-    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    initTraceInfo();
-    $.ui.loadContent("#ordertrace", false, false, "slide");
+        setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+        initTraceInfo();
+        $.ui.loadContent("#ordertrace", false, false, "slide");
     }else{
-
         initTraceInfo();
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }
 }
 /*订单跟踪 登录*/
-function traceInfo2(elm){
-    /*init_search_panel();*/
-    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    initTraceInfo2();
-    $.ui.loadContent("#ordertrace2", false, false, "slide");
+function traceInfo33(elm){
+//    alert(1);
+//    /*init_search_panel();*/
+    //setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+    //initTraceInfo2();
+    $.ui.loadContent("#orderdetail33", false, false, "slide");
+
+
 }
 /**/
 function signorderslist_panel(){
