@@ -13,18 +13,7 @@ function init_orderdetail()
         $("#"+target).hide();
         $(this).addClass('selectTotalDay');
         $("#"+$(this).attr('target')).fadeIn(300);
-//        if($(this).attr('target')=='orderDetailInfo'){
-//            queryDetailInfo();
-//        } else if($(this).attr('target')=='orderDetailProduct') {
-//            $("#Productproducts").empty();
-//            queryDetailProduct();
-//        } else if($(this).attr('target')=='orderDetailTrace') {
-//            queryDetailTrace_login();
-//        } else if($(this).attr('target')=='orderDetailEvaluate') {
-//
-//        } else {
-//
-//        }
+
     })
 }
 
@@ -43,7 +32,7 @@ function queryDetailInfo(){
     $('#ownerAddr_d').html(data.ownerAddr);
     $('#ownerContacts_d').html(data.orderNo);
 
-    $('#status_d').html(data.status);
+    $('#status_d').html(showstatus(data.status));
     $('#transNo_d').html(data.transNo);
     $('#ownerNo_d').html(data.ownerNo);
     $('#custNo_d').html(data.custNo);
@@ -52,6 +41,7 @@ function queryDetailInfo(){
     $('#topdeliverNo_d').html(data.topsendNo);
     queryDetailProduct();
     queryDetailTrace_login();
+    queryEvalute();
 }
 
 function queryDetailProduct(){
@@ -168,3 +158,77 @@ function updateTracePanel2(datas){
 }
 
 
+function queryEvalute(){
+    //order/view_evaluate.action
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+//    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
+//            'dispatchNo':data.dispatchNo },
+//        "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo },
+        "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
+function updateEvalute(datas){
+    var evaluteResult = '';
+
+    if(datas.isSucc){
+        if(datas.obj.length == 0){
+            $('#orderDetailEvaluate').empty();
+            evaluteResult = '<div><p>无评论信息</p></div>';
+            $('#orderDetailEvaluate').append(evaluteResult);
+        }else{
+            if(lOCATIONID==1){
+                $('#evaluteBtn').hide();
+            } else if(lOCATIONID==2){
+                $('#evaluteBtn').hide();
+                $('#replyBtn').hide();
+            } else if(lOCATIONID==3){
+                $('#replyBtn').hide();
+            } else {
+
+            }
+            if(datas.obj.bodmEvaluate != null){
+                $('#evaluteInfo').append('');
+                $('#evaluteInfo').html(datas.obj.bodmEvaluate.reviewsUserNo);
+                evaluteResult = '';
+                $('#evaluteName').html(datas.obj.bodmEvaluate.reviewsUserNo
+                    +'【'+datas.obj.bodmEvaluate.reviewsDate+'】');
+                $('#reviewsDemo').html(datas.obj.bodmEvaluate.reviewsDemo);
+                $('#reviewsItem1').html(changeStar( datas.obj.bodmEvaluate.reviewsItem1) );
+                $('#reviewsItem2').html(changeStar( datas.obj.bodmEvaluate.reviewsItem2) );
+                $('#reviewsItem3').html(changeStar( datas.obj.bodmEvaluate.reviewsItem3) );
+
+                if(datas.obj.bodmEvaluateAnswer !=null ){
+                    $('#replyInfo').append('');
+                }else{
+
+                    $('#replyspan').hide();
+                    $('#replyInfo').empty();
+                }
+            }else{
+                $('#orderDetailEvaluate').empty();
+                evaluteResult = '<div><p>无评论信息</p></div>';
+                $('#orderDetailEvaluate').append(evaluteResult);
+            }
+            evaluteResult = '';
+        }
+    } else {
+        //errorPopup(data.msg);
+
+    }
+}
+
+function changeStar(star){
+    if(star == 1){
+
+    }else if( star == 1 ){
+
+    }else if( star == 1 ){
+
+    }else if( star == 1 ){
+
+    }else if( star == 1 ){
+
+    }
+}

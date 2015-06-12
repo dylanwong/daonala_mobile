@@ -13,18 +13,7 @@ function init_orderdetail()
         $("#"+target).hide();
         $(this).addClass('selectTotalDay');
         $("#"+$(this).attr('target')).fadeIn(300);
-//        if($(this).attr('target')=='orderDetailInfo'){
-//            queryDetailInfo();
-//        } else if($(this).attr('target')=='orderDetailProduct') {
-//            $("#Productproducts").empty();
-//            queryDetailProduct();
-//        } else if($(this).attr('target')=='orderDetailTrace') {
-//            queryDetailTrace_login();
-//        } else if($(this).attr('target')=='orderDetailEvaluate') {
-//
-//        } else {
-//
-//        }
+
     })
 }
 
@@ -52,6 +41,7 @@ function queryDetailInfo(){
     $('#topdeliverNo_d').html(data.topsendNo);
     queryDetailProduct();
     queryDetailTrace_login();
+    queryEvalute();
 }
 
 function queryDetailProduct(){
@@ -165,6 +155,34 @@ function updateTracePanel2(datas){
     $("#orderDetailTrace").append(html);
     $.ui.unblockUI();
     $.ui.hideMask();
+}
+
+
+function queryEvalute(){
+    //order/view_evaluate.action
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+//    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
+//            'dispatchNo':data.dispatchNo },
+//        "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo },
+        "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
+function updateEvalute(datas){
+    var evaluteResult = '';
+    if(datas.isSucc){
+        if(datas.obj.length == 0){
+            $('#orderDetailEvaluate').empty();
+            evaluteResult = '<div><p>无评论信息</p></div>';
+            $('#orderDetailEvaluate').append(evaluteResult);
+        }else{
+            evaluteResult = '';
+        }
+    } else {
+        //errorPopup(data.msg);
+
+    }
 }
 
 

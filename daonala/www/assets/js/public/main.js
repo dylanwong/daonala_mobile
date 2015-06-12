@@ -142,9 +142,25 @@ function traceInfo33(elm){
     setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
     initTraceInfo2();
     $.ui.loadContent("#orderdetail33", false, false, "slide");
+}
 
+function traceSingleInfo33(){
+//    alert(1);
+//    /*init_search_panel();*/
+
+    initTraceInfo2();
+    $.ui.loadContent("#orderdetail33", false, false, "slide");
+}
+
+function traceSingleInfo(){
+//    alert(1);
+//    /*init_search_panel();*/
+    initTraceInfo();
+    $.ui.loadContent("#ordertrace", false, false, "slide");
 
 }
+
+
 /**/
 function signorderslist_panel(){
     queryDetailList();
