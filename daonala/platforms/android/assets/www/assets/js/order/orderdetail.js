@@ -13,6 +13,18 @@ function init_orderdetail()
         $("#"+target).hide();
         $(this).addClass('selectTotalDay');
         $("#"+$(this).attr('target')).fadeIn(300);
+//        if($(this).attr('target')=='orderDetailInfo'){
+//            queryDetailInfo();
+//        } else if($(this).attr('target')=='orderDetailProduct') {
+//            $("#Productproducts").empty();
+//            queryDetailProduct();
+//        } else if($(this).attr('target')=='orderDetailTrace') {
+//            queryDetailTrace_login();
+//        } else if($(this).attr('target')=='orderDetailEvaluate') {
+//
+//        } else {
+//
+//        }
     })
 }
 
@@ -38,6 +50,8 @@ function queryDetailInfo(){
     $('#orderDate_d').html(data.orderDate);
 
     $('#topdeliverNo_d').html(data.topsendNo);
+    queryDetailProduct();
+    queryDetailTrace_login();
 }
 
 function queryDetailProduct(){

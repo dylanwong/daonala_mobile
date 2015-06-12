@@ -139,8 +139,8 @@ function traceInfo(elm){
 function traceInfo33(elm){
 //    alert(1);
 //    /*init_search_panel();*/
-    //setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    //initTraceInfo2();
+    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+    initTraceInfo2();
     $.ui.loadContent("#orderdetail33", false, false, "slide");
 
 
