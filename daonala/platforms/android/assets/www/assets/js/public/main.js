@@ -17,8 +17,9 @@ include("assets/js/order/orderdetail.js");
 //include("assets/js/.js");
 include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
-
+include("assets/js/public/filetooms.js");
 //include("assets/js/.js");
+include("assets/js/order/logistboard.js");
 
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
@@ -35,6 +36,8 @@ function message_panel(){
 }
 function mine_panel()
 {
+    $("#userpart").height($("#mine").height()/2);
+    $("#mine_module").height($("#mine").height()-$("#userpart").height());
     $.ui.loadContent("#mine", false, false, "slide");
 }
 function main_panel()
@@ -78,7 +81,9 @@ function myorders_panel(){
     $.ui.loadContent("#myorders", false, false, "slide");
 }
 function logisticboard_panel(){
-    $.ui.loadContent("#logisticboard", false, false, "slide");
+    init_orderboard();
+    initLogisticBoard();
+
 }
 function ownerboard_panel(){
     $.ui.loadContent("#ownerboard", false, false, "slide");
@@ -122,21 +127,31 @@ function traceInfo(elm){
     /*init_search_panel();*/
   //  $(elm).attr('data-todo-detail')
     if(elm!=null){
-    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    initTraceInfo();
-    $.ui.loadContent("#ordertrace", false, false, "slide");
+        setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+        initTraceInfo();
+        $.ui.loadContent("#ordertrace", false, false, "slide");
     }else{
-
         initTraceInfo();
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }
 }
 /*订单跟踪 登录*/
-function traceInfo2(elm){
-    /*init_search_panel();*/
+function traceInfo33(elm){
+//    alert(1);
+//    /*init_search_panel();*/
     setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
     initTraceInfo2();
-    $.ui.loadContent("#ordertrace2", false, false, "slide");
+    $.ui.loadContent("#orderdetail33", false, false, "slide");
+
+
+}
+/**/
+function signorderslist_panel(){
+    queryDetailList();
+    //$.ui.loadContent("#signorderslist", false, false, "slide");
+}
+function signorderdetail_panel(){
+    $.ui.loadContent("#signorderdetail", false, false, "slide");
 }
 
 
@@ -160,6 +175,8 @@ function init_search_panel(){
 
 function init_home_ad()
 {
+    $("#ad").height($("#home").height()/3);
+    $("#home-module").height($("#home").height()-$("#ad").height());
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
         '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
         '</div>' +
@@ -249,44 +266,7 @@ function register_panel()
 }
 
 
-function qrcode_panel()
-{
-    if(localStorage.getItem("user")!=null)
-    {
-        var user = JSON.parse(localStorage.getItem("user"));
-        $("#myPopularizeCode").html("我的推广码："+user.obj.popularizeCode);
-    }
-    $.ui.loadContent("#qrcode", false, false, "slide");
-}
 
-function search_panel()
-{
-    var locationObj = localStorage.getItem("locationObj");
-    var user = localStorage.getItem("user");
-
-    if(locationObj != null)
-    {
-        locationObj = JSON.parse(locationObj);
-        $("#search-departure").val(locationObj.provinceName+" "+locationObj.cityName);
-    }
-
-    user = JSON.parse(user);
-    $("#search-cartype").val('');
-    //1:企业2:个人
-    if(user.obj.workerType == 1)
-    {
-        $(".destination_class").removeClass('input-bot');
-        $(".destination_class").addClass('input-mid');
-        $(".cartype_class").show();
-    }else
-    {
-        $(".destination_class").removeClass('input-mid');
-        $(".destination_class").addClass('input-bot');
-        $(".cartype_class").hide();
-    }
-
-    $.ui.loadContent('#search', false, false, 'down');
-}
 
 
 function msgdetail_panel(elm){

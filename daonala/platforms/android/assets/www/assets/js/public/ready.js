@@ -21,19 +21,19 @@ $(document).ready(function(){
     }
 
 
-    if(localStorage.getItem("user")){
-        setCacheData("myFilter",mergeJson(JSON.parse(localStorage.getItem("myFilter")),{'start':'1'},true),true);
-        getAjax(queryMyOrderList,JSON.parse(localStorage.getItem("myFilter")),"setCacheData('myList',data,false)");
-    }else{
-        var myOption= {
-            'queryDate':'',
-            'queryType':'2',
-            'start':'1',
-            'length':'10',
-            "userNo":""
-        }
-        localStorage.setItem("myFilter",JSON.stringify(myOption))
-    }
+//    if(localStorage.getItem("user")){
+//        setCacheData("myFilter",mergeJson(JSON.parse(localStorage.getItem("myFilter")),{'start':'1'},true),true);
+//        getAjax(queryMyOrderList,JSON.parse(localStorage.getItem("myFilter")),"setCacheData('myList',data,false)");
+//    }else{
+//        var myOption= {
+//            'queryDate':'',
+//            'queryType':'2',
+//            'start':'1',
+//            'length':'10',
+//            "userNo":""
+//        }
+//        localStorage.setItem("myFilter",JSON.stringify(myOption))
+//    }
 
     //queryOrderList
     var localStorageVersion= parseFloat(localStorage.getItem("localStorageVersion"));
@@ -43,20 +43,20 @@ $(document).ready(function(){
     //if(1==1){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
-        var swiperDiv = $.create("div", {
-            className: "swiper-container",
-            id:"screenWrapper",
-            html: '<div class="swiper-wrapper">' +
-            '<div class="swiper-slide"><div class="slide1"></div></div>' +
-            '<div class="swiper-slide"><div class="slide2"></div></div>' +
-            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
-            '<div class="pagination"></div>'
-        });
-        $(swiperDiv.get(0)).appendTo("#splashscreen");
-        var mySwiper = new Swiper('#screenWrapper',{
-            pagination: '.pagination',
-            paginationClickable: true
-        })
+//        var swiperDiv = $.create("div", {
+//            className: "swiper-container",
+//            id:"screenWrapper",
+//            html: '<div class="swiper-wrapper">' +
+//            '<div class="swiper-slide"><div class="slide1"></div></div>' +
+//            '<div class="swiper-slide"><div class="slide2"></div></div>' +
+//            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
+//            '<div class="pagination"></div>'
+//        });
+//        $(swiperDiv.get(0)).appendTo("#splashscreen");
+//        var mySwiper = new Swiper('#screenWrapper',{
+//            pagination: '.pagination',
+//            paginationClickable: true
+//        })
     }else{
         $.ui.launch();
         alertLocationPopup = true;
@@ -74,40 +74,16 @@ function errorlaunchUI(){
 
 $.ui.ready(function(){
 
-    init_dom();
 
-    //Date
-    var currYear = new Date().getFullYear();
-    $('#search-start-pay').mobiscroll().date({
-        theme: 'android-ics light',
-        lang: 'zh',
-        display: 'bottom',
-        dateOrder: 'yyyy mm dd',//弹出显示日期格式
-        dateFormat: 'yyyy-mm-dd',//选中后的值格式
-        defaultValue: new Date(new Date().setFullYear(currYear)),
-        maxDate: new Date(),
-        minDate: new Date(new Date().setFullYear(currYear - 10))
-    });
-    $('#showStartPaySearchDate').click(function(){
-        $('#search-start-pay').mobiscroll('show');
+
+
+    $("#afui").delegate(".arrow","click",function(event){
+        event.stopPropagation()
+        event.preventDefault()
+        $('#'+$(this).data('selete')).mobiscroll('show');
+        ETID=$(this).prev()[0].id;
         return false;
     });
-    $('#search-end-pay').mobiscroll().date({
-        theme: 'android-ics light',
-        lang: 'zh',
-        display: 'bottom',
-        dateOrder: 'yyyy mm dd',//弹出显示日期格式
-        dateFormat: 'yyyy-mm-dd',//选中后的值格式
-        defaultValue: new Date(new Date().setFullYear(currYear)),
-        maxDate: new Date(),
-        minDate: new Date(new Date().setFullYear(currYear - 10))
-    });
-    $('#showEndPaySearchDate').click(function(){
-        $('#search-end-pay').mobiscroll('show');
-        return false;
-    });
-
-
 
     jQuery('#usertype_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
@@ -130,8 +106,6 @@ $.ui.ready(function(){
         }
     });
 
-
-
     jQuery('#deliverremark_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
@@ -152,29 +126,6 @@ $.ui.ready(function(){
             $("#deliverremarks").val(v);
         }
     });
-
-    jQuery('#roletype_select').mobiscroll().select({
-        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
-        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
-        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
-        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
-        onBeforeShow: function (html, inst) {
-        },
-        onShow: function () {
-
-        },
-        onClose: function () {
-
-        },
-        onCancel: function () {
-
-        },
-        onSelect: function (v, inst) {
-            $("#role").val(v);
-        }
-    });
-
-
     jQuery('#followremark_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
@@ -226,7 +177,8 @@ $.ui.ready(function(){
             }
 
         }
-    });jQuery('#handoverremark_select').mobiscroll().select({
+    });
+    jQuery('#handoverremark_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
         display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
@@ -246,45 +198,51 @@ $.ui.ready(function(){
             $("#handoverremarks").val(v);
         }
     });
+    jQuery('#signremark_select').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
+        },
+        onClose: function () {
+        },
+        onCancel: function () {
+        },
+        onSelect: function (v, inst) {
+            $("#signremarks").val(v);
+        }
+    });
+    jQuery('#roletype_select').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
 
+        },
+        onClose: function () {
 
+        },
+        onCancel: function () {
 
-
-
-
-
-
-
-
-    $("#myOrderList").delegate("li","click",function(){
-        event.stopPropagation()
-        event.preventDefault()
-        ETID=this.id;
-        $.ui.loadContent('#selfOrderOffer', false, false, 'slide')
-        return false;
+        },
+        onSelect: function (v, inst) {
+            $("#role").val(v);
+        }
     });
 
 
 
-    $("#search-btn").click(function(){
 
 
-        var departure = $("#search-departure").val()
-        var destination = $("#search-destination").val()
-        var cartype = $("#search-cartype").val()
 
-        var Filter={};
-        if(departure.trim()=='' && destination.trim()=='' && cartype.trim()=='') {
-            Filter = {'start':'1','queryDate':''}
-        }else{
-        departure = departure.split(" ")
-        destination =destination.split(" ");
-            Filter = {'vOriginAddrProvince':departure[0],'vOriginAddrCity':departure[1],'vDesAddrProvince':destination[0],'vDesAddrCity':destination[1],'vehicleType':cartype,'start':'1','queryDate':''}
-        }
-        setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),Filter,true),true);
-        getNewMainList();
-        $.ui.goBack()
-    })
+
+
 
     $("#reset-btn").click(function(){
         $("#search-departure").val(null);
@@ -371,7 +329,7 @@ $.ui.ready(function(){
 
 
 
-    mainScroller = $("#main").scroller(); //Fetch the scroller from cache
+    mainScroller = $("#driverboard").scroller(); //Fetch the scroller from cache
     //Since this is a App Framework UI scroller, we could also do
     // mainScroller=$.ui.scrollingDivs['webslider'];
     mainScroller.addInfinite();
@@ -394,11 +352,11 @@ $.ui.ready(function(){
     $.bind(mainScroller, "refresh-release", function () {
         var that = this;
         if(!visitor){
-            getPullToRefresh(that);
+            getTodoPullToRefresh(that);
         }else{
             setTimeout(function () {
                 that.hideRefresh();
-                goToPortalPanelPopup();
+                getRequestFromTaskInfinite();
             }, 1000);
 
 
@@ -447,42 +405,40 @@ $.ui.ready(function(){
     });
 
 
-    myScroller = $("#selfOrder").scroller(); //Fetch the scroller from cache
-//Since this is a App Framework UI scroller, we could also do
-// myScroller=$.ui.scrollingDivs['webslider'];
-    myScroller.addInfinite();
-    myScroller.addPullToRefresh();
-    myScroller.runCB=true;
-    $.bind(myScroller, 'scrollend', function () {
+   
+  
+
+    orderlistScroller = $("#orderlist").scroller(); //Fetch the scroller from cache
+    orderlistScroller.addInfinite();
+    orderlistScroller.addPullToRefresh();
+    orderlistScroller.runCB=true;
+    $.bind(orderlistScroller, 'scrollend', function () {
         console.log("scroll end");
     });
 
-    $.bind(myScroller, 'scrollstart', function () {
+    $.bind(orderlistScroller, 'scrollstart', function () {
         console.log("scroll start");
     });
-    $.bind(myScroller,"scroll",function(position){
+    $.bind(orderlistScroller,"scroll",function(position){
 
     })
-    $.bind(myScroller, "refresh-trigger", function () {
+    $.bind(orderlistScroller, "refresh-trigger", function () {
         console.log("Refresh trigger");
     });
     var hideClose;
-    $.bind(myScroller, "refresh-release", function () {
+    $.bind(orderlistScroller, "refresh-release", function () {
         var that = this;
-        getMyPullToRefresh(that);
+        getOrderListPullToRefresh(that);
         return false; //tells it to not auto-cancel the refresh
     });
 
-    $.bind(myScroller, "refresh-cancel", function () {
-        //requestFlag=false;
-        //clearTimeout(hideClose);
-        //console.log("cancelled");
+    $.bind(orderlistScroller, "refresh-cancel", function () {
     });
-    myScroller.enable();
+    orderlistScroller.enable();
 
-    $.bind(myScroller, "infinite-scroll", function () {
+    $.bind(orderlistScroller, "infinite-scroll", function () {
         var self = this;
-        if($("#nullOrderSelf").length) {
+        if($("#nullTodoSelf").length) {
             self.clearInfinite();
         }else{
             console.log("infinite triggered");
@@ -493,65 +449,12 @@ $.ui.ready(function(){
                     "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
             }
 
-            $.bind(myScroller, "infinite-scroll-end", function () {
-                $.unbind(myScroller, "infinite-scroll-end");
+            $.bind(orderlistScroller, "infinite-scroll-end", function () {
+                $.unbind(orderlistScroller, "infinite-scroll-end");
 
                 if (ajaxFlag) {
                     ajaxFlag = false
-                    getRequestFromMyInfinite(self)
-                }
-            });
-        }
-    });
-
-
-    todoScroller = $("#task").scroller(); //Fetch the scroller from cache
-    todoScroller.addInfinite();
-    todoScroller.addPullToRefresh();
-    todoScroller.runCB=true;
-    $.bind(todoScroller, 'scrollend', function () {
-        console.log("scroll end");
-    });
-
-    $.bind(todoScroller, 'scrollstart', function () {
-        console.log("scroll start");
-    });
-    $.bind(todoScroller,"scroll",function(position){
-
-    })
-    $.bind(todoScroller, "refresh-trigger", function () {
-        console.log("Refresh trigger");
-    });
-    var hideClose;
-    $.bind(todoScroller, "refresh-release", function () {
-        var that = this;
-        getTodoPullToRefresh(that);
-        return false; //tells it to not auto-cancel the refresh
-    });
-
-    $.bind(todoScroller, "refresh-cancel", function () {
-    });
-    todoScroller.enable();
-
-    $.bind(todoScroller, "infinite-scroll", function () {
-        var self = this;
-        if($("#nullTodoSelf").length) {
-            self.clearInfinite();
-        }else{
-            console.log("infinite triggered");
-
-            if($("#infinite").length == 0)
-            {
-                $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
-                    "height:40px;font-size: 20px;text-align: center'>获取任务中 ...</div>");
-            }
-
-            $.bind(todoScroller, "infinite-scroll-end", function () {
-                $.unbind(todoScroller, "infinite-scroll-end");
-
-                if (ajaxFlag) {
-                    ajaxFlag = false
-                    getRequestFromTodoInfinite(self)
+                    getRequestFromOrderListinite(self)
                 }
             });
         }
@@ -578,7 +481,8 @@ function getAjax(ajaxURL,option,successFunction,failFunction){
     if(user!=null)
     {
         user = JSON.parse(user);
-        args = mergeJson(option,{lastTime:user.obj.lastTime,workerNo:user.obj.workerNo},true);
+        args = mergeJson(option,{lastTime:user.obj.lastTime,
+            userNo:user.obj.userNo,userType:user.obj.userType ,enterpriseNo:user.obj.enterpriseNo},true);
         args = JSON.parse(args);
     }
 
@@ -786,46 +690,7 @@ function loginTimeoutPopup(msg) {
         cancelOnly: true
     });
 }
-function changeLocationPopup(province,city) {
-    setTimeout(function(){$.ui.blockUI(.5);},10);
-    $.ui.popup({
-        title: "当前城市"+city,
-        message: "切换查询始发地为"+city,
-        cancelText: "取消",
-        cancelCallback: function () { alertLocationPopup =false},
-        cancelClass:"popup-btn",
-        doneText: "切换",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),{'vOriginAddrProvince':province,'vOriginAddrCity':city,'start':'1','queryDate':'','vehicleType':'','vDesAddrProvince':'','vDesAddrCity':''},true),true);
-            getNewMainList();
-            if($.ui.activeDiv.id=="main"){
-                mainPanleLoad();
-            }else{
-                $.ui.loadContent('#main', false, false, 'slide');
-            }
-        },
-        cancelOnly: false
-    });
-}
 
-//msg内容 msgType类型
-function pushMsg(message,method)
-{
-    $.ui.popup({
-        title: "您有一条新消息",
-        message: message,
-        cancelText: "忽略",
-        cancelCallback: function () {},
-        cancelClass:"popup-btn",
-        doneText: "立即查看",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            eval(method);
-        },
-        cancelOnly: false
-    });
-}
 //确定 or  取消
 
 function delImg(message,method){
@@ -861,29 +726,7 @@ function orderBuySuccPopup(msg) {
     });
 }
 
-function pushPopup(msg) {
-    setTimeout(function(){$.ui.blockUI(.5);},10);
-    $.ui.popup({
-        title: "有新订单",
-        message: msg,
-        cancelText: "取消",
-        cancelCallback: function () {},
-        cancelClass:"popup-btn",
-        doneText: "抢单",
-        doneClass:"popup-btn",
-        doneCallback: function () {
-            setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),{'start':'1'},true),true);
-            getNewMainList();
-            if($.ui.activeDiv.id=="main"){
-                mainPanleLoad();
-            }else{
-                $.ui.loadContent('#main', false, false, 'slide');
-            }
 
-        },
-        cancelOnly: false
-    });
-}
 
 function checkMobile(elementId){
     var number = $("#"+elementId).val();
@@ -904,7 +747,7 @@ function setCacheData(key,value,ever){
     }
 }
 
-function getWorkerNo(){
+function getUserNo(){
     return JSON.parse(localStorage.getItem("user")).obj.workerNo ;
 }
 
@@ -928,12 +771,7 @@ function mergeJson(jsonbject1, jsonbject2,needString)
     }
 };
 //设置为绘画完成,清除列表，清除session缓存，请求数据，返回数据放到缓存
-function getNewMainList(){
-$("ul#orderList").data("launch",false);
-$("ul#orderList").empty();
-sessionStorage.removeItem("mainList");
-getAjax(queryOrderList,JSON.parse(localStorage.getItem("locationFilter")),"setCacheData('mainList',data,false)","errorPopup('网络请求超时,请检查网络后再尝试..')");
-}
+
 
 function offerDone(data,consignNo){
     var msgText=data.msg.split("-")
@@ -1068,12 +906,17 @@ function myLocationOnSuccess(position)
 }
 
 
-function init_dom()
-{
-    var height = $("#mine2").height();
-    $("#mine2Content").css('height',height);
+//function init_dom()
+//{
+//    var height = $("#mine2").height();
+//    $("#mine2Content").css('height',height);
+//
+//    $("#home-content-panel").css('height',$("#home").height());
+//    $("#home-module").height($("#home").height()-$("#ad").height());
+//
+//}
 
-    $("#home-content-panel").css('height',$("#home").height());
-    $("#home-module").height($("#home").height()-$("#ad").height());
 
-}
+
+
+

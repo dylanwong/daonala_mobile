@@ -4,11 +4,11 @@
 
 var taskTabStatus = 0;
 function toggleTaskTabs(elm) {
-    $(".tabTaskCurrent").addClass('tabTaskN');
-    $(".tabTaskCurrent").removeClass('tabTaskY');
+    $(".tabTaskCurrent").addClass('tabTaskY');
+    $(".tabTaskCurrent").removeClass('tabTaskN');
 
-    $(elm).removeClass('tabTaskN');
-    $(elm).addClass('tabTaskY');
+    $(elm).removeClass('tabTaskY');
+    $(elm).addClass('tabTaskN');
 
     taskTabStatus = $(elm).attr('status')
     taskPanelLoad(taskTabStatus);
@@ -34,7 +34,7 @@ function getTodoPullToRefresh(that){
     setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
         {'queryType':'1'},true),true);
     jQuery.ajax({
-        url: queryTodoList,
+        url: taskqueryUrl,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("taskFilter"))
@@ -54,7 +54,7 @@ function getTodoPullToRefresh(that){
                             $("#selfOrder_pulldown").html("<h2 style='color: #F6842B'>暂无新任务</h2>")
                         }else{
                             $("#selfOrder_pulldown").html("<h2 style='color: #F6842B'>新增"+data.obj.data.length+"个任务</h2>")
-                            updateTodoPanel(data,true);
+                            updateTaskPanel(data,true);
                         }
                     }catch(e){
                     };
@@ -76,9 +76,9 @@ function getTodoPullToRefresh(that){
 }
 
 
-function getRequestFromTodoInfinite(self) {
+function getRequestFromTaskInfinite(self) {
     jQuery.ajax({
-        url: queryTodoList,
+        url: taskqueryUrl,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("taskFilter"))
@@ -96,7 +96,7 @@ function getRequestFromTodoInfinite(self) {
                     try{
                         $(self.el).find("#infinite").remove();
                         self.clearInfinite();
-                        updateTodoPanel(data);
+                        updateTaskPanel(data);
                     }catch(e){
                     };
                 }
@@ -128,8 +128,8 @@ function updateTaskPanel(data, prepend) {
         var timeline = '';
         var buttonHtml = "";
 
-        taskTabStatus == 0 ? todoTriFuc = 'taskInfo(this);' : todoTriFuc = 'trace_panel(this);';
-        taskTabStatus == 0 ? buttonHtml = '任务反馈' : buttonHtml = '查看任务';
+        taskTabStatus == 0 ? todoTriFuc = 'taskInfo(this);' : todoTriFuc = 'biddingsignorder(this);';
+        taskTabStatus == 0 ? buttonHtml = '任务反馈' : buttonHtml = '补录';
         $(obj).each(function (index,data) {
             var statusSelStyle10 = "";
             var statusSelCss10 = "bg_black";
@@ -140,34 +140,34 @@ function updateTaskPanel(data, prepend) {
             var status = data.status;
             if(status <= 40)
             {
-                statusSelStyle10 = "color:#EE9837";
-                statusSelCss10 = "bg_yellow";
+                statusSelStyle10 = "color:#00B2EE";
+                statusSelCss10 = "bg_blue";
             }else if(status > 40 && status <= 70)
             {
-                statusSelStyle70 = "color:#EE9837";
-                statusSelCss70 = "bg_yellow";
+                statusSelStyle70 = "color:#00B2EE";
+                statusSelCss70 = "bg_blue";
             }else if(status > 70 && status <= 99)
             {
-                statusSelStyle99 = "color:#EE9837";
-                statusSelCss99 = "bg_yellow";
+                statusSelStyle99 = "color:#00B2EE";
+                statusSelCss99 = "bg_blue";
             }
 
             if(taskTabStatus == 0)
             {
                 timeline = '<div class="fr f10"><div class="fl">' +
-                    '<p class="f10 " style="'+statusSelStyle10+'">提货</p><div style="margin: -5px auto;" ' +
+                    '<p class="f10 " style="'+statusSelStyle10+'">未完成</p><div style="margin: -5px auto;" ' +
                     'class="circle '+statusSelCss10+'">' +
                     '</div></div><div class="fl"><p></p><div style="margin: 10px auto; height:10px;" ' +
                     'class="">—</div></div><div class="fl">' +
-                    '<p class="f10" style="'+statusSelStyle70+'">在途</p>' +
+                    '<p class="f10" style="'+statusSelStyle70+'">完成</p>' +
                     '<div style="margin: -5px auto;" class="circle '+statusSelCss70+'"></div></div>' +
-                    '<div class="fl"><p></p><div style="margin: 10px auto; height:10px;">—</div>' +
+                    /*'<div class="fl"><p></p><div style="margin: 10px auto; height:10px;">—</div>' +
                     '</div><div class="fl">' +
                     '<p class="f10" style="'+statusSelStyle99+'">交接</p><div style="margin: -5px auto;" ' +
-                    'class="circle '+statusSelCss99+'"></div></div><div style="clear:both;"></div></div>';
+                    'class="circle '+statusSelCss99+'"></div></div>*/'<div style="clear:both;"></div></div>';
             }else
             {
-                timeline = '<div class="fr f10 yellowColor"> '+list[i].surplusDate+'</div>';
+                timeline = '<div class="fr f10 yellowColor"> '+data.deliveryDate+'</div>';
             }
 
 

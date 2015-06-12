@@ -49,7 +49,7 @@ function deliveryorder() {
 //            deliverNo, orders, imgurls, remarks, operater, userName,
 //            subStatus, type, userNo, status, location
             getAjax(url, option, 'addorderstatus_result_succ(data)');
-            localStorage.removeItem("chocieorders");
+
     }
 }
 
@@ -83,7 +83,7 @@ function confirmfolloworder(){
         var fileList = JSON.stringify(chk_value);
 
         var data = JSON.parse(localStorage.getItem("currenttask"));
-        var url = baseUrl + "feedback/addorderstatus.action";
+        var url = baseUrl + "driver/update_trace_status.action";
         var user = JSON.parse(localStorage.getItem('user'));
         var option = {
             operator: '',
@@ -124,7 +124,7 @@ function confirmhandoverorder(){
     var fileList=JSON.stringify(chk_value);
     var data = JSON.parse(localStorage.getItem("currenttask"));
     //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
-    var url = baseUrl+"feedback/addorderstatus.action";
+    var url = baseUrl+"driver/update_trace_status.action";
     var user = JSON.parse( localStorage.getItem('user') );
     var option = {
         operator:$('#handoveroperater').val(),
@@ -142,11 +142,11 @@ function confirmhandoverorder(){
         userNo:user.obj.userNo
     };
     getAjax(url,option,'addorderstatus_result_succ(data)');
-    localStorage.removeItem("chocieorders");
+   /* localStorage.removeItem("chocieorders");*/
     }
 }
 
-/**交接货物确认**/
+/**签收货物确认**/
 function confirmsignorder(){
     if($("#signoperater").val()==''||$("#signoperater")==undefined){
         errorPopup('请输入签收人');
@@ -163,10 +163,10 @@ function confirmsignorder(){
         var fileList=JSON.stringify(chk_value);
         var data = JSON.parse(localStorage.getItem("currenttask"));
         //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
-        var url = baseUrl+"feedback/addorderstatus.action";
+        var url = baseUrl+"driver/sign_order_status.action";
         var user = JSON.parse( localStorage.getItem('user') );
         var option = {
-            operator:$('#handoveroperater').val(),
+            operator:$('#signoperater').val(),
             enterpriseNo:data.enterpriseNo,
             deliveryNo:data.deliveryNo,
             orders: localStorage.getItem("chocieorders"),
@@ -174,26 +174,62 @@ function confirmsignorder(){
             substatus:'',
             location:'',
             remarks:$('#handoverremarks').val(),
-            type:'3',
+            type:'4',
             tel:user.obj.phone,
-            status:'80',
+            status:'90',
             userName:user.obj.userName,
             userNo:user.obj.userNo
         };
+
         getAjax(url,option,'addorderstatus_result_succ(data)');
+        var signQtyurl = baseUrl+"driver/signQty.action";
+        var goodslist = localStorage.getItem("signQtyItem");
+
+        if (JSON.parse(goodslist).length>0 ){
+            var qtyOptions = {
+                goodslist:goodslist
+            };
+            getAjax(signQtyurl,qtyOptions,'saveGoodQty_result_succ(data)');
+        }
         localStorage.removeItem("chocieorders");
     }
 }
 
 
-function addorderstatus_result_succ(data){
+function saveGoodQty(){
 
+    var goodslist = new Array();
+    var qtyOption;
+    $("input[name='signQty']").each(function (){
+        if( $(this).attr('signQty')!=$(this).val() ){
+            qtyOption = {
+                enterpriseNo:$(this).attr('enterpriseNo'),
+                orderNo:$(this).attr('orderNo'),
+                dispatchNo:$(this).attr('dispatchNo'),
+                articleNo:$(this).attr('articleNo'),
+                articleBarcode:$(this).attr('articlebarcode'),
+                signQty:$(this).val()
+            };
+            goodslist.push(qtyOption);
+        }
+    });
+    if(goodslist.length>0){
+    localStorage.setItem("signQtyItem",JSON.stringify(goodslist ));
+    }
+    $.ui.loadContent('#signorders', false, false, 'slide')
+}
+function saveGoodQty_result_succ(data){
+    localStorage.removeItem("signQty");
+}
+
+function addorderstatus_result_succ(data){
+    localStorage.removeItem("chocieorders");
     if(data.isSuc)
         errorPopup(data.msg);
     else{
         errorPopup(data.msg);
     }
-    task_panel();
+    driverboard_panel();
     clearthispage();
 }
 
@@ -208,7 +244,131 @@ function refreshlocation(){
     getCurrentPositionAddress();
 }
 
+/*订单明细选择列表*/
 
+function queryDetailList(){
+   var datas = JSON.parse(localStorage.getItem("chocieorders") );
+   var detail_list = '';
+   var gooddetail = '';
+    $('#signorderlist').empty();
+   if(datas.length>1){
+   $(datas).each(function (index,data) {
+       detail_list =+ '<li href="#" onclick="querygoodlist(this);"  '
+           +'enterpriseno="'+data.enterpriseNo+'" dispatchno="'+data.dispatchNo+'"  class="f2" style="margin-top:4px;">'+
+           '<div class="f2" style="height: 100px;margin-top:14px;">'+
+           '<div class="" style="float:left;width: 90%;margin-top:14px;">'+
+           '<div ><div style="float:left;width:90%;margin-top:14px;">'+
+           '<span class="fontCb f1 f14  p0-6 fd" >子订单号:</span>'+
+           '<span class="fontCb f1 f14  p0-6 fd" >'+data.subOrderNo+'</span>'+
+           '</div><div style="clear:both;"></div></div>'+
+           '<div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">'+
+           '</div><div><span class="ownerName f12 fco p0-6"  >货主单号:</span>'+
+           '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.orderNo+'</span><br>'+
+           '</div></div><div style="float:right;">'+
+           '<div class="" style="right: 20px;position:absolute;padding-top:35px;width:10%;">'+
+           '<div align="center" style="">'+
+           '<img style="width:16px;height: 16px;" src="assets/img/right.png" />'+
+           '</div></div></div><div style="clear:both;"></div></div></li>';
+   });
+  // $('#signorderlist').empty();
+   $('#signorderlist').append(detail_list);
+   $.ui.loadContent("#signorderslist", false, false, "slide");
+   } else if( datas.length=1 ){
+       $(datas).each(function (index,data) {
+           detail_list += '<li href="#" onclick="querygoodlist2(this);" '
+               +' enterpriseno="'+data.enterpriseNo+'" dispatchno="'+data.dispatchNo+'" '+
+               ' orderNo="'+data.orderNo+'" class="f2" style="margin-top:4px;">'+
+               '<div class="f2" style="height: 100px;margin-top:14px;">'+
+               '<div class="" style="float:left;width: 90%;margin-top:14px;">'+
+               '<div ><div style="float:left;width:90%;margin-top:14px;">'+
+               '<span class="fontCb f1 f14  p0-6 fd" >子订单号:</span>'+
+               '<span class="fontCb f1 f14  p0-6 fd" >'+data.subOrderNo+'</span>'+
+               '</div><div style="clear:both;"></div></div>'+
+               '<div align=""><hr style="margin-left:5px;width:94%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">'+
+               '</div><div><span class="ownerName f12 fco p0-6"  >货主单号:</span>'+
+               '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.orderNo+'</span><br>'+
+               '</div></div><div style="float:right;">'+
+               '<div class="" style="right: 20px;position:absolute;padding-top:37px;width:10%;">'+
+               '<div align="center" style="">'+
+               '<img style="width:16px;height: 16px;" src="assets/img/right.png" />'+
+               '</div></div></div><div style="clear:both;"></div></div></li>';
+       });
+       $('#signorderlist').append(detail_list);
+       $.ui.loadContent("#signorderslist", false, false, "slide");
+   } else {
+        errorPopup( '无数据,请重新选择订单!' );
+   }
+}
+
+function querygoodlist2(elm){
+    var enterpriseNo = eval('(' +$(elm).attr('enterpriseno')+ ')');
+    var dispatchNo = $(elm).attr('dispatchno');
+    var orderNo =  $(elm).attr('orderNo');
+    var detail_list = '';
+    var gooddetail = '';
+    $('#s_orderNo').html(orderNo);
+    $('#signorderlist').empty();
+    getAjax(goodSearchUrl, {'enterpriseNo':enterpriseNo,'dispatchNo':dispatchNo},
+        "updategoodlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
+function querygoodlist(){
+//    var enterpriseNo = eval('(' +$(elm).attr('enterpriseno')+ ')');
+//    var dispatchNo = $(elm).attr('dispatchno');
+    var datas = JSON.parse(localStorage.getItem("chocieorders") );
+    var detail_list = '';
+    var gooddetail = '';
+    $('#s_orderNo').html(datas[0].orderNo);
+    $('#signorderlist').empty();
+//    if(datas.length>1){
+//        $(datas).each(function (index,data) {
+//
+//        });
+//    }
+    var enterpriseNo = datas[0].enterpriseNo;
+    var dispatchNo = datas[0].dispatchNo;
+        getAjax(goodSearchUrl, {'enterpriseNo':enterpriseNo,'dispatchNo':dispatchNo},
+        "updategoodlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
+function updategoodlistPanel(datas){
+ //   var datas = JSON.parse(localStorage.getItem("chocieorders") );
+    var gooddetail = '';
+    var gooddetail = '';
+    if(datas.isSucc){
+    var list = datas.obj;
+
+    $('#goodscontent').empty();
+    if(list.length>=1){
+        $(list).each(function (index,data) {
+            gooddetail +=
+            '<div style="margin-top:5px;"><hr style="margin-left:5px;width:90%;' +
+            'margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #06ABD4;">'+
+            '</div> <div><div style="float:left;width:100%;height:45px;">'+
+            '<span class="f12 fco  p0-6" >产品名称:</span>'+
+            '<span class=" f12 fco" >'+data.articleName+'</span><br>'+
+            '<div><div style="float:left;width:50%;">'+
+            '<span class="f12 fco  p0-6">产品条码:</span>'+
+            '<span class=" f12 fco" >'+data.articleBarcode+'</span>'+
+            '</div><div style="float:right;width:50%;">'+
+            '<span class="f12 fco  ">签收数量:</span>'+
+            '<span class=" f12 fco" ><div style="line-height:0px;display:inline-block;" > ' +
+            '<input style="width:50px;" type="text" enterpriseNo="'+data.enterpriseNo+'"' +
+            ' orderNo="'+data.orderNo+'" ' +
+            'articleNo="'+data.articleNo+'" articleBarcode="'+data.articleBarcode+'" ' +
+            'dispatchNo="'+data.dispatchNo+'" signQtybak="'+data.signQty+'" name="signQty" value="'+data.signQty+'"></div>'+
+            '</span></div><div style="clear:both;"></div></div></div> </div>';
+        });
+        // $('#signorderlist').empty();
+        $('#goodscontent').append(gooddetail);
+        $.ui.loadContent("#signorderdetail", false, false, "slide");
+    } else {
+        errorPopup( '无商品明细!' );
+    }
+    }else{
+        errorPopup('程序异常，请检查代码');
+    }
+}
 /**
  * Created by wyy on 2015/3/3.
  * upload img to oms
