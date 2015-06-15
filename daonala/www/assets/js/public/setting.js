@@ -22,10 +22,10 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 //var queryOrderList=baseUrl+"order/query_deliverorderlistfordirver.action";
 
 
-var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
+var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.120:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.93:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -46,7 +46,7 @@ var ETID = null;
 //选中的任务ID
 var TDID = null;
 //位置ID
-var lOCATIONID = null;
+var roleID = null;
 //选中角色 1:物流商 2:货主 3: 货主客户 4：司机
 var ISSELROLE = "2";
 

@@ -218,6 +218,8 @@ function updateOrderlistPanel_bak(data){
            return '提货';
        }else if(status=='70'){
            return '在途';
+       }else if(status=='80'){
+           return '交接';
        }else if(status=='90'){
            return '签收';
        }else {

@@ -171,36 +171,43 @@ function queryEvalute(){
 
 function updateEvalute(datas){
     var evaluteResult = '';
-
+    var cuser = JSON.parse(localStorage.getItem("user"));
+    $('#reviewsItem1').empty();
+    $('#reviewsItem2').empty();
+    $('#reviewsItem3').empty();
     if(datas.isSucc){
         if(datas.obj.length == 0){
             $('#orderDetailEvaluate').empty();
             evaluteResult = '<div><p>无评论信息</p></div>';
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-            if(lOCATIONID==1){
+            if(cuser.obj.userType==0){
+
                 $('#evaluteBtn').hide();
-            } else if(lOCATIONID==2){
+            } else if(cuser.obj.userType==1){
                 $('#evaluteBtn').hide();
                 $('#replyBtn').hide();
-            } else if(lOCATIONID==3){
+            } else if(cuser.obj.userType==2){
+
                 $('#replyBtn').hide();
             } else {
 
             }
-            if(datas.obj.bodmEvaluate != null){
-                $('#evaluteInfo').append('');
-                $('#evaluteInfo').html(datas.obj.bodmEvaluate.reviewsUserNo);
-                evaluteResult = '';
-                $('#evaluteName').html(datas.obj.bodmEvaluate.reviewsUserNo
-                    +'【'+datas.obj.bodmEvaluate.reviewsDate+'】');
-                $('#reviewsDemo').html(datas.obj.bodmEvaluate.reviewsDemo);
-                $('#reviewsItem1').html(changeStar( datas.obj.bodmEvaluate.reviewsItem1) );
-                $('#reviewsItem2').html(changeStar( datas.obj.bodmEvaluate.reviewsItem2) );
-                $('#reviewsItem3').html(changeStar( datas.obj.bodmEvaluate.reviewsItem3) );
-
-                if(datas.obj.bodmEvaluateAnswer !=null ){
-                    $('#replyInfo').append('');
+            if(datas.obj[0].bodmEvaluate != null){
+                $('#orderDetailEvaluate').val(datas.obj[0].bodmEvaluate.reviewsNo);
+                //$('#evaluteInfo').append('');
+//                $('#evaluteInfo').html(datas.obj[0].bodmEvaluate.reviewsUserNo);
+//                evaluteResult = '';
+                $('#evaluteName').html(datas.obj[0].bodmEvaluate.reviewsUserNo
+                    +'【'+datas.obj[0].bodmEvaluate.reviewsDate+'】');
+                $('#reviewsDemo').html(datas.obj[0].bodmEvaluate.reviewsDemo);
+                $('#reviewsItem1').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem1) );
+                $('#reviewsItem2').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem2) );
+                $('#reviewsItem3').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem3) );
+                $('#replyBtn').hide();
+                if(datas.obj[0].bodmEvaluateAnswer !=null ){
+                    $('#replyInfo').append('<p>'+datas.obj[0].bodmEvaluateAnswer.replyUserNo+'['+datas.obj[0].bodmEvaluateAnswer.replyDate+']</p>'+
+                        '<p style="color:#06ABD4">'+datas.obj[0].bodmEvaluateAnswer.replyDemo+'</p>');
                 }else{
 
                     $('#replyspan').hide();
@@ -209,7 +216,12 @@ function updateEvalute(datas){
             }else{
                 $('#orderDetailEvaluate').empty();
                 evaluteResult = '<div><p>无评论信息</p></div>';
-                $('#orderDetailEvaluate').append(evaluteResult);
+                //$('#orderDetailEvaluate').append(evaluteResult);
+                $('#orderDetailEvaluate').append('<div><a href="#evaluate" >'+
+                    '<button type="button" id="evaluteBtn" class="btn btn-primary" '+
+                    'style="width:60px;height:24px;font-size:14px; '+
+                    'text-align:center;line-height:24px;padding:0px 12px;">去评价</button> '+
+                    '</a></div>');
             }
             evaluteResult = '';
         }
@@ -219,16 +231,136 @@ function updateEvalute(datas){
     }
 }
 
-function changeStar(star){
+function showStar(star){
     if(star == 1){
-
-    }else if( star == 1 ){
-
-    }else if( star == 1 ){
-
-    }else if( star == 1 ){
-
-    }else if( star == 1 ){
-
+       return '<ul class="star1">'+
+        '<li><img src="assets/img/bluestar.png"/></li>'+
+        '<li><img src="assets/img/star.png"/></li>'+
+        '<li><img src="assets/img/star.png"/></li>'+
+        '<li><img src="assets/img/star.png"/></li>'+
+        '<li><img src="assets/img/star.png"/></li>'+
+        '</ul> ';
+    }else if( star == 2 ){
+        return '<ul class="star1">'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '</ul> ';
+    }else if( star == 3 ){
+        return '<ul class="star1">'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '</ul> ';
+    }else if( star == 4 ){
+        return '<ul class="star1">'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '</ul> ';
+    }else if( star == 5 ){
+        return '<ul class="star1">'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '</ul> ';
     }
+}
+
+$(function(){
+    $(".star li").mouseenter(function(){
+        $(".star li img").attr("src","assets/img/bluestar.png");
+        $(".star li img").attr("evaluteGrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evaluteGrade","0");
+    })
+});
+
+function saveReply(){
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var cuser = JSON.parse(localStorage.getItem("user"));
+    var savereplyUrl = baseUrl + 'order/submit_evaluate_reply.action';
+
+    getAjax(savereplyUrl, {'enterpriseNo':data.enterpriseNo, 'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo, 'ownerNo':data.ownerNo,
+        'reviewsDemo':$('#reply_Info').val(), 'replyParentId':$('#orderDetailEvaluate').val(),
+            'userName':cuser.obj.userName },
+        "saveReplySucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+
+function saveEvalute(){
+    var saveevaluteUrl = baseUrl + 'order/submit_evaluate.action';
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var cuser = JSON.parse(localStorage.getItem("user"));
+    var savereplyUrl = 'order/submit_evaluate_reply.action';
+  /*  enterpriseNo, systemNo,
+        dispatchNo, ownerNo, reviewsItem1, reviewsItem2,
+        reviewsItem3, reviewsDemo, userName*/
+    //evaluteGrade
+    var reviewsItem1 ;
+    var reviewsItem2 ;
+    var reviewsItem3 ;
+    $('img[name="wanhao"]').each(
+        function() {
+            if( $(this).attr(evaluteGrade) == 1 ){
+                reviewsItem1 += 1;
+            };
+        });
+    $('img[name="huidan"]').each(
+        function() {
+            if( $(this).attr(evaluteGrade) == 1 ){
+                reviewsItem2 += 1;
+            };
+        });
+    $('img[name="attitude"]').each(
+        function() {
+            if( $(this).attr(evaluteGrade) == 1 ){
+                reviewsItem3 += 1;
+            };
+        });
+    var options = {
+        'enterpriseNo':data.enterpriseNo,
+        'systemNo':data.systemNo,
+        'dispatchNo':data.dispatchNo,
+        'ownerNo':data.ownerNo,
+        'reviewsDemo':$('#evaluteInfo').val(),
+        'reviewsItem1':reviewsItem1,
+        'reviewsItem2':reviewsItem2,
+        'reviewsItem3':reviewsItem3,
+        'userName':cuser.obj.userName
+    }
+    getAjax(saveevaluteUrl, options,
+        "saveEvaluteSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+
+}
+
+function saveReplySucc(data){
+    if(data.isSucc){
+        errorPopup.msg('回复成功！');
+        traceSingleInfo33();
+    }else{
+        errorPopup(data.msg);
+    }
+
+}
+
+function saveEvaluteSucc(data){
+    if(data.isSucc){
+        errorPopup.msg('评论成功！');
+        traceSingleInfo33();
+    }else{
+        errorPopup(data.msg);
+    }
+
 }

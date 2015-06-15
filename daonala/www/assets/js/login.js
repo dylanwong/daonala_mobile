@@ -50,6 +50,7 @@ function save_login_succ(data)
         isLogin = true;
         setCacheData('user',data,1);
         loginStatus = 1;
+        roleID = data.obj.userType;
         visitor=false;
 
         $('#user_img').attr('src','assets/img/person.png');
@@ -73,6 +74,7 @@ function bing_login_dom_data()
 
 function logout()
 {
+    roleID = '';
     $.ui.popup({
         title: "温馨提示",
         message: "您确定注销登陆!",
