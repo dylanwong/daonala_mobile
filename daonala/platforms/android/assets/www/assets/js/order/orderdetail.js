@@ -112,24 +112,28 @@ function updateTracePanel2(datas){
         var obj = datas.obj ;
         $(obj).each(function (index,data) {
             var status = data.status;
+            var dispatchStatus = data.dispatchStatus;
             time = data.changeTimeDescri;
             desc = data.statusDesc;
             if(desc == "")
             {
                 height = ";height:100px;";
             }
-            if(status <= 40)
+            if( dispatchStatus <= 10 ){
+                color = "#3EA2FC";
+                title = "下单";
+            }else if( dispatchStatus > 10 && dispatchStatus <= 40)
             {
                 color = "#30BC7F";
                 title = "提货";
-            }else if(status > 40 && status <= 70)
+            }else if(dispatchStatus > 40 && dispatchStatus <= 80)
             {
                 color = "#3EA2FC";
-                title = "在途";
-            }else if(status > 70 && status <= 99)
+                title = "运输中";
+            }else if(status > 80 && status <= 99)
             {
                 color = "#F53274";
-                title = "交接";
+                title = "签收";
             }
 
             if(index == 0)
@@ -177,8 +181,18 @@ function updateEvalute(datas){
     $('#reviewsItem3').empty();
     if(datas.isSucc){
         if(datas.obj.length == 0){
-            $('#orderDetailEvaluate').empty();
+            if(cuser.obj.userType==2){
+                $('#orderDetailEvaluate').empty();
+                evaluteResult = '<div class=" width20" align="center" style="color:#26B6D9;font-size:16px;">'+
+               '<a href="#evaluate" ><button type="button" id="evaluteBtn" class="btn btn-primary" '+
+               'style="width:60px;height:24px;font-size:14px; '+
+               'text-align:center;line-height:24px;padding:0px 12px;">去评价</button> '+
+                                '</a></div>';
+              //  evaluteResult = '<div><p>无评论信息</p></div>';
+            }else{
+                $('#orderDetailEvaluate').empty();
             evaluteResult = '<div><p>无评论信息</p></div>';
+            }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
             if(cuser.obj.userType==0){
@@ -188,7 +202,7 @@ function updateEvalute(datas){
                 $('#evaluteBtn').hide();
                 $('#replyBtn').hide();
             } else if(cuser.obj.userType==2){
-
+                $('#evaluteBtn').show();
                 $('#replyBtn').hide();
             } else {
 
@@ -278,10 +292,10 @@ function showStar(star){
 $(function(){
     $(".star li").mouseenter(function(){
         $(".star li img").attr("src","assets/img/bluestar.png");
-        $(".star li img").attr("evaluteGrade","1");
+        $(".star li img").attr("evalutegrade","1");
         $(this).find('img').attr("src","assets/img/bluestar.png");
         $(this).nextAll().find('img').attr("src","assets/img/star.png");
-        $(this).nextAll().find('img').attr("evaluteGrade","0");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
     })
 });
 
@@ -306,26 +320,26 @@ function saveEvalute(){
   /*  enterpriseNo, systemNo,
         dispatchNo, ownerNo, reviewsItem1, reviewsItem2,
         reviewsItem3, reviewsDemo, userName*/
-    //evaluteGrade
-    var reviewsItem1 ;
-    var reviewsItem2 ;
-    var reviewsItem3 ;
+    //evalutegrade
+    var reviewsItem1 = 0 ;
+    var reviewsItem2 = 0 ;
+    var reviewsItem3 = 0 ;
     $('img[name="wanhao"]').each(
         function() {
-            if( $(this).attr(evaluteGrade) == 1 ){
-                reviewsItem1 += 1;
+            if( $(this).attr('evalutegrade') == 1 ){
+                reviewsItem1 + 1;
             };
         });
     $('img[name="huidan"]').each(
         function() {
-            if( $(this).attr(evaluteGrade) == 1 ){
-                reviewsItem2 += 1;
+            if( $(this).attr('evalutegrade') == 1 ){
+                reviewsItem2 + 1;
             };
         });
     $('img[name="attitude"]').each(
         function() {
-            if( $(this).attr(evaluteGrade) == 1 ){
-                reviewsItem3 += 1;
+            if( $(this).attr('evalutegrade') == 1 ){
+                reviewsItem3 + 1;
             };
         });
     var options = {

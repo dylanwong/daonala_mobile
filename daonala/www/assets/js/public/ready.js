@@ -408,6 +408,59 @@ $.ui.ready(function(){
    
   
 
+    custorderlistScroller = $("#custboard").scroller(); //Fetch the scroller from cache
+    custorderlistScroller.addInfinite();
+    custorderlistScroller.addPullToRefresh();
+    custorderlistScroller.runCB=true;
+    $.bind(custorderlistScroller, 'scrollend', function () {
+        console.log("scroll end");
+    });
+
+    $.bind(custorderlistScroller, 'scrollstart', function () {
+        console.log("scroll start");
+    });
+    $.bind(custorderlistScroller,"scroll",function(position){
+
+    })
+    $.bind(custorderlistScroller, "refresh-trigger", function () {
+        console.log("Refresh trigger");
+    });
+    var hideClose;
+    $.bind(custorderlistScroller, "refresh-release", function () {
+        var that = this;
+        getCustOrderPullToRefresh(that);
+        return false; //tells it to not auto-cancel the refresh
+    });
+
+    $.bind(custorderlistScroller, "refresh-cancel", function () {
+    });
+    custorderlistScroller.enable();
+
+    $.bind(custorderlistScroller, "infinite-scroll", function () {
+        var self = this;
+        if($("#nullTodoSelf").length) {
+            self.clearInfinite();
+        }else{
+            console.log("infinite triggered");
+
+            if($("#infinite").length == 0)
+            {
+                $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
+                    "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
+            }
+
+            $.bind(custorderlistScroller, "infinite-scroll-end", function () {
+                $.unbind(custorderlistScroller, "infinite-scroll-end");
+
+                if (ajaxFlag) {
+                    ajaxFlag = false
+                    getRequestFromCustOrderinite(self)
+                }
+            });
+        }
+    });
+
+
     orderlistScroller = $("#orderlist").scroller(); //Fetch the scroller from cache
     orderlistScroller.addInfinite();
     orderlistScroller.addPullToRefresh();
@@ -459,8 +512,6 @@ $.ui.ready(function(){
             });
         }
     });
-
-
 
 
 
@@ -748,7 +799,10 @@ function setCacheData(key,value,ever){
 }
 
 function getUserNo(){
-    return JSON.parse(localStorage.getItem("user")).obj.workerNo ;
+    return JSON.parse(localStorage.getItem("user")).obj.userNo ;
+}
+function getEnterpriseNo(){
+    return JSON.parse(localStorage.getItem("user")).obj.enterpriseNo ;
 }
 
 function mergeJson(jsonbject1, jsonbject2,needString)

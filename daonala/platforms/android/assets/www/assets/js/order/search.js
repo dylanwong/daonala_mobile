@@ -12,19 +12,22 @@ function search(){
         {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
     if ( localStorage.getItem("user")==null ) {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
+            'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+                'userType':user.obj.userType },
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
     if( getUserNo()!=null ){
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo() }, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+                'userType':user.obj.userType }, true), true);
     }else{
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N' }, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
 
     }
 
@@ -235,12 +238,14 @@ function updateOrderlistPanel_bak(data){
 
 
 function getOrderListPullToRefresh(that){
+    setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+        {'queryType':'1'},true),true);
 
     jQuery.ajax({
         url: searchUrl,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
-        data:JSON.parse(data)
+        data:JSON.parse(localStorage.getItem("searchFilter"))
     }).done(
         function (data) {
             if(data!=null)

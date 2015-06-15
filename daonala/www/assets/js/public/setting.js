@@ -25,7 +25,7 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.93:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.78:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -126,6 +126,7 @@ function init_homepage(){
             $('#myboard').bind('click',function(){
                 custboard_panel();
             });
+            $('#myboard').attr('statusType','0');
             $('#myboardText').html('看板');
         }else if(user.obj.userType=='3'){
             $('#myboard').unbind('click');
