@@ -43,7 +43,6 @@ function updateOrderlistPanel(data){
         if (data.obj.recordsTotal > 1) {
             $.ui.loadContent("#orderlist", false, false, "slide");
             for (var k in data.obj.data) {
-                $.ui.loadContent("#orderlist", false, false, "slide");
                 $.ui.showMask("我们正在拼命的加载数据...");
                 if (data.obj.data[k].occurPlace == '') {
                     result = $('<li class="f2" style="margin-top:4px;" onclick="' + traceFuc + '" ' +
