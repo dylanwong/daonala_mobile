@@ -120,6 +120,26 @@ li{ position:relative; }
     width: 20px;
 }
 
+.star2 {padding-top:-1px;margin-top:-1px;list-style:none; float:left;}
+.star2 li {
+    float: left;
+    margin-right: 4px;
+}
+.star2 li img{
+    height: 20px;
+    width: 20px;
+}
+
+.star3 {padding-top:-1px;margin-top:-1px;list-style:none; float:left;}
+.star3 li {
+    float: left;
+    margin-right: 4px;
+}
+.star3 li img{
+    height: 20px;
+    width: 20px;
+}
+
 .width7{width: 70%}
 .width6{width: 60%}
 .width3{width: 30%}
@@ -382,21 +402,23 @@ a:focus,input:focus{
 /*tabs*/
 .tabOrderSelYes
 {
-    color: #F6842B;
+    background-color:#8A8A8A;
+    color: #FFFFFF
 }
 .tabOrderSelNo
 {
-    background-color: #EF8305;
+    background-color: #06ABD4;
     color:#FFFFFF;
 }
 
 .tabTaskY
 {
-    color: #F6842B;
+    background-color:#8A8A8A;
+    color: #FFFFFF
 }
 .tabTaskN
 {
-    background-color: #EF8305;
+    background-color:#06ABD4;
     color:#FFFFFF;
 }
 
@@ -541,4 +563,53 @@ li {list-style-type:none;}
 #orderDetailTrace img{
     padding-right: 5px;
     padding-top: 5px;
+}
+
+
+/**自动填充**/
+.ac_results {
+    padding: 0px;
+    border: 1px solid WindowFrame;
+    background-color: Window;
+    overflow: hidden;
+}
+
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ac_results iframe {
+    display:none;/*sorry for IE5*/
+    display/**/:block;/*sorry for IE5*/
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+    filter:mask();
+    width:3000px;
+    height:3000px;
+}
+
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    font: menu;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.ac_loading {
+    background : Window url('./indicator.gif') right center no-repeat;
+}
+
+.ac_over {
+    background-color: Highlight;
+    color: HighlightText;
 }

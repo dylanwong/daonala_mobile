@@ -1,18 +1,95 @@
 /**
- * Created by zhouhuan on 2015-06-10.
+ * Created by wyy on 2015-06-10.
  */
+//初始化更精确查询页面（分公司初始化）
+function initBoardSearchPage(){
+    //initAutoData();
+   /* if(getUserType() == 0){
+        $('#ownerText').attr('placeholder','请输入货主编号或名称模糊查询...');
+    }else if(getUserType() == 1){
+        $('#ownerText').attr('placeholder','请输入客户编号或名称模糊查询...');
+    }*/
+    getAjax(searchSubCompanyUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
+        "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
 
+//确认精确查询条件
+function confirmSearch(){
+    var subcompany = $('#select_city').attr('selectid');
+    var subcompanyName = $('#select_city').val();
+
+    $('#subCompany').empty();
+    $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
+    $('#subCompany').attr('value',subcompany);
+    // var ownerOrCustText = $('#ownerText').val();
+    initLogisticBoardAgain();
+}
+
+function updateBoardSearchPage(data){
+    if(data.isSucc){
+        var result = null;
+        for( var i in data.obj){
+            result += '<option value="'+data.obj[i].companyNo+'">'+data.obj[i].companyName+'</option>';
+        }
+        $('#select_city_panel').append(result);
+    }
+    jQuery('#select_city_panel').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
+        },
+        onClose: function () {
+        },
+        onCancel: function () {
+        },
+        onSelect: function (v, inst) {
+            $("#select_city").val(v);
+            $("#select_city").attr('selectid',inst.values);
+        }
+    });
+}
+
+//初始化物流/货主看板
 function initLogisticBoard(){
+    var user =  JSON.parse( localStorage.getItem('user') );
+
+
+    $('#subCompany').empty();
+//  $('#subCompany').append('<b class="">分公司：</b>'+user.obj.enterpriseN);
+//    $('#subCompany').attr('value',user.obj.enterpriseNo);
+    //$('#boardOwner').text(user.obj.enterpriseName);
+   // $('#boardOwner').text('');
     var option ={
-        enterpriseText : $('#subCompany').attr('value'),
-        ownerText : $('#boardOwner').val(),
-        custText : '',
+        enterpriseNo : user.obj.enterpriseNo,
+        ownerNo :'',
+        subCompanyNo : '',
      //   userNo : '',
-        userType : '0'
+        userType : user.obj.userType
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
 }
+function initLogisticBoardAgain(){
+    var user =  JSON.parse( localStorage.getItem('user') );
 
+    //$('#subCompany').attr('value',user.obj.enterpriseNo);
+    //$('#subCompany').attr('value','');
+    $('#boardOwner').text(user.obj.enterpriseName);
+    // $('#boardOwner').text('');
+    var option ={
+        enterpriseNo : user.obj.enterpriseNo,
+
+        subCompanyNo : $('#subCompany').attr('value'),
+        ownerNo :'',
+        //   userNo : '',
+        userType : user.obj.userType
+    }
+    getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
+
+}
 function queryLogisticCount_Result_Suc(data) {
 
     if (data.isSucc) {
@@ -24,37 +101,64 @@ function queryLogisticCount_Result_Suc(data) {
         localStorage.setItem("list7", JSON.stringify(list2));
         localStorage.setItem("list30", JSON.stringify(list3));
 
-        $("#allCount_1").html(
-             parseInt(list1[0].countNumber)
-            +parseInt(list1[1].countNumber)
-            +parseInt(list1[2].countNumber)
-            +parseInt(list1[3].countNumber));
-        $("#allCount_7").html(
-                parseInt(list2[0].countNumber)
-                +parseInt(list2[1].countNumber)
-                +parseInt(list2[2].countNumber)
-                +parseInt(list2[3].countNumber));
-        $("#allCount_30").html(
-                parseInt(list3[0].countNumber)
-                +parseInt(list3[1].countNumber)
-                +parseInt(list3[2].countNumber)
-                +parseInt(list3[3].countNumber));
 
-        $("#count_status10_1").html(list1[0].countNumber);
-        $("#count_status40_1").html(list1[1].countNumber);
-        $("#count_status70_1").html(list1[2].countNumber);
-        $("#count_status90_1").html(list1[3].countNumber);
+        var count1001 =  parseInt( list1[0].list[0].countNumber );
+        var count4001 =
+             parseInt(list1[1].list[0].countNumber)
+            +parseInt(list1[1].list[1].countNumber)
+            +parseInt(list1[1].list[2].countNumber)
+            +parseInt(list1[1].list[3].countNumber)
+            +parseInt(list1[1].list[4].countNumber);
+        var count7001 =
+             parseInt(list1[2].list[0].countNumber)
+            +parseInt(list1[2].list[1].countNumber)
+            +parseInt(list1[2].list[2].countNumber);
+        var count9001 =  parseInt( list1[3].list[0].countNumber );
 
-        $("#count_status10_7").html(list2[0].countNumber);
-        $("#count_status40_7").html(list2[1].countNumber);
-        $("#count_status70_7").html(list2[2].countNumber);
-        $("#count_status90_7").html(list2[3].countNumber);
+        var count1007 =  parseInt( list2[0].list[0].countNumber );
+        var count4007 =
+             parseInt(list2[1].list[0].countNumber)
+            +parseInt(list2[1].list[1].countNumber)
+            +parseInt(list2[1].list[2].countNumber)
+            +parseInt(list2[1].list[3].countNumber)
+            +parseInt(list2[1].list[4].countNumber);
+        var count7007 =
+             parseInt(list2[2].list[0].countNumber)
+            +parseInt(list2[2].list[1].countNumber)
+            +parseInt(list2[2].list[2].countNumber);
+        var count9007 =  parseInt( list2[3].list[0].countNumber );
 
-        $("#count_status10_30").html(list3[0].countNumber);
-        $("#count_status40_30").html(list3[1].countNumber);
-        $("#count_status70_30").html(list3[2].countNumber);
-        $("#count_status90_30").html(list3[3].countNumber);
+        var count1030 =  parseInt( list3[0].list[0].countNumber );
+        var count4030 =
+             parseInt(list3[1].list[0].countNumber)
+            +parseInt(list3[1].list[1].countNumber)
+            +parseInt(list3[1].list[2].countNumber)
+            +parseInt(list3[1].list[3].countNumber)
+            +parseInt(list3[1].list[4].countNumber);
+        var count7030 =
+             parseInt(list3[2].list[0].countNumber)
+            +parseInt(list3[2].list[1].countNumber)
+            +parseInt(list3[2].list[2].countNumber);
+        var count9030 = parseInt( list3[3].list[0].countNumber );
+        $("#count_status10_1").html(count1001);
+        $("#count_status40_1").html(count4001);
+        $("#count_status70_1").html(count7001);
+        $("#count_status90_1").html(count9001);
 
+        $("#count_status10_7").html(count1007);
+        $("#count_status40_7").html(count4007);
+        $("#count_status70_7").html(count7007);
+        $("#count_status90_7").html(count9007);
+
+        $("#count_status10_30").html(count1030);
+        $("#count_status40_30").html(count4030);
+        $("#count_status70_30").html(count7030);
+        $("#count_status90_30").html(count9030);
+
+
+        $("#allCount_1").html(count1001+count4001+count7001+count9001);
+        $("#allCount_7").html(count1007+count4007+count7007+count9007);
+        $("#allCount_30").html(count1030+count4030+count7030+count9030);
     } else {
 
     }
@@ -144,6 +248,6 @@ function orderlist_panel(statustype){
 
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
-            'ownerText':'','custText':'','userNo':getUserNo()}, true), true);
+            'ownerText':'','custText':'','userNo':getUserNo(),'userType':getUserTypeFromsession()}, true), true);
 
 }

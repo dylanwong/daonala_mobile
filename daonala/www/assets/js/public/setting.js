@@ -25,7 +25,7 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.78:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.98:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -41,6 +41,8 @@ var goodSearchUrl = baseUrl+"order/query_goodslist.action";
 var ordercount = baseUrl +"order/order_count.action";
 var searchProductUrl = baseUrl + "order/query_order_detail.action";
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
+var searchSubCompanyUrl = baseUrl + "order/query_subcompany.action";
+var linkDataUrl = baseUrl + "order/getLinkDataList.action";
 //event target ID
 var ETID = null;
 //选中的任务ID
@@ -77,10 +79,10 @@ function onDeviceReadySettingEvents() {
             navigator.splashscreen.hide();
         }, 1000);
     }
-    setTimeout(function () {
-        getLocation()
-    }, 3000);
-    checkVersion();
+//    setTimeout(function () {
+//        getLocation()
+//    }, 3000);
+    //checkVersion();
     init_home_ad();
     init_homepage();
 

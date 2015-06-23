@@ -17,6 +17,42 @@ function init_orderdetail()
     })
 }
 
+/*货主客户订单详情页面*/
+function initTraceInfo2(){
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    $('#shipPhone_d').html(data.orderNo);
+    $('#shipNo_d').html(data.ownerName);
+
+    $('#custAddr_d').html(data.custAddr);
+    $('#custName_d').html(data.custName);
+    $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
+    $('#addrName_d').html(data.addrName);
+    $('#ownerPhone_d').attr('href','tel:'+data.custPhone);
+
+    $('#ownerName_d').html(data.ownerName);
+    $('#ownerAddr_d').html(data.ownerAddr);
+    $('#ownerContacts_d').html(data.ownerContacts+'  '+data.ownerPhone);
+
+
+    $('#status_d').html( showstatus(data.status) );
+    $('#transNo_d').html(data.transNo);
+    $('#ownerNo_d').html(data.ownerNo);
+    $('#custNo_d').html(data.custNo);
+    $('#orderDate_d').html(data.orderDate);
+
+
+    $('#topdeliverNo_d').html('运输单号:'+data.topsendNo);
+    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
+    queryDetailProduct();
+    queryDetailTrace_login();
+    queryEvalute();
+//    $.ui.blockUI(.3);
+//    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+//            'dispatchNo':data.dispatchNo,
+//            'sendNo':data.topsendNo},
+//        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
 function queryDetailInfo(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $('#shipPhone_d').html(data.orderNo);
@@ -32,13 +68,14 @@ function queryDetailInfo(){
     $('#ownerAddr_d').html(data.ownerAddr);
     $('#ownerContacts_d').html(data.orderNo);
 
-    $('#status_d').html(showstatus(data.status));
+    $('#status_d').html('状态： '+ showstatus(data.status));
     $('#transNo_d').html(data.transNo);
     $('#ownerNo_d').html(data.ownerNo);
     $('#custNo_d').html(data.custNo);
     $('#orderDate_d').html(data.orderDate);
 
     $('#topdeliverNo_d').html(data.topsendNo);
+    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
     queryDetailProduct();
     queryDetailTrace_login();
     queryEvalute();
@@ -67,24 +104,25 @@ function updataDetailPanel(data){
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="orderQty_d" >' + data.obj[i].orderQty + '</span>' +
+                    '<span class="fl fs32" style="color: #06ABD4" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="border-left: 1px solid #E3E3E3; ' +
                     'border-right: 1px solid #E3E3E3;line-height:60px;" align="center"> ' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="deliverQty_d" >' + data.obj[i].deliverQty + '</span> ' +
+                    '<span class="fl fs32" style="color: #06ABD4" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="line-height:60px;" align="center"> ' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="signQty_d" >' + data.obj[i].signQty + '</span></div></li></ul></div>'
+                    '<span class="fl fs32" style="color: #06ABD4" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
             ;
           //  $(products).appendTo(productNode);
         }
         $("#orderDetailProduct").html(products);
       //  productNode.appendTo("#Productproducts");
     }else{
-        productNode=$("<div class='productNode'>暂无产品信息</div>");
-        productNode.appendTo("#Productproducts");
+     /*   productNode=$("<div class='productNode'>暂无产品信息</div>");
+        productNode.appendTo("#Productproducts");*/
+        $("#orderDetailProduct").html("<div class='productNode'>暂无产品信息</div>");
     }
     //$.ui.unblockUI();
 }
@@ -92,7 +130,7 @@ function updataDetailPanel(data){
 
 
 function queryDetailTrace_login(){
-    $("#orderDetailTrace").empty();
+    $("#orderDetailTraceContent").empty();
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $.ui.blockUI(.3);
     getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
@@ -102,19 +140,34 @@ function queryDetailTrace_login(){
 
 }
 
+function queryDetailTraceAgain_login(){
+    $("#orderDetailTraceContent").empty();
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    $.ui.blockUI(.3);
+    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+            'dispatchNo':data.dispatchNo,
+            'sendNo':$('#topdeliverNo_d').attr('delivery')},
+        "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+
+
+
 function updateTracePanel2(datas){
     $("#trace-timeline").empty();
 
-    var color,alert,title,time,desc;
+    var color,alert,title,time,desc,file;
     var html = "",height = "";
     if(datas.isSucc){
         var result = '';
         var obj = datas.obj ;
+        $('#orderDetailTraceContent').show();
         $(obj).each(function (index,data) {
             var status = data.status;
             var dispatchStatus = data.dispatchStatus;
             time = data.changeTimeDescri;
             desc = data.statusDesc;
+
             if(desc == "")
             {
                 height = ";height:100px;";
@@ -145,18 +198,34 @@ function updateTracePanel2(datas){
             {
                 alert = "";
             }
+
+            if(data.fileNo !=null || data.fileNo !=''){
+                file = '<div style="height:20px;width:30px;' +
+                    'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
+                    'text-align:center;line-height:20px;" deliveryNo="'+data.deliveryNo+'" ' +
+                    'objectNo="'+data.fileNo+'" onclick="setImgList(this)">附件</div>';
+            }else{
+                file = "";
+            }
             html += '<div style="overflow:hidden;"><div class="fl" style="width:25%;margin:12px auto;">' +
                 '<div style="width:60px;height:60px;background:'+color+';border: 4px solid #fffff;border-radius:60px;' +
                 'font-size:24px;color:#FFFFFF;font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">'+title+'' +
                 '</div></div><div class="fl" style="width:75%;"><div style="'+height+'" class="send"><div class="arrow"></div>' +
                 '<div style="position:relative;right:5px;top:0px;float:right;">'+alert+'</div>' +
                 '<div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;">'+time+'</div>' +
-                '<div style="font-size:12px;margin-left:10px;margin-bottom:20px;">'+desc+'</div></div></div></div>';
+                '<div style="font-size:12px;margin-left:10px;margin-bottom:20px;">'+desc+'</div>'+
+                '<div style="position:relative;right:5px;top:-15px;float:right;">'+file+'</div>' +
+                '</div></div></div>';
+
+            //
         });
+        $("#orderDetailTraceContent").append(html);
     }else{
+        $("#orderDetailTrace").empty();
+        $("#orderDetailTrace").html("暂无跟踪信息");
         html = nullTrace;
     }
-    $("#orderDetailTrace").append(html);
+
     $.ui.unblockUI();
     $.ui.hideMask();
 }
@@ -208,6 +277,7 @@ function updateEvalute(datas){
 
             }
             if(datas.obj[0].bodmEvaluate != null){
+                $('#evaluteBtn').hide();
                 $('#orderDetailEvaluate').val(datas.obj[0].bodmEvaluate.reviewsNo);
                 //$('#evaluteInfo').append('');
 //                $('#evaluteInfo').html(datas.obj[0].bodmEvaluate.reviewsUserNo);
@@ -218,12 +288,14 @@ function updateEvalute(datas){
                 $('#reviewsItem1').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem1) );
                 $('#reviewsItem2').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem2) );
                 $('#reviewsItem3').append(showStar( datas.obj[0].bodmEvaluate.reviewsItem3) );
-                $('#replyBtn').hide();
                 if(datas.obj[0].bodmEvaluateAnswer !=null ){
+                    $('#replyBtn').hide();
                     $('#replyInfo').append('<p>'+datas.obj[0].bodmEvaluateAnswer.replyUserNo+'['+datas.obj[0].bodmEvaluateAnswer.replyDate+']</p>'+
                         '<p style="color:#06ABD4">'+datas.obj[0].bodmEvaluateAnswer.replyDemo+'</p>');
                 }else{
-
+//                    if(cuser.obj.userType=0) {
+//                        $('#replyBtn').show();
+//                    }
                     $('#replyspan').hide();
                     $('#replyInfo').empty();
                 }
@@ -241,19 +313,26 @@ function updateEvalute(datas){
         }
     } else {
         //errorPopup(data.msg);
-
     }
 }
 
 function showStar(star){
-    if(star == 1){
+    if(star == 0){
        return '<ul class="star1">'+
-        '<li><img src="assets/img/bluestar.png"/></li>'+
+        '<li><img src="assets/img/star.png"/></li>'+
         '<li><img src="assets/img/star.png"/></li>'+
         '<li><img src="assets/img/star.png"/></li>'+
         '<li><img src="assets/img/star.png"/></li>'+
         '<li><img src="assets/img/star.png"/></li>'+
         '</ul> ';
+    }else if(star == 1){
+        return '<ul class="star1">'+
+            '<li><img src="assets/img/bluestar.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '<li><img src="assets/img/star.png"/></li>'+
+            '</ul> ';
     }else if( star == 2 ){
         return '<ul class="star1">'+
             '<li><img src="assets/img/bluestar.png"/></li>'+
@@ -296,7 +375,22 @@ $(function(){
         $(this).find('img').attr("src","assets/img/bluestar.png");
         $(this).nextAll().find('img').attr("src","assets/img/star.png");
         $(this).nextAll().find('img').attr("evalutegrade","0");
+    });
+    $(".star2 li").mouseenter(function(){
+        $(".star2 li img").attr("src","assets/img/bluestar.png");
+        $(".star2 li img").attr("evalutegrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
+    });
+    $(".star3 li").mouseenter(function(){
+        $(".star3 li img").attr("src","assets/img/bluestar.png");
+        $(".star3 li img").attr("evalutegrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
     })
+
 });
 
 function saveReply(){
@@ -327,19 +421,19 @@ function saveEvalute(){
     $('img[name="wanhao"]').each(
         function() {
             if( $(this).attr('evalutegrade') == 1 ){
-                reviewsItem1 + 1;
+                reviewsItem1 += 1;
             };
         });
     $('img[name="huidan"]').each(
         function() {
             if( $(this).attr('evalutegrade') == 1 ){
-                reviewsItem2 + 1;
+                reviewsItem2 += 1;
             };
         });
     $('img[name="attitude"]').each(
         function() {
             if( $(this).attr('evalutegrade') == 1 ){
-                reviewsItem3 + 1;
+                reviewsItem3 += 1;
             };
         });
     var options = {
@@ -347,7 +441,7 @@ function saveEvalute(){
         'systemNo':data.systemNo,
         'dispatchNo':data.dispatchNo,
         'ownerNo':data.ownerNo,
-        'reviewsDemo':$('#evaluteInfo').val(),
+        'reviewsDemo':$('#evaluteContent').val(),
         'reviewsItem1':reviewsItem1,
         'reviewsItem2':reviewsItem2,
         'reviewsItem3':reviewsItem3,
@@ -361,7 +455,7 @@ function saveEvalute(){
 
 function saveReplySucc(data){
     if(data.isSucc){
-        errorPopup.msg('回复成功！');
+        errorPopup('回复成功！');
         traceSingleInfo33();
     }else{
         errorPopup(data.msg);
@@ -371,10 +465,79 @@ function saveReplySucc(data){
 
 function saveEvaluteSucc(data){
     if(data.isSucc){
-        errorPopup.msg('评论成功！');
+        errorPopup('评论成功！');
         traceSingleInfo33();
     }else{
         errorPopup(data.msg);
     }
+
+}
+
+
+/**
+ * 设置图片幻灯Url
+ */
+function setImgList(elm)
+{
+    var objectNo = $(elm).attr('objectno');
+    var deliveryNo = $(elm).attr('deliveryNo');
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var url = baseUrl + "order/queryImgUrl.action";
+    getAjax(url, {'orderNo':data.orderNo,'deliveryNo':deliveryNo,
+            'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
+        "setImgListSuc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+function setImgListSuc(data){
+    if(data.isSucc){
+        var jqueryResult = data.obj;
+        $.ui.loadContent("#searchImg", false, false, "slide");
+    /*var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        hashnav: true
+    });*/
+        var html = '';
+        var imgLi = "";
+        html = '<div class="swiper-wrapper" style="height:100%;"> ';
+        for ( var i in jqueryResult )
+        {
+            var fileUrl = jqueryResult[i].filePath;
+            var fileName = jqueryResult[i].fileName;
+//            newSlide = swiper.appendSlide("<div class='swiper-slide'  data-hash='slide1'>" +
+//                "<a href='"+fileUrl+"' target='_blank'>" +
+//                "<img src='"+fileUrl+"' " +
+//                "thumb='' alt='"+fileName+"' text='"+fileName+"' />" +
+//                "</a>" +
+//                "</div>");
+            html += '<div class="swiper-slide" >' +
+                    '<img ' +
+                    ' src="'+fileUrl+'" width="100%"  />' +
+                    '</div>';
+             }
+        html += '</div><div class="swiper-button-prev"></div><div class="swiper-button-next"></div>' ;
+        $("#traceimgs").empty();
+        $("#traceimgs").append(html);
+
+        $("#traceimgs").height($("#searchImg").height()*(17/20));
+        $("#imgTop").height($("#searchImg").height()*(1/20));
+        $("#imgFooter").height($("#searchImg").height()*(1/10));
+        var swiper = new Swiper('#traceimgs', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            effect : 'coverflow',
+            prevButton:'.swiper-button-prev',
+            nextButton:'.swiper-button-next',
+            parallax: true,
+            autoplayDisableOnInteraction: false
+        });
+    }
+
+
 
 }

@@ -11,19 +11,20 @@ function search(){
    /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
-    if ( localStorage.getItem("user")==null ) {
+    var user = JSON.parse( localStorage.getItem("user") );
+    if ( user==null ) {
         getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
             'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
                 'userType':user.obj.userType },
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
-    if( getUserNo()!=null ){
+    if( user!=null ){
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
                 'userType':user.obj.userType }, true), true);
     }else{
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
