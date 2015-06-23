@@ -12,19 +12,22 @@ function search(){
         {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
     if ( localStorage.getItem("user")==null ) {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
+            'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+                'userType':user.obj.userType },
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
     if( getUserNo()!=null ){
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'userNo':getUserNo() }, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':getUserNo(),
+                'userType':user.obj.userType }, true), true);
     }else{
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText }, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
 
     }
 
@@ -101,9 +104,13 @@ function updateOrderlistPanel(data){
         } else if (data.obj.recordsTotal == 1) {
             setCacheData("currentorder", data.obj[0], 1);
             if( loginStatus==0 || loginStatus== '0' ){
-                traceInfo();
+                setCacheData("currentorder",data.obj.data[0] ,1);
+
+               // JSON.stringify(data.obj.data[k])
+                traceSingleInfo();
             }else{
-                traceInfo2();
+                setCacheData("currentorder",data.obj.data[0] ,1);
+                traceSingleInfo33();
             }
         } else {
             result = nullTrace;
@@ -214,6 +221,8 @@ function updateOrderlistPanel_bak(data){
            return '提货';
        }else if(status=='70'){
            return '在途';
+       }else if(status=='80'){
+           return '交接';
        }else if(status=='90'){
            return '签收';
        }else {
@@ -229,12 +238,14 @@ function updateOrderlistPanel_bak(data){
 
 
 function getOrderListPullToRefresh(that){
+    setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+        {'queryType':'1'},true),true);
 
     jQuery.ajax({
         url: searchUrl,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
-        data:JSON.parse(data)
+        data:JSON.parse(localStorage.getItem("searchFilter"))
     }).done(
         function (data) {
             if(data!=null)

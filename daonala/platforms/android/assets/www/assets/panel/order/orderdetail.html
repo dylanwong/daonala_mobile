@@ -203,7 +203,7 @@
             </div>
 
             <div id="orderDetailTrace" class="none">
-                <div class="width95">
+                <!--<div class="width95">
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
                             <div class="fl width80" align="right"
@@ -277,59 +277,83 @@
                         </div>
                     </div>
                 </div>
-
+-->
             </div>
             <div id="orderDetailEvaluate" class="none">
                 <div class="width95">
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
                             <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;">评价</div>
+                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;"><span >评价</span></div>
                             <div class="fr width20" align="right"
                                  style="color:#26B6D9;font-size:16px;">
-                                <a href="#evaluate">
-                                <button type="button" class="btn btn-primary"
+                                <a href="#evaluate" >
+                                <button type="button" id="evaluteBtn" class="btn btn-primary"
                                         style="width:60px;height:24px;font-size:14px;
-                                        text-align:center;line-height:24px;padding:0px 12px;">添加</button>
+                                        text-align:center;line-height:24px;padding:0px 12px;">去评价</button>
                                 </a>
                             </div>
                         </li>
                     </ul>
-                    <div align="left" style="padding-left:10px;">
-                        <p>程先生[2015-01-23 11:30]</p>
-                        <p style="color:#06ABD4">物流速度很快，送货司机态度不错!</p>
+                    <div align="left" style="padding-left:10px;" id="evaluteInfo">
+                        <p id="evaluteName">程先生[2015-01-23 11:30]</p>
+                        <p style="color:#06ABD4" id="reviewsDemo">物流速度很快，送货司机态度不错!</p>
                         <div>
                             <div class="overflowHidden">
                                 <p class="fl width30" align="right">商品完好度：</p>
-                                <p class="fl width70">★★★★★</p>
+                                <p class="fl" id="reviewsItem1">
+                                <!--<ul class="star1">
+                                <li><img src="assets/img/star.png"/></li>
+                                <li><img src="assets/img/star.png"/></li>
+                                <li><img src="assets/img/star.png"/></li>
+                                <li><img src="assets/img/star.png"/></li>
+                                <li><img src="assets/img/star.png"/></li>
+                                </ul> --></p>
                             </div>
                             <div class="overflowHidden">
                                 <p class="fl width30" align="right">回单及时性：</p>
-                                <p class="fl width70">★★★★★</p>
+                                <p class="fl" id="reviewsItem2">
+                                <!--<ul class="star1">
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                </ul>-->
+                                </p>
                             </div>
                             <div class="overflowHidden">
                                 <p class="fl width30" align="right">送货人态度：</p>
-                                <p class="fl width70">★★★★★</p>
+                                <p class="fl"  id="reviewsItem3">
+                                <!--<ul class="star1">
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                    <li><img src="assets/img/star.png"/></li>
+                                </ul>-->
+                                </p>
                             </div>
                         </div>
                     </div>
                     <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
+                        <li style="border-bottom: 1px dashed #09ACD4;" >
                             <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;">回复</div>
+                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>
                             <div class="fr width20" align="right"
                                  style="color:#26B6D9;font-size:16px;">
-                                <a href="#evaluate">
-                                <button type="button" class="btn btn-primary"
+                                <a href="#reply">
+                                <button type="button" id="replyBtn"
+                                        class="btn btn-primary"
                                         style="width:60px;height:24px;font-size:14px;
-                                        text-align:center;line-height:24px;padding:0px 12px;">添加</button>
+                                        text-align:center;line-height:24px;padding:0px 12px;">回复</button>
                                 </a>
                             </div>
                         </li>
                     </ul>
-                    <div align="left" style="padding-left:10px;">
-                        <p>客服人员[2015-01-23 11:30]</p>
-                        <p style="color:#06ABD4">谢谢您的评价!</p>
+                    <div align="left" style="padding-left:10px;" id="replyInfo">
+                        <!--<p>客服人员[2015-01-23 11:30]</p>
+                        <p style="color:#06ABD4">谢谢您的评价!</p>-->
                     </div>
                 </div>
             </div>

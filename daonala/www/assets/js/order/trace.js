@@ -57,6 +57,7 @@ function initTraceInfo2(){
 
     queryDetailProduct();
     queryDetailTrace_login();
+    queryEvalute();
 //    $.ui.blockUI(.3);
 //    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
 //            'dispatchNo':data.dispatchNo,
@@ -93,24 +94,28 @@ function updateTracePanel(datas){
         $('#trace_tel').html(datas.obj[0].tel);
         $(obj).each(function (index,data) {
             var status = data.status;
+            var dispatchStatus = data.dispatchStatus;
             time = data.changeTimeDescri;
             desc = data.statusDesc;
             if(desc == "")
             {
                 height = ";height:100px;";
             }
-            if(status <= 40)
+            if( dispatchStatus <= 10 ){
+                color = "#3EA2FC";
+                title = "下单";
+            }else if( dispatchStatus > 10 && dispatchStatus <= 40)
             {
                 color = "#30BC7F";
                 title = "提货";
-            }else if(status > 40 && status <= 70)
+            }else if(dispatchStatus > 40 && dispatchStatus <= 80)
             {
                 color = "#3EA2FC";
-                title = "在途";
-            }else if(status > 70 && status <= 99)
+                title = "运输中";
+            }else if(status > 80 && status <= 99)
             {
                 color = "#F53274";
-                title = "交接";
+                title = "签收";
             }
 
             if(index == 0)

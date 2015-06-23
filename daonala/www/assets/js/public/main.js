@@ -20,6 +20,8 @@ include("assets/js/driver/operateguide.js");
 include("assets/js/public/filetooms.js");
 //include("assets/js/.js");
 include("assets/js/order/logistboard.js");
+include("assets/js/order/custboard.js");
+
 
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
@@ -88,8 +90,30 @@ function logisticboard_panel(){
 function ownerboard_panel(){
     $.ui.loadContent("#ownerboard", false, false, "slide");
 }
-function custboard_panel(){
-    $.ui.loadContent("#custboard", false, false, "slide");
+function custboard_panel(elm){
+
+    if(localStorage.getItem('user')==null){
+        $.ui.loadContent("#portal", false, false, "slide");
+    }else
+    {
+        $.ui.loadContent("#custboard", false, false, "slide");
+        $("#custboard_head").html("<div style='float:left;width:15%;cursor:pointer;'>" +
+            "<a onclick='home_panel()'>" +
+            "<img src='assets/img/back.png' />" +
+            "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
+            "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
+            " ><div class='btn-group' role='group'><button" +
+            " onclick='toggleCustTabs(this)' status='0' type='button' " +
+            "class='btn btn-default tabCustCurrent'>未签收</button>" +
+            " <button onclick='toggleCustTabs(this)' status='1'  type='button' " +
+            "class='btn btn-default tabCustHistory'  >" +
+            "已签收</button></div></div>" +
+            "<div style='clear:both;width:10%'></div>");
+        custTabStatus = 0;
+        cust_orderlist_panel();
+    }
+
+  //  $.ui.loadContent("#custboard", false, false, "slide");
 }
 function driverboard_panel(){
    // $.ui.loadContent("#driverboard", false, false, "slide");
@@ -142,9 +166,25 @@ function traceInfo33(elm){
     setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
     initTraceInfo2();
     $.ui.loadContent("#orderdetail33", false, false, "slide");
+}
 
+function traceSingleInfo33(){
+//    alert(1);
+//    /*init_search_panel();*/
+
+    initTraceInfo2();
+    $.ui.loadContent("#orderdetail33", false, false, "slide");
+}
+
+function traceSingleInfo(){
+//    alert(1);
+//    /*init_search_panel();*/
+    initTraceInfo();
+    $.ui.loadContent("#ordertrace", false, false, "slide");
 
 }
+
+
 /**/
 function signorderslist_panel(){
     queryDetailList();
