@@ -4,8 +4,8 @@
 
 var taskTabStatus = 0;
 function toggleTaskTabs(elm) {
-    $(".tabTaskCurrent").addClass('tabTaskY');
-    $(".tabTaskCurrent").removeClass('tabTaskN');
+    $(".tabTaskN").addClass('tabTaskY');
+    $(".tabTaskN").removeClass('tabTaskN');
 
     $(elm).removeClass('tabTaskY');
     $(elm).addClass('tabTaskN');

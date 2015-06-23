@@ -5,6 +5,7 @@ function include(path){
     var head=document.getElementsByTagName("head")[0];
     head.appendChild(a);
 }
+include("assets/js/public/mine.js");
 include("assets/js/login.js");
 include("assets/js/register.js");
 include("assets/js/public/setup.js");
@@ -18,6 +19,7 @@ include("assets/js/order/orderdetail.js");
 include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
 include("assets/js/public/filetooms.js");
+include("assets/js/public/tools.js");
 //include("assets/js/.js");
 include("assets/js/order/logistboard.js");
 include("assets/js/order/custboard.js");
@@ -84,11 +86,14 @@ function myorders_panel(){
 }
 function logisticboard_panel(){
     init_orderboard();
+    initBoardSearchPage();
     initLogisticBoard();
 
 }
 function ownerboard_panel(){
-    $.ui.loadContent("#ownerboard", false, false, "slide");
+    init_orderboard();
+    initBoardSearchPage();
+    initLogisticBoard();
 }
 function custboard_panel(elm){
 
@@ -104,9 +109,9 @@ function custboard_panel(elm){
             "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
             " ><div class='btn-group' role='group'><button" +
             " onclick='toggleCustTabs(this)' status='0' type='button' " +
-            "class='btn btn-default tabCustCurrent'>未签收</button>" +
+            "class='btn btn-default tabTaskN'>未签收</button>" +
             " <button onclick='toggleCustTabs(this)' status='1'  type='button' " +
-            "class='btn btn-default tabCustHistory'  >" +
+            "class='btn btn-default tabTaskY'  >" +
             "已签收</button></div></div>" +
             "<div style='clear:both;width:10%'></div>");
         custTabStatus = 0;
@@ -131,9 +136,9 @@ function driverboard_panel(){
             "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
             " ><div class='btn-group' role='group'><button" +
             " onclick='toggleTaskTabs(this)' status='0' type='button' " +
-            "class='btn btn-default tabTaskCurrent'>当前任务</button>" +
+            "class='btn btn-default tabTaskN'>当前任务</button>" +
             " <button onclick='toggleTaskTabs(this)' status='1'  type='button' " +
-            "class='btn btn-default tabTaskHistory'  >" +
+            "class='btn btn-default tabTaskY'  >" +
             "历史任务</button></div></div>" +
             "<div style='clear:both;width:10%'></div>");
         taskTabStatus = 0;

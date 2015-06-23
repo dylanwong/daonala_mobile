@@ -31,7 +31,7 @@ function login()
                 username:userNo,
                 pwd:pwd,
                 loginType:os,
-                deviceNo:'NOKIA',
+                deviceNo:deviceNo,
                 currentAddr:currentAddr,
                 longitude:'',
                 latitude:''
@@ -54,7 +54,6 @@ function save_login_succ(data)
         visitor=false;
 
         $('#user_img').attr('src','assets/img/person.png');
-
         $('#userAlias').text(data.obj.userName+" 用户");
         init_homepage();
         home_panel();
@@ -110,7 +109,9 @@ function logoutSucc()
     sessionStorage.removeItem("mainList");
     sessionStorage.removeItem("myList");
     $('#user_img').attr('src','assets/img/user1.png');
+    $('#user_img').attr('onclick','login_panel()');
     $('#userAlias').text('');
+    init_homepage();
 }
 
 

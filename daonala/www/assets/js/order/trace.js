@@ -11,60 +11,38 @@ function initTraceInfo(){
 
 
     $('#topdeliverNo').html('运输单号'+data.topsendNo);
+    $('#topdeliverNo').attr('delivery',data.topsendNo);
     getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo,
             'sendNo':data.topsendNo},
         "updateTracePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     //enterpriseNo, systemNo,dispatchNo,sendNo
 }
-
+//选择运输单查看订单轨迹
 function initTraceInfoAgain(elm){
     var sendno = $(elm).attr('sendno');
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    $.ui.loadContent("#ordertrace", false, false, "slide");
-    $('#topdeliverNo').html('运输单号   '+sendno);
-    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-            'dispatchNo':data.dispatchNo,
-            'sendNo':sendno},
-        "updateTracePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-    //enterpriseNo, systemNo,dispatchNo,sendNo
+    var user = JSON.parse(localStorage.getItem("user"));
+    var todoFun ;
+    if(user!=null){
+        //$('#topdeliverNo_d').html(data.topsendNo);
+        $('#topdeliverNo_d').attr('delivery',data.topsendNo);
+        $('#topdeliverNo_d').html('运输单号:'+data.topsendNo);
+        $.ui.goBack();//.goBack;
+        queryDetailTraceAgain_login();
+    }else {
+        $('#topdeliverNo').html('运输单号   '+sendno);
+        $('#topdeliverNo').attr('delivery',sendno);
+        $.ui.loadContent("#ordertrace", false, false, "slide");
+        $('#topdeliverNo').html('运输单号' + data.topsendNo);
+        todoFun = "updateDetailPanel(data)";
+        getAjax(searchTraceUrl, {'enterpriseNo': data.enterpriseNo, 'systemNo': data.systemNo,
+                'dispatchNo': data.dispatchNo,
+                'sendNo': sendno},
+            "updateTracePanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    }
+
 }
-/*登陆初始化订单详情页面*/
-function initTraceInfo2(){
-    var data = JSON.parse(localStorage.getItem("currentorder"));
-    $('#shipPhone_d').html(data.orderNo);
-    $('#shipNo_d').html(data.ownerName);
-
-    $('#custAddr_d').html(data.custAddr);
-    $('#custName_d').html(data.custName);
-    $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
-    $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone);
-
-    $('#ownerName_d').html(data.ownerName);
-    $('#ownerAddr_d').html(data.ownerAddr);
-    $('#ownerContacts_d').html(data.orderNo);
-
-
-    $('#status_d').html(data.status);
-    $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.ownerNo);
-    $('#custNo_d').html(data.custNo);
-    $('#orderDate_d').html(data.orderDate);
-
-
-    $('#topdeliverNo_d').html('运输单号'+data.topsendNo);
-
-    queryDetailProduct();
-    queryDetailTrace_login();
-    queryEvalute();
-//    $.ui.blockUI(.3);
-//    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-//            'dispatchNo':data.dispatchNo,
-//            'sendNo':data.topsendNo},
-//        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
- }
-
 
 
 
@@ -74,17 +52,29 @@ function initTraceInfo2forAgain(elm){
     $('#trace_sender').html(data.ownerName);
     $('#trace_reciever').html(data.custName);
 
-
-    $('#topdeliverNo').html('运输单号'+data.topsendNo);
-    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-            'dispatchNo':data.dispatchNo,
-            'sendNo':data.topsendNo},
-        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    var user = JSON.parse(localStorage.getItem("user"));
+    var todoFun ;
+    if(user!=null){
+        $('#topdeliverNo_d').html(data.topsendNo);
+        $('#topdeliverNo_d').attr('delivery',data.topsendNo);
+        //$('#topdeliverNo').html('运输单号：'+data.topsendNo);
+        $.ui.goBack();//.goBack;
+        todoFun = "queryDetailTraceAgain_login()";
+    }else{
+        $('#topdeliverNo').html('运输单号'+data.topsendNo);
+        todoFun = "updateDetailPanel(data)";
+        getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
+                'dispatchNo':data.dispatchNo,
+                'sendNo':data.topsendNo},
+            todoFun, "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    }
 }
-var nullTrace = "<div align='center' style='margin: 10px;'>暂无物流跟踪信息...</div>";
+
+
+
 function updateTracePanel(datas){
     $("#trace-timeline").empty();
-
+    var nullTrace = "<div align='center' style='margin: 10px;'>暂无物流跟踪信息...</div>";
     var color,alert,title,time,desc;
     var html = "",height = "";
     if(datas.isSucc){
@@ -157,6 +147,7 @@ function changeTraceOrder()
 function updateChoicePanel(datas){
     var nullTrace = "<div align='center' style='margin: 10px;'>查无多条订单...</div>";
     var result='';
+
     if(datas.isSucc){
         var obj = datas.obj;
         $(obj).each(function (index,data) {

@@ -198,6 +198,30 @@ $.ui.ready(function(){
             $("#handoverremarks").val(v);
         }
     });
+
+    jQuery('#select_city_panel').mobiscroll().select({
+        theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
+        mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
+        display: "bottom", // Specify display mode like: display: 'bottom' or omit setting to use default
+        lang: "zh"      ,  // Specify language like: lang: 'pl' or omit setting to use default
+        onBeforeShow: function (html, inst) {
+        },
+        onShow: function () {
+        },
+        onClose: function () {
+        },
+        onCancel: function () {
+        },
+        onSelect: function (v, inst) {
+            $("#select_city").val(v);
+        }
+    });
+
+    function initSearchPageScroll(){
+
+    }
+
+
     jQuery('#signremark_select').mobiscroll().select({
         theme: "android-ics light",     // Specify theme like: theme: 'ios' or omit setting to use default
         mode: "mixed",       // Specify scroller mode like: mode: 'mixed' or omit setting to use default
@@ -804,7 +828,9 @@ function getUserNo(){
 function getEnterpriseNo(){
     return JSON.parse(localStorage.getItem("user")).obj.enterpriseNo ;
 }
-
+function getUserTypeFromsession(){
+    return JSON.parse(localStorage.getItem("user")).obj.userType ;
+}
 function mergeJson(jsonbject1, jsonbject2,needString)
 {
     var needStringFlag = arguments[2] ? arguments[2] :false ;

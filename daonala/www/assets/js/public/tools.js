@@ -104,3 +104,14 @@ function getQuarterEndDate(){
     var quarterStartDate = new Date(nowYear, quarterEndMonth, getMonthDays(quarterEndMonth));
     return formatDate(quarterStartDate);
 }
+
+function ifNull(data){
+    if(data==null){
+        return '';
+    }else if(data ==''){
+        return '无';
+    }else{
+        return data;
+    }
+
+}
