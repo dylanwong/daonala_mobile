@@ -138,6 +138,11 @@ function updateMySetupError(data){}
 function initSetup()
 {
     getMySetup();
+    if(localStorage.getItem('user')==null){
+        $('#logoutBtn').hide();
+    }else{
+
+    }
     $("#versionNo").html(currentVersion+".1");//默认加.1
 }
 
@@ -212,6 +217,8 @@ function saveFeedBackSucc(data){
     {
         toastrTip('','反馈成功,感谢您的意见!','success');
         $.ui.goBack();
+        $("#feedbackContent").val('');
+        $('#feedbacker').val('');
     }else
     {
         toastrTip('',data.msg.substring(data.msg.indexOf('-')+1,data.msg.length),'error');

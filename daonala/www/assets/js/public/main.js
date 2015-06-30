@@ -23,17 +23,18 @@ include("assets/js/public/tools.js");
 //include("assets/js/.js");
 include("assets/js/order/logistboard.js");
 include("assets/js/order/custboard.js");
-
-
+include("assets/js/order/addOrder.js");
+include("assets/js/order/city.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
 function message_panel(){
     var user = localStorage.getItem('user');
     user = JSON.parse(user);
-    getMessageList(user);
+
     if(user!=null){
         $.ui.loadContent("#message", false, false, "slide");
+        getMessageList(user);
     }else{
         $.ui.loadContent("#login", false, false, "slide");
     }
@@ -84,6 +85,7 @@ function setup(){
 function myorders_panel(){
     $.ui.loadContent("#myorders", false, false, "slide");
 }
+//物流看板初始化页面
 function logisticboard_panel(){
     init_orderboard();
     initBoardSearchPage();
@@ -155,6 +157,7 @@ function searchorder_panel(){
 function traceInfo(elm){
     /*init_search_panel();*/
   //  $(elm).attr('data-todo-detail')
+    clear_orderdetailPage();
     if(elm!=null){
         setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
         initTraceInfo();
@@ -164,26 +167,45 @@ function traceInfo(elm){
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }
 }
-/*订单跟踪 登录*/
+//订单跟踪 登录
 function traceInfo33(elm){
 //    alert(1);
 //    /*init_search_panel();*/
+    clear_orderdetailPage();
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+    }else{
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
+    }
+   // $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
     setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
     initTraceInfo2();
     $.ui.loadContent("#orderdetail33", false, false, "slide");
 }
 
 function traceSingleInfo33(){
-//    alert(1);
-//    /*init_search_panel();*/
-
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+    }else{
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+    }
     initTraceInfo2();
     $.ui.loadContent("#orderdetail33", false, false, "slide");
 }
 
 function traceSingleInfo(){
-//    alert(1);
-//    /*init_search_panel();*/
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+
+    }else{
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+    }
+    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
     initTraceInfo();
     $.ui.loadContent("#ordertrace", false, false, "slide");
 
@@ -310,7 +332,10 @@ function register_panel()
     $.ui.loadContent("#register", false, false, "slide");
 }
 
+function addorder_panel(){
+    queryOwnerInfo();
 
+}
 
 
 
@@ -339,11 +364,10 @@ function getLoad(){
 
 /*获取消息列表*/
 function getMessageList(user){
-   // user = JSON.parse(user);
-    var options = {
-        userNo:user.obj.userNo
-    };
-    getAjax(queryMsgList,options,'getMsgListSucc(data)','getMsgListError(data)');
+        var options = {
+            userNo: user.obj.userNo
+        };
+        getAjax(queryMsgList, options, 'getMsgListSucc(data)', 'getMsgListError(data)');
 }
 function getMsgListSucc(data){
 

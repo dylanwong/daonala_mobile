@@ -1692,14 +1692,14 @@ body {
 }
 
 .afPopup>FOOTER>A#action{
-    background: #F6842B;
+    background: #06ABD4;
     width: 50%;
     padding: 15px 0;
     float:right;
 }
 
 .afPopup>FOOTER>A.center{
-    background: #F6842B !important;
+    background: #06ABD4 !important;
     float:right !important;
     width:100% !important;
     padding: 15px 0 !important;

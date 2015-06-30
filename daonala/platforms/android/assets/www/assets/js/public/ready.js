@@ -43,6 +43,8 @@ $(document).ready(function(){
     //if(1==1){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
+        $.ui.launch();
+        alertLocationPopup = true;
 //        var swiperDiv = $.create("div", {
 //            className: "swiper-container",
 //            id:"screenWrapper",
@@ -73,9 +75,25 @@ function errorlaunchUI(){
 }
 
 $.ui.ready(function(){
+    var now = new Date();
+    var currYear = new Date().getFullYear();
+    $('#deliveryDate').mobiscroll().datetime({
 
-
-
+        theme: 'android-ics light',
+        lang: 'zh',
+        display: 'bottom',
+        dateOrder: 'yyyy mm dd',//弹出显示日期格式
+        dateFormat: 'yy-mm-dd',//选中后的值格式
+        /*timeFormat:'hh ii A',*/
+        //defaultValue: new Date(new Date().setFullYear(currYear)),
+        //maxDate: new Date(),
+        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+        invalid: [ 'w0', 'w6', '5/1', '12/24', '12/25']
+    });
+    $('#showdeliveryDateDate').click(function(){
+        $('#deliveryDate').mobiscroll('show');
+        return false;
+    });
 
     $("#afui").delegate(".arrow","click",function(event){
         event.stopPropagation()
@@ -412,7 +430,7 @@ $.ui.ready(function(){
 
                 if (ajaxFlag) {
                     ajaxFlag = false
-                    getRequestFromInfinite(self)
+                    getRequestFromTaskInfinite(self)
 
                 }
             });
@@ -451,9 +469,22 @@ $.ui.ready(function(){
     });
     var hideClose;
     $.bind(custorderlistScroller, "refresh-release", function () {
+//        var that = this;
+//        getCustOrderPullToRefresh(that);
+//        return false; //tells it to not auto-cancel the refresh
         var that = this;
-        getCustOrderPullToRefresh(that);
-        return false; //tells it to not auto-cancel the refresh
+        if(!visitor){
+            getCustOrderPullToRefresh(that);
+        }else{
+            setTimeout(function () {
+                that.hideRefresh();
+                getRequestFromCustOrderinite();
+            }, 1000);
+
+
+        }
+
+        return false;
     });
 
     $.bind(custorderlistScroller, "refresh-cancel", function () {
@@ -515,7 +546,7 @@ $.ui.ready(function(){
 
     $.bind(orderlistScroller, "infinite-scroll", function () {
         var self = this;
-        if($("#nullTodoSelf").length) {
+        if($("#nullOrderListSelf").length) {
             self.clearInfinite();
         }else{
             console.log("infinite triggered");
@@ -924,16 +955,27 @@ function iosUpdatePlugin(flag) {
     });
 }
 
-//竞价抢单成功回调
-function saveOfferDonSucc(data)
+function toastrTip(title,msg,type)
 {
-    if(data.isSucc)
-    {
-        $("#"+ETID).remove();
-    }
-    offerDone(data);
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "2000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    toastr[type](msg, title)
 }
-
 function updateApp(appUpdateUrl) {
     var _url ="itms-services://?action=download-manifest&url="+appUpdateUrl;
     window.open(_url, '_system');

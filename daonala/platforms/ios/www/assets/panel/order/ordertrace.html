@@ -1,0 +1,138 @@
+
+<div id="trace1_content" >
+   <!-- <div class="col-lg-6">
+        <div class="input-group" style="border:1px;">
+            <input type="text" id="searchText"
+                   style="border:1px solid #ccc;" class="form-control" placeholder="请输入单号查找">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button"  onclick="search()" id="searchBtn"
+                style="font-size:small;background: #00B2EE">搜索</button>
+      </span>
+        </div>&lt;!&ndash; /input-group &ndash;&gt;
+
+    </div>-->
+    <div>
+        <ul class="list" style="margin: 0px 0px;height:80px;" id="trace_title">
+            <li style="padding:0px 0px 0px 10px;border-bottom:0px">
+                <div class="order-detail-text mt10">
+                    <div style="float:left;padding-top:5px;margin:0px 5px;width:90%;">
+                        <div style="overflow:hidden;">
+                            <div style="color:#A0A0A0;line-height:18px;float:left;text-align:right;">货主单号</div>
+                            <div id="trace_orderNo" style="color:#A0A0A0;line-height:18px;
+                            float:left;text-align:right;margin-left:10px;">
+
+                            </div>
+                        </div>
+                        <div style="overflow:hidden;">
+                            <div style="color:#A0A0A0;line-height:18px;float:left;text-align:right;">客户单号</div>
+                            <div id="trace_custNo" style="color:#A0A0A0;line-height:18px;
+                            float:left;text-align:right;margin-left:20px;">
+
+                            </div>
+                        </div>
+                        <div style="overflow:hidden;">
+                            <div style="color:#A0A0A0;line-height:18px;float:left;text-align:right;">发货人</div>
+                            <div id="trace_sender" style="color:#A0A0A0;line-height:18px;
+                            float:left;text-align:right;margin-left:25px;">
+
+                            </div>
+                        </div>
+                        <div style="overflow:hidden;">
+                            <div style="color:#A0A0A0;line-height:18px;float:left;text-align:right;">收货人</div>
+                            <div id="trace_reciever" style="color:#A0A0A0;line-height:18px;
+                            float:left;text-align:right;margin-left:25px;">
+
+                            </div>
+                        </div>
+                        <div style="overflow:hidden;">
+                            <div style="color:#A0A0A0;line-height:18px;float:left;text-align:right;">司机</div>
+                            <div id="trace_driver" style="color:#A0A0A0;line-height:18px;
+                            float:left;text-align:right;margin-left:40px;">
+
+                            </div>
+                            <div style="color:#A0A0A0;line-height:18px;
+                            float:right;text-align:right;margin-left:10px;color:black;">
+                                 <a  id="trace_tel" href="tel:4001110005"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div style="float:right;margin:0px auto;width:30%;">
+                    </div>
+                    </div>
+            </li>
+        </ul>
+    </div>
+    <div  style="height:70%;">
+       <!-- <div><p>跟踪信息</p></div>-->
+        <div onclick="changeTraceOrder()"
+             style="height:30px; overflow:hidden;line-height:30px;
+            background-color:#F2F2F2;border-radius:5px;">
+            <div class="fl" id="topdeliverNo" style="font-size:12px;margin-left:10px;
+            color:#53575E;"><!--运输单号:D1414214--><span style="font-weight:bold;" id="traceOrderSelNo"></span>[物流轨迹]↓</div>
+            <div class="fr" style="margin-right:20px ">
+                <i style="font-size:20px;line-height:30px" class="icon-more-horiz"></i>更多</div>
+        </div>
+
+        <div id="trace-timeline"></div>
+
+       <!-- <div style="overflow:hidden;">
+            <div class="fl" style="width:25%;margin:25px auto;">
+                <div style="width:60px;height:60px;background:#F53274;
+                border: 4px solid #fffff;border-radius:60px;font-size:24px;color:#FFFFFF;
+                font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">
+                    交接
+                </div>
+            </div>
+            <div class="fl" style="width:75%;">
+                <div class="send">
+                    <div class="arrow"></div>
+                    <div style="position:relative;right:5px;top:0px;float:right;">
+                        <div style="height:20px;width:30px;background-color:#1EA389;
+                        border-radius:5px;color:#ffffff;font-size:12px;text-align:center;line-height:20px;">
+                            最新
+                        </div>
+                    </div>
+                    <div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;">
+                        04-28 15:300
+                    </div>
+                    <div style="font-size:12px;margin-left:10px;">
+                        订单号[T20151212012]&nbsp;
+                        货物已经送到[杭州蒋妮渠],交接人[李四],服务营业员[张三],备注[交接正常].
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="overflow:hidden;">
+            <div class="fl" style="width:25%;margin:25px auto;">
+                <div style="width:60px;height:60px;background:#F53274;
+                border: 4px solid #fffff;border-radius:60px;font-size:24px;color:#FFFFFF;
+                font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">
+                    在途
+                </div>
+            </div>
+            <div class="fl" style="width:75%;">
+                <div class="send">
+                    <div class="arrow"></div>
+                    <div style="position:relative;right:5px;top:0px;float:right;">
+                        <div style="height:20px;width:30px;background-color:#1EA389;
+                        border-radius:5px;color:#ffffff;font-size:12px;text-align:center;line-height:20px;">
+                            最新
+                        </div>
+                    </div>
+                    <div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;">
+                        04-28 15:300
+                    </div>
+                    <div style="font-size:12px;margin-left:10px;">
+                        订单号[T20151212012]&nbsp;
+                        货物正在发往[杭州蒋妮渠],司机[李],备注[在途正常].
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+
+    </div>
+
+    </div>

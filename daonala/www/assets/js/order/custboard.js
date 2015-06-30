@@ -19,6 +19,7 @@ function cust_orderlist_panel(tdStatus){
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     $("ul#cust_orderlist_ul").empty();
+    $('#orderdetailBackId').attr('onclick',"custboard_panel();");
     //var statustype=elm;
     var statustype ='';
     tdStatus == undefined ? statustype = '' : statustype = tdStatus;//? tdStatus = '1' : tdStatus = tdStatus;
@@ -52,6 +53,8 @@ function cust_orderlist_panel(tdStatus){
         {'start': '1', 'length':'10','orderNo':'','timeType':'N','status':status,
             'enterpriseNo':'10001','enterpriseText':'',
             'ownerText':'','custText':'','userNo':getUserNo(),'userType':user.obj.userType}, true), true);
+    $('#cust_orderlist_ul').empty();
+
 
 }
 
@@ -66,7 +69,7 @@ function updateCustOrderlistPanel(data,flag){
     if(data.isSucc) {
         var result = '';
         var list = data.obj.data;
-        $('#cust_orderlist_ul').empty();
+
         var traceFuc = '';
         loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
         if (data.obj.recordsTotal > 0) {
@@ -143,9 +146,7 @@ function updateCustOrderlistPanel(data,flag){
 //            result = nullTrace;
 //            $(result).appendTo(containNode);
         }
-        //$(containNode).appendTo("#cust_orderlist_ul");
-
-    }else{
+       }else{
         errorPopup(data.msg);
     }
 
@@ -203,6 +204,11 @@ function getCustOrderPullToRefresh(that){
 
 
 function getRequestFromCustOrderinite(self) {
+
+    var searchFilter =  JSON.parse(localStorage.getItem("searchFilter"));
+    var start = parseInt(searchFilter.start) + 10;
+    setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':start},true),true);
     jQuery.ajax({
         url: searchUrl,
         timeout: 20000, //超时X秒

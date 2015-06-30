@@ -53,16 +53,20 @@ function updateBoardSearchPage(data){
     });
 }
 
+function init_orderboard() {
+    $("#orderboard-buttons").delegate('button', 'click', function () {
+        var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+        $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+        $("#" + target).hide();
+        $(this).addClass('selectTotalDay');
+        $("#" + $(this).attr('target')).fadeIn(300);
+    });
+}
 //初始化物流/货主看板
 function initLogisticBoard(){
+    clearboard();
     var user =  JSON.parse( localStorage.getItem('user') );
-
-
     $('#subCompany').empty();
-//  $('#subCompany').append('<b class="">分公司：</b>'+user.obj.enterpriseN);
-//    $('#subCompany').attr('value',user.obj.enterpriseNo);
-    //$('#boardOwner').text(user.obj.enterpriseName);
-   // $('#boardOwner').text('');
     var option ={
         enterpriseNo : user.obj.enterpriseNo,
         ownerNo :'',
@@ -72,7 +76,22 @@ function initLogisticBoard(){
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
 }
+
+function clearboard(){
+    var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+    $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    $("#" + target).hide();
+    $("#oneId").addClass('selectTotalDay');
+    $("#" + $('#oneId').attr('target')).fadeIn(300);
+}
+
 function initLogisticBoardAgain(){
+    var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+    $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    $("#" + target).hide();
+    $("#oneId").addClass('selectTotalDay');
+    $("#" + $('#oneId').attr('target')).fadeIn(300);
+
     var user =  JSON.parse( localStorage.getItem('user') );
 
     //$('#subCompany').attr('value',user.obj.enterpriseNo);
@@ -165,15 +184,6 @@ function queryLogisticCount_Result_Suc(data) {
     $.ui.loadContent("#logisticboard", false, false, "slide");
 }
 
-function init_orderboard() {
-    $("#orderboard-buttons").delegate('button', 'click', function () {
-        var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
-        $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
-        $("#" + target).hide();
-        $(this).addClass('selectTotalDay');
-        $("#" + $(this).attr('target')).fadeIn(300);
-    });
-}
 function toggleBoardBtn(type) {
 
         var list1 ;
@@ -232,6 +242,8 @@ function orderlist_panel(statustype){
       //  timeType='N';
         status='';
     }
+    $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
@@ -249,5 +261,5 @@ function orderlist_panel(statustype){
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
             'ownerText':'','custText':'','userNo':getUserNo(),'userType':getUserTypeFromsession()}, true), true);
-
+    $('#orderlist_ul').empty();
 }

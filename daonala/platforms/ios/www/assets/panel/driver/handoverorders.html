@@ -1,0 +1,90 @@
+<!--create by wyy 20140415-->
+<div data-launch="false" class="list">
+
+
+    <div>
+        <ul style="margin: 0px -5px;" id="">
+
+
+            <li>
+                <div class="lh4 f16 f2 p0-6">
+                    <a href="javascript:;"  >
+                        <div  style="text-align:center;">
+                            <b id="handoverownercity"></b>
+                            <img src="assets/img/right-arrows.png" width="16" height="16" />
+                            <b  id="handovercustcity"></b>
+                        </div>
+
+                        <!-- <div style="float:right;">
+                             <b>03-07</b>
+                         </div>-->
+                        <div style="clear:both;"></div>
+                    </a>
+                </div>
+                <div class="lh2 order-detail-text mt10">
+                    <div style="float:left;padding-top:5px;margin:0px 5px;">
+                        <span style="color:#A0A0A0;line-height:18px;">运输单号：</span>
+                        <span id="handoverconsignno" style="color:#A0A0A0;line-height:18px;"></span>
+
+                    </div>
+                    <div style="float:right;margin:0px 5px;">
+                        <!-- <span style="font-size:18px;color:#EF8407;">成功</span>-->
+                    </div>
+                    <div style="clear:both;"></div>
+                </div>
+            </li>
+        </ul>
+        <div>
+            <div class="input-box input-top icon-head username">
+                <input name="feedback" id="handoveroperater" maxlength="12" type="text" placeholder="请输入交接人(必填)" >
+
+
+            </div>
+            <div class="input-box input-bot  icon-local-shipping username" >
+                <input name="feedback" id="handoverremarks"  type="text" placeholder="备注" >
+                <span class="select_icon"   >
+                <img src="assets/img/select_icon.png" class="arrow f32"
+                     data-selete="handoverremark_select" />
+                </span>
+
+            </div>
+            <div style="height: 20px;"></div>
+                    <div style="float:left;padding-top:5px;margin:0px 5px;"> <span style="float:left;color:#06ABD4;line-height:18px">附件列表</span></div>
+                    <div style="float:right">
+                        <a href="javascript:;" onclick="upload_oms(this)">
+                            <img src="assets/img/demo/no_photo.png"
+                                 id="deliverImage" width="53" height="30" style="border-radius:8px;
+                -webkit-border-radius:8px;
+                -moz-border-radius:8px;" class="">
+                        </a>
+
+                    </div>
+                    <div style="clear:both;"></div>
+
+        </div>
+
+        <div style="width: 100%; height: auto; position: relative; background-color: #fbfbfb; border: 1px solid #b8b8b8;"
+             data-controltype="image" id="handoverImageFile" style="display:none;">
+            <div class="gallery-row thumbs" id="handoverImageFileRow">
+                <!-- <script src="../sea-modules/uploadify/when.js"></script> -->
+            </div>
+        </div>
+        <div style='clear:both;'></div>
+        <br>
+        <br>
+        <br>
+        <button role="button" id="submitRegister"
+                style="font-size:x-large;"  onclick="confirmhandoverorder()"
+                class="btn btn-lg btn-block bg_blue" >交接确认</button>
+        <br>
+
+
+
+
+
+
+
+    </div>
+
+
+</div>

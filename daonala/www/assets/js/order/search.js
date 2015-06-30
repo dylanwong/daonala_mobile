@@ -8,44 +8,58 @@ function search(){
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     $("ul#todoList").empty();
+    $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
    /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
+    if( searchText != '' && searchText != null){
     var user = JSON.parse( localStorage.getItem("user") );
     if ( user==null ) {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
+        getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
             'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+        getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
                 'userType':user.obj.userType },
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
     if( user!=null ){
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
                 'userType':user.obj.userType }, true), true);
     }else{
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
+            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
 
     }
-
-
+    $('#orderlist_ul').empty();
+    }else{
+        $.ui.unblockUI();
+        $.ui.hideMask();
+        errorPopup('请输入搜索条件');
+    }
 }
 
-function updateOrderlistPanel(data){
+function updateOrderlistPanel(data,flag){
+    var prependFlag = arguments[1] ? arguments[1] : false;
+    var oldmyFilter = JSON.parse(localStorage.getItem("searchFilter"));
 
     var containNode = $("<div class='orderNode'></div>");
     var nullTrace = "<div align='center' style='margin: 10px;'>查无订单...</div>";
     if(data.isSucc) {
         var result = '';
-        $('#orderlist_ul').empty();
+
         var traceFuc = '';
         loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
-        if (data.obj.recordsTotal > 1) {
+        if (data.obj.recordsTotal >1 ){
+            if (data.obj.data.length > 1) {
             $.ui.loadContent("#orderlist", false, false, "slide");
+            if(localStorage.getItem('user')==null){
+                $('#orderlist').attr('data-header','home2Header');
+            }else{
+                $('#orderlist').attr('data-header','orderlistHeader');
+            }
             for (var k in data.obj.data) {
                 $.ui.showMask("我们正在拼命的加载数据...");
                 if (data.obj.data[k].occurPlace == '') {
@@ -53,7 +67,7 @@ function updateOrderlistPanel(data){
                         'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
                         '<div ><div style="float:left;">' +
                         '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
+                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].transNo + '</span>' +
                         '</div>' +
                         '<div align="center"><hr style="width:95%;margin-top:0px;margin-bottom:0px;border: 0;border-top:1px solid #BFBFBF;">' +
                         '</div> <div class="f2" style="height: 80px;"><div class="leftslide">' +
@@ -77,7 +91,7 @@ function updateOrderlistPanel(data){
                         'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
                         '<div ><div style="float:left;">' +
                         '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
+                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].transNo + '</span>' +
                         '</div><div style="float:right;width:40%;">' +
                         '<span id="occurPlaceimg_' + k + '" class="orderNo"><img src="assets/img/location.png"/></span>' +
                         '<span id="occurPlace_' + k + '" class="occurPlace f12" style="color:#F6842B;">' + data.obj.data[k].occurPlace + '</span>' +
@@ -102,7 +116,7 @@ function updateOrderlistPanel(data){
                 $.ui.hideMask();
                 $(result).appendTo(containNode);
             }
-        } else if (data.obj.recordsTotal == 1) {
+        } else if (data.obj.data.length == 1) {
             setCacheData("currentorder", data.obj[0], 1);
             if( loginStatus==0 || loginStatus== '0' ){
                 setCacheData("currentorder",data.obj.data[0] ,1);
@@ -117,12 +131,29 @@ function updateOrderlistPanel(data){
             result = nullTrace;
             errorPopup(data.msg);
         }
-        $(containNode).appendTo("#orderlist_ul");
 
+
+        if(flag){
+            $(containNode).appendTo("#orderlist_ul");
+               // $("#orderlist_ul").prepend(containNode);
+        }else {
+            if (data.obj.data.length < (oldmyFilter.length -= 0)) {
+                $("<div id='nullOrderListSelf' class='nullOrder'>" +
+                "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
+                "</div>").appendTo(containNode);
+            }
+            $(containNode).appendTo("#orderlist_ul");
+//            result = nullTrace;
+//            $(result).appendTo(containNode);
+        }
+       // $(containNode).appendTo("#orderlist_ul");
+
+    }else{
+            errorPopup('无更多订单');
+    }
     }else{
         errorPopup(data.msg);
     }
-
    }
 
 
@@ -134,18 +165,18 @@ function updateOrderlistPanel_bak(data){
         var result = '';
         $('#orderlist_ul').empty();
         var traceFuc = '';
-        loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo2(this);';
+        loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
         if (data.obj.recordsTotal > 1) {
             $.ui.loadContent("#orderlist", false, false, "slide");
             for (var k in data.obj.data) {
-                $.ui.loadContent("#orderlist", false, false, "slide");
+
                 $.ui.showMask("我们正在拼命的加载数据...");
                 if (data.obj[k].occurPlace == '') {
                     result = $('<li class="f2" style="margin-top:4px;" onclick="' + traceFuc + '" ' +
                         'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
                         '<div ><div style="float:left;">' +
                         '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
+                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].transNo + '</span>' +
                         '</div>' +
                         '<div align="center"><hr style="width:95%;margin-top:0px;margin-bottom:0px;border: 0;border-top:1px solid #BFBFBF;">' +
                         '</div> <div class="f2" style="height: 80px;"><div class="leftslide">' +
@@ -169,7 +200,7 @@ function updateOrderlistPanel_bak(data){
                         'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
                         '<div ><div style="float:left;">' +
                         '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
+                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].transNo + '</span>' +
                         '</div><div style="float:right;width:40%;">' +
                         '<span id="occurPlaceimg_' + k + '" class="orderNo"><img src="assets/img/location.png"/></span>' +
                         '<span id="occurPlace_' + k + '" class="occurPlace f12" style="color:#F6842B;">' + data.obj.data[k].occurPlace + '</span>' +
@@ -216,10 +247,16 @@ function updateOrderlistPanel_bak(data){
    function showstatus(status){
        if(status=='10'){
            return '下单';
+       }else if(status=='20'){
+           return '调度';
        }else if(status=='30'){
            return '备货';
        }else if(status=='40'){
            return '提货';
+       }else if(status=='50'){
+           return '装车';
+       }else if(status=='60'){
+           return '发运';
        }else if(status=='70'){
            return '在途';
        }else if(status=='80'){
@@ -227,7 +264,7 @@ function updateOrderlistPanel_bak(data){
        }else if(status=='90'){
            return '签收';
        }else {
-           return 'error';
+           return status;
        }
    }
     /*setCacheData("searchFilter", mergeJson(oldmyFilter, {'start': (oldmyFilter.start -= 0) +
@@ -239,8 +276,9 @@ function updateOrderlistPanel_bak(data){
 
 
 function getOrderListPullToRefresh(that){
+
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-        {'queryType':'1'},true),true);
+        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':0},true),true);
 
     jQuery.ajax({
         url: searchUrl,
@@ -286,6 +324,10 @@ function getOrderListPullToRefresh(that){
 
 
 function getRequestFromOrderListinite(self) {
+    var searchFilter =  JSON.parse(localStorage.getItem("searchFilter"));
+    var start = parseInt(searchFilter.start) + 10;
+    setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':start},true),true);
     jQuery.ajax({
         url: searchUrl,
         timeout: 20000, //超时X秒

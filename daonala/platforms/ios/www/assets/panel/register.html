@@ -1,0 +1,55 @@
+<div class="login-box">
+    <!--<div class="input-box input-top icon-head username">
+        <input id="usertypeCode" required type="text"
+         readonly placeholder="点击右侧按钮选择">
+        <button onclick="getUserType()"
+                style="width:120px;margin:0;padding:5px 0 0 0;
+                font-size:16px;line-height:20px;border-radius: 0"
+                class="phone-code btn btn-primary">选择</button>
+    </div>-->
+    <div class="input-box input-top icon-local-phone username">
+        <input name="" id="phone" type="tel" maxlength="11" required
+            placeholder="请填写11位的大陆手机号码">
+    </div>
+    <div class="input-box input-mid phone icon-perm-phone-msg">
+        <input id="messageCode" type="tel" placeholder="请输入验证码" required />
+
+        <button id="getVerifyCode" onclick="send_msg('phone','getVerifyCode',1)"
+                style="background:#3B3B3B;width:120px;margin:0;padding:5px 0 0 0;
+                font-size:16px;line-height:20px;border-radius: 0"
+                class="phone-code btn">获取验证码</button>
+    </div>
+    <div class="input-box input-top icon-lock-outline password">
+        <input name="" type="password" id="password"
+              required maxlength="15" placeholder="输入密码(6-15位英文数字)">
+    </div>
+    <div class="input-box input-bot icon-insert-invitation password">
+        <input name="" type="text" id="role"
+               required maxlength="7" placeholder="请选择角色"><!--roletype_select-->
+
+        <div data-selete="roletype_select" class="phone-code arrow f32 width10">
+            <span class="phone-code unit-box icon-keyboard-arrow-down f32" ></span>
+        </div>
+    </div>
+    <br> <br>
+    <button role="button" id="submitRegister"
+            style="font-size:x-large;background:#00B2EE;"  onclick="register()"
+            class="btn btn-block" >完成</button>
+
+
+    <!--<div class="input-box input-top icon-local-shipping username">
+        <input name="feedback" id="followstatus" maxlength="12" type="text" placeholder="异常反馈" onchange="this.parentNode.nextSibling.value=this.value" >
+        &lt;!&ndash; <span class="select_icon"    >
+             <img src="assets/img/select_icon.png" class="arrow f32"
+                  data-selete="followstatus_select"  />
+         </span>&ndash;&gt;
+        <div data-selete="followstatus_select" class="phone-code arrow f32 width10">
+            <span class="phone-code unit-box icon-keyboard-arrow-down f32" ></span>
+        </div>
+        &lt;!&ndash; <div data-selete="followstatus_select" class="rrow f32">
+             <span class="phone-code unit-box icon-keyboard-arrow-down f32" ></span>
+         </div>&ndash;&gt;
+    </div>-->
+
+    <br>
+</div>

@@ -109,7 +109,7 @@ function ifNull(data){
     if(data==null){
         return '';
     }else if(data ==''){
-        return '无';
+        return '';
     }else{
         return data;
     }

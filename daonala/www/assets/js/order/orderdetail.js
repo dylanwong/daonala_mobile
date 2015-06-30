@@ -15,12 +15,67 @@ function init_orderdetail()
         $("#"+$(this).attr('target')).fadeIn(300);
 
     })
-}
 
+    $(".star li").mouseenter(function(){
+        $(".star li img").attr("src","assets/img/bluestar.png");
+        $(".star li img").attr("evalutegrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
+    });
+    $(".star2 li").mouseenter(function(){
+        $(".star2 li img").attr("src","assets/img/bluestar.png");
+        $(".star2 li img").attr("evalutegrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
+    });
+    $(".star3 li").mouseenter(function(){
+        $(".star3 li img").attr("src","assets/img/bluestar.png");
+        $(".star3 li img").attr("evalutegrade","1");
+        $(this).find('img').attr("src","assets/img/bluestar.png");
+        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+        $(this).nextAll().find('img').attr("evalutegrade","0");
+    })
+}
+function clear_orderdetailPage(){
+    var target = $($("#orderdetail-buttons").find(".selectTotalDay")[0]).attr('target');
+    $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    $("#"+target).hide();
+    $("#orderDetailInfoId").addClass('selectTotalDay');
+    $("#"+$('#orderDetailInfoId').attr('target')).fadeIn(300);
+    $('#shipPhone_d').html('');
+    $('#shipNo_d').html('');
+
+    $('#custAddr_d').html('');
+    $('#custName_d').html('');
+    $('#custContacts_d').html('');
+    $('#addrName_d').html('');
+    $('#ownerPhone_d').attr('');
+
+    $('#ownerName_d').html('');
+    $('#ownerAddr_d').html('');
+    $('#ownerContacts_d').html('');
+
+
+    $('#status_d').html( '' );
+    $('#transNo_d').html('');
+    $('#ownerNo_d').html('');
+    $('#custNo_d').html('');
+    $('#orderDate_d').html('');
+
+
+    $('#topdeliverNo_d').html('');
+    $('#topdeliverNo_d').attr('delivery','');
+
+    $('#orderDetailEvaluate').empty();
+}
 /*货主客户订单详情页面*/
 function initTraceInfo2(){
+
+
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    $('#shipPhone_d').html(data.orderNo);
+    $('#shipPhone_d').html(data.shipperPhone);
     $('#shipNo_d').html(data.ownerName);
 
     $('#custAddr_d').html(data.custAddr);
@@ -36,7 +91,7 @@ function initTraceInfo2(){
 
     $('#status_d').html( showstatus(data.status) );
     $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.ownerNo);
+    $('#ownerNo_d').html(data.orderNo);
     $('#custNo_d').html(data.custNo);
     $('#orderDate_d').html(data.orderDate);
 
@@ -55,7 +110,7 @@ function initTraceInfo2(){
 
 function queryDetailInfo(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    $('#shipPhone_d').html(data.orderNo);
+    $('#shipPhone_d').html(data.shipperPhone);
     $('#shipNo_d').html(data.ownerName);
 
     $('#custAddr_d').html(data.custAddr);
@@ -70,7 +125,7 @@ function queryDetailInfo(){
 
     $('#status_d').html('状态： '+ showstatus(data.status));
     $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.ownerNo);
+    $('#ownerNo_d').html(data.orderNo);
     $('#custNo_d').html(data.custNo);
     $('#orderDate_d').html(data.orderDate);
 
@@ -199,7 +254,7 @@ function updateTracePanel2(datas){
                 alert = "";
             }
 
-            if(data.fileNo !=null || data.fileNo !=''){
+            if(data.fileNo !=null && data.fileNo !=''){
                 file = '<div style="height:20px;width:30px;' +
                     'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
                     'text-align:center;line-height:20px;" deliveryNo="'+data.deliveryNo+'" ' +
@@ -237,9 +292,15 @@ function queryEvalute(){
 //    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
 //            'dispatchNo':data.dispatchNo },
 //        "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
+    if(data.status=='90'){
+        getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo },
         "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        $('#orderDetailEvaluate').empty();
+    }else{
+        $('#orderDetailEvaluate').empty();
+        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
+    }
 }
 
 function updateEvalute(datas){
@@ -249,6 +310,34 @@ function updateEvalute(datas){
     $('#reviewsItem2').empty();
     $('#reviewsItem3').empty();
     if(datas.isSucc){
+        var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
+            '<div class="fl width80" align="right"'+
+            'style="color:#26B6D9;font-size:16px;padding-top: 5px;"><span >评价</span></div>'+
+            '<div class="fr width20" align="right"'+
+            'style="color:#26B6D9;font-size:16px;"> <a href="#evaluate" >'+
+            '<button type="button" id="evaluteBtn" class="btn btn-primary"'+
+            'style="width:60px;height:24px;font-size:14px;'+
+            'text-align:center;line-height:24px;padding:0px 12px;">去评价</button>'+
+            '</a></div></li></ul>' +
+            '<div align="left" style="padding-left:10px;" id="evaluteInfo">'+
+            '  <p id="evaluteName"></p><p style="color:#06ABD4" id="reviewsDemo"></p>'+
+            ' <div><div class="overflowHidden"><p class="fl width30" align="right">商品完好度：</p>'+
+            ' <p class="fl" id="reviewsItem1"></p></div><div class="overflowHidden">'+
+            ' <p class="fl width30" align="right">回单及时性：</p>'+
+            '     <p class="fl" id="reviewsItem2"></p> </div>'+
+            ' <div class="overflowHidden"><p class="fl width30" align="right">送货人态度：</p>'+
+            ' <p class="fl"  id="reviewsItem3"></p></div></div>'+
+            '</div><ul><li style="border-bottom: 1px dashed #09ACD4;" >'+
+            '    <div class="fl width80" align="right" '+
+            '  style="color:#26B6D9;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
+            '  <div class="fr width20" align="right"'+
+            ' style="color:#26B6D9;font-size:16px;">'+
+            ' <a href="#reply"> <button type="button" id="replyBtn"'+
+            '    class="btn btn-primary"'+
+            '   style="width:60px;height:24px;font-size:14px;'+
+            '            text-align:center;line-height:24px;padding:0px 12px;">回复</button>'+
+            '</a></div></li></ul>'+
+            '<div align="left" style="padding-left:10px;" id="replyInfo"></div>';
         if(datas.obj.length == 0){
             if(cuser.obj.userType==2){
                 $('#orderDetailEvaluate').empty();
@@ -264,24 +353,13 @@ function updateEvalute(datas){
             }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-            if(cuser.obj.userType==0){
 
-                $('#evaluteBtn').hide();
-            } else if(cuser.obj.userType==1){
-                $('#evaluteBtn').hide();
-                $('#replyBtn').hide();
-            } else if(cuser.obj.userType==2){
-                $('#evaluteBtn').show();
-                $('#replyBtn').hide();
-            } else {
-
-            }
             if(datas.obj[0].bodmEvaluate != null){
+                $('#orderDetailEvaluate').empty();
+                $('#orderDetailEvaluate').append(info);
                 $('#evaluteBtn').hide();
+                $('#replyBtn').hide();
                 $('#orderDetailEvaluate').val(datas.obj[0].bodmEvaluate.reviewsNo);
-                //$('#evaluteInfo').append('');
-//                $('#evaluteInfo').html(datas.obj[0].bodmEvaluate.reviewsUserNo);
-//                evaluteResult = '';
                 $('#evaluteName').html(datas.obj[0].bodmEvaluate.reviewsUserNo
                     +'【'+datas.obj[0].bodmEvaluate.reviewsDate+'】');
                 $('#reviewsDemo').html(datas.obj[0].bodmEvaluate.reviewsDemo);
@@ -293,9 +371,7 @@ function updateEvalute(datas){
                     $('#replyInfo').append('<p>'+datas.obj[0].bodmEvaluateAnswer.replyUserNo+'['+datas.obj[0].bodmEvaluateAnswer.replyDate+']</p>'+
                         '<p style="color:#06ABD4">'+datas.obj[0].bodmEvaluateAnswer.replyDemo+'</p>');
                 }else{
-//                    if(cuser.obj.userType=0) {
-//                        $('#replyBtn').show();
-//                    }
+
                     $('#replyspan').hide();
                     $('#replyInfo').empty();
                 }
@@ -308,6 +384,18 @@ function updateEvalute(datas){
                     'style="width:60px;height:24px;font-size:14px; '+
                     'text-align:center;line-height:24px;padding:0px 12px;">去评价</button> '+
                     '</a></div>');
+            }
+            if(cuser.obj.userType==0  && datas.obj[0].bodmEvaluateAnswer == null ){
+                $('#replyBtn').show();
+                $('#evaluteBtn').hide();
+            } else if(cuser.obj.userType==1){
+                $('#evaluteBtn').hide();
+                $('#replyBtn').hide();
+            } else if( cuser.obj.userType == 2 && datas.obj[0].bodmEvaluate == null ){
+                $('#evaluteBtn').show();
+                $('#replyBtn').hide();
+            } else {
+
             }
             evaluteResult = '';
         }
@@ -367,31 +455,31 @@ function showStar(star){
             '</ul> ';
     }
 }
-
-$(function(){
-    $(".star li").mouseenter(function(){
-        $(".star li img").attr("src","assets/img/bluestar.png");
-        $(".star li img").attr("evalutegrade","1");
-        $(this).find('img').attr("src","assets/img/bluestar.png");
-        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-        $(this).nextAll().find('img').attr("evalutegrade","0");
-    });
-    $(".star2 li").mouseenter(function(){
-        $(".star2 li img").attr("src","assets/img/bluestar.png");
-        $(".star2 li img").attr("evalutegrade","1");
-        $(this).find('img').attr("src","assets/img/bluestar.png");
-        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-        $(this).nextAll().find('img').attr("evalutegrade","0");
-    });
-    $(".star3 li").mouseenter(function(){
-        $(".star3 li img").attr("src","assets/img/bluestar.png");
-        $(".star3 li img").attr("evalutegrade","1");
-        $(this).find('img').attr("src","assets/img/bluestar.png");
-        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-        $(this).nextAll().find('img').attr("evalutegrade","0");
-    })
-
-});
+//
+//$(function(){
+//    $(".star li").mouseenter(function(){
+//        $(".star li img").attr("src","assets/img/bluestar.png");
+//        $(".star li img").attr("evalutegrade","1");
+//        $(this).find('img').attr("src","assets/img/bluestar.png");
+//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+//        $(this).nextAll().find('img').attr("evalutegrade","0");
+//    });
+//    $(".star2 li").mouseenter(function(){
+//        $(".star2 li img").attr("src","assets/img/bluestar.png");
+//        $(".star2 li img").attr("evalutegrade","1");
+//        $(this).find('img').attr("src","assets/img/bluestar.png");
+//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+//        $(this).nextAll().find('img').attr("evalutegrade","0");
+//    });
+//    $(".star3 li").mouseenter(function(){
+//        $(".star3 li img").attr("src","assets/img/bluestar.png");
+//        $(".star3 li img").attr("evalutegrade","1");
+//        $(this).find('img').attr("src","assets/img/bluestar.png");
+//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
+//        $(this).nextAll().find('img').attr("evalutegrade","0");
+//    })
+//
+//});
 
 function saveReply(){
     var data = JSON.parse(localStorage.getItem("currentorder"));

@@ -1,0 +1,25 @@
+<div class="login-box">
+
+    <div class="input-box input-top icon-local-phone username">
+        <input name="" id="findPhone" type="tel" maxlength="11" required
+            placeholder="请填写11位的大陆手机号码">
+    </div>
+    <div class="input-box input-mid phone icon-perm-phone-msg">
+        <input id="findMessageCode" type="tel" placeholder="请输入验证码" required />
+
+        <button id="findGetVerifyCode" onclick="send_msg('findPhone','findGetVerifyCode',2)"
+                style="width:120px;margin:0;padding:5px 0 0 0;
+                font-size:16px;line-height:20px;border-radius: 0"
+                class="phone-code btn">获取验证码</button>
+    </div>
+    <div class="input-box input-bot icon-lock-outline password">
+        <input name="" type="password" id="findPassword"
+              required maxlength="15" placeholder="输入新密码(6-15位英文数字)">
+    </div>
+
+    <br> <br>
+    <button role="button" id="submitRegister"
+            style="font-size:x-large;color:#00B2EE;"  onclick="saveUpdatePwd()"
+            class="btn  btn-lg btn-block" >下一步</button>
+    <br>
+</div>

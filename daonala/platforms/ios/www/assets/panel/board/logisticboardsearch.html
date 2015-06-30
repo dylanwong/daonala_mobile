@@ -1,0 +1,42 @@
+<div class="boardPanel">
+    <div class="login-box">
+        <br>
+        <h1 style="text-align: center">输入查询条件</h1>
+        <br>
+    <!--    <div class="input-box input-top icon-place username"
+             onclick="select_city_panel('search-departure')" >
+            <input id="search-departure" type="text" id="subcompanyText" placeholder="请选择分公司..." >
+            <div  class="phone-code arrow f32 width10">
+                <span class="phone-code unit-box icon-keyboard-arrow-down f32"></span>
+            </div>
+        </div>-->
+
+        <div class="input-box input-bot  icon-local-shipping username" >
+            <input name="" id="select_city"  type="text" placeholder="请选择分公司..." >
+                <span class="select_icon"   >
+                <img src="assets/img/select_icon.png" class="arrow f32"
+                     data-selete="select_city_panel" />
+                </span>
+
+        </div>
+        <!--<div class="input-box input-top input-bot icon-attach-money password">
+            <input id="linkDataId" name="linkData.linkDataId" type="hidden">
+            <input name="" id="linkDataName" name="linkData.linkDataName"
+                   type="text" onkeyup="getLinkData();"
+                   placeholder="请输入货主编号或名称模糊查询..." >
+            <div id="popup" style="position: absolute;z-index:1001;">
+                <table width="100%" bgcolor="#fffafa">
+                    <tbody id="popupBody"></tbody>
+                </table>
+            </div>
+        </div>-->
+       <!-- <input id="keyword" />
+                <input id="getValue" value="GetValue" type="button" />-->
+        <br> <br>
+        <a id="reset-btn" class="btn btn-lg fl width4"
+           style="background: #b6bece;color: #ffffff;">清空</a>
+        <a class="btn btn-primary btn-lg fr width4" id="SearchConfirmBtn" onclick="confirmSearch();"
+           style="background: #06ABD4;color: #ffffff;border-color:#06ABD4">确定</a>
+        <br>
+    </div>
+</div>

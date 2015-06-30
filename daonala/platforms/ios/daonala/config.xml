@@ -19,15 +19,6 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <name>daonala</name>
-    <description>
-        A sample Apache Cordova application that responds to the deviceready event.
-    </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
-    <content src="index.html" />
-    <access origin="*" />
     <feature name="SocialSharing">
         <param name="ios-package" value="SocialSharing" />
         <param name="onload" value="true" />
@@ -59,4 +50,18 @@
         <param name="ios-package" value="CDVCamera" />
     </feature>
     <preference name="CameraUsesGeolocation" value="false" />
+    <name>daonala</name>
+    <description>
+        到哪啦是一款订单管理应用，由海联天下出品.
+    </description>
+    <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
+        深圳市海联天下科技有限公司
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <access launch-external="yes" origin="tel:*" />
+    <access launch-external="yes" origin="geo:*" />
+    <access launch-external="yes" origin="mailto:*" />
+    <access launch-external="yes" origin="sms:*" />
+    <access launch-external="yes" origin="market:*" />
 </widget>

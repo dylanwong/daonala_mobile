@@ -1,41 +1,660 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+<head>
+    <title>到哪啦</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <link href="assets/libs/af/css/af.ui.base.css" rel="stylesheet" type="text/css"/>
+    <!--<link href="assets/libs/af/css/af.ui.css" rel="stylesheet" type="text/css"/>-->
+    <link href="assets/libs/af/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/mobiscroll/css/mobiscroll.core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/mobiscroll/css/mobiscroll.android-ics.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/plugin.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/comm.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/font.css" rel="stylesheet" type="text/css" />
+   <!-- <link href="assets/libs/swiper/swiper.css" rel="stylesheet" type="text/css"/>-->
+    <link href="assets/libs/swiper/swiper3.08.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/animate/animate.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/jquery/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/js/jq.appframework.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/ui/af.ui.jquery.js"></script>
+
+   <!-- <script type="text/javascript" charset="utf-8" src="assets/libs/swiper/swiper.js"></script>-->
+    <script type="text/javascript" charset="utf-8" src="assets/libs/swiper/swiper3.08.jquery.min.js"></script>
+
+    <script src="assets/libs/mobiscroll/js/mobiscroll.core.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.datetime.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.select.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.list.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/mobiscroll.android-ics.js" type="text/javascript"></script>
+    <script src="assets/libs/mobiscroll/js/i18n/mobiscroll.i18n.zh.js" type="text/javascript"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/af/plugins/af.8tiles.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/plugin.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/setting.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/ready.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/js/public/main.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/toastr/toastr.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/libs/bootstrap/js/bootstrap.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="assets/libs/jquery/jquery.autocomplete.min.js"></script>
+</head>
+<body>
+<div id="afui" class="af">
+<!-- this is the splashscreen you see. -->
+<div id="splashscreen" class='ui-loader heavy'>
+    <br>
+    <br><br>
+    <br>
+    到哪啦
+    <br>
+    <br>    <span class='ui-icon ui-icon-loading spin'></span>
+    <h1>正在加载应用..</h1>
+</div>
+
+<div id="content">
+<!--
+data-header:设置页面头部,
+data-load:每次页面加载js函数
+data-unload: 每次页面离开的时候调用的JS函数
+data-footer: 设置页面底部
+data-tab:指定页面底部的具体一项，设置高亮
+data-defer:加载一个html进来
+    -->
+<div class="panel p0"
+     title="首页" id="home" data-defer="assets/panel/home.html"
+     data-header="homeHeader"
+     data-load="init_home_ad"
+     data-tab="nabar_welcome">
+</div>
+
+
+
+<div class="panel p0"
+     title="我" id="mine" data-defer="assets/panel/mine.html"
+     data-load="init_mine"
+     data-header="homeHeader"
+     data-unload=""
+     data-tab="navbar_mine">
+</div>
+
+<div class="panel p0"
+     title="" id="search" data-defer="assets/panel/order/search.html"
+     data-load=""
+     data-header="homeHeader"
+     data-unload=""
+     data-tab="navbar_search">
+</div>
+
+<div class="panel p0"
+     title="" id="orderlist" data-defer="assets/panel/order/orderlist.html"
+     data-load=""
+     data-header="home2Header"
+     data-unload=""
+     >
+</div>
+
+<div class="panel p0"
+     title="" id="ordertrace" data-defer="assets/panel/order/ordertrace.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+        >
+</div>
+
+
+<div class="panel p0"
+     title="" id="ordertrace2" data-defer="assets/panel/order/ordertrace2.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+     >
+</div>
+
+<div class="panel p0"
+     title="" id="searchImg" data-defer="assets/panel/order/searchImg.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+    >
+</div>
+
+<div class="panel p0"
+     title="" id="orderchoice" data-defer="assets/panel/order/choicedeliverorder.html"
+     data-load=""
+     data-header="allHeader"
+     data-footer="none">
+    >
+</div>
+
+
+<div class="panel p0"
+     title="" id="message" data-defer="assets/panel/message.html"
+     data-header="allHeader"
+     data-load="init_home_ad"
+     data-tab="nabar_welcome">
+</div>
+
+<div class="panel p0"
+     title="" id="messagedetail" data-defer="assets/panel/detailmsg.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+
+<div class="panel"
+     title="" id="login" data-defer="assets/panel/login.html"
+     data-load=""
+     data-header="allHeader"
+     data-unload=""
+     data-tab="navbar_mine">
+        >
+</div>
+<div class="panel "
+     title="" id="register" data-defer="assets/panel/register.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+
+<div class="panel "
+     title="" id="setup" data-defer="assets/panel/setup.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+         title="设置" id="feedback" data-defer="assets/panel/feedback.html"
+         data-load=""
+         data-unload=""
+         data-header="allHeader"
+         data-footer="none">
+        <!--data-load="loginPageLoad"-->
+</div>
+
+
+<div class="panel "
+     title="" id="about" data-defer="assets/panel/about.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="register-footer">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel p0"
+     title="" id="logisticboard" data-defer="assets/panel/board/logisticboard.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="" id="logisticboardsearch" data-defer="assets/panel/board/logisticboardsearch.html"
+     data-load="init_board"
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="客户看板" id="custboard" data-defer="assets/panel/board/custboard.html"
+     data-load="init_board"
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="订单详情" id="orderdetail33" data-defer="assets/panel/order/orderdetail.html"
+     data-load="init_orderdetail"
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="" id="evaluate" data-defer="assets/panel/order/evaluate.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+<div class="panel p0"
+     title="" id="reply" data-defer="assets/panel/order/reply.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="" id="addorder" data-defer="assets/panel/order/addOrder.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="" id="chocieOwner" data-defer="assets/panel/order/choiceOwner.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="选择城市" id="citys" data-defer="assets/panel/order/citys.html"
+     data-load=""
+     data-unload=""
+     data-footer="">
+    <!--data-load="loginPageLoad"-->
+</div>
+
+<div class="panel "
+     title="选择省份" id="provinces" data-defer="assets/panel/order/provinces.html"
+     data-load=""
+     data-unload=""
+     data-footer="">
+    <!--data-load="loginPageLoad"-->
+</div>
+<div class="panel "
+     title="选择区域" id="zones" data-defer="assets/panel/order/zone.html"
+     data-load=""
+     data-unload=""
+     data-footer="">
+    <!--data-load="loginPageLoad"-->
+</div>
+<!--<div class="panel "
+     title="我的订单" id="selfOrder" data-defer="assets/panel/selforder.html"
+     data-load=""
+     data-unload=""
+     data-header="selfOrderHeader"
+     data-footer="none">
+    data-load="loginPageLoad"
+</div>
+
+<div class="panel "
+     title="订单详情" id="selfOrderOffer" data-defer="assets/panel/selfOrderOffer.html"
+     data-load="myOrderInfoPanleLoad"
+     data-unload=""
+     data-header="offerHeader"
+     data-footer="none">
+    data-load="loginPageLoad"
+</div>-->
+
+<!--
+<div class="panel "
+     title="推广APP" id="qrcode" data-defer="assets/panel/qrcode.html"
+     data-load="qrcode_load"
+     data-unload=""
+     data-footer="none">
+</div>
+-->
+
+<!--<div class="panel "
+     title="用户注册" id="role" data-defer="assets/panel/role.html"
+     data-load=""
+     data-unload=""
+     data-header="baseHeader"
+     data-footer="role-footer">
+    data-load="loginPageLoad"
+</div>-->
+
+<div class="panel "
+     title="找回密码" id="findPwd" data-defer="assets/panel/findPwd.html"
+     data-load=""
+     data-unload=""
+     data-header="allHeader"
+
+     data-footer="none">
+</div>
+
+<!--<div class="panel p0"
+     title="竞价记录" id="biddingRecord" data-defer="assets/panel/biddingRecord.html"
+     data-header="biddingRecodeHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>-->
+
+
+<div class="panel p0"
+     title="任务" id="driverboard" data-defer="assets/panel/driver/task.html"
+     data-header="taskHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+
+<div class="panel"
+     title="任务详情" id="todoInfo" data-defer="assets/panel/driver/taskInfo.html"
+     data-load=""
+     data-unload=""
+     data-header="todoInfoHeader"
+     data-footer="register-footer">
+</div>
+
+
+<div class="panel "
+     title="任务操作" id="operateguide" data-defer="assets/panel/driver/operateguide.html"
+     data-header="operateguideHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="订单选择" id="chocieorders" data-defer="assets/panel/driver/chocieorders.html"
+     data-header="chocieordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="提取订单" id="deliverorders" data-defer="assets/panel/driver/deliverorders.html"
+     data-header="deliverordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+<div class="panel "
+     title="在途跟踪" id="followorder" data-defer="assets/panel/driver/followorder.html"
+     data-header="followorderHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+<div class="panel "
+     title="交接订单" id="handoverorders" data-defer="assets/panel/driver/handoverorders.html"
+     data-header="handoverordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+<div class="panel "
+     title="签收订单" id="signorders" data-defer="assets/panel/driver/signorders.html"
+     data-header="signordersHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="签收订单明细列表" id="signorderslist" data-defer="assets/panel/driver/signorderlist.html"
+     data-header="signorderslistHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+<div class="panel "
+     title="签收订单明细" id="signorderdetail" data-defer="assets/panel/driver/signdetail.html"
+     data-header="signorderdetailHeader"
+     data-load=""
+     data-unload=""
+     data-footer="none">
+</div>
+
+
+
+
+<!--<div title='首页' id="main" class="panel"  data-defer="http://fatcoder.com/weixin.html"-->
+<!--data-nav="navList" data-tab="navbar_home" data-load="allPanelLoaded" >-->
+
+<!--</div>-->
+
+
+</div>
+
+
+
+<header id="homeHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton" style="top:0px;">
+        <span id="homeTitle" class="" style="color:#EF8305;text-shadow:1px 1px 2px #FEFEFE;"></span>
+    </div>
+    <div style="padding-top:10px;padding-left:10px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+   <!-- <div class="homeRightButton animated 5s flash daiyufont">让订单交付更简单</div>-->
+</header>
+
+<header id="home2Header" style="background-color:#00B2EE;">
+    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
+        返回
+    </a>
+    <h1 id="home2Title" class="">订单列表</h1>
+    <div></div></header>
+
+<header id="mineHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton">
+        <span id="mineTitle" class="" style=""><a  class="backButton button" >我</a></span>
+    </div>
+    <div style="padding-top:10px;padding-left:10px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+
+</header>
+
+<header id="allHeader" style="background-color:#00B2EE;">
+    <div class="homeLeftButton">
+        <span id="allTitle" class="" style=""><a  class="backButton button" >返回</a></span>
+    </div>
+    <div style="padding-top:10px;padding-left:100px;display:table-cell;">
+        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+</header>
+
+<header id="taskHeader">
+    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
+        返回
+    </a>
+    <h1 id="taskTitle" class="">任务列表</h1>
+    <div></div>
+</header>
+
+<header id="operateguideHeader">
+    <a class="backButton button"  onclick="$.ui.loadContent('#driverboard', false, false, 'slide')" >
+        返回
+    </a>
+    <h1 id="operateguideTitle" class="">任务操作</h1>
+    <div></div>
+</header>
+
+<header id="chocieordersHeader">
+    <a class="backButton button"  onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
+    <h1 id="orderTitle" class="">订单选择</h1>
+    <div><a style="margin-right: 0px;" class="searchButton"  id='chocieordersTelButton' href="tel:" >联系客服</a></div>
+</header>
+
+<header id="todoInfoHeader">
+    <a class="backButton button" >任务</a>
+    <h1 id="odoInfoTitle" class="">任务详情</h1>
+    <div><a style="margin-right: 0px;" class="searchButton" id='odoInfoTelButton' href="tel:" >联系客服</a></div>
+</header>
+
+<header id="deliverordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="deliverordersTitle" class="">提取订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='deliverordersTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="followorderHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')">返回</a>
+    <h1 id="followorderTitle" class="">在途跟踪</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='followorderTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="handoverordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="handoverordersTitle" class="">交接订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='handoverordersTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="signordersHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#operateguide', false, false, 'slide')" >返回</a>
+    <h1 id="signordersHeaderordersTitle" class="">签收订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signordersHeaderordersTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+<header id="signorderdetailHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#signorders', false, false, 'slide')" >返回</a>
+    <h1 id="signorderdetailTitle" class="">明细</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signorderdetailTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="signorderlistHeader">
+    <a class="backButton button" onclick="$.ui.loadContent('#signorderdetail', false, false, 'slide')" >返回</a>
+    <h1 id="signorderlistTitle" class="">选择订单</h1>
+    <div><a class="searchButton" style="margin-right: 0px;" id='signorderlistTelButton' href="tel:" >联系客服</a></div>
+
+</header>
+
+<header id="biddingRecodeHeader">
+
+</header>
+<header id="selfOrderHeader">
+
+</header>
+<header id="todoHeader">
+
+</header>
+
+<header id="noneHeader">
+</header>
+
+<div id="navbar">
+    <a href="#home" id='nabar_welcome' class='icon icon-home' style="height:100%;">首页</a>
+    <a href="javascript:;" onclick="searchorder_panel()"
+       id='navbar_search' class='icon icon-local-shipping' style="height:100%;">搜索</a>
+    <!--<a href="#bbs" id='navbar_bbs' class="icon icon-forum">司机帮</a>-->
+    <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle" style="height:100%;">我</a>
+</div>
+
+</div>
+
+<div style="display: none">
+
+    <select id="select_city_panel" data-role="none">
+      </select>
+    <select id="province_select" data-role="none">
+        <option value="粤">粤</option>
+        <option value="苏">苏</option>
+        <option value="浙">浙</option>
+        <option value="鄂">鄂</option>
+        <option value="皖">皖</option>
+        <option value="辽">辽</option>
+        <option value="京">京</option>
+        <option value="津">津</option>
+        <option value="沪">沪</option>
+        <option value="豫">豫</option>
+        <option value="鲁">鲁</option>
+        <option value="湘">湘</option>
+        <option value="渝">渝</option>
+        <option value="冀">冀</option>
+        <option value="云">云</option>
+        <option value="黑">黑</option>
+        <option value="新">新</option>
+        <option value="赣">赣</option>
+        <option value="桂">桂</option>
+        <option value="甘">甘</option>
+        <option value="晋">晋</option>
+        <option value="蒙">蒙</option>
+        <option value="陕">陕</option>
+        <option value="吉">吉</option>
+        <option value="闽">闽</option>
+        <option value="贵">贵</option>
+        <option value="青">青</option>
+        <option value="藏">藏</option>
+        <option value="川">川</option>
+        <option value="宁">宁</option>
+        <option value="琼">琼</option>
+    </select>
+
+
+
+    <select id="roletype_select" data-role="none">
+        <option value="0">物流商</option>
+        <option value="1">货主</option>
+        <option value="2">货主客户</option>
+        <option value="3">司机</option>
+
+    </select>
+
+
+    <select id="deliverremark_select" data-role="none">
+        <option value="提取顺利">提货顺利</option>
+        <option value="提货异常">提货异常</option>
+    </select>
+
+
+    <select id="followstatus_select" data-role="none">
+        <option value="正常反馈">正常反馈</option>
+        <option value="异常反馈">异常反馈</option>
+    </select>
+
+    <select id="followremark_select" data-role="none">
+        <!--<option value="在途正常">在途正常</option>-->
+        <option value="货物丢失">货物丢失</option>
+        <option value="货物损坏">货物损坏</option>
+        <option value="天气恶劣">天气恶劣</option>
+        <option value="交通堵塞">交通堵塞</option>
+        <option value="车辆故障">车辆故障</option>
+        <option value="车辆事故">车辆事故</option>
+    </select>
+
+ <!--   <select id="signremark_select" data-role="none">
+        &lt;!&ndash;<option value="在途正常">在途正常</option>&ndash;&gt;
+        <option value="货物丢失">货物丢失</option>
+        <option value="货物损坏">货物损坏</option>
+        <option value="天气恶劣">天气恶劣</option>
+        <option value="交通堵塞">交通堵塞</option>
+        <option value="车辆故障">车辆故障</option>
+        <option value="车辆事故">车辆事故</option>
+    </select>-->
+    <!--  在途正常,货物丢失,货物损坏,天气恶劣,交通堵塞,车辆故障,车辆事故
+
+    交接正常,货物短少,货物损坏,客户拒收,客户强退,窜货,压车不卸货-->
+
+    <select id="signremark_select" data-role="none">
+        <option value="正常签收">正常签收</option>
+        <option value="异常签收">异常签收</option>
+    </select>
+
+
+
+
+</div>
+</body>
 </html>

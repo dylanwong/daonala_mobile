@@ -10,9 +10,9 @@ function login()
     {
         errorPopup('请填写完全!');
     }
-    else if(pwd.trim().length<6 || pwd.trim().length>15)
+    else if(pwd.trim().length<1 || pwd.trim().length>15)
     {
-        errorPopup('请填写合法密码(6-15英文数字)!');
+        errorPopup('请填写合法密码(1-15英文数字)!');
     }else
     {
             var deviceNo = getDeviceNo();
@@ -172,9 +172,9 @@ function saveUpdatePwd()
     {
         errorPopup('请填写完全输入项!');
     }
-    else if(password.trim().length<6 || password.trim().length>15)
+    else if(password.trim().length<1 || password.trim().length>15)
     {
-        errorPopup('请填写合法密码(6-15英文数字)!');
+        errorPopup('请填写合法密码(1-15英文数字)!');
     }
     else
     {

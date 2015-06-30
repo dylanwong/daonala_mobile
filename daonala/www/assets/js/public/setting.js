@@ -25,7 +25,7 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.98:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.86:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -86,13 +86,6 @@ function onDeviceReadySettingEvents() {
     init_home_ad();
     init_homepage();
 
-    //设备启动完毕发起 获取消息内容请求
-   // var DaoNaLaRoute = cordova.require('com.sealink.daonala.cordova.DaoNaLaRoute');
-//    DaoNaLaRoute.route(function(message) {
-//        alert(message);
-//    }, function(message) {
-//        alert(message);
-//    });
 
 }
 
@@ -108,8 +101,16 @@ function init_homepage(){
             login_panel();//login_panel();
         });
         $('#myboardText').html('我的订单');
+
+
+        $('#myFirstboard').unbind('click');
+        $('#myFirstboard').bind('click',function(){
+            searchorder_panel();
+        });
+        $('#myFirstboardText').html('订单跟踪');
     }else{
         loginStatus=1;
+
         if(user.obj.userType=='0'){
             $('#myboard').unbind('click');
 
@@ -117,12 +118,24 @@ function init_homepage(){
                 logisticboard_panel();
             });
             $('#myboardText').html('看板');
+
+            $('#myFirstboard').unbind('click');
+            $('#myFirstboard').bind('click',function(){
+                addorder_panel();
+            });
+            $('#myFirstboardText').html('我要下单');
         }else if(user.obj.userType=='1'){
             $('#myboard').unbind('click');
             $('#myboard').bind('click',function(){
                 ownerboard_panel();
             });
             $('#myboardText').html('看板');
+
+            $('#myFirstboard').unbind('click');
+            $('#myFirstboard').bind('click',function(){
+                addorder_panel();
+            });
+            $('#myFirstboardText').html('我要下单');
         }else if(user.obj.userType=='2'){
             $('#myboard').unbind('click');
             $('#myboard').bind('click',function(){
@@ -130,12 +143,20 @@ function init_homepage(){
             });
             $('#myboard').attr('statusType','0');
             $('#myboardText').html('看板');
+
+            $('#myFirstboard').unbind('click');
+            $('#myFirstboard').bind('click',function(){
+                searchorder_panel();
+            });
+            $('#myFirstboardText').html('订单跟踪');
         }else if(user.obj.userType=='3'){
             $('#myboard').unbind('click');
             $('#myboard').bind('click',function(){
                 driverboard_panel();
             });
             $('#myboardText').html('我的任务');
+
+
         }
     }
 }
