@@ -6,11 +6,19 @@
 function choiceOwnerAddr(){
     var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
     var user = JSON.parse(localStorage.getItem("user"));
-    var option = {
-        enterpriseno:'10001',
-        ownerNo:user.obj.enterpriseNo
-    };
-    $.ui.loadContent("#chocieOwner", false, false, "slide");
+    var option ;
+    if(user.obj.userType==1){
+        option = {
+            enterpriseno:'10001',
+            ownerNo:user.obj.enterpriseNo
+        };
+    }else if(user.obj.userType==0){
+        option = {
+            enterpriseno:user.obj.enterpriseNo,
+            ownerNo:''
+        };
+    }
+
     getAjax(choiceOwnerAddrUrl, option,
         "showOwnerAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
@@ -24,10 +32,24 @@ function choiceCustAddr(){
     $.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
     var user = JSON.parse(localStorage.getItem("user"));
-    var option = {
-        enterpriseno:'10001',
-        ownerNo:user.obj.enterpriseNo
-    };
+    var option ;
+    var owners = JSON.parse(localStorage.getItem("ownerInfo"));
+    if(user.userType==1){
+        option = {
+            enterpriseno:'10001',
+            ownerNo:user.obj.enterpriseNo
+        };
+    }else if(user.obj.userType==0){
+        option = {
+            enterpriseno:user.obj.enterpriseNo,
+            ownerNo:owners.ownerNo
+        };
+    }
+
+//    var option = {
+//        enterpriseno:'10001',
+//        ownerNo:user.obj.enterpriseNo
+//    };
     getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
 }
@@ -134,8 +156,8 @@ function confirmOwnerAddr(elm){
     $('#o_linker').val(data.ownerContact);
     $('#o_linkPhone').val(data.ownerPhone);
     $('#o_addr').val(data.unionAddr);
+    queryOwnerInfo(data.ownerNo);
     $.ui.goBack();
-
     localStorage.setItem('confirmProvince',data.province);
     localStorage.setItem('confirmCity',data.city);
     localStorage.setItem('confirmZone',data.county);
@@ -143,7 +165,7 @@ function confirmOwnerAddr(elm){
 }
 function confirmCustAddr(elm){
     var data = eval('(' +$(elm).attr('data-order-detail')+ ')');
-    $('#c_custname').val(data.ownerName);
+    $('#c_custname').val(data.custName);
     $('#c_provice').val(data.province+data.city+data.county);
     $('#c_linker').val(data.custContact);
     $('#c_linkPhone').val(data.custPhone);
@@ -182,15 +204,19 @@ function submitOrderInfo(){
 }
 
 
-function queryOwnerInfo(){
+function queryOwnerInfo(pram){
     var queryOwnerUrl = baseUrl + "order/queryOwnerInfo.action";
-    var ownerNo = getEnterpriseNo();
-    getAjax(queryOwnerUrl,{ownerNo:ownerNo},"queryOwnerInfoSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-}
+    var ownerNo = pram;
+//    if(getUserType=='1'){
+        getAjax(queryOwnerUrl,{ownerNo:ownerNo},"queryOwnerInfoSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+//    }else  if(getUserType=='0'){
+//        $.ui.loadContent("addorder",false,false,"slide");
+//    }
+    }
 function queryOwnerInfoSucc(data){
     if(data.isSucc){
         localStorage.setItem("ownerInfo",JSON.stringify(data.obj));
-        $.ui.loadContent("addorder",false,false,"slide");
+       // $.ui.loadContent("addorder",false,false,"slide");
     }
 }
 /**
@@ -244,7 +270,7 @@ function saveOrUpdate() {
         weight : $("#c_weight").val(),
         articleName : $("#c_goodname").val()
     };
-
+    var reg = /^\\d+$/;
     if (transOrderM.ownerNo == "") {
         //parent.art.dialog.alert("请选择发货人！");
         errorPopup('请选择发货人!');
@@ -334,47 +360,56 @@ function saveOrUpdate() {
         errorPopup('货物总称未填写!');
         flag = false;
     }
-    if (qty > 0) {
+    qty = $("#c_quantity").val();
+    vol = $("#c_volume").val();
+    wt = $("#c_weight").val();
+    if ( qty > 0) {
         $("#c_quantity").val(qty);
     } else if ($("#c_quantity").val() == ""
         || parseInt($("#c_quantity").val()) == 0) {
-        errorPopup("总件数不能为空或为零");
-        // errorPopup('总件数不能为空或为零！',1);
+        //errorPopup("总件数应为正整数！");
+         errorPopup('总件数不能为空或为零！',1);
         //parent.art.dialog.alert("总件数不能为空或为零！");
-        flag = false;
-    }
-    else if (parseInt($("#c_quantity").val()) < 0) {
+        flag = false;return;
+    }else if (parseInt($("#c_quantity").val()) < 0) {
         //parent.art.dialog.alert("总件数小于零！");
-        errorPopup('总件数小于零！');
-        flag = false;
+        errorPopup('总件数不能小于零');
+        flag = false;return;
+    }else{
+        errorPopup('总件数应为正整数！');
+        flag = false;return;
     }
 
-    if (vol > 0) {
+    if ( vol > 0) {
         $("#c_volume").val(vol);
     } else if ($("#c_volume").val() == ""
         || parseFloat($("#c_volume").val()) == 0) {
         errorPopup('总体积不能为空或为零！');
         //parent.art.dialog.alert("总体积不能为空或为零！");
-        flag = false;
-    }
-    else if (parseFloat($("#c_volume").val()) < 0) {
-        errorPopup('总体积小于零！');
+        flag = false;return;
+    }else if (parseFloat($("#c_volume").val()) < 0) {
+        errorPopup('总体积不能小于零！！');
         //parent.art.dialog.alert("总体积小于零！");
-        flag = false;
+        flag = false;return;
+    }else{
+        errorPopup('总体积应为正整数！');
+        flag = false;return;
     }
 
-    if (wt > 0) {
+    if (  wt > 0) {
         $("#c_weight").val(wt);
     } else if ($("#c_weight").val() == ""
         || parseFloat($("#c_weight").val()) == 0) {
-        errorPopup('总重量不能为空或为零！');
+        errorPopup('总重量不能为空或为零！！');
         //parent.art.dialog.alert("总重量不能为空或为零！");
-        flag = false;
-    }
-    else if (parseFloat($("#c_weight").val()) < 0) {
+        flag = false;return;
+    }else if (parseFloat($("#c_weight").val()) < 0) {
         //parent.art.dialog.alert("总重量小于零！");
-        errorPopup('总重量小于零！');
-        flag = false;
+        errorPopup('总重量不能小于零！');
+        flag = false;return;
+    }else{
+        errorPopup('总重量应为正整数！');
+        return;
     }
     var param;
     // 保存

@@ -333,8 +333,8 @@ function register_panel()
 }
 
 function addorder_panel(){
-    queryOwnerInfo();
-
+    //queryOwnerInfo();
+    $.ui.loadContent("addorder",false,false,"slide");
 }
 
 
