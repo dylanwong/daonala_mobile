@@ -26,8 +26,8 @@ function initTraceInfoAgain(elm){
     var todoFun ;
     if(user!=null){
         //$('#topdeliverNo_d').html(data.topsendNo);
-        $('#topdeliverNo_d').attr('delivery',data.topsendNo);
-        $('#topdeliverNo_d').html('运输单号:'+data.topsendNo);
+        $('#topdeliverNo_d').attr('delivery',sendno);
+        $('#topdeliverNo_d').html('运输单号:'+sendno);
         $.ui.goBack();//.goBack;
         queryDetailTraceAgain_login();
     }else {

@@ -15,7 +15,7 @@ include("assets/js/order/trace.js");
 include("assets/js/driver/task.js");
 include("assets/js/board/boards.js");
 include("assets/js/order/orderdetail.js");
-//include("assets/js/.js");
+include("assets/js/order/linkData.js");
 include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
 include("assets/js/public/filetooms.js");
@@ -25,6 +25,7 @@ include("assets/js/order/logistboard.js");
 include("assets/js/order/custboard.js");
 include("assets/js/order/addOrder.js");
 include("assets/js/order/city.js");
+include("assets/js/public/iscroll.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
@@ -89,6 +90,7 @@ function myorders_panel(){
 function logisticboard_panel(){
     init_orderboard();
     initBoardSearchPage();
+
     initLogisticBoard();
 
 }
@@ -153,13 +155,21 @@ function searchorder_panel(){
     init_search_panel();
     $.ui.loadContent("#search", false, false, "slide");
 }
+
+//function inittrace(elm){
+//    if(loginStatus == 0) {
+//        traceInfo(this);
+//    }else {
+//        traceInfo33(this);
+//    }
+//}
 /*订单跟踪 未登录*/
-function traceInfo(elm){
+function traceInfo(){
     /*init_search_panel();*/
   //  $(elm).attr('data-todo-detail')
     clear_orderdetailPage();
     if(elm!=null){
-        setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+       // setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
         initTraceInfo();
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }else{
@@ -168,7 +178,7 @@ function traceInfo(elm){
     }
 }
 //订单跟踪 登录
-function traceInfo33(elm){
+function traceInfo33(){
 //    alert(1);
 //    /*init_search_panel();*/
     clear_orderdetailPage();
@@ -179,22 +189,28 @@ function traceInfo33(elm){
     }else{
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
     }
-   // $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
-    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    initTraceInfo2();
-    $.ui.loadContent("#orderdetail33", false, false, "slide");
-}
 
+    initTraceInfo2();//初始化订单详情
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
+}
+//登陆
 function traceSingleInfo33(){
+    clear_orderdetailPage();
     var user = JSON.parse(localStorage.getItem('user'));
     if(user.obj.userType == 2){
         //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
         $('#orderdetailBackId').attr('onclick',"custboard_panel();");
     }else{
-        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+
+        if( $("#orderdetailBackId").attr('onclick') ==
+            "$.ui.loadContent('#search', false, false, 'slide')"){
+
+        }else{
+            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+        }
     }
     initTraceInfo2();
-    $.ui.loadContent("#orderdetail33", false, false, "slide");
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
 
 function traceSingleInfo(){
@@ -207,9 +223,33 @@ function traceSingleInfo(){
     }
     $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
     initTraceInfo();
-    $.ui.loadContent("#ordertrace", false, false, "slide");
-
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
+
+
+
+//商品详情页面
+function productPanel(){
+    queryDetailProduct();
+    $.ui.loadContent("#orderDetailProduct", false, false, "slide");
+}
+
+//商品评价
+function evalutePanel(){
+    queryEvalute();
+    $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
+}
+
+//订单详情（收发货人详情）
+function orderDetailPanel(){
+    $.ui.loadContent("#orderdetail", false, false, "slide");
+}
+//物流轨迹页面
+function productPanel(){
+    queryDetailTrace_login();
+    $.ui.loadContent("#orderDetailTrace", false, false, "slide");
+}
+
 
 
 /**/
@@ -377,13 +417,20 @@ function getMsgListSucc(data){
         var t = data.obj[i].noticeTitle;
         var c = data.obj[i].noticeContent;
         msgliststr += " <tr><td onclick='msgdetail_panel(this)' title='"+data.obj[i].noticeTitle+"' content='"+data.obj[i].noticeContent+"'>"
-            +data.obj[i].noticeTitle+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
+            +changeContent(data.obj[i].noticeTitle)+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
     }
     $("#msglist").empty();
     $('#msglist').append(msgliststr);
 }
 function getMsgListError(data){
 
+}
+function changeContent(content){
+    if(content.length>10){
+        return content.substring(0,10)+"......";
+    }else{
+        return content
+    }
 }
 
 

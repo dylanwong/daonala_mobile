@@ -4,13 +4,18 @@
 //初始化更精确查询页面（分公司初始化）
 function initBoardSearchPage(){
     //initAutoData();
-   /* if(getUserType() == 0){
-        $('#ownerText').attr('placeholder','请输入货主编号或名称模糊查询...');
+    $('#select_city').val('');
+    $('#product_search').val('');
+    if(getUserType() == 0){
+        $('#product_search').attr('placeholder','请输入货主编号或名称模糊查询...');
     }else if(getUserType() == 1){
-        $('#ownerText').attr('placeholder','请输入客户编号或名称模糊查询...');
-    }*/
+        $('#product_search').attr('placeholder','请输入客户编号或名称模糊查询...');
+    }
     getAjax(searchSubCompanyUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
-        "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");//初始化分公司
+    getAjax(searchOwnerOrCustUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
+        "updateBoardSearchPage2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        //linkSource();//初始化客户或货主
 }
 
 //确认精确查询条件
@@ -21,6 +26,19 @@ function confirmSearch(){
     $('#subCompany').empty();
     $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
     $('#subCompany').attr('value',subcompany);
+
+    var owner = $('#product_search').attr('productid');
+    var ownerName = $('#product_search').val();
+    if(owner!=undefined){
+    $('#boardowner').empty();
+    var userType = JSON.parse(localStorage.getItem('user')).obj.userType;
+    if(userType == 0) {
+        $('#boardowner').append('<b>货&nbsp;&nbsp;&nbsp;主&nbsp;:</b>&nbsp;' + ownerName);
+    }else if(userType == 1) {
+        $('#boardowner').append('<b>客&nbsp;&nbsp;&nbsp;户&nbsp;:</b>&nbsp;' + ownerName);
+    }
+    $('#boardowner').attr('value',owner);
+    }
     // var ownerOrCustText = $('#ownerText').val();
     initLogisticBoardAgain();
 }
@@ -53,13 +71,29 @@ function updateBoardSearchPage(data){
     });
 }
 
+function updateBoardSearchPage2(data){
+    if(data.isSucc){
+        var products = new Array();
+        for( var k in data.obj ){
+            var a ={
+                "id": data.obj[k].enterpriseNo,
+                "name": data.obj[k].enterpriseName
+            };
+            products.push(a);
+        }
+        linkSource(products);
+    }
+
+}
+
 function init_orderboard() {
     $("#orderboard-buttons").delegate('button', 'click', function () {
         var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
         $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
         $("#" + target).hide();
         $(this).addClass('selectTotalDay');
-        $("#" + $(this).attr('target')).fadeIn(300);
+        $("#" + $(this).attr('target')).fadeIn(300)//show();//;
+
     });
 }
 //初始化物流/货主看板
@@ -67,6 +101,7 @@ function initLogisticBoard(){
     clearboard();
     var user =  JSON.parse( localStorage.getItem('user') );
     $('#subCompany').empty();
+    $('#boardowner').empty();
     var option ={
         enterpriseNo : user.obj.enterpriseNo,
         ownerNo :'',
@@ -100,10 +135,8 @@ function initLogisticBoardAgain(){
     // $('#boardOwner').text('');
     var option ={
         enterpriseNo : user.obj.enterpriseNo,
-
         subCompanyNo : $('#subCompany').attr('value'),
-        ownerNo :'',
-        //   userNo : '',
+        ownerNo :$('#boardowner').attr('value'),
         userType : user.obj.userType
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');

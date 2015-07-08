@@ -1,0 +1,159 @@
+<div id="orderMainDetailInfo">
+    <div style="border-bottom:1px solid #ededed;
+            border-top: 10px solid #EFEFEF;">
+        <div>
+            <div class="clearfix" style="font-size:18px;padding:10px;">
+                <div class="fl" style="text-align: right;font-size: 16px;color:#5b5b5b;width: 30%;">
+                    单据信息
+                </div>
+                <div class="fl" id="status_d" style="text-align: left;padding-left: 30px;color:#b2b2b2;width: 70%;">
+
+                </div>
+            </div>
+            <div class="clearfix" style="font-size:18px;padding:10px;">
+                <div class="fl" style="text-align: right;font-size: 16px;color:#5b5b5b;width: 30%;">
+                    物流商单号
+                </div>
+                <div class="fl" id="transNo_d" style="text-align: left;padding-left: 30px;color:#b2b2b2;width: 70%;">
+
+                </div>
+            </div>
+            <div class="clearfix" style="font-size:18px;padding:10px;">
+                <div class="fl" style="text-align: right;font-size: 16px;color:#5b5b5b;width: 30%;">
+                    货主单号
+                </div>
+                <div class="fl" id="ownerNo_d" style="text-align: left;padding-left: 30px;color:#b2b2b2;width: 70%;">
+
+                </div>
+            </div>
+            <div class="clearfix" style="font-size:18px;padding:10px;">
+                <div class="fl" style="text-align: right;font-size: 16px;color:#5b5b5b;width: 30%;">
+                    货主客户单号
+                </div>
+                <div class="fl" id="custNo_d" style="text-align: left;padding-left: 30px;color:#b2b2b2;width: 70%;">
+
+                </div>
+            </div>
+            <div class="clearfix" style="font-size:18px;padding:10px;">
+                <div class="fl" style="text-align: right;font-size: 16px;color:#5b5b5b;width: 30%;">
+                    下单时间
+                </div>
+                <div class="fl" id="orderDate_d" style="text-align: left;padding-left: 30px;color:#b2b2b2;width: 70%;">
+
+                </div>
+            </div>
+            <!--<li>
+                <div class="fl width30" align="right" style="color:#7C7B78;">物流商单号</div>
+                <div class="fl" style="margin-left: 10px;color: #000;" id="transNo_d"></div>
+            </li>
+            <li>
+                <div class="fl width30" align="right" style="color:#7C7B78;">货主单号</div>
+                <div class="fl" style="margin-left: 10px;color: #000;" id="ownerNo_d">AF2015012365410</div>
+            </li>
+            <li>
+                <div class="fl width30" align="right" style="color:#7C7B78;">货主客户单号</div>
+                <div class="fl" style="margin-left: 10px;color: #000;" id="custNo_d"></div>
+            </li>
+            <li>
+                <div class="fl width30" align="right" style="color:#7C7B78;">下单时间</div>
+                <div class="fl" style="margin-left: 10px;color: #000;" id="orderDate_d"></div>
+            </li>-->
+        </div>
+    </div>
+    <div style="border-bottom:1px solid #ededed">
+        <ul>
+            <li style="border-bottom: 1px dashed #09ACD4;">
+                <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">商品</div>
+                <div class="fr" style="width: 10%;">
+                    <img src="assets/img/info.png" style="margin-top: 10px;" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div style="border-bottom:1px solid #ededed">
+        <ul>
+            <li style="border-bottom: 1px dashed #09ACD4;">
+                <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">评价</div>
+                <div class="fr" style="width: 10%;">
+                    <img src="assets/img/info.png" style="margin-top: 10px;" />
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="gray10"></div>
+    <div  id="detailTraceList" style="">
+        <div>
+            <p style="font-size: 16px;color: #383838">物流轨迹</p>
+        </div>
+       <!-- <script id="odetailTraceListTemp" type="text/html">
+            {{each obj.data as obj i}}-->
+            <div class="clearfix" onclick="querySingleOrderTrace();">
+            <div class="fl" style="width: 100%;border-bottom:1px solid #ededed">
+                <div class="fl" style="width: 70%;">
+                <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
+                    <p class="fl" style="width:10px;height:10px;border-radius:10px;
+                        background-color: #089c2e;
+                        margin-right: 10px; margin-top: 10px;"></p>
+                    <p style="font-size: 16px;color: #383838">
+                        GSD-S000114   2014-02-12
+                    </p>
+                </div>
+            </div>
+            <div class="fr" style="width: 30%;">
+                <span style="font-size: 14px;color: #383838">
+                    <img src="assets/img/info.png" style="margin-top: 10px;" />
+                </span>
+            </div>
+            </div>
+            <div class="fl" style="width: 100%;">
+               <div class="clearfix" style="font-size:16px;padding:5px;">
+                    <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                    货物已签收，签收人【王亚运】 <br>
+                    司机秦师傅，联系电话 13212341234
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div>
+            <p style="font-size: 16px;color: #383838">物流轨迹</p>
+        </div>
+        <!-- <script id="odetailTraceListTemp" type="text/html">
+             {{each obj.data as obj i}}-->
+        <div class="clearfix" onclick="querySingleOrderTrace();">
+            <div class="fl" style="width: 100%;border-bottom:1px solid #ededed">
+                <div class="fl" style="width: 70%;">
+                    <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
+                        <p class="fl" style="width:10px;height:10px;border-radius:10px;
+                        background-color: #089c2e;
+                        margin-right: 10px; margin-top: 10px;"></p>
+                        <p style="font-size: 16px;color: #383838">
+                            GSD-S000114   2014-02-12
+                        </p>
+                    </div>
+                </div>
+                <div class="fr" style="width: 30%;">
+                <span style="font-size: 14px;color: #383838">
+                    <img src="assets/img/info.png" style="margin-top: 10px;" />
+                </span>
+                </div>
+            </div>
+            <div class="fl" style="width: 100%;">
+                <div class="clearfix" style="font-size:16px;padding:5px;">
+                    <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                        货物已签收，签收人【王亚运】 <br>
+                        司机秦师傅，联系电话 13212341234
+                    </div>
+                </div>
+            </div>
+        </div>
+           </div>
+
+
+
+          <!--  {{/each}}
+
+        </script>-->
+    </div>
+
+</div>

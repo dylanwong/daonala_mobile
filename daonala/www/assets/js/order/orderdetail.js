@@ -12,25 +12,25 @@ function init_orderdetail()
         $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
         $("#"+target).hide();
         $(this).addClass('selectTotalDay');
-        $("#"+$(this).attr('target')).fadeIn(300);
+        $("#"+$(this).attr('target')).show();//fadeIn(1000);
 
     })
 
-    $(".star li").mouseenter(function(){
+    $(".star li").tap(function(){
         $(".star li img").attr("src","assets/img/bluestar.png");
         $(".star li img").attr("evalutegrade","1");
         $(this).find('img').attr("src","assets/img/bluestar.png");
         $(this).nextAll().find('img').attr("src","assets/img/star.png");
         $(this).nextAll().find('img').attr("evalutegrade","0");
     });
-    $(".star2 li").mouseenter(function(){
+    $(".star2 li").tap(function(){
         $(".star2 li img").attr("src","assets/img/bluestar.png");
         $(".star2 li img").attr("evalutegrade","1");
         $(this).find('img').attr("src","assets/img/bluestar.png");
         $(this).nextAll().find('img').attr("src","assets/img/star.png");
         $(this).nextAll().find('img').attr("evalutegrade","0");
     });
-    $(".star3 li").mouseenter(function(){
+    $(".star3 li").tap(function(){
         $(".star3 li img").attr("src","assets/img/bluestar.png");
         $(".star3 li img").attr("evalutegrade","1");
         $(this).find('img').attr("src","assets/img/bluestar.png");
@@ -82,7 +82,7 @@ function initTraceInfo2(){
     $('#custName_d').html(data.custName);
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
     $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone);
+    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
 
     $('#ownerName_d').html(data.ownerName);
     $('#ownerAddr_d').html(data.ownerAddr);
@@ -96,17 +96,17 @@ function initTraceInfo2(){
     $('#orderDate_d').html(data.orderDate);
 
 
-    $('#topdeliverNo_d').html('运输单号:'+data.topsendNo);
-    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
-    queryDetailProduct();
-    queryDetailTrace_login();
-    queryEvalute();
+//    $('#topdeliverNo_d').html('运输单号:'+data.topsendNo);
+//    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
+
 //    $.ui.blockUI(.3);
 //    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
 //            'dispatchNo':data.dispatchNo,
 //            'sendNo':data.topsendNo},
 //        "updateDetailPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
+
+
 
 function queryDetailInfo(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
@@ -117,7 +117,7 @@ function queryDetailInfo(){
     $('#custName_d').html(data.custName);
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
     $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone);
+    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
 
     $('#ownerName_d').html(data.ownerName);
     $('#ownerAddr_d').html(data.ownerAddr);
@@ -542,6 +542,7 @@ function saveEvalute(){
 }
 
 function saveReplySucc(data){
+    debugger
     if(data.isSucc){
         errorPopup('回复成功！');
         traceSingleInfo33();
@@ -552,6 +553,7 @@ function saveReplySucc(data){
 }
 
 function saveEvaluteSucc(data){
+    debugger
     if(data.isSucc){
         errorPopup('评论成功！');
         traceSingleInfo33();
