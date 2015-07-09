@@ -208,7 +208,10 @@ function getCustOrderPullToRefresh(that){
             setTimeout(function () {
                 setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
                     {'queryType':'2'},true),true);
-                that.hideRefresh();
+               // that.hideRefresh();
+                custPullDownEl.attr('class','').hide();
+                custboardScroll.refresh();
+                custLoadingStep = 0;
             }, 1000);
         });
 }
@@ -237,8 +240,9 @@ function getRequestFromCustOrderinite(self) {
                     errorPopup(msgText[1])
                 }else if(data.isSucc === true){
                     try{
-                        $(self.el).find("#infinite").remove();
-                        self.clearInfinite();
+                        /*$(self.el).find("#infinite").remove();
+                        self.clearInfinite();*/
+                        custPullUpEl.removeClass('loading');
                         updateCustOrderlistPanel(data);
                     }catch(e){
                     };

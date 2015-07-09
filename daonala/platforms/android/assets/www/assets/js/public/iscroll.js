@@ -69,13 +69,13 @@ function custLoaded(){
                     custPullUpEl.removeClass('flip').addClass('loading');
                     custPullUpL.html('<img src="assets/img/preloader.gif" style="padding-right: 10px" />努力加载数据中...');
                     custLoadingStep = 2;
-                    getRequestFromOrderListinite();
+                    getRequestFromCustOrderinite();
 
                 }else if(custPullDownEl.attr('class').match('flip|loading')){
                     custPullDownEl.removeClass('flip').addClass('loading');
                     custPullDownL.html('<img src="assets/img/preloader.gif" style="padding-right: 10px" />努力加载数据中...');
                     custLoadingStep = 2;
-                    getOrderListPullToRefresh();
+                    getCustOrderPullToRefresh();
                 }
             }
         });

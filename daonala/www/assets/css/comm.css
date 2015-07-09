@@ -97,45 +97,57 @@ li{ position:relative; }
    /* padding-top:25px;*/
 }
 .fontCb{
-    color:#06ABD4
+    color:#ef8305
 }
 
-.star1 {padding-top:-1px;margin-top:5px;list-style:none; float:left;}
+.star1 {padding-top:-1px;margin-top:-2px;list-style:none; float:left;}
 .star1 li {
     float: left;
-    margin-right: 4px;
+    margin-right: 10px;
     margin-top:0px;
 }
 .star1 li img{
     height: 20px;
     width: 20px;
 }
-.star {padding-top:-1px;margin-top:-1px;list-style:none; float:left;}
+.star {padding-top:0px;margin-top:4px;list-style:none; float:left;}
 .star li {
+    height: 20px;
+    width: 35px;
     float: left;
-    margin-right: 4px;
+    margin-right: 0px;
 }
 .star li img{
+    display:block;
+    margin:0 auto;
     height: 20px;
     width: 20px;
 }
 
-.star2 {padding-top:-1px;margin-top:-1px;list-style:none; float:left;}
+.star2 {padding-top:0px;margin-top:4px;list-style:none; float:left;}
 .star2 li {
+    height: 20px;
+    width: 35px;
     float: left;
-    margin-right: 4px;
+    margin-right: 0px;
 }
 .star2 li img{
+    display:block;
+    margin:0 auto;
     height: 20px;
     width: 20px;
 }
 
-.star3 {padding-top:-1px;margin-top:-1px;list-style:none; float:left;}
+.star3 {padding-top:0px;margin-top:4px;list-style:none; float:left;}
 .star3 li {
+    height: 20px;
+    width: 35px;
     float: left;
-    margin-right: 4px;
+    margin-right: 0px;
 }
 .star3 li img{
+    display:block;
+    margin:0 auto;
     height: 20px;
     width: 20px;
 }
@@ -161,7 +173,7 @@ li{ position:relative; }
 .order-detail-text-time{color: #AAAAAA;font-size: 12px !important;}
 .text-center{text-align: center}
 .text-right{text-align: right}
-.order-btn{background: #06ABD4;border-radius: 2px;color:ghostwhite;border: 1px #06ABD4 solid}
+.order-btn{background: #ef8305;border-radius: 2px;color:ghostwhite;border: 1px #ef8305 solid}
 
 .p0{padding: 0px !important;}
 .p2{padding: 2px}
@@ -412,7 +424,7 @@ a:focus,input:focus{
 }
 .tabOrderSelNo
 {
-    background-color: #06ABD4;
+    background-color: #ef8305;
     color:#FFFFFF;
 }
 
@@ -423,7 +435,7 @@ a:focus,input:focus{
 }
 .tabTaskN
 {
-    background-color:#06ABD4;
+    background-color:#ef8305;
     color:#FFFFFF;
 }
 
@@ -435,7 +447,7 @@ a:focus,input:focus{
 }
 .bg_blue
 {
-    background-color:#06ABD4;
+    background-color:#ef8305;
 }
 .bg_black
 {
@@ -444,7 +456,7 @@ a:focus,input:focus{
 
 .yellowColor
 {
-    color: #06ABD4;
+    color: #ef8305;
 }
 .blackColor
 {
@@ -505,6 +517,7 @@ a:focus,input:focus{
 .width90{width:90%}
 .width95{width:95%}
 .width70{width:70%}
+.width40{width:40%}
 .width30{width:30%}
 .width33{width:33%}
 
@@ -535,7 +548,7 @@ li {list-style-type:none;}
     border-bottom: 1px solid #CECECE;
     line-height: 30px;
     padding-left: 10px;
-    color: #06ABD4;
+    color: #ef8305;
 }
 #logicTable{
     text-align:center;
@@ -548,16 +561,16 @@ li {list-style-type:none;}
 #logicTable tr td b{
     font-size:32px;
     font-weight:bold;
-    color:#06ABD4;
+    color:#ef8305;
 }
 #logicTable tr td p{
     font-size:16px;
     font-weight:bold;
     color:#383838;
 }
-.selectTotalDay{background-color:#06ABD4;color:white;}
+.selectTotalDay{background-color:#ef8305;color:white;}
 #searchHref a{
-    color: #00B2EE;
+    color: #ef8305;
 }
 
 /**订单详情**/

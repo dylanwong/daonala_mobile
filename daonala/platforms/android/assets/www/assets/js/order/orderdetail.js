@@ -6,15 +6,15 @@
  */
 function init_orderdetail()
 {
-    $("#orderdetail-buttons").delegate('button','click',function()
-    {
-        var target = $($("#orderdetail-buttons").find(".selectTotalDay")[0]).attr('target');
-        $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
-        $("#"+target).hide();
-        $(this).addClass('selectTotalDay');
-        $("#"+$(this).attr('target')).show();//fadeIn(1000);
-
-    })
+//    $("#orderdetail-buttons").delegate('button','click',function()
+//    {
+//        var target = $($("#orderdetail-buttons").find(".selectTotalDay")[0]).attr('target');
+//        $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+//        $("#"+target).hide();
+//        $(this).addClass('selectTotalDay');
+//        $("#"+$(this).attr('target')).show();//fadeIn(1000);
+//
+//    })
 
     $(".star li").tap(function(){
         $(".star li img").attr("src","assets/img/bluestar.png");
@@ -39,11 +39,11 @@ function init_orderdetail()
     })
 }
 function clear_orderdetailPage(){
-    var target = $($("#orderdetail-buttons").find(".selectTotalDay")[0]).attr('target');
-    $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
-    $("#"+target).hide();
-    $("#orderDetailInfoId").addClass('selectTotalDay');
-    $("#"+$('#orderDetailInfoId').attr('target')).fadeIn(300);
+  //  var target = $($("#orderdetail-buttons").find(".selectTotalDay")[0]).attr('target');
+//    $($("#orderdetail-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+//    $("#"+target).hide();
+//    $("#orderDetailInfoId").addClass('selectTotalDay');
+//    $("#"+$('#orderDetailInfoId').attr('target')).fadeIn(300);
     $('#shipPhone_d').html('');
     $('#shipNo_d').html('');
 
@@ -156,10 +156,12 @@ function queryDeliverordertraceListUrlSuc(data){
     }
 }
 //订单跟踪信息
-function querySingleTraceInfo(sendNo){
+function querySingleTraceInfo(sendNo,status){
  //   $("#orderDetailTraceContent").empty();
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $.ui.blockUI(.3);
+    $("#trace_list_div").empty();
+    $('#tracestatus').html(showstatus(status));
     getAjax(searchTraceUrl, {'orderEnterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo,
             'sendNo':sendNo},
@@ -186,22 +188,22 @@ function updataDetailPanel(data){
        // var productNode = $("<div class='productNode'></div>");
         for (var i in data.obj) {
              products +=
-                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li>' +
-                    '<div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
+                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:square;">' +
+                    '<div class="fl width30" align="right" style="color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
+                    '<span class="fl fs32" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="border-left: 1px solid #E3E3E3; ' +
                     'border-right: 1px solid #E3E3E3;line-height:60px;" align="center"> ' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
+                    '<span class="fl fs32" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="line-height:60px;" align="center"> ' +
                     '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
-                    '<span class="fl fs32" style="color: #06ABD4" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
+                    '<span class="fl fs32" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
             ;
           //  $(products).appendTo(productNode);
         }
@@ -241,88 +243,98 @@ function updataDetailPanel(data){
 
 
 
-function updateTracePanel2(datas){
+function updateTracePanel2(data){
     $("#trace-timeline").empty();
-
+    var result = '';
     var color,alert,title,time,desc,file;
     var html = "",height = "";
-    if(datas.isSucc){
-        var result = '';
-        var obj = datas.obj ;
+    if(data.isSucc){
+
+
+        var obj = data.obj ;
         $.ui.loadContent("#orderDetailTrace", false, false, "slide");
+        result = template('orderTraceListTemp',data);
 
-      /*  $('#orderDetailTraceContent').show();
-        $(obj).each(function (index,data) {
-            var status = data.status;
-            var dispatchStatus = data.dispatchStatus;
-            time = data.changeTimeDescri;
-            desc = data.statusDesc;
-
-            if(desc == "")
-            {
-                height = ";height:100px;";
+        $("#trace_list_div").append(result);
+        var len = obj.length;
+        for(var i = 0; i < len; i++ ) {
+            if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
+                console.log(i+' '+obj[i].fileNo);
+                setSmallImgList( obj[i].fileNo,obj[i].deliveryNo );
             }
-            if( dispatchStatus <= 10 ){
-                color = "#3EA2FC";
-                title = "下单";
-            }else if( dispatchStatus > 10 && dispatchStatus <= 40)
-            {
-                color = "#30BC7F";
-                title = "提货";
-            }else if(dispatchStatus > 40 && dispatchStatus <= 80)
-            {
-                color = "#3EA2FC";
-                title = "运输中";
-            }else if(status > 80 && status <= 99)
-            {
-                color = "#F53274";
-                title = "签收";
-            }
-
-            if(index == 0)
-            {
-                alert = '<div style="height:20px;width:30px;' +
-                    'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
-                    'text-align:center;line-height:20px;">最新</div>';
-            }else
-            {
-                alert = "";
-            }
-
-            if(data.fileNo !=null && data.fileNo !=''){
-                file = '<div style="height:20px;width:30px;' +
-                    'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
-                    'text-align:center;line-height:20px;" deliveryNo="'+data.deliveryNo+'" ' +
-                    'objectNo="'+data.fileNo+'" onclick="setImgList(this)">附件</div>';
-            }else{
-                file = "";
-            }
-            html += '<div style="overflow:hidden;"><div class="fl" style="width:25%;margin:12px auto;">' +
-                '<div style="width:60px;height:60px;background:'+color+';border: 4px solid #fffff;border-radius:60px;' +
-                'font-size:24px;color:#FFFFFF;font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">'+title+'' +
-                '</div></div><div class="fl" style="width:75%;"><div style="'+height+'" class="send"><div class="arrow"></div>' +
-                '<div style="position:relative;right:5px;top:0px;float:right;">'+alert+'</div>' +
-                '<div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;">'+time+'</div>' +
-                '<div style="font-size:12px;margin-left:10px;margin-bottom:20px;">'+desc+'</div>'+
-                '<div style="position:relative;right:5px;top:-15px;float:right;">'+file+'</div>' +
-                '</div></div></div>';
-
-            //
-        });*/
-       // $("#orderDetailTraceContent").append(html);
+        };
     }else{
-        $("#orderDetailTrace").empty();
-        $("#orderDetailTrace").html("暂无跟踪信息");
-        html = nullTrace;
+        $("#trace_list_div").empty();
+        $("#trace_list_div").html("暂无跟踪信息");
+
     }
+    $('.gj_cn:first').addClass('juhong12');
+
+
 
     $.ui.unblockUI();
     $.ui.hideMask();
 }
 
+function setSmallImgList(fileNo,deliveryNo)
+{
+    var objectNo = fileNo;
+    var deliveryNo = deliveryNo;
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var url = baseUrl + "order/queryImgUrl.action";
+    getAjax(url, {'orderNo':data.orderNo,'deliveryNo':deliveryNo,
+            'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
+        "setSmallImgListSuc(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+
+function setSmallImgListSuc(data,objectNo){
+    if(data.isSucc){
+        jqueryResult = data.obj;
+        var len = jqueryResult.length;
+        if(len>0){
+            var count = 0;
+            var result = '';
+            var containHead = '<tr id="">';
+            var containContent = '';
+            var containEnd = '</tr>';
+            result += containHead;
+            for( var i = 0; i < len; i++ ){
+               // for ( var k = 0; k < 3; k++ ){
+                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''){
+                count++;
+                var fileUrl = jqueryResult[i].filePath;
+                var fileName = jqueryResult[i].fileName;
+                containContent = ' <td style="width:60px;"><a target="_blank">'+
+                            '    <img name="realImg" style="margin:5px 5px;"  '+
+                            '    src="'+fileUrl+'" '+
+                            '    width="60" height="50" fileno="" id=""></a> '+
+                            '       </td> ';
+                result += containContent;
+                }
+            }
+               // if( count == 3 ) {
+                    count = 0;
+                    //containPNodes =+ '</tr>'
+                    //result =+ containContent;
+                   // result =+ containPNodes;
+                    //containContent = '';
+              //  }
+
+            result += containEnd;
+            $('#'+objectNo).html(result);
+               // }
+            }
+    }
+
+
+
+
+}
+
 
 function queryEvalute(){
-    //order/view_evaluate.action
+    //order/view_evaluate.action   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
     var data = JSON.parse(localStorage.getItem("currentorder"));
 //    getAjax(evaluteUrl, {'ownerNo':data.ownerNo,'systemNo':data.systemNo,
 //            'dispatchNo':data.dispatchNo },
@@ -332,9 +344,13 @@ function queryEvalute(){
             'dispatchNo':data.dispatchNo },
         "updateEvalute(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         $('#orderDetailEvaluate').empty();
+
     }else{
-        $('#orderDetailEvaluate').empty();
-        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
+//        $('evalutePanelId').unbind()
+
+        errorPopup('该单未签收，暂无评价信息');
+//        $('#orderDetailEvaluate').empty();
+//        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
     }
 }
 
@@ -345,50 +361,54 @@ function updateEvalute(datas){
     $('#reviewsItem2').empty();
     $('#reviewsItem3').empty();
     if(datas.isSucc){
+
         var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
             '<div class="fl width80" align="right"'+
-            'style="color:#26B6D9;font-size:16px;padding-top: 5px;"><span >评价</span></div>'+
+            'style="border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;padding-top:15px;padding-left:15px;"><span >评价</span></div>'+
             '<div class="fr width20" align="right"'+
-            'style="color:#26B6D9;font-size:16px;"> <a href="#evaluate" >'+
+            'style="color:#5b5b5b;font-size:16px;"> <a href="#evaluate" >'+
             '<button type="button" id="evaluteBtn" class="btn btn-primary"'+
             'style="width:60px;height:24px;font-size:14px;'+
             'text-align:center;line-height:24px;padding:0px 12px;">去评价</button>'+
             '</a></div></li></ul>' +
-            '<div align="left" style="padding-left:10px;" id="evaluteInfo">'+
+            '<div align="left" style="padding-left:10px;padding-top: 30px;" id="evaluteInfo">'+
             '  <p id="evaluteName"></p><p style="color:#06ABD4" id="reviewsDemo"></p>'+
             ' <div><div class="overflowHidden"><p class="fl width30" align="right">商品完好度：</p>'+
             ' <p class="fl" id="reviewsItem1"></p></div><div class="overflowHidden">'+
-            ' <p class="fl width30" align="right">回单及时性：</p>'+
+            ' <p class="fl width30" align="right" >回单及时性：</p>'+
             '     <p class="fl" id="reviewsItem2"></p> </div>'+
             ' <div class="overflowHidden"><p class="fl width30" align="right">送货人态度：</p>'+
             ' <p class="fl"  id="reviewsItem3"></p></div></div>'+
             '</div><ul><li style="border-bottom: 1px dashed #09ACD4;" >'+
             '    <div class="fl width80" align="right" '+
-            '  style="color:#26B6D9;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
+            '  style="color:#5b5b5b;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
             '  <div class="fr width20" align="right"'+
-            ' style="color:#26B6D9;font-size:16px;">'+
+            ' style="color:#5b5b5b;font-size:16px;">'+
             ' <a href="#reply"> <button type="button" id="replyBtn"'+
             '    class="btn btn-primary"'+
-            '   style="width:60px;height:24px;font-size:14px;'+
+            '   style="border-bottom:1px solid #ededed;width:60px;height:24px;font-size:14px;'+
             '            text-align:center;line-height:24px;padding:0px 12px;">回复</button>'+
             '</a></div></li></ul>'+
             '<div align="left" style="padding-left:10px;" id="replyInfo"></div>';
         if(datas.obj.length == 0){
             if(cuser.obj.userType==2){
                 $('#orderDetailEvaluate').empty();
-                evaluteResult = '<div class=" width20" align="center" style="color:#26B6D9;font-size:16px;">'+
+                evaluteResult = '<div class=" width20" align="center" style="color:#5b5b5b;font-size:16px;">'+
                '<a href="#evaluate" ><button type="button" id="evaluteBtn" class="btn btn-primary" '+
                'style="width:60px;height:24px;font-size:14px; '+
                'text-align:center;line-height:24px;padding:0px 12px;">去评价</button> '+
                                 '</a></div>';
               //  evaluteResult = '<div><p>无评论信息</p></div>';
+                $(".star2 li img").attr("src","assets/img/bluestar.png");
+                $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
-                $('#orderDetailEvaluate').empty();
-            evaluteResult = '<div><p>无评论信息</p></div>';
+                errorPopup('暂无评价信息');
+//                $('#orderDetailEvaluate').empty();
+//                evaluteResult = '<div><p>无评论信息</p></div>';
             }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-
+            $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
             if(datas.obj[0].bodmEvaluate != null){
                 $('#orderDetailEvaluate').empty();
                 $('#orderDetailEvaluate').append(info);
@@ -441,92 +461,70 @@ function updateEvalute(datas){
 
 function showStar(star){
     if(star == 0){
-       return '<ul class="star1">'+
-        '<li><img src="assets/img/star.png"/></li>'+
-        '<li><img src="assets/img/star.png"/></li>'+
-        '<li><img src="assets/img/star.png"/></li>'+
-        '<li><img src="assets/img/star.png"/></li>'+
-        '<li><img src="assets/img/star.png"/></li>'+
+       return '<ul class="star1" style="padding-top:0px;">'+
+        '<li ><img src="assets/img/star.png"/></li>'+
+        '<li ><img src="assets/img/star.png"/></li>'+
+        '<li ><img src="assets/img/star.png"/></li>'+
+        '<li ><img src="assets/img/star.png"/></li>'+
+        '<li ><img src="assets/img/star.png"/></li>'+
         '</ul> ';
     }else if(star == 1){
-        return '<ul class="star1">'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
+        return '<ul class="star1" style="padding-top:0px;">'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
             '</ul> ';
     }else if( star == 2 ){
-        return '<ul class="star1">'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
+        return '<ul class="star1" style="padding-top:0px;">'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
             '</ul> ';
     }else if( star == 3 ){
-        return '<ul class="star1">'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
+        return '<ul class="star1" style="padding-top:0px;">'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
             '<li><img src="assets/img/star.png"/></li>'+
             '</ul> ';
     }else if( star == 4 ){
-        return '<ul class="star1">'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/star.png"/></li>'+
+        return '<ul class="star1" style="padding-top:0px;">'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/star.png"/></li>'+
             '</ul> ';
     }else if( star == 5 ){
-        return '<ul class="star1">'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
-            '<li><img src="assets/img/bluestar.png"/></li>'+
+        return '<ul class="star1" style="padding-top:0px;">'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
+            '<li ><img src="assets/img/bluestar.png"/></li>'+
             '</ul> ';
     }
 }
-//
-//$(function(){
-//    $(".star li").mouseenter(function(){
-//        $(".star li img").attr("src","assets/img/bluestar.png");
-//        $(".star li img").attr("evalutegrade","1");
-//        $(this).find('img').attr("src","assets/img/bluestar.png");
-//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-//        $(this).nextAll().find('img').attr("evalutegrade","0");
-//    });
-//    $(".star2 li").mouseenter(function(){
-//        $(".star2 li img").attr("src","assets/img/bluestar.png");
-//        $(".star2 li img").attr("evalutegrade","1");
-//        $(this).find('img').attr("src","assets/img/bluestar.png");
-//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-//        $(this).nextAll().find('img').attr("evalutegrade","0");
-//    });
-//    $(".star3 li").mouseenter(function(){
-//        $(".star3 li img").attr("src","assets/img/bluestar.png");
-//        $(".star3 li img").attr("evalutegrade","1");
-//        $(this).find('img').attr("src","assets/img/bluestar.png");
-//        $(this).nextAll().find('img').attr("src","assets/img/star.png");
-//        $(this).nextAll().find('img').attr("evalutegrade","0");
-//    })
-//
-//});
+
 
 function saveReply(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
     var cuser = JSON.parse(localStorage.getItem("user"));
     var savereplyUrl = baseUrl + 'order/submit_evaluate_reply.action';
-
-    getAjax(savereplyUrl, {'enterpriseNo':data.enterpriseNo, 'systemNo':data.systemNo,
+    if( $('#reply_Info').val() !='' && $('#reply_Info').val() != undefined ){
+        getAjax(savereplyUrl, {'enterpriseNo':data.enterpriseNo, 'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo, 'ownerNo':data.ownerNo,
         'reviewsDemo':$('#reply_Info').val(), 'replyParentId':$('#orderDetailEvaluate').val(),
             'userName':cuser.obj.userName },
         "saveReplySucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-
+    } else {
+        errorPopup('请完成回复内容');
+    }
 }
 
 function saveEvalute(){
@@ -559,6 +557,9 @@ function saveEvalute(){
                 reviewsItem3 += 1;
             };
         });
+    if( reviewsItem2===0 || reviewsItem2===0 || reviewsItem3 === 0){
+        errorPopup('请完成所有评分');
+    }else{
     var options = {
         'enterpriseNo':data.enterpriseNo,
         'systemNo':data.systemNo,
@@ -572,7 +573,7 @@ function saveEvalute(){
     }
     getAjax(saveevaluteUrl, options,
         "saveEvaluteSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-
+    }
 
 }
 
@@ -666,3 +667,61 @@ function setImgListSuc(data){
 
 
 }
+/*  $('#orderDetailTraceContent').show();
+ $(obj).each(function (index,data) {
+ var status = data.status;
+ var dispatchStatus = data.dispatchStatus;
+ time = data.changeTimeDescri;
+ desc = data.statusDesc;
+
+ if(desc == "")
+ {
+ height = ";height:100px;";
+ }
+ if( dispatchStatus <= 10 ){
+ color = "#3EA2FC";
+ title = "下单";
+ }else if( dispatchStatus > 10 && dispatchStatus <= 40)
+ {
+ color = "#30BC7F";
+ title = "提货";
+ }else if(dispatchStatus > 40 && dispatchStatus <= 80)
+ {
+ color = "#3EA2FC";
+ title = "运输中";
+ }else if(status > 80 && status <= 99)
+ {
+ color = "#F53274";
+ title = "签收";
+ }
+
+ if(index == 0)
+ {
+ alert = '<div style="height:20px;width:30px;' +
+ 'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
+ 'text-align:center;line-height:20px;">最新</div>';
+ }else
+ {
+ alert = "";
+ }
+
+ if(data.fileNo !=null && data.fileNo !=''){
+ file = '<div style="height:20px;width:30px;' +
+ 'background-color:#1EA389;border-radius:5px;color:#ffffff;font-size:12px;' +
+ 'text-align:center;line-height:20px;" deliveryNo="'+data.deliveryNo+'" ' +
+ 'objectNo="'+data.fileNo+'" onclick="setImgList(this)">附件</div>';
+ }else{
+ file = "";
+ }
+ html += '<div style="overflow:hidden;"><div class="fl" style="width:25%;margin:12px auto;">' +
+ '<div style="width:60px;height:60px;background:'+color+';border: 4px solid #fffff;border-radius:60px;' +
+ 'font-size:24px;color:#FFFFFF;font-weight:bold;text-align:center;line-height:60px;margin:0px auto;">'+title+'' +
+ '</div></div><div class="fl" style="width:75%;"><div style="'+height+'" class="send"><div class="arrow"></div>' +
+ '<div style="position:relative;right:5px;top:0px;float:right;">'+alert+'</div>' +
+ '<div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;">'+time+'</div>' +
+ '<div style="font-size:12px;margin-left:10px;margin-bottom:20px;">'+desc+'</div>'+
+ '<div style="position:relative;right:5px;top:-15px;float:right;">'+file+'</div>' +
+ '</div></div></div>';
+
+ //
+ });*/

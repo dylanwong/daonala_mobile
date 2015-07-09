@@ -1,69 +1,61 @@
 <div id="orderDetailTrace">
-    <div class="clearfix"  >
-                <div class="fl width80" align="right"
-                     style="color:#26B6D9;font-size:16px;padding-top: 5px;">物流跟踪<span id="topdeliverNo_d"></span>
-                </div>
+
+
+    <div class="clearfix"  style="width: 100%;border-bottom:1px solid #ededed;" >
+          <div class="fl width80" align="right"
+          style="color:#333;font-size:16px;padding-bottom: 10px;padding-top: 10px;padding-left:10px;">
+          <i class="iconfont icon-genzong "
+          style="color:#333;;font-size:20px;line-height:30px"></i>
+          物流跟踪
+          </div>
+        <div class="fr" style="color:#ef8305;font-size:16px;padding-right:15px;padding-bottom: 10px;padding-top: 10px;" ><span  id="tracestatus"></span></div>
     </div>
     <div id="orderDetailTraceContent" >
-        <div id="trace_list_div" style="">
-            <div class="gj">
+        <div id="trace_list_div" style=""></div>
 
+        <script id="orderTraceListTemp" type="text/html">
+            {{each obj as obj i}}
+            <div class="gj">
                 <div class="gj_cn">
-                    <div class="juhong12">2015-07-03 15:10:34</div>
-                    <span class="juhong12">货物当前位置【】途中记录，服务营业员【siji01】,备注：【货物丢失】--来自于【手机导入】
+                    <div >{{ obj.changeTimeDescri }}</div>
+                    <span >{{ obj.statusDesc }}
                     </span>
-                    <div class="cursor" name="showFile" style="float:right; color:#FF9900">
-                        有1条附件信息
-                        <span name="tipPng">▲</span>
-                    </div>
+
                     <table width="100%" border="0" cellspacing="0" cellpadding="5">
-                        <tbody>
-                        <tr><td></td>
-                            <td><div align="left"></div></td>
-                        </tr>
-                        <tr><td style="">
-                            <a target="_blank">
-                                <img name="realImg" style="margin:5px 5px;"
-                                   src="http://192.168.16.98:8080/fileserver/uploadFiles/real\10001\D2015-07-03\3\\7955bf8f23d84dc6874b3150033de49b1L.jpg"
-                                       width="60" height="50" fileno="460" id="460">
-                            </a>
-                            </td>
-                            <td valign="top"></td>
-                        </tr>
+                        <tbody id="{{ obj.fileNo }}">
+
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="gj">
+            {{/each}}
+        </script>
+    </div>
+</div>
+
+<!--
+<div class="gj">
                 <div class="gj_cn">
                     <div class="">2015-07-03 14:58:00</div>
                     <span class="">货物当前位置【】途中记录，服务营业员【siji01】,备注：【货物丢失】--来自于【手机导入】
                     </span>
-                    <div class="cursor" name="showFile" style="float:right; color:#FF9900">
-                        有1条附件信息 <span name="tipPng">▼</span>
-                    </div>
                     <table style="" width="100%" border="0" cellspacing="0"
                            cellpadding="5">
-                        <tbody>
-                        <tr>
-                            <td style="width:60px;"><a target="_blank">
-                                <img name="realImg" style="margin:5px 5px;" src="http://192.168.16.98:8080/fileserver/uploadFiles/real\10001\D2015-07-03\3\\7955bf8f23d84dc6874b3150033de49b1L.jpg"
-                                     width="60" height="50" fileno="458" id="1"></a>
-                            </td>
-                            <td style="width:131px;"><a target="_blank">
-                                <img name="realImg" style="margin:5px 5px;" src="http://192.168.16.98:8080/fileserver/uploadFiles/real\10001\D2015-07-03\3\\7955bf8f23d84dc6874b3150033de49b1L.jpg"
-                                     width="60" height="50" fileno="458" id="2"></a>
-                            </td>
-                        </tr>
+                        <tbody id="traceImgs">
+
                         </tbody></table>
                 </div>
             </div>
-    </div>
-
-</div>
-</div>
-
-
+            <tr id="">
+    <td style="width:60px;"><a target="_blank">
+        <img name="realImg" style="margin:5px 5px;" src="http://192.168.16.98:8080/fileserver/uploadFiles/real\10001\D2015-07-03\3\\7955bf8f23d84dc6874b3150033de49b1L.jpg"
+             width="60" height="50" fileno="458" id="1"></a>
+    </td>
+    <td style="width:131px;"><a target="_blank">
+        <img name="realImg" style="margin:5px 5px;" src="http://192.168.16.98:8080/fileserver/uploadFiles/real\10001\D2015-07-03\3\\7955bf8f23d84dc6874b3150033de49b1L.jpg"
+             width="60" height="50" fileno="458" id="2"></a>
+    </td>
+</tr>-->
 <!--
 
 <div style="overflow:hidden;border-bottom: 1px dashed #09ACD4;" class="width95">

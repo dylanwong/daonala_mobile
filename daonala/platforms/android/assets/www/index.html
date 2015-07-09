@@ -255,28 +255,28 @@ data-defer:加载一个html进来
      title="订单详情" id="orderdetail" data-defer="assets/panel/order/orderdetail.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="gobackHeader"
+     data-header="detailgobackHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
      title="订单评价" id="orderDetailEvalute" data-defer="assets/panel/order/orderDetailEvaluate.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="gobackHeader"
+     data-header="evalutegobackHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
      title="物流轨迹" id="orderDetailTrace" data-defer="assets/panel/order/orderDetailTrace.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="gobackHeader"
+     data-header="tracegobackHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
      title="货物详情" id="orderDetailProduct" data-defer="assets/panel/order/orderDetailProduct.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="gobackHeader"
+     data-header="goodDetailgobackHeader"
      data-footer="none">
 </div>
 
@@ -494,32 +494,32 @@ data-defer:加载一个html进来
     </div>
 </header>
 
-<header id="home2Header" style="background-color:#00B2EE;">
-    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
-        返回
+<header id="home2Header" style="background-color:#ef8305;">
+    <a class="backButton button"  onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
+
     </a>
     <h1 id="home2Title" class="">订单列表</h1>
     <div></div>
 </header>
-<header id="orderlistHeader" style="background-color:#00B2EE;">
+<header id="orderlistHeader" style="background-color:#ef8305;">
     <a class="backButton button" id="orderlistHeaderId" onclick="$.ui.loadContent('#logisticboard', false, false, 'slide')" >
-        返回
+
     </a>
     <h1 id="orderlistTitle" class="">订单列表</h1>
     <div></div>
 </header>
 
 
-<header id="orderdetailHeader" style="background-color:#00B2EE;">
+<header id="orderdetailHeader" style="background-color:#ef8305;">
     <a class="backButton button" id="orderdetailBackId" onclick="$.ui.loadContent('#logisticboard', false, false, 'slide')" >
-        返回
+
     </a>
     <h1 id="orderdetailTitle" class="">订单详情</h1>
     <div></div>
 </header>
 
 
-<header id="mineHeader" style="background-color:#00B2EE;">
+<header id="mineHeader" style="background-color:#ef8305;">
     <div class="homeLeftButton">
         <span id="mineTitle" class="" style=""><a  class="backButton button" >我</a></span>
     </div>
@@ -528,40 +528,58 @@ data-defer:加载一个html进来
 
 </header>
 
-<header id="allHeader" style="background-color:#00B2EE;">
+<header id="allHeader" style="background-color:#ef8305;">
     <div class="homeLeftButton">
-        <span id="allTitle" class="" style=""><a  class="backButton button" >返回</a></span>
+        <span id="allTitle" class="" style=""><a  class="backButton button" >
+
+        </a></span>
     </div>
     <div style="padding-top:10px;padding-left:100px;display:table-cell;">
         <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
 </header>
 
 <header id="logisticHeader">
-    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
-        返回
+    <a class="backButton button"  onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
+
+
     </a>
     <h1 id="logisticTitle" class="">看板</h1>
     <div></div>
 </header>
 <header id="taskHeader">
-    <a class="backButton button"  onclick="$.ui.loadContent('#home', false, false, 'slide')" >
-        返回
+    <a class="backButton button"  onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
+
     </a>
     <h1 id="taskTitle" class="">任务列表</h1>
     <div></div>
 </header>
-<header id="gobackHeader">
-    <a class="backButton button"  onclick="$.ui.goback()" >
-        返回
+<header id="tracegobackHeader">
+    <a class="backButton button"  onclick="$.ui.goBack()" >
     </a>
-    <h1 id="gobackTitle" class=""></h1>
+    <h1 id="tracegobackTitle" class="">物流轨迹</h1>
     <div></div>
 </header>
-
-
+<header id="evalutegobackHeader">
+    <a class="backButton button"  onclick="$.ui.goBack()" >
+    </a>
+    <h1 id="evalutegobackTitle" class="">评价</h1>
+    <div></div>
+</header>
+<header id="detailgobackHeader">
+    <a class="backButton button"  onclick="$.ui.goBack()" >
+    </a>
+    <h1 id="detailgobackTitle" class="">订单详情</h1>
+    <div></div>
+</header>
+<header id="goodDetailgobackHeader">
+    <a class="backButton button"  onclick="$.ui.goBack()" >
+    </a>
+    <h1 id="goodDetailgobackTitle" class="">货物详情</h1>
+    <div></div>
+</header>
 <header id="operateguideHeader">
     <a class="backButton button"  onclick="$.ui.loadContent('#driverboard', false, false, 'slide')" >
-        返回
+
     </a>
     <h1 id="operateguideTitle" class="">任务操作</h1>
     <div></div>
