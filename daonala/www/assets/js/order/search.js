@@ -55,7 +55,6 @@ function updateOrderlistPanel(data,flag){
         var result = '';
         if(flag){$("#orderlist_ul").empty();}
         var traceFuc = '';
-
         if (data.obj.recordsTotal >= 1 ){
 
             if (data.obj.data.length > 1) {
@@ -100,10 +99,6 @@ function updateOrderlistPanel(data,flag){
             }else{
                 $("#orderlist_ul").append(result);
             }
-
-//          $(containNode).appendTo("#orderlist_ul");
-//          result = nullTrace;
-//          $(result).appendTo(containNode);
         }
     }else{
             errorPopup('无更多订单');
@@ -123,16 +118,16 @@ function updateOrderlistPanel(data,flag){
 }
 
 //点击订单列表事件
-function querySingleOrder(systemNo,orderNo,dispatchNo){
-    var enterpriseNo = getEnterpriseNo();
-    getAjax(searchUrl, {'enterpriseNo': enterpriseNo, 'systemNo':systemNo,
+function querySingleOrder(enterpriseNo,systemNo,orderNo,dispatchNo){
+    //var enterpriseNo = getEnterpriseNo();
+    getAjax(querySingleOrderUrl, {'orderEnterpriseNo': enterpriseNo, 'systemNo':systemNo,
             'orderNo':orderNo,'dispatchNo':dispatchNo },
         "querySingleOrderSuc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
 }
 
 function querySingleOrderSuc(data){
-    setCacheData("currentorder",data.obj);
+    localStorage.setItem("currentorder",  JSON.stringify(data.obj)  );
     if(loginStatus == 0) {
         traceInfo();
     }else {

@@ -777,3 +777,16 @@ li {list-style-type:none;}
     height: 10px;
     background-color: #f2f2f2;
 }
+
+
+/****/
+/*物流轨迹*/
+.gj{ width:auto; height:auto; text-align:left; overflow:hidden}
+.gj ul{ width:auto; height:auto; text-align:left;}
+.gj_time{ float:left; text-align:right; width:120px;}
+.gj_cn{ float:left; background-image:url(../img/gj_bg.gif); margin-left:15px; padding-bottom:15px; background-repeat:no-repeat; padding-left:40px; }
+.juhong12{ color:#ee8713}
+.cursor
+{
+    cursor: pointer;
+}

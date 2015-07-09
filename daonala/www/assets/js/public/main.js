@@ -245,7 +245,7 @@ function orderDetailPanel(){
     $.ui.loadContent("#orderdetail", false, false, "slide");
 }
 //物流轨迹页面
-function productPanel(){
+function tracePanel(){
     queryDetailTrace_login();
     $.ui.loadContent("#orderDetailTrace", false, false, "slide");
 }

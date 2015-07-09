@@ -449,6 +449,7 @@ $.ui.ready(function(){
 
    
   
+/*
 
     custorderlistScroller = $("#custboard").scroller(); //Fetch the scroller from cache
     custorderlistScroller.addInfinite();
@@ -515,6 +516,7 @@ $.ui.ready(function(){
         }
     });
 
+*/
 
 //    orderlistScroller = $("#orderlist").scroller(); //Fetch the scroller from cache
 //    orderlistScroller.addInfinite();
