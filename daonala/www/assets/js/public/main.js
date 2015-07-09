@@ -282,8 +282,10 @@ function init_search_panel(){
 
 function init_home_ad()
 {
-    $("#ad").height($("#home").height()/3);
+    $("#ad").height($("#home").height()*0.32);
     $("#home-module").height($("#home").height()-$("#ad").height());
+    $("#home-module-total-num").height($("#home-module-total").height()-60);
+    $("#home-module-buttons-button").height($("#home-module-buttons").height()-60);
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
         '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
         '</div>' +

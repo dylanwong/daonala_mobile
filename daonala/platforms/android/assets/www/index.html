@@ -11,6 +11,7 @@
     <link href="assets/libs/af/css/af.ui.base.css" rel="stylesheet" type="text/css"/>
     <!--<link href="assets/libs/af/css/af.ui.css" rel="stylesheet" type="text/css"/>-->
     <link href="assets/libs/af/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/fonts/iconfont/iconfont.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/mobiscroll/css/mobiscroll.core.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/mobiscroll/css/mobiscroll.android-ics.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -80,6 +81,14 @@ data-footer: 设置页面底部
 data-tab:指定页面底部的具体一项，设置高亮
 data-defer:加载一个html进来
     -->
+<div class="panel p0"
+     title="首页2" id="home2" data-defer="assets/panel/home2.html"
+     data-header="homeHeader"
+     data-load="init_home_ad"
+     data-tab="none"
+     data-footer="none">
+</div>
+
 <div class="panel p0"
      title="首页" id="home" data-defer="assets/panel/home.html"
      data-header="homeHeader"
@@ -476,13 +485,13 @@ data-defer:加载一个html进来
 
 
 
-<header id="homeHeader" style="background-color:#00B2EE;">
-    <div class="homeLeftButton" style="top:0px;">
-        <span id="homeTitle" class="" style="color:#EF8305;text-shadow:1px 1px 2px #FEFEFE;"></span>
+<header id="homeHeader" style="background-color:#ef8305;">
+    <div style="width:100%;height:100%;" align="center">
+        <img src="assets/img/home/home-header-logo.png"
+                style="position:absolute;top: 50%;
+  left: 50%; -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);"/>
     </div>
-    <div style="padding-top:10px;padding-left:10px;display:table-cell;">
-        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
-   <!-- <div class="homeRightButton animated 5s flash daiyufont">让订单交付更简单</div>-->
 </header>
 
 <header id="home2Header" style="background-color:#00B2EE;">
