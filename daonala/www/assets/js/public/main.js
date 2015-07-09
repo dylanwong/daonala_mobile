@@ -402,6 +402,36 @@ function getLoad(){
     $('#load_select').mobiscroll('show');
 }
 
+function orderBoard_panel() {
+    $.ui.loadContent('#orderBoard', false, false, 'slide');
+}
+
+function init_orderBoard()
+{
+    $("#orderBoardChart").height($("#orderBoard").height()-160-60);
+    $("#myChart").width($("#orderBoard").width() * 0.6);
+    $("#myChart").height($("#orderBoardChart").height() * 0.8);
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var data = [
+        {
+            value: 30,
+            color:"#2ec7c9"
+        },
+        {
+            value : 50,
+            color : "#b6a2de"
+        },
+        {
+            value : 100,
+            color : "#5ab1ef"
+        },
+        {
+            value : 100,
+            color : "#ffb980"
+        }
+    ]
+    new Chart(ctx).Doughnut(data,{});
+}
 
 
 /*获取消息列表*/
