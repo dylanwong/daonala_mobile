@@ -399,7 +399,10 @@ function updateEvalute(datas){
                'text-align:center;line-height:24px;padding:0px 12px;">去评价</button> '+
                                 '</a></div>';
               //  evaluteResult = '<div><p>无评论信息</p></div>';
+                $(".star li img").attr("src","assets/img/star.png");
                 $(".star2 li img").attr("src","assets/img/star.png");
+                $(".star3 li img").attr("src","assets/img/star.png");
+                $("#evaluteContent").val('');
                 $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
                 errorPopup('暂无评价信息');
