@@ -18,7 +18,7 @@ function toggleCustTabs(elm){
 function cust_orderlist_panel(tdStatus){
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
-    $("ul#cust_orderlist_ul").empty();
+    $("#cust_orderlist_ul").empty();
     $('#orderdetailBackId').attr('onclick',"custboard_panel();");
     //var statustype=elm;
     var statustype ='';
@@ -53,7 +53,7 @@ function cust_orderlist_panel(tdStatus){
         {'start': '1', 'length':'10','orderNo':'','timeType':'N','status':status,
             'enterpriseNo':'10001','enterpriseText':'',
             'ownerText':'','custText':'','userNo':getUserNo(),'userType':user.obj.userType}, true), true);
-    $('#cust_orderlist_ul').empty();
+    //$('#cust_orderlist_ul').empty();
 
 
 }
@@ -71,12 +71,13 @@ function updateCustOrderlistPanel(data,flag){
         var list = data.obj.data;
 
         var traceFuc = '';
-        loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
+        //loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
         if (data.obj.recordsTotal > 0) {
-            $.ui.loadContent("#custboard", false, false, "slide");
-            for (var k in data.obj.data) {
+            //$.ui.loadContent("#custboard", false, false, "slide");
+            /*for (var k in data.obj.data) {*/
                 $.ui.showMask("我们正在拼命的加载数据...");
-                if (data.obj.data[k].occurPlace == '') {
+                var result = template('custorderListTemp',data);
+                /*if (data.obj.data[k].occurPlace == '') {
                     result = $('<li class="f2" style="margin-top:4px;" onclick="' + traceFuc + '" ' +
                         'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
                         '<div ><div style="float:left;">' +
@@ -127,30 +128,40 @@ function updateCustOrderlistPanel(data,flag){
                         '<span class="wnerNo f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].deliveryDate + '</span>' +
                         '</div> <div style="clear:both;"></div></div><div style="clear:both;"></div></div></li>');
                 }
-
-                $(result).appendTo(containNode);
-            }
+*/
+                /*$(result).appendTo(containNode);*/
+           /* }*/
         } else{
            // result = ''
         }
-        $.ui.hideMask();
+
         if(flag){
-            $("#cust_orderlist_ul").prepend(containNode);
+            $("#cust_orderlist_ul").append(result);
         }else {
-            if (list.length < (oldmyFilter.length -= 0)) {
+            /*if (list.length < (oldmyFilter.length -= 0)) {
                 $("<div id='nullTodoSelf' class='nullOrder'>" +
-                    "<p style='text-align: center;text-color:orange;'>暂无剩余任务..</p>" +
-                    "</div>").appendTo(containNode);
-            }
-            $(containNode).appendTo("#cust_orderlist_ul");
+                    "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
+                    "</div>").appendTo(cust_orderlist_ul);
+            }*/
+            $("#cust_orderlist_ul").append(result);
+            //$(containNode).appendTo("#cust_orderlist_ul");
 //            result = nullTrace;
 //            $(result).appendTo(containNode);
         }
+
        }else{
         errorPopup(data.msg);
     }
 
-    
+    custLoaded();
+
+    custPullUpEl['class'] = custPullDownEl.attr('class');
+    custPullUpEl.attr('class','').hide();
+    custPullDownEl.attr('class','').hide();
+    custboardScroll.refresh();
+    custLoadingStep = 0;
+    $.ui.unblockUI();
+    $.ui.hideMask();
     
     
 }
@@ -197,7 +208,10 @@ function getCustOrderPullToRefresh(that){
             setTimeout(function () {
                 setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
                     {'queryType':'2'},true),true);
-                that.hideRefresh();
+               // that.hideRefresh();
+                custPullDownEl.attr('class','').hide();
+                custboardScroll.refresh();
+                custLoadingStep = 0;
             }, 1000);
         });
 }
@@ -226,8 +240,9 @@ function getRequestFromCustOrderinite(self) {
                     errorPopup(msgText[1])
                 }else if(data.isSucc === true){
                     try{
-                        $(self.el).find("#infinite").remove();
-                        self.clearInfinite();
+                        /*$(self.el).find("#infinite").remove();
+                        self.clearInfinite();*/
+                        custPullUpEl.removeClass('loading');
                         updateCustOrderlistPanel(data);
                     }catch(e){
                     };

@@ -6,20 +6,20 @@
                 <span class="mainPullDownLabel">下拉刷新...</span>
             </div>
 
-<div id=orderlist-content>
+<div id="orderlist-content">
     <div id="orderlist_ul"></div>
         <script id="orderListTemp" type="text/html">
 
             {{each obj.data as obj i}}
 
-            <div class="clearfix" onclick="querySingleOrder('{{obj.systemNo}}','{{obj.orderNo}}','{{obj.dispatchNo}}');">
+            <div class="clearfix" onclick="querySingleOrder('{{obj.enterpriseNo}}','{{obj.systemNo}}','{{obj.orderNo}}','{{obj.dispatchNo}}');">
                 <div class="fl" style="width: 100%;border-bottom:1px solid #ededed">
                 <div class="fl" style="width: 70%;">
                     <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
                         <p class="fl" style="width:10px;height:10px;border-radius:10px;
                 background-color: #089c2e;
                 margin-right: 10px; margin-top: 10px;"></p>
-                        <p style="font-size: 18px;color: #383838">
+                        <p style="font-size: 16px;color: #383838">
                             {{obj.ownerCity}}
                         </p>
                     </div>
@@ -28,20 +28,24 @@
                         <p class="fl" style="width:10px;height:10px;border-radius:10px;background-color:
                  #ef0505;
             margin-right: 10px; margin-top: 10px;"></p>
-                        <p style="font-size: 18px;color: #383838">
+                        <p style="font-size: 16px;color: #383838">
                             {{obj.custCity}}</p>
                     </div>
                     </div>
                     <div class="fr" style="width: 30%;">
                         <div class="clearfix" style="padding-top: 10px;">
-                        <span style="font-size: 14px;color: #383838">
-                        </span>
-                <span style="font-size: 18px;color: #ef8305">
-                    {{obj.statusName}}
-                </span>
-                <span style="font-size: 14px;color: #383838">
-                        <img src="assets/img/info.png" style="margin-top: 10px;" />
-                </span>
+                        <div class="fl" style="width: 60%;">
+                            <span style="font-size: 14px;color: #383838">
+                            </span>
+                            <span style="font-size: 16px;color: #ef8305;padding-right:20px;">
+                            {{obj.statusName}}
+                            </span>
+                        </div>
+                        <div class="fr">
+                            <span style="font-size: 14px;color: #383838;padding-right:0px;">
+                            <img src="assets/img/info.png" style="margin-top: 0px;" />
+                            </span>
+                        </div>
                         </div>
 
                     </div>
@@ -49,34 +53,34 @@
 
                 <div class="fl" style="width: 100%;">
                     <div class="clearfix" style="font-size:16px;padding:5px;">
-                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 30%;">
                             发货人：
                         </div>
-                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 60%;">
+                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 70%;">
                             {{obj.ownerName}}
                         </div>
                     </div>
                     <div class="clearfix" style="font-size:16px;padding:5px;">
-                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 30%;">
                             收货人：
                         </div>
-                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 60%;">
+                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 70%;">
                             {{obj.custName}}
                         </div>
                     </div>
                     <div class="clearfix" style="font-size:16px;padding:5px;">
-                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 30%;">
                             货主单号：
                         </div>
-                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 60%;">
+                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 70%;">
                             {{obj.orderNo}}
                         </div>
                     </div>
                     <div class="clearfix" style="font-size:16px;padding:5px;">
-                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 40%;">
+                        <div class="fl" style="text-align: right;color:#b2b2b2;width: 30%;">
                         预计到货：
                         </div>
-                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 60%;">
+                        <div class="fl" style="text-align: left;color:#b2b2b2;width: 70%;">
                             {{ obj.deliveryDate }}
                         </div>
                     </div>

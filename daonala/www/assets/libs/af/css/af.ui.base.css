@@ -680,10 +680,10 @@ body {
 }
 
 #afui .header{
-    background:#00B2EE;
+    background:#ef8305;
     border:none;
 
-    border-bottom:1px solid #00B2EE;
+    border-bottom:1px solid #ef8305;
     color:white;
 }
 
@@ -1699,7 +1699,7 @@ body {
 }
 
 .afPopup>FOOTER>A.center{
-    background: #06ABD4 !important;
+    background: #ef8305 !important;
     float:right !important;
     width:100% !important;
     padding: 15px 0 !important;

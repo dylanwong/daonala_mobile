@@ -53,7 +53,7 @@ function main_panel()
 
 function home_panel()
 {
-    $.ui.loadContent("#home", false, false, "slide");
+    $.ui.loadContent("#home2", false, false, "slide");
 }
 
 function login_panel()
@@ -237,7 +237,7 @@ function productPanel(){
 //商品评价
 function evalutePanel(){
     queryEvalute();
-    $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
+
 }
 
 //订单详情（收发货人详情）
@@ -245,7 +245,7 @@ function orderDetailPanel(){
     $.ui.loadContent("#orderdetail", false, false, "slide");
 }
 //物流轨迹页面
-function productPanel(){
+function tracePanel(){
     queryDetailTrace_login();
     $.ui.loadContent("#orderDetailTrace", false, false, "slide");
 }

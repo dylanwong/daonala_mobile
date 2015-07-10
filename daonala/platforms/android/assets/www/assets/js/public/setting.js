@@ -25,7 +25,7 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.85:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.82:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -33,13 +33,16 @@ var queryMySet = baseUrl + "base/query_device_set.action";
 var updateOrUpdateMySet = baseUrl + "base/save_device_set.action";
 var queryMsgList = baseUrl + "msg/query_msg_list.action";
 var searchUrl = baseUrl +"order/query_suborderlist.action";
+var querySingleOrderUrl = baseUrl +"order/querySingleorder.action";
 var searchTraceUrl = baseUrl+"order/query_deliverordertrace.action";
 var choicedeliverOrdersUrl = baseUrl+"order/query_deliverorderlist.action";
 var taskqueryUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
 var queryTaskUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
-var goodSearchUrl = baseUrl+"order/query_goodslist.action";
+//var goodSearchUrl = baseUrl+"order/query_goodslist.action";
 var ordercount = baseUrl +"order/order_count.action";
+
 var searchProductUrl = baseUrl + "order/query_order_detail.action";
+var queryDeliverordertraceListUrl = baseUrl + "order/queryDeliverordertraceList.action";
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
 var searchSubCompanyUrl = baseUrl + "order/query_subcompany.action";
 var searchOwnerOrCustUrl = baseUrl + "order/getLinkDataList.action";
@@ -120,6 +123,12 @@ function init_homepage(){
             });
             $('#myboardText').html('看板');
 
+            $('#boardPanel').unbind('click');
+            $('#boardPanel').bind('click',function(){
+                logisticboard_panel();
+            });
+
+
             $('#myFirstboard').unbind('click');
             $('#myFirstboard').bind('click',function(){
                 addorder_panel();
@@ -132,6 +141,11 @@ function init_homepage(){
             });
             $('#myboardText').html('看板');
 
+            $('#boardPanel').unbind('click');
+            $('#boardPanel').bind('click',function(){
+                ownerboard_panel();
+            });
+
             $('#myFirstboard').unbind('click');
             $('#myFirstboard').bind('click',function(){
                 addorder_panel();
@@ -142,6 +156,13 @@ function init_homepage(){
             $('#myboard').bind('click',function(){
                 custboard_panel();
             });
+
+            $('#boardPanel').unbind('click');
+            $('#boardPanel').bind('click',function(){
+                custboard_panel();
+            });
+
+
             $('#myboard').attr('statusType','0');
             $('#myboardText').html('看板');
 
