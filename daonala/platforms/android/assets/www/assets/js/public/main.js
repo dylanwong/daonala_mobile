@@ -405,7 +405,6 @@ function getLoad(){
 function orderBoard_panel() {
     $.ui.loadContent('#orderBoard', false, false, 'slide');
 }
-
 function init_orderBoard()
 {
     $("#orderBoardChart").height($("#orderBoard").height()-160-60);
@@ -432,7 +431,11 @@ function init_orderBoard()
     ]
     new Chart(ctx).Doughnut(data,{});
 }
-
+function init_lightbox() {
+    /*lightbox = baguetteBox.run('.baguetteBoxOne', {
+    });*/
+    $('.swipebox' ).swipebox();
+}
 
 /*获取消息列表*/
 function getMessageList(user){

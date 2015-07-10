@@ -188,7 +188,11 @@ function exitAppPopup(e) {
             },
             cancelOnly: false
         });
-    }else
+    }else if($("#swipebox-slider").css('display') != undefined)
+    {
+        $.swipebox.close();
+    }
+    else
     {
         $.ui.goBack();
     }

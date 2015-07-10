@@ -23,6 +23,8 @@
     <link href="assets/libs/animate/animate.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/baguetteBox/baguetteBox.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/libs/swipebox/css/swipebox.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
@@ -60,6 +62,10 @@
             src="assets/libs/template/template-debug.js"></script>
     <script type="text/javascript" charset="utf-8"
             src="assets/libs/chart/Chart.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="assets/libs/baguetteBox/baguetteBox.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="assets/libs/swipebox/js/jquery.swipebox.js"></script>
 </head>
 <body>
 <div id="afui" class="af">
@@ -102,6 +108,14 @@ data-defer:加载一个html进来
      title="订单看板" id="orderBoard" data-defer="assets/panel/board/orderBoard.html"
      data-header="orderBoardHeader"
      data-load="init_orderBoard"
+     data-tab=""
+     data-footer="none">
+</div>
+
+<div class="panel p0"
+     title="订单看板" id="lightbox" data-defer="assets/panel/lightbox.html"
+     data-header=""
+     data-load="init_lightbox"
      data-tab=""
      data-footer="none">
 </div>
