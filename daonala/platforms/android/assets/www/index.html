@@ -58,6 +58,8 @@
     <script type="text/javascript" charset="utf-8" src="assets/js/public/underscore-min.js"></script>
     <script type="text/javascript" charset="utf-8"
             src="assets/libs/template/template-debug.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="assets/libs/chart/Chart.min.js"></script>
 </head>
 <body>
 <div id="afui" class="af">
@@ -96,7 +98,13 @@ data-defer:加载一个html进来
      data-tab="nabar_welcome">
 </div>
 
-
+<div class="panel p0"
+     title="订单看板" id="orderBoard" data-defer="assets/panel/board/orderBoard.html"
+     data-header="orderBoardHeader"
+     data-load="init_orderBoard"
+     data-tab=""
+     data-footer="none">
+</div>
 
 <div class="panel p0"
      title="我" id="mine" data-defer="assets/panel/mine.html"
@@ -491,6 +499,18 @@ data-defer:加载一个html进来
                 style="position:absolute;top: 50%;
   left: 50%; -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);"/>
+    </div>
+</header>
+<header id="orderBoardHeader" style="background-color:#ef8305;">
+    <a class="headerBack" href="javascript:;"
+       onclick="$.ui.goBack()" >
+        <img src="assets/img/backPage.png" height="32" />
+    </a>
+    <h1>订单看板</h1>
+    <div>
+        <a class="searchButton iconfont icon-guolv"
+           style="color:#fff;font-size:30px;top:8px;padding-right:10px;width:50px;">
+        </a>
     </div>
 </header>
 

@@ -285,6 +285,23 @@ li{ position:relative; }
     font-size: 18px;
     font-weight:inherit;
 }
+.headerBack
+{
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    color: inherit;
+    font-size: 28px;
+    text-decoration: none;
+    z-index: 2;
+    left: 0px;
+    top: 10;
+    width: 50px;
+    padding: 0 !important;
+    margin: 0 !important;
+}
 
 .searchButton
 {
