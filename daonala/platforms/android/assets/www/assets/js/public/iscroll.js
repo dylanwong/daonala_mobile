@@ -144,13 +144,13 @@ function mainLoaded() {
                     mainPullUpEl.removeClass('flip').addClass('loading');
                     mainPullUpL.html('<img src="assets/img/preloader.gif" style="padding-right: 10px" />努力加载数据中...');
                     mainLoadingStep = 2;
-                    getRequestFromCustOrderinite();
+                    getRequestFromOrderListinite();
 
                 }else if(mainPullDownEl.attr('class').match('flip|loading')){
                     mainPullDownEl.removeClass('flip').addClass('loading');
                     mainPullDownL.html('<img src="assets/img/preloader.gif" style="padding-right: 10px" />努力加载数据中...');
                     mainLoadingStep = 2;
-                    getCustOrderPullToRefresh();
+                    getOrderListPullToRefresh();
                 }
             }
         });

@@ -4,11 +4,11 @@
 
 function toggleCustTabs(elm){
 
-    $(".tabTaskN").addClass('tabTaskY');
-    $(".tabTaskN").removeClass('tabTaskN');
-
-    $(elm).removeClass('tabTaskY');
-    $(elm).addClass('tabTaskN');
+    //$(".tabTaskN").addClass('selectTotalDay');
+    //$(".tabTaskN").removeClass('tabTaskN');
+    $($("#custBoarfButtons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    //$(elm).removeClass('tabTaskY');
+    $(elm).addClass('selectTotalDay');
 
     custTabStatus = $(elm).attr('status')
     cust_orderlist_panel(custTabStatus);
@@ -138,16 +138,31 @@ function updateCustOrderlistPanel(data,flag){
         if(flag){
             $("#cust_orderlist_ul").append(result);
         }else {
-            /*if (list.length < (oldmyFilter.length -= 0)) {
-                $("<div id='nullTodoSelf' class='nullOrder'>" +
-                    "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
-                    "</div>").appendTo(cust_orderlist_ul);
-            }*/
-            $("#cust_orderlist_ul").append(result);
+//            if (data.obj.data.length < (oldmyFilter.length -= 0)) {
+//                $("<div id='nullTodoSelf' class='nullOrder'>" +
+//                    "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
+//                    "</div>").appendTo(cust_orderlist_ul);
+//            }
+//            $("#cust_orderlist_ul").append(result);
             //$(containNode).appendTo("#cust_orderlist_ul");
 //            result = nullTrace;
 //            $(result).appendTo(containNode);
+
+            if (data.obj.data.length < (oldmyFilter.length -= 0)) {
+                if($("#nullCustOrderSelf").length>0){
+                    $("#cust_orderlist_ul").append(result);
+                }else{
+                    $("#cust_orderlist_ul").append(result);
+                    $("<div id='nullCustOrderSelf' class='nullOrder'>" +
+                        "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
+                        "</div>").appendTo(cust_orderlist_ul);
+                }
+            }else{
+                $("#cust_orderlist_ul").append(result);
+            }
         }
+
+
 
        }else{
         errorPopup(data.msg);

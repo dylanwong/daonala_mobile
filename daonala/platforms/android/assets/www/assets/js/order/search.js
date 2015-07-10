@@ -82,7 +82,7 @@ function updateOrderlistPanel(data,flag){
                 traceSingleInfo33();
             }
         } else {
-            result = nullTrace;
+            //result = nullTrace;
         }
         if(flag){
             $("#orderlist_ul").append(result);
@@ -243,7 +243,7 @@ function getRequestFromOrderListinite(self) {
 //                        self.clearInfinite();
                         mainPullUpEl.removeClass('loading');
                      //   mainPullUpL.html("<h2 style='color: #F6842B;margin:0px;padding:0px;'>暂无新订单</h2>");
-
+                       // mainPullUpEl.html("<h2 style='color: #F6842B;margin:0px;padding:0px;'>暂无新订单</h2>");
                         updateOrderlistPanel(data);
                     }catch(e){
                     };

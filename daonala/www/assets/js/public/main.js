@@ -88,14 +88,15 @@ function myorders_panel(){
 }
 //物流看板初始化页面
 function logisticboard_panel(){
-    init_orderboard();
-    initBoardSearchPage();
 
+    init_orderboardheader();//初始化头部和圆形图标
+    initBoardSearchPage();//初始化看板刷选页
     initLogisticBoard();
 
 }
 function ownerboard_panel(){
-    init_orderboard();
+
+    init_orderboardheader();
     initBoardSearchPage();
     initLogisticBoard();
 }
@@ -106,18 +107,15 @@ function custboard_panel(elm){
     }else
     {
         $.ui.loadContent("#custboard", false, false, "slide");
-        $("#custboard_head").html("<div style='float:left;width:15%;cursor:pointer;'>" +
-            "<a onclick='home_panel()'>" +
-            "<img src='assets/img/back.png' />" +
-            "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
-            "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
-            " ><div class='btn-group' role='group'><button" +
-            " onclick='toggleCustTabs(this)' status='0' type='button' " +
-            "class='btn btn-default tabTaskN'>未签收</button>" +
+        $("#custboard_head").html(
+            "<div class='row'' style='height:60px;'' id='custBoarfButtons'>" +
+            "<div class='col-xs-1'></div>" +
+            " <div class='col-xs-10 text-center' style='padding-top: 10px;'>" +
+            "<button onclick='toggleCustTabs(this)' status='0' type='button' " +
+            "class='btn btn-default selectTotalDay' style=' font-size:18px;' >未签收</button>" +
             " <button onclick='toggleCustTabs(this)' status='1'  type='button' " +
-            "class='btn btn-default tabTaskY'  >" +
-            "已签收</button></div></div>" +
-            "<div style='clear:both;width:10%'></div>");
+            "class='btn btn-default ' style=' font-size:18px;' >已签收</button>" +
+            "</div> <div class='col-xs-1'> </div></div>");
         custTabStatus = 0;
         cust_orderlist_panel();
     }
@@ -179,7 +177,6 @@ function traceInfo(){
 }
 //订单跟踪 登录
 function traceInfo33(){
-//    alert(1);
 //    /*init_search_panel();*/
     clear_orderdetailPage();
     var user = JSON.parse(localStorage.getItem('user'));
@@ -189,11 +186,10 @@ function traceInfo33(){
     }else{
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
     }
-
     initTraceInfo2();//初始化订单详情
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
-//登陆
+// 登陆时 单条订单新跟踪
 function traceSingleInfo33(){
     clear_orderdetailPage();
     var user = JSON.parse(localStorage.getItem('user'));
@@ -206,7 +202,7 @@ function traceSingleInfo33(){
             "$.ui.loadContent('#search', false, false, 'slide')"){
 
         }else{
-            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
         }
     }
     initTraceInfo2();
@@ -219,9 +215,9 @@ function traceSingleInfo(){
         $('#orderdetailBackId').attr('onclick',"custboard_panel();");
 
     }else{
-        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
     }
-    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
     initTraceInfo();
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
@@ -301,6 +297,8 @@ function init_home_ad()
         parallax: true,
         autoplayDisableOnInteraction: false
     });
+
+    init_homepage();
 }
 
 
@@ -405,36 +403,61 @@ function getLoad(){
 function orderBoard_panel() {
     $.ui.loadContent('#orderBoard', false, false, 'slide');
 }
-function init_orderBoard()
+function init_orderBoard(data)
 {
+    var count ;
+    if( data == 1){
+        count = JSON.parse(localStorage.getItem("allCount_1"));
+    } else if( data == 7){
+        count = JSON.parse(localStorage.getItem("allCount_7"));
+    } else if( data == 30){
+        count = JSON.parse(localStorage.getItem("allCount_30"));
+    } else {
+//        count = {
+//            "count10":0,
+//            "count40":0,
+//            "count70":0,
+//            "count90":0
+//        }
+        errorPopup('无数据');
+        return ;
+    }
+//    "count10":count1001,
+//    "count40":count4001,
+//    "count70":count7001,
+//    "count90":count9001
+//    localStorage.setItem("allCount_1",allCount_1);
+//    localStorage.setItem("allCount_7",allCount_7);
+//    localStorage.setItem("allCount_30",allCount_30);
     $("#orderBoardChart").height($("#orderBoard").height()-160-60);
     $("#myChart").width($("#orderBoard").width() * 0.6);
     $("#myChart").height($("#orderBoardChart").height() * 0.8);
     var ctx = document.getElementById("myChart").getContext("2d");
     var data = [
         {
-            value: 30,
+            value: parseInt(count.count10),
             color:"#2ec7c9"
         },
         {
-            value : 50,
+            value : parseInt(count.count40),
             color : "#b6a2de"
         },
         {
-            value : 100,
+            value : parseInt(count.count70),
             color : "#5ab1ef"
         },
         {
-            value : 100,
+            value : parseInt(count.count90),
             color : "#ffb980"
         }
     ]
     new Chart(ctx).Doughnut(data,{});
+    //$(".close").alert()
 }
-function init_lightbox() {
+function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
     });*/
-    $('.swipebox' ).swipebox();
+    $('.swipebox.img'+objectNo ).swipebox();
 }
 
 /*获取消息列表*/

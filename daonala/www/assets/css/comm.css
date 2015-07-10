@@ -585,7 +585,21 @@ li {list-style-type:none;}
     font-weight:bold;
     color:#383838;
 }
-.selectTotalDay{background-color:#ef8305;color:white;}
+.selectTotalDay{background-color: #ef8305;color:#fff;font-size:18px;}
+.tabTaskY
+{
+    width:30%;
+    background-color:#8A8A8A;
+    color: #FFFFFF;
+    font-size:18px;
+}
+.tabTaskN
+{
+    width:30%;
+    /*background-color:#ef8305;*/
+    /*color:#FFFFFF;*/
+    font-size:18px;
+}
 #searchHref a{
     color: #ef8305;
 }

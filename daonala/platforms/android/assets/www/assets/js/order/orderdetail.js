@@ -193,16 +193,16 @@ function updataDetailPanel(data){
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
-                    '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
+                    '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
                     '<span class="fl fs32" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="border-left: 1px solid #E3E3E3; ' +
                     'border-right: 1px solid #E3E3E3;line-height:60px;" align="center"> ' +
-                    '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
+                    '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
                     '<span class="fl fs32" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="line-height:60px;" align="center"> ' +
-                    '<b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
+                    '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
                     '<span class="fl fs32" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
             ;
           //  $(products).appendTo(productNode);
@@ -295,9 +295,9 @@ function setSmallImgListSuc(data,objectNo){
         if(len>0){
             var count = 0;
             var result = '';
-            var containHead = '<tr id="">';
+            var containHead = '';
             var containContent = '';
-            var containEnd = '</tr>';
+            var containEnd = '';
             result += containHead;
             for( var i = 0; i < len; i++ ){
                // for ( var k = 0; k < 3; k++ ){
@@ -305,11 +305,12 @@ function setSmallImgListSuc(data,objectNo){
                 count++;
                 var fileUrl = jqueryResult[i].filePath;
                 var fileName = jqueryResult[i].fileName;
-                containContent = ' <td style="width:60px;"><a target="_blank">'+
-                            '    <img name="realImg" style="margin:5px 5px;"  '+
-                            '    src="'+fileUrl+'" '+
-                            '    width="60" height="50" fileno="" id=""></a> '+
-                            '       </td> ';
+                containContent = ' <div style="float:left;width:30%;"><a target="_blank" ' +
+                    'href="'+fileUrl+'" class="swipebox img'+objectNo+'" >'+
+                    '<img name="realImg" style="margin:5px 0px;width:80px;height:70px;"  '+
+                    ' src="'+fileUrl+'" '+
+                    ' fileno="" id=""></a> '+
+                    '</div> ';
                 result += containContent;
                 }
             }
@@ -324,6 +325,7 @@ function setSmallImgListSuc(data,objectNo){
             result += containEnd;
             $('#'+objectNo).html(result);
                // }
+            init_lightbox(objectNo);
             }
     }
 
@@ -364,7 +366,9 @@ function updateEvalute(datas){
 
         var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
             '<div class="fl width80" align="right"'+
-            'style="border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;padding-top:15px;padding-left:15px;"><span >评价</span></div>'+
+            'style="border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;' +
+            'padding-top:15px;padding-left:10px;">' +
+            '<span >评价</span></div>'+
             '<div class="fr width20" align="right"'+
             'style="color:#5b5b5b;font-size:16px;"> <a href="#evaluate" >'+
             '<button type="button" id="evaluteBtn" class="btn btn-primary"'+
