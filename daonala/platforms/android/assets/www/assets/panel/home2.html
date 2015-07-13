@@ -17,11 +17,11 @@
             </div>
             <div id="home-module-total-num" style="width:100%;border-top:1px solid #e6e6e6;
             border-bottom:1px solid #e6e6e6">
-                <table style="height:100%;width:100%;text-align:center;">
-                    <tr>
+                <table style="height:100%;width:100%;text-align:center;" id="home-module-table">
+                    <!--<tr>
                         <td style="width:33%;">
                             <div style="color:#ef8305;font-size:24px;">156</div>
-                            <div style="color:#636363;font-size:18px;">今日到达</div>
+                            <div style="color:#636363;font-size:18px;">今日达</div>
                         </td>
                         <td style="width:33%;border-left:1px solid #e6e6e6;
                         border-right: 1px solid #e6e6e6">
@@ -32,7 +32,7 @@
                             <div style="color:#ef8305;font-size:24px;">4</div>
                             <div style="color:#636363;font-size:18px;">逾期</div>
                         </td>
-                    </tr>
+                    </tr>-->
                 </table>
             </div>
         </div>
@@ -48,9 +48,7 @@
                     <tr>
 
                         <td id="boardPanel" style="width:33%;"  align="center">
-
-
-                            <div style="width:80px;
+                          <div style="width:80px;
                             height:80px;border-radius:80px;background-color:#57b9de;">
                                 <i class="iconfont icon-quanbudingdan "
                                    style="color:#fff;font-size:56px;line-height:80px"></i>
@@ -59,13 +57,15 @@
                                 订单
                             </div>
                         </td>
-                        <td style="width:33%;" align="center">
+                        <td style="width:33%;" align="center" id="addOrderPanel">
                             <div style="width:80px;
                             height:80px;border-radius:80px;background-color:#01cd88;">
-                                <i class="iconfont icon-kefu " style="color:#fff;font-size:56px;line-height:80px">
+                               <a href="tel:4001110005" >
+                                <i class="iconfont icon-kefu "  style="color:#fff;font-size:56px;line-height:80px">
                                     </i>
+                               </a>
                             </div>
-                            <div style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">
+                            <div  id="addOrderPanelText" style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">
                                 客服
                             </div>
                         </td>

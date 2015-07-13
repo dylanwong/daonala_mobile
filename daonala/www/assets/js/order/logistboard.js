@@ -100,6 +100,8 @@ function init_orderboardheader() {
 //初始化物流/货主看板
 function initLogisticBoard(){
     clearboard();
+    $.ui.blockUI(.3);
+    //$.ui.showMask("获取看板数据..");
     var user =  JSON.parse( localStorage.getItem('user') );
     $('#subCompany').empty();
     $('#boardowner').empty();
@@ -233,11 +235,15 @@ function queryLogisticCount_Result_Suc(data) {
         localStorage.setItem("allCount_1",JSON.stringify(allCount_1));
         localStorage.setItem("allCount_7",JSON.stringify(allCount_7));
         localStorage.setItem("allCount_30",JSON.stringify(allCount_30));
-        init_orderBoard(1);
+       // init_orderBoard(1);
+
     } else {
 
     }
     $.ui.loadContent("#orderBoard", false, false, "slide");
+    $.ui.unblockUI();
+ //   $.ui.hideMask();
+    $('#oneId').click();
 }
 
 function toggleBoardBtn(type) {
