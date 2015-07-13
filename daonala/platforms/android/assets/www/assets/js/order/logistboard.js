@@ -86,13 +86,14 @@ function updateBoardSearchPage2(data){
 
 }
 
-function init_orderboard() {
+function init_orderboardheader() {
     $("#orderboard-buttons").delegate('button', 'click', function () {
         var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
         $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
         $("#" + target).hide();
         $(this).addClass('selectTotalDay');
         $("#" + $(this).attr('target')).fadeIn(300)//show();//;
+        var s = init_orderBoard($(this).val());
 
     });
 }
@@ -211,10 +212,32 @@ function queryLogisticCount_Result_Suc(data) {
         $("#allCount_1").html(count1001+count4001+count7001+count9001);
         $("#allCount_7").html(count1007+count4007+count7007+count9007);
         $("#allCount_30").html(count1030+count4030+count7030+count9030);
+        var allCount_1 = {
+            "count10":count1001,
+            "count40":count4001,
+            "count70":count7001,
+            "count90":count9001
+        }
+        var allCount_7 = {
+            "count10":count1007,
+            "count40":count4007,
+            "count70":count7007,
+            "count90":count9007
+        }
+        var allCount_30 = {
+            "count10":count1030,
+            "count40":count4030,
+            "count70":count7030,
+            "count90":count9030
+        }
+        localStorage.setItem("allCount_1",JSON.stringify(allCount_1));
+        localStorage.setItem("allCount_7",JSON.stringify(allCount_7));
+        localStorage.setItem("allCount_30",JSON.stringify(allCount_30));
+        init_orderBoard(1);
     } else {
 
     }
-    $.ui.loadContent("#logisticboard", false, false, "slide");
+    $.ui.loadContent("#orderBoard", false, false, "slide");
 }
 
 function toggleBoardBtn(type) {
@@ -275,7 +298,7 @@ function orderlist_panel(statustype){
       //  timeType='N';
         status='';
     }
-    $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#logisticboard', false, false, 'slide')");
+    $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
 
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/

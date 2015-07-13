@@ -8,7 +8,9 @@
           style="color:#333;;font-size:20px;line-height:30px"></i>
           物流跟踪
           </div>
-        <div class="fr" style="color:#ef8305;font-size:16px;padding-right:15px;padding-bottom: 10px;padding-top: 10px;" ><span  id="tracestatus"></span></div>
+        <div class="fr" style="line-height:30px;color:#ef8305;font-size:16px;
+        padding-right:15px;padding-bottom: 10px;padding-top: 10px;" >
+            <span  id="tracestatus"></span></div>
     </div>
     <div id="orderDetailTraceContent" >
         <div id="trace_list_div" style=""></div>
@@ -21,11 +23,11 @@
                     <span >{{ obj.statusDesc }}
                     </span>
 
-                    <table width="100%" border="0" cellspacing="0" cellpadding="5">
-                        <tbody id="{{ obj.fileNo }}">
+                    <div width="100%" border="0" >
+                        <div id="{{ obj.fileNo }}">
 
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             {{/each}}

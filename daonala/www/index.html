@@ -23,7 +23,6 @@
     <link href="assets/libs/animate/animate.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/libs/baguetteBox/baguetteBox.css" rel="stylesheet" type="text/css"/>
     <link href="assets/libs/swipebox/css/swipebox.css" rel="stylesheet" type="text/css"/>
 
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -62,8 +61,7 @@
             src="assets/libs/template/template-debug.js"></script>
     <script type="text/javascript" charset="utf-8"
             src="assets/libs/chart/Chart.min.js"></script>
-    <script type="text/javascript" charset="utf-8"
-            src="assets/libs/baguetteBox/baguetteBox.js"></script>
+
     <script type="text/javascript" charset="utf-8"
             src="assets/libs/swipebox/js/jquery.swipebox.js"></script>
 </head>
@@ -107,7 +105,7 @@ data-defer:加载一个html进来
 <div class="panel p0"
      title="订单看板" id="orderBoard" data-defer="assets/panel/board/orderBoard.html"
      data-header="orderBoardHeader"
-     data-load="init_orderBoard"
+     data-load=""
      data-tab=""
      data-footer="none">
 </div>
@@ -517,12 +515,12 @@ data-defer:加载一个html进来
 </header>
 <header id="orderBoardHeader" style="background-color:#ef8305;">
     <a class="headerBack" href="javascript:;"
-       onclick="$.ui.goBack()" >
+       onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1>订单看板</h1>
     <div>
-        <a class="searchButton iconfont icon-guolv"
+        <a class="searchButton iconfont icon-guolv" href="#logisticboardsearch"
            style="color:#fff;font-size:30px;top:8px;padding-right:10px;width:50px;">
         </a>
     </div>
@@ -536,7 +534,7 @@ data-defer:加载一个html进来
     <div></div>
 </header>
 <header id="orderlistHeader" style="background-color:#ef8305;">
-    <a class="backButton button" id="orderlistHeaderId" onclick="$.ui.loadContent('#logisticboard', false, false, 'slide')" >
+    <a class="backButton button" id="orderlistHeaderId" onclick="$.ui.loadContent('#orderBoard', false, false, 'slide')" >
 
     </a>
     <h1 id="orderlistTitle" class="">订单列表</h1>
@@ -545,7 +543,7 @@ data-defer:加载一个html进来
 
 
 <header id="orderdetailHeader" style="background-color:#ef8305;">
-    <a class="backButton button" id="orderdetailBackId" onclick="$.ui.loadContent('#logisticboard', false, false, 'slide')" >
+    <a class="backButton button" id="orderdetailBackId" onclick="$.ui.loadContent('#orderBoard', false, false, 'slide')" >
 
     </a>
     <h1 id="orderdetailTitle" class="">订单详情</h1>
@@ -686,11 +684,14 @@ data-defer:加载一个html进来
 </header>
 
 <div id="navbar">
-    <a href="#home" id='nabar_welcome' class='icon icon-home' style="height:100%;">首页</a>
+    <a href="#home2" id='nabar_welcome' class='icon icon-home'
+       style="height:100%;">首页</a>
     <a href="javascript:;" onclick="searchorder_panel()"
-       id='navbar_search' class='icon icon-local-shipping' style="height:100%;">搜索</a>
+       id='navbar_search' class='icon icon-local-shipping'
+       style="height:100%;">搜索</a>
     <!--<a href="#bbs" id='navbar_bbs' class="icon icon-forum">司机帮</a>-->
-    <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle" style="height:100%;">我</a>
+    <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle"
+       style="height:100%;">我</a>
 </div>
 
 </div>

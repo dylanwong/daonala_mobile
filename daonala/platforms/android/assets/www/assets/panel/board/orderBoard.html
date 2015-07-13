@@ -1,4 +1,5 @@
 <div>
+<<<<<<< HEAD
     <div class="alert alert-info alert-dismissible fade in" role="alert">
         <button type="button" class="close" data-dismiss="alert"
                 aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -7,23 +8,24 @@
     </div>
 
     <div class="row" style="height:60px;">
+=======
+    <div class="row" style="height:60px;" id="orderboard-buttons">
+>>>>>>> 814e0b68a69989f53d98f0bb7ec99b311fb56ee8
         <div class="col-xs-1">
         </div>
         <div class="col-xs-10 text-center" style="padding-top: 10px;">
-            <button class="btn btn-default" style="background-color: #ef8305;
-            color:#fff;font-size:18px;width:30%;"
+            <button target="one" id="oneId" value="1"
+                    class="btn btn-default selectTotalDay" style="font-size:18px;width:30%;"
                     type="button">
                 当天
             </button>
-            <button class="btn btn-default" style="background-color: #fff;
-            border: 1px solid #cdcdcd;
-            color:#ef8305;font-size:18px;width:30%;"
+            <button target="seven" id="sevenId" value="7"
+                    class="btn btn-default" style="font-size:18px;width:30%;"
                     type="button">
                 7天
             </button>
-            <button class="btn btn-default" style="background-color: #fff;
-            border: 1px solid #cdcdcd;
-            color:#ef8305;font-size:18px;width:30%;"
+            <button target="thirty" id="thirtyId" value="30"
+                    class="btn btn-default" style="font-size:18px;width:30%;"
                     type="button">
                 30天
             </button>
@@ -44,14 +46,15 @@
         <div class="row-xs-2"></div>
     </div>
 
-    <div>
-         <div style="height:40px;line-height:40px;border-top:1px solid #dbdddc;
+    <!---->
+    <div class="none" id="one" >
+         <div onclick="orderlist_panel('10')" style="height:40px;line-height:40px;border-top:1px solid #dbdddc;
          border-bottom:1px solid #dbdddc;overflow:hidden;">
              <div class="fl" style="padding-left: 10px;font-size:16px;">
                  下单
              </div>
              <div class="fr" style="font-size:16px;">
-                 <div class="fl" style="padding-right: 5px;color: #b9b9b9">
+                 <div class="fl" id="count_status10_1"  style="padding-right: 5px;color: #b9b9b9">
                      30
                  </div>
                  <div class="fr" style="padding-right: 10px;">
@@ -59,13 +62,13 @@
                  </div>
              </div>
          </div>
-        <div style="height:40px;line-height:40px;
+        <div onclick="orderlist_panel('40')"  style="height:40px;line-height:40px;
          border-bottom:1px solid #dbdddc;overflow:hidden;">
             <div class="fl" style="padding-left: 10px;font-size:16px;">
                 提货
             </div>
             <div class="fr" style="font-size:16px;">
-                <div class="fl" style="padding-right: 5px;color: #b9b9b9">
+                <div class="fl" id="count_status40_1"  style="padding-right: 5px;color: #b9b9b9">
                     50
                 </div>
                 <div class="fr" style="padding-right: 10px;">
@@ -73,13 +76,13 @@
                 </div>
             </div>
         </div>
-        <div style="height:40px;line-height:40px;
+        <div onclick="orderlist_panel('70')"  style="height:40px;line-height:40px;
          border-bottom:1px solid #dbdddc;overflow:hidden;">
             <div class="fl" style="padding-left: 10px;font-size:16px;">
                 在途
             </div>
             <div class="fr" style="font-size:16px;">
-                <div class="fl" style="padding-right: 5px;color: #b9b9b9">
+                <div class="fl" id="count_status70_1" style="padding-right: 5px;color: #b9b9b9">
                     100
                 </div>
                 <div class="fr" style="padding-right: 10px;">
@@ -87,14 +90,131 @@
                 </div>
             </div>
         </div>
-        <div style="height:40px;line-height:40px;
+        <div onclick="orderlist_panel('90')" style="height:40px;line-height:40px;
          border-bottom:1px solid #dbdddc;overflow:hidden;">
             <div class="fl" style="padding-left: 10px;font-size:16px;">
                 完成
             </div>
             <div class="fr" style="font-size:16px;">
-                <div class="fl" style="padding-right: 5px;color: #b9b9b9">
+                <div class="fl" id="count_status90_1" style="padding-right: 5px;color: #b9b9b9">
+
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="none" id="seven" >
+        <div  onclick="orderlist_panel('10')" style="height:40px;line-height:40px;border-top:1px solid #dbdddc;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                下单
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status10_7" style="padding-right: 5px;color: #b9b9b9">
+                    30
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div onclick="orderlist_panel('40')" style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                提货
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status40_7" style="padding-right: 5px;color: #b9b9b9">
+                    50
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div onclick="orderlist_panel('90')" style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                在途
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status70_7" style="padding-right: 5px;color: #b9b9b9">
                     100
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div onclick="orderlist_panel('90')"  style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                完成
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status90_7" style="padding-right: 5px;color: #b9b9b9">
+                    100
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="none" id="thirty" >
+        <div onclick="orderlist_panel('10')"
+             style="height:40px;line-height:40px;border-top:1px solid #dbdddc;
+            border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                下单
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status10_30" style="padding-right: 5px;color: #b9b9b9">
+                    30
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div onclick="orderlist_panel('40')" style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                提货
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status40_30" style="padding-right: 5px;color: #b9b9b9">
+
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div onclick="orderlist_panel('70')" style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                在途
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status70_30" style="padding-right: 5px;color: #b9b9b9">
+
+                </div>
+                <div class="fr" style="padding-right: 10px;">
+                    <img src="assets/img/detail-icon.png">
+                </div>
+            </div>
+        </div>
+        <div style="height:40px;line-height:40px;
+         border-bottom:1px solid #dbdddc;overflow:hidden;" onclick="orderlist_panel('90')">
+            <div class="fl" style="padding-left: 10px;font-size:16px;">
+                完成
+            </div>
+            <div class="fr" style="font-size:16px;">
+                <div class="fl" id="count_status90_30" style="padding-right: 5px;color: #b9b9b9">
+
                 </div>
                 <div class="fr" style="padding-right: 10px;">
                     <img src="assets/img/detail-icon.png">

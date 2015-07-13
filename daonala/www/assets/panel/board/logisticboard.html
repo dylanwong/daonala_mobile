@@ -1,177 +1,177 @@
-<div class="boardPanel">
-    <div class="percent30">
-       <!-- <div align="center" id="orderdetail-buttons">
-            <div class="btn-group btn-group-justified width90 margin10" role="group">
-                <div class="btn-group" role="group">
-                    <button target="orderDetailInfo"  type="button" class="btn btn-default
-                    selectTotalDay">订单</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button target="orderDetailProduct"  type="button" class="btn btn-default">产品</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button target="orderDetailTrace"  type="button" class="btn btn-default">轨迹</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button target="orderDetailEvaluate"  type="button" class="btn btn-default">评价</button>
-                </div>
-            </div>
-        </div>-->
-        <div class="percent30" align="center" id="orderboard-buttons" >
-            <div class="btn-group btn-group-justified width90 margin10" role="group">
-                <div class="btn-group" role="group">
-                    <button  target="one" id="oneId" value="1"   type="button" class="btn btn-default selectTotalDay">当天</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button  target="seven" id="sevenId" value="7"   type="button" class="btn btn-default">7天</button>
-                </div>
-                <div class="btn-group" role="group">
-                    <button  target="thirty" id="thirtyId" value="30"   type="button" class="btn btn-default">30天</button>
-                </div>
-            </div>
-        </div>
-        <div class="percent30 width90 margin18"><!--SLO0000074397 SLO0000075021-->
-            <p id="subCompany" ><!--<b>分公司：</b>共速达股份有限公司--></p>
-            <p id="boardowner" ></p>
-       </div>
-        <div class="percent30"></div>
-    </div>
-    <div class="percent70" id="one">
-        <div class="logicBoradTotal overflowHidden percent10">
-            <div class="fl">
-                <i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>
-                共<span id="allCount_1"></span>张单
-            </div>
-            <div class="fr" id="searchHref_1">
-                <a href="#logisticboardsearch">
-                    <i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>
-                </a>
-            </div>
+<!--<div class="boardPanel">-->
+    <!--<div class="percent30">-->
+       <!--&lt;!&ndash; <div align="center" id="orderdetail-buttons">-->
+            <!--<div class="btn-group btn-group-justified width90 margin10" role="group">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button target="orderDetailInfo"  type="button" class="btn btn-default-->
+                    <!--selectTotalDay">订单</button>-->
+                <!--</div>-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button target="orderDetailProduct"  type="button" class="btn btn-default">产品</button>-->
+                <!--</div>-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button target="orderDetailTrace"  type="button" class="btn btn-default">轨迹</button>-->
+                <!--</div>-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button target="orderDetailEvaluate"  type="button" class="btn btn-default">评价</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>&ndash;&gt;-->
+        <!--<div class="percent30" align="center" id="orderboard-buttons" >-->
+            <!--<div class="btn-group btn-group-justified width90 margin10" role="group">-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button  target="one" id="oneId" value="1"   type="button" class="btn btn-default selectTotalDay">当天</button>-->
+                <!--</div>-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button  target="seven" id="sevenId" value="7"   type="button" class="btn btn-default">7天</button>-->
+                <!--</div>-->
+                <!--<div class="btn-group" role="group">-->
+                    <!--<button  target="thirty" id="thirtyId" value="30"   type="button" class="btn btn-default">30天</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="percent30 width90 margin18">&lt;!&ndash;SLO0000074397 SLO0000075021&ndash;&gt;-->
+            <!--<p id="subCompany" >&lt;!&ndash;<b>分公司：</b>共速达股份有限公司&ndash;&gt;</p>-->
+            <!--<p id="boardowner" ></p>-->
+       <!--</div>-->
+        <!--<div class="percent30"></div>-->
+    <!--</div>-->
+    <!--<div class="percent70" id="one">-->
+        <!--<div class="logicBoradTotal overflowHidden percent10">-->
+            <!--<div class="fl">-->
+                <!--<i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>-->
+                <!--共<span id="allCount_1"></span>张单-->
+            <!--</div>-->
+            <!--<div class="fr" id="searchHref_1">-->
+                <!--<a href="#logisticboardsearch">-->
+                    <!--<i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>-->
+                <!--</a>-->
+            <!--</div>-->
 
-        </div>
-        <table class="percent90 width100" id="logicTable">
-            <tr class="percent50">
-                <td onclick="orderlist_panel('10')">
-                    <b ><span id="count_status10_1"></span></b>
-                    <p>
-                        下单
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('40')">
-                    <b ><span id="count_status40_1"></span></b>
-                    <p>
-                        提货
-                    </p>
-                </td>
-            </tr>
-            <tr class="percent50">
-                <td onclick="orderlist_panel('50')">
-                    <b  ><span id="count_status70_1"></span></b>
-                    <p>
-                        运输中
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('90')">
-                    <b ><span id="count_status90_1"></span></b>
-                    <p>
-                        完成
-                    </p>
-                </td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div class="percent70 none" id="seven">
-        <div class="logicBoradTotal overflowHidden percent10">
-            <div class="fl">
-                <i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>
-                共<span id="allCount_7"></span>张单
-            </div>
-            <div class="fr" id="searchHref_7">
-                <a href="#logisticboardsearch">
-                    <i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>
-                </a>
-            </div>
-
-        </div>
-        <table class="percent90 width100" id="logicTable">
-            <tr class="percent50">
-                <td onclick="orderlist_panel('10')">
-                    <b ><span id="count_status10_7"></span></b>
-                    <p>
-                        下单
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('40')">
-                    <b ><span id="count_status40_7"></span></b>
-                    <p>
-                        提货
-                    </p>
-                </td>
-            </tr>
-            <tr class="percent50">
-                <td onclick="orderlist_panel('50')">
-                    <b  ><span id="count_status70_7"></span></b>
-                    <p>
-                        运输中
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('90')">
-                    <b ><span id="count_status90_7"></span></b>
-                    <p>
-                        完成
-                    </p>
-                </td>
-            </tr>
-        </table>
-    </div>
+        <!--</div>-->
+        <!--<table class="percent90 width100" id="logicTable">-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('10')">-->
+                    <!--<b ><span id="count_status10_1"></span></b>-->
+                    <!--<p>-->
+                        <!--下单-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('40')">-->
+                    <!--<b ><span id="count_status40_1"></span></b>-->
+                    <!--<p>-->
+                        <!--提货-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('50')">-->
+                    <!--<b  ><span id="count_status70_1"></span></b>-->
+                    <!--<p>-->
+                        <!--运输中-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('90')">-->
+                    <!--<b ><span id="count_status90_1"></span></b>-->
+                    <!--<p>-->
+                        <!--完成-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
 
 
+    <!--<div class="percent70 none" id="seven">-->
+        <!--<div class="logicBoradTotal overflowHidden percent10">-->
+            <!--<div class="fl">-->
+                <!--<i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>-->
+                <!--共<span id="allCount_7"></span>张单-->
+            <!--</div>-->
+            <!--<div class="fr" id="searchHref_7">-->
+                <!--<a href="#logisticboardsearch">-->
+                    <!--<i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>-->
+                <!--</a>-->
+            <!--</div>-->
+
+        <!--</div>-->
+        <!--<table class="percent90 width100" id="logicTable">-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('10')">-->
+                    <!--<b ><span id="count_status10_7"></span></b>-->
+                    <!--<p>-->
+                        <!--下单-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('40')">-->
+                    <!--<b ><span id="count_status40_7"></span></b>-->
+                    <!--<p>-->
+                        <!--提货-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('50')">-->
+                    <!--<b  ><span id="count_status70_7"></span></b>-->
+                    <!--<p>-->
+                        <!--运输中-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('90')">-->
+                    <!--<b ><span id="count_status90_7"></span></b>-->
+                    <!--<p>-->
+                        <!--完成-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
 
 
-    <div class="percent70 none" id="thirty">
-        <div class="logicBoradTotal overflowHidden percent10">
-            <div class="fl">
-                <i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>
-                共<span id="allCount_30"></span>张单
-            </div>
-            <div class="fr" id="searchHref_30">
-                <a href="#logisticboardsearch">
-                    <i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>
-                </a>
-            </div>
 
-        </div>
-        <table class="percent90 width100" id="logicTable">
-            <tr class="percent50">
-                <td onclick="orderlist_panel('10')">
-                    <b ><span id="count_status10_30"></span></b>
-                    <p>
-                        下单
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('40')">
-                    <b ><span id="count_status40_30"></span></b>
-                    <p>
-                        提货
-                    </p>
-                </td>
-            </tr>
-            <tr class="percent50">
-                <td onclick="orderlist_panel('50')">
-                    <b  ><span id="count_status70_30"></span></b>
-                    <p>
-                        运输中
-                    </p>
-                </td>
-                <td onclick="orderlist_panel('90')">
-                    <b ><span id="count_status90_30"></span></b>
-                    <p>
-                        完成
-                    </p>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
+
+    <!--<div class="percent70 none" id="thirty">-->
+        <!--<div class="logicBoradTotal overflowHidden percent10">-->
+            <!--<div class="fl">-->
+                <!--<i class="icon-toc fs24 fl block line-height-30 paddingTop3"></i>-->
+                <!--共<span id="allCount_30"></span>张单-->
+            <!--</div>-->
+            <!--<div class="fr" id="searchHref_30">-->
+                <!--<a href="#logisticboardsearch">-->
+                    <!--<i class="icon-search fs24 line-height-30 block marginRight10 paddingTop3"></i>-->
+                <!--</a>-->
+            <!--</div>-->
+
+        <!--</div>-->
+        <!--<table class="percent90 width100" id="logicTable">-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('10')">-->
+                    <!--<b ><span id="count_status10_30"></span></b>-->
+                    <!--<p>-->
+                        <!--下单-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('40')">-->
+                    <!--<b ><span id="count_status40_30"></span></b>-->
+                    <!--<p>-->
+                        <!--提货-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr class="percent50">-->
+                <!--<td onclick="orderlist_panel('50')">-->
+                    <!--<b  ><span id="count_status70_30"></span></b>-->
+                    <!--<p>-->
+                        <!--运输中-->
+                    <!--</p>-->
+                <!--</td>-->
+                <!--<td onclick="orderlist_panel('90')">-->
+                    <!--<b ><span id="count_status90_30"></span></b>-->
+                    <!--<p>-->
+                        <!--完成-->
+                    <!--</p>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
+<!--</div>-->
