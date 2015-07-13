@@ -7,16 +7,17 @@
  * @description A plugin to allow jQuery developers to use App Framework UI
  */
 /* jshint eqeqeq:false */
-(function($,window){
+(function ($, window) {
     "use strict";
     jQuery.event.props.push("touches");
     jQuery.event.props.push("originalTouches");
     jQuery.event.props.push("changedTouches");
-    var nundefined, document = window.document,classCache = {},isWin8=(typeof(MSApp)==="object"),_jsonPID = 1;
+    var nundefined, document = window.document, classCache = {}, isWin8 = (typeof(MSApp) === "object"), _jsonPID = 1;
 
     function classRE(name) {
         return name in classCache ? classCache[name] : (classCache[name] = new RegExp("(^|\\s)" + name + "(\\s|$)"));
     }
+
     function _shimNodes(nodes, obj) {
         if (!nodes)
             return;
@@ -27,12 +28,13 @@
         for (var i = 0, iz = nodes.length; i < iz; i++)
             obj[obj.length++] = nodes[i];
     }
-    $.extend($.fn,{
+
+    $.extend($.fn, {
         /* @param {String} attribute to get
-        * @param {String} value to set as
-        * @return {Object} an appframework object
-        * @title $().css(attribute,[value])
-        */
+         * @param {String} value to set as
+         * @return {Object} an appframework object
+         * @title $().css(attribute,[value])
+         */
         vendorCss: function (attribute, value, obj) {
             return this.css($.feat.cssPrefix + attribute, value, obj);
         },
@@ -40,7 +42,7 @@
          * Performs a css vendor specific transform:translate operation on the collection.
          *
          ```
-            $("#main").cssTranslate('200px,0,0');
+         $("#main").cssTranslate('200px,0,0');
          ```
          * @param {String} Transform values
          * @return {Object} an appframework object
@@ -52,20 +54,20 @@
         /**
          * Gets the computed style of CSS values
          *
-        ```
-           $("#main").computedStyle('display');
-        ```
+         ```
+         $("#main").computedStyle('display');
+         ```
          * @param {String} css property
          * @return {Int|String|Float|} css vlaue
          * @title $().computedStyle()
          */
-        computedStyle:function(val){
-            if(this.length===0||val==nundefined) return;
-            return window.getComputedStyle(this[0],"")[val];
+        computedStyle: function (val) {
+            if (this.length === 0 || val == nundefined) return;
+            return window.getComputedStyle(this[0], "")[val];
         },
-        replaceClass: function(name, newName) {
+        replaceClass: function (name, newName) {
             if (name == nundefined || newName == nundefined) return this;
-            var replaceClassFn=function(cname) {
+            var replaceClassFn = function (cname) {
                 classList = classList.replace(classRE(cname), " ");
             };
             for (var i = 0; i < this.length; i++) {
@@ -91,25 +93,25 @@
         $.os.androidICS = $.os.android && userAgent.match(/(Android)\s4/) ? true : false;
         $.os.ipad = userAgent.match(/(iPad).*OS\s([\d_]+)/) ? true : false;
         $.os.iphone = !$.os.ipad && userAgent.match(/(iPhone\sOS)\s([\d_]+)/) ? true : false;
-        $.os.ios7 = ($.os.ipad||$.os.iphone)&&userAgent.match(/7_/)||($.os.ipad||$.os.iphone)&&userAgent.match(/8_/) ? true : false;
+        $.os.ios7 = ($.os.ipad || $.os.iphone) && userAgent.match(/7_/) || ($.os.ipad || $.os.iphone) && userAgent.match(/8_/) ? true : false;
         $.os.webos = userAgent.match(/(webOS|hpwOS)[\s\/]([\d.]+)/) ? true : false;
         $.os.touchpad = $.os.webos && userAgent.match(/TouchPad/) ? true : false;
         $.os.ios = $.os.ipad || $.os.iphone;
         $.os.playbook = userAgent.match(/PlayBook/) ? true : false;
         $.os.blackberry10 = userAgent.match(/BB10/) ? true : false;
-        $.os.blackberry = $.os.playbook || $.os.blackberry10|| userAgent.match(/BlackBerry/) ? true : false;
+        $.os.blackberry = $.os.playbook || $.os.blackberry10 || userAgent.match(/BlackBerry/) ? true : false;
         $.os.chrome = userAgent.match(/Chrome/) ? true : false;
         $.os.opera = userAgent.match(/Opera/) ? true : false;
         $.os.fennec = userAgent.match(/fennec/i) ? true : userAgent.match(/Firefox/) ? true : false;
-        $.os.ie = userAgent.match(/MSIE 10.0/i)||userAgent.match(/Trident\/7/i) ? true : false;
+        $.os.ie = userAgent.match(/MSIE 10.0/i) || userAgent.match(/Trident\/7/i) ? true : false;
         $.os.ieTouch = $.os.ie && userAgent.toLowerCase().match(/touch/i) ? true : false;
-        $.os.tizen = userAgent.match(/Tizen/i)?true:false;
+        $.os.tizen = userAgent.match(/Tizen/i) ? true : false;
         $.os.supportsTouch = ((window.DocumentTouch && document instanceof window.DocumentTouch) || "ontouchstart" in window);
-        $.os.kindle=userAgent.match(/Silk-Accelerated/)?true:false;
+        $.os.kindle = userAgent.match(/Silk-Accelerated/) ? true : false;
         //features
         $.feat = {};
         var head = document.documentElement.getElementsByTagName("head")[0];
-        $.feat.nativeTouchScroll = typeof(head.style["-webkit-overflow-scrolling"]) !== "undefined" && ($.os.ios||$.os.blackberry10);
+        $.feat.nativeTouchScroll = typeof(head.style["-webkit-overflow-scrolling"]) !== "undefined" && ($.os.ios || $.os.blackberry10);
         $.feat.cssPrefix = $.os.webkit ? "Webkit" : $.os.fennec ? "Moz" : $.os.ie ? "ms" : $.os.opera ? "O" : "";
         $.feat.cssTransformStart = !$.os.opera ? "3d(" : "(";
         $.feat.cssTransformEnd = !$.os.opera ? ",0)" : ")";
@@ -123,9 +125,9 @@
 
     /**
      * Utility function to create a psuedo GUID
-       ```
-       var id= $.uuid();
-       ```
+     ```
+     var id= $.uuid();
+     ```
      * @title $.uuid
      */
     $.uuid = function () {
@@ -137,12 +139,12 @@
 
     /**
      * Gets the css matrix, or creates a fake one
-       ```
-       $.getCssMatrix(domElement)
-       ```
-       @returns matrix with postion
-       */
-    $.getCssMatrix = function(ele) {
+     ```
+     $.getCssMatrix(domElement)
+     ```
+     @returns matrix with postion
+     */
+    $.getCssMatrix = function (ele) {
         if ($.is$(ele)) ele = ele.get(0);
 
         var matrixFn = window.WebKitCSSMatrix || window.MSCSSMatrix;
@@ -166,8 +168,8 @@
         var computedStyle = window.getComputedStyle(ele);
 
         var transform = computedStyle.webkitTransform ||
-                        computedStyle.transform ||
-                        computedStyle[$.feat.cssPrefix + "Transform"];
+            computedStyle.transform ||
+            computedStyle[$.feat.cssPrefix + "Transform"];
 
         if (matrixFn)
             return new matrixFn(transform);
@@ -197,20 +199,20 @@
 
     /**
      * $.create - a faster alertnative to $("<div id='main'>this is some text</div>");
-      ```
-      $.create("div",{id:'main',innerHTML:'this is some text'});
-      $.create("<div id='main'>this is some text</div>");
-      ```
-      * @param {String} DOM Element type or html
-      * @param [{Object}] properties to apply to the element
-      * @return {Object} Returns an appframework object
-      * @title $.create(type,[params])
-      */
-    $.create = function(type, props) {
+     ```
+     $.create("div",{id:'main',innerHTML:'this is some text'});
+     $.create("<div id='main'>this is some text</div>");
+     ```
+     * @param {String} DOM Element type or html
+     * @param [{Object}] properties to apply to the element
+     * @return {Object} Returns an appframework object
+     * @title $.create(type,[params])
+     */
+    $.create = function (type, props) {
         var elem;
         var f = new $();
         if (props || type[0] !== "<") {
-            if (props.html){
+            if (props.html) {
                 props.innerHTML = props.html;
                 delete props.html;
             }
@@ -223,7 +225,7 @@
         } else {
             elem = document.createElement("div");
             if (isWin8) {
-                MSApp.execUnsafeLocalFunction(function() {
+                MSApp.execUnsafeLocalFunction(function () {
                     elem.innerHTML = type.trim();
                 });
             } else
@@ -234,19 +236,19 @@
     };
     /**
      * $.query  - a faster alertnative to $("div");
-      ```
-      $.query(".panel");
-      ```
-      * @param {String} selector
-      * @param {Object} [context]
-      * @return {Object} Returns an appframework object
-      * @title $.query(selector,[context])
-      */
+     ```
+     $.query(".panel");
+     ```
+     * @param {String} selector
+     * @param {Object} [context]
+     * @return {Object} Returns an appframework object
+     * @title $.query(selector,[context])
+     */
     $.query = function (sel, what) {
         try {
-            return $(sel,what);
+            return $(sel, what);
         }
-        catch(e) {
+        catch (e) {
             return $();
         }
     };
@@ -254,9 +256,9 @@
     /* The following are for events on objects */
     /**
      * Bind an event to an object instead of a DOM Node
-       ```
-       $.bind(this,'event',function(){});
-       ```
+     ```
+     $.bind(this,'event',function(){});
+     ```
      * @param {Object} object
      * @param {String} event name
      * @param {Function} function to execute
@@ -273,9 +275,9 @@
 
     /**
      * Trigger an event to an object instead of a DOM Node
-       ```
-       $.trigger(this,'event',arguments);
-       ```
+     ```
+     $.trigger(this,'event',arguments);
+     ```
      * @param {Object} object
      * @param {String} event name
      * @param {Array} arguments
@@ -298,9 +300,9 @@
     };
     /**
      * Unbind an event to an object instead of a DOM Node
-       ```
-       $.unbind(this,'event',function(){});
-       ```
+     ```
+     $.unbind(this,'event',function(){});
+     ```
      * @param {Object} object
      * @param {String} event name
      * @param {Function} function to execute
@@ -308,7 +310,7 @@
      */
     $.unbind = function (obj, ev, f) {
         if (!obj.__events) return;
-        if(ev==nundefined) {
+        if (ev == nundefined) {
             delete obj.__events;
             return;
         }
@@ -317,7 +319,7 @@
             if (obj.__events[ev[i]]) {
                 var evts = obj.__events[ev[i]];
                 for (var j = 0; j < evts.length; j++) {
-                    if (f ==nundefined)
+                    if (f == nundefined)
                         delete evts[j];
                     if (evts[j] === f) {
                         evts.splice(j, 1);
@@ -327,7 +329,8 @@
             }
         }
     };
-    $.cleanUpContent = function(){};
+    $.cleanUpContent = function () {
+    };
 
     $.isObject = function (obj) {
         return typeof obj === "object";
@@ -335,27 +338,27 @@
 
     $.asap = function (fn, context, args) {
         if (!$.isFunction(fn)) throw "$.asap - argument is not a valid function";
-        setTimeout(function(){
-            fn.apply(context,args);
+        setTimeout(function () {
+            fn.apply(context, args);
         });
     };
 
     /**
      * this function executes javascript in HTML.
-       ```
-       $.parseJS(content)
-       ```
-    * @param {String|DOM} content
-    * @title $.parseJS(content);
-    */
+     ```
+     $.parseJS(content)
+     ```
+     * @param {String|DOM} content
+     * @title $.parseJS(content);
+     */
     var remoteJSPages = {};
     $.parseJS = function (div) {
         if (!div)
             return;
         if (typeof (div) === "string") {
             var elem = document.createElement("div");
-            if(isWin8){
-                MSApp.execUnsafeLocalFunction(function(){
+            if (isWin8) {
+                MSApp.execUnsafeLocalFunction(function () {
                     elem.innerHTML = div;
                 });
             }
@@ -367,7 +370,7 @@
         var scripts = div.getElementsByTagName("script");
         div = null;
         for (var i = 0; i < scripts.length; i++) {
-            if (scripts[i].src.length > 0 && !remoteJSPages[scripts[i].src]&&!isWin8) {
+            if (scripts[i].src.length > 0 && !remoteJSPages[scripts[i].src] && !isWin8) {
                 var doc = document.createElement("script");
                 doc.type = scripts[i].type;
                 doc.src = scripts[i].src;
@@ -383,7 +386,7 @@
     $.is$ = function (obj) {
         return obj instanceof $;
     };
-    $.jsonP = function(options) {
+    $.jsonP = function (options) {
         if (isWin8) {
             options.type = "get";
             options.dataType = null;
@@ -393,7 +396,7 @@
         var abortTimeout = "",
             context, callback;
         var script = document.createElement("script");
-        window[callbackName] = function(data) {
+        window[callbackName] = function (data) {
             clearTimeout(abortTimeout);
             $(script).remove();
             delete window[callbackName];
@@ -412,14 +415,14 @@
             script.src = options.url;
         }
         if (options.error) {
-            script.onerror = function() {
+            script.onerror = function () {
                 clearTimeout(abortTimeout);
                 options.error.call(context, "", "error");
             };
         }
         $("head").append(script);
         if (options.timeout > 0)
-            abortTimeout = setTimeout(function() {
+            abortTimeout = setTimeout(function () {
                 options.error.call(context, "", "timeout");
             }, options.timeout);
         return {};
@@ -427,12 +430,12 @@
 
     //Shim to put touch events on the jQuery special event
 
-    window.$afm=$;
+    window.$afm = $;
 
 
     if (!window.numOnly) {
         window.numOnly = function numOnly(val) {
-            if (val ===undefined || val === "") return 0;
+            if (val === undefined || val === "") return 0;
             if (isNaN(parseFloat(val))) {
                 if (val.replace) {
                     val = val.replace(/[^0-9.-]/g, "");
@@ -442,59 +445,59 @@
         };
     }
 
-})(jQuery,window);
+})(jQuery, window);
 
-window.af=window.jq=jQuery;
+window.af = window.jq = jQuery;
 
 /**
  * af.actionsheet - an actionsheet for html5 mobile apps
  * Copyright 2012 - Intel
  */
 /* EXAMPLE
-  You can pass in an HTML string that will get rendered
+ You can pass in an HTML string that will get rendered
 
-  $(document.body).actionsheet('<a >Back</a><a onclick="alert(\'hi\');" >Show Alert 3</a><a onclick="alert(\'goodbye\');">Show Alert 4</a>');
+ $(document.body).actionsheet('<a >Back</a><a onclick="alert(\'hi\');" >Show Alert 3</a><a onclick="alert(\'goodbye\');">Show Alert 4</a>');
 
-  You can also use an arra of objects to show each item.  There are three propertyes
-    text - the text to display
-    cssClasses - extra css classes
-    handler - click handler function
+ You can also use an arra of objects to show each item.  There are three propertyes
+ text - the text to display
+ cssClasses - extra css classes
+ handler - click handler function
 
-  $(document.body).actionsheet(
-    [{
-        text: 'back',
-        cssClasses: 'red',
-        handler: function () {
-            $.ui.goBack();
-        }
-    }, {
-        text: 'show alert 5',
-        cssClasses: 'blue',
-        handler: function () {
-            alert("hi");
-        }
-    }, {
-        text: 'show alert 6',
-        cssClasses: '',
-        handler: function () {
-            alert("goodbye");
-        }
-    }]
-  );
+ $(document.body).actionsheet(
+ [{
+ text: 'back',
+ cssClasses: 'red',
+ handler: function () {
+ $.ui.goBack();
+ }
+ }, {
+ text: 'show alert 5',
+ cssClasses: 'blue',
+ handler: function () {
+ alert("hi");
+ }
+ }, {
+ text: 'show alert 6',
+ cssClasses: '',
+ handler: function () {
+ alert("goodbye");
+ }
+ }]
+ );
 
  */
- /* global af*/
-(function($) {
+/* global af*/
+(function ($) {
     "use strict";
-    $.fn.actionsheet = function(opts) {
+    $.fn.actionsheet = function (opts) {
         var tmp;
         for (var i = 0; i < this.length; i++) {
             tmp = new actionsheet(this[i], opts);
         }
         return this.length === 1 ? tmp : this;
     };
-    var actionsheet = (function() {
-        var actionsheet = function(elID, opts) {
+    var actionsheet = (function () {
+        var actionsheet = function (elID, opts) {
             if (typeof elID === "string" || elID instanceof String) {
                 this.el = document.getElementById(elID);
             } else {
@@ -520,7 +523,8 @@ window.af=window.jq=jQuery;
             var markStart = "<div id='af_actionsheet'><div style='width:100%'>";
             var markEnd = "</div></div>";
             var markup;
-            var noop=function(){};
+            var noop = function () {
+            };
             if (typeof opts === "string") {
                 markup = $(markStart + opts + "<a href='javascript:;' class='cancel'>Cancel</a>" + markEnd);
             } else if (typeof opts === "object") {
@@ -546,17 +550,17 @@ window.af=window.jq=jQuery;
             markup.cssTranslate("0,0");
             markup.css("top", window.innerHeight + "px");
             this.el.style.overflow = "hidden";
-            markup.on("click", "a", function() {
+            markup.on("click", "a", function () {
                 that.hideSheet();
                 return false;
             });
             this.activeSheet = markup;
             $(elID).append("<div id='af_action_mask' style='position:absolute;top:0px;left:0px;right:0px;bottom:0px;z-index:9998;background:rgba(0,0,0,.4)'/>");
-            setTimeout(function() {
+            setTimeout(function () {
                 markup.vendorCss("Transition", "all 300ms");
                 markup.cssTranslate("0," + (-(markup.height())) + "px");
             }, 10);
-            $("#af_action_mask").bind("touchstart touchmove touchend click",function(e){
+            $("#af_action_mask").bind("touchstart touchmove touchend click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -564,19 +568,19 @@ window.af=window.jq=jQuery;
         };
         actionsheet.prototype = {
             activeSheet: null,
-            hideSheet: function() {
+            hideSheet: function () {
                 var that = this;
-                this.activeSheet.off("click", "a", function() {
+                this.activeSheet.off("click", "a", function () {
                     that.hideSheet();
                 });
                 $(this.el).find("#af_action_mask").unbind("click").remove();
                 this.activeSheet.vendorCss("Transition", "all 0ms");
                 var markup = this.activeSheet;
                 var theEl = this.el;
-                setTimeout(function() {
+                setTimeout(function () {
                     markup.vendorCss("Transition", "all 300ms");
                     markup.cssTranslate("0,0px");
-                    setTimeout(function() {
+                    setTimeout(function () {
                         markup.remove();
                         markup = null;
                         theEl.style.overflow = "none";
@@ -592,49 +596,49 @@ window.af=window.jq=jQuery;
  * af.css3animate - a css3 animation library that supports chaning/callbacks
  * Copyright 2013 - Intel
  */
- /*  EXAMPLE
+/*  EXAMPLE
 
-  $("#animate").css3Animate({
-        width: "100px",
-        height: "100px",
-        x: "20%",
-        y: "30%",
-        time: "1000ms",
-        opacity: .5,
-        callback: function () {
-            //execute when finished
-        }
-    });
+ $("#animate").css3Animate({
+ width: "100px",
+ height: "100px",
+ x: "20%",
+ y: "30%",
+ time: "1000ms",
+ opacity: .5,
+ callback: function () {
+ //execute when finished
+ }
+ });
 
-    //Chain animations
-    $("#animate").css3Animate({
-        x: 20,
-        y: 30,
-        time: "300ms",
-        callback: function () {
-            $("#animate").css3Animate({
-                x: 20,
-                y: 30,
-                time: "500ms",
-                previous: true,
-                callback: function () {
-                    reset();
-                }
-            });
-        }
-    });
+ //Chain animations
+ $("#animate").css3Animate({
+ x: 20,
+ y: 30,
+ time: "300ms",
+ callback: function () {
+ $("#animate").css3Animate({
+ x: 20,
+ y: 30,
+ time: "500ms",
+ previous: true,
+ callback: function () {
+ reset();
+ }
+ });
+ }
+ });
  */
 
- /* global af*/
- /* global numOnly*/
-(function($) {
+/* global af*/
+/* global numOnly*/
+(function ($) {
     "use strict";
     var cache = [];
-    var objId = function(obj) {
+    var objId = function (obj) {
         if (!obj.afCSS3AnimateId) obj.afCSS3AnimateId = $.uuid();
         return obj.afCSS3AnimateId;
     };
-    var getEl = function(elID) {
+    var getEl = function (elID) {
         if (typeof elID === "string" || elID instanceof String) {
             return document.getElementById(elID);
         } else if ($.is$(elID)) {
@@ -643,7 +647,7 @@ window.af=window.jq=jQuery;
             return elID;
         }
     };
-    var getCSS3Animate = function(obj, options) {
+    var getCSS3Animate = function (obj, options) {
         var tmp, id, el = getEl(obj);
         //first one
         id = objId(el);
@@ -656,7 +660,7 @@ window.af=window.jq=jQuery;
         }
         return tmp;
     };
-    $.fn.css3Animate = function(opts) {
+    $.fn.css3Animate = function (opts) {
         //keep old callback system - backwards compatibility - should be deprecated in future versions
         if (!opts.complete && opts.callback) opts.complete = opts.callback;
         //first on
@@ -671,7 +675,7 @@ window.af=window.jq=jQuery;
     };
 
 
-    $.css3AnimateQueue = function() {
+    $.css3AnimateQueue = function () {
         return new css3Animate.queue();
     };
     var translateOpen = $.feat.cssTransformStart;
@@ -681,9 +685,9 @@ window.af=window.jq=jQuery;
 
     transitionEnd = transitionEnd.replace(transitionEnd.charAt(0), transitionEnd.charAt(0).toLowerCase());
 
-    var css3Animate = (function() {
+    var css3Animate = (function () {
 
-        var css3Animate = function(elID, options) {
+        var css3Animate = function (elID, options) {
             if (!(this instanceof css3Animate)) return new css3Animate(elID, options);
 
             //start doing stuff
@@ -699,14 +703,14 @@ window.af=window.jq=jQuery;
             this.animate(options);
 
             var that = this;
-            af(this.el).bind("destroy", function() {
+            af(this.el).bind("destroy", function () {
                 var id = that.el.afCSS3AnimateId;
                 that.callbacksStack = [];
                 if (cache[id]) delete cache[id];
             });
         };
         css3Animate.prototype = {
-            animate: function(options) {
+            animate: function (options) {
 
                 //cancel current active animation on this object
                 if (this.isActive) this.cancel();
@@ -717,7 +721,7 @@ window.af=window.jq=jQuery;
                     return;
                 }
 
-                var classMode = !! options.addClass;
+                var classMode = !!options.addClass;
                 var scale, time;
                 var timeNum = numOnly(options.time);
                 if (classMode) {
@@ -831,7 +835,7 @@ window.af=window.jq=jQuery;
                 } else {
                     //setup the event normally
 
-                    this.activeEvent = function(event) {
+                    this.activeEvent = function (event) {
                         clearTimeout(that.timeout);
                         that.finishAnimation(event);
                         that.el.removeEventListener(transitionEnd, that.activeEvent, false);
@@ -842,16 +846,16 @@ window.af=window.jq=jQuery;
                 }
 
             },
-            addCallbackHook: function(callback) {
+            addCallbackHook: function (callback) {
                 if (callback) this.callbacksStack.push(callback);
                 this.countStack++;
                 return this.linkFinishedProxy;
             },
-            linkFinished: function(canceled) {
+            linkFinished: function (canceled) {
                 if (canceled) this.cancel();
                 else this.finishAnimation();
             },
-            finishAnimation: function(event) {
+            finishAnimation: function (event) {
                 if (event && event.preventDefault) event.preventDefault();
                 if (!this.isActive) return;
 
@@ -859,7 +863,7 @@ window.af=window.jq=jQuery;
 
                 if (this.countStack === 0) this.fireCallbacks(false);
             },
-            fireCallbacks: function(canceled) {
+            fireCallbacks: function (canceled) {
                 this.clearEvents();
 
                 //keep callbacks after cleanup
@@ -881,22 +885,22 @@ window.af=window.jq=jQuery;
                     else if (typeof(success) === "function") success();
                 }
             },
-            cancel: function() {
+            cancel: function () {
                 if (!this.isActive) return;
                 this.fireCallbacks(true); //fire failure callbacks
             },
-            cleanup: function() {
+            cleanup: function () {
                 this.callbacksStack = [];
                 this.isActive = false;
                 this.countStack = 0;
             },
-            clearEvents: function() {
+            clearEvents: function () {
                 if (this.activeEvent) {
                     this.el.removeEventListener(transitionEnd, this.activeEvent, false);
                 }
                 this.activeEvent = null;
             },
-            link: function(elID, opts) {
+            link: function (elID, opts) {
                 var callbacks = {
                     complete: opts.complete,
                     success: opts.success,
@@ -918,16 +922,16 @@ window.af=window.jq=jQuery;
         return css3Animate;
     })();
 
-    css3Animate.queue = function() {
+    css3Animate.queue = function () {
         return {
             elements: [],
-            push: function(el) {
+            push: function (el) {
                 this.elements.push(el);
             },
-            pop: function() {
+            pop: function () {
                 return this.elements.pop();
             },
-            run: function() {
+            run: function () {
                 var that = this;
                 if (this.elements.length === 0) return;
                 if (typeof(this.elements[0]) === "function") {
@@ -937,13 +941,13 @@ window.af=window.jq=jQuery;
                 if (this.elements.length === 0) return;
                 var params = this.shift();
                 if (this.elements.length > 0) {
-                    params.complete = function(canceled) {
+                    params.complete = function (canceled) {
                         if (!canceled) that.run();
                     };
                 }
                 css3Animate(document.getElementById(params.id), params);
             },
-            shift: function() {
+            shift: function () {
                 return this.elements.shift();
             }
         };
@@ -952,44 +956,45 @@ window.af=window.jq=jQuery;
 
 
 /**
-  * @license MIT - https://github.com/darius/requestAnimationFrame/commit/4f27a5a21902a883330da4663bea953b2f96cb15#diff-9879d6db96fd29134fc802214163b95a
+ * @license MIT - https://github.com/darius/requestAnimationFrame/commit/4f27a5a21902a883330da4663bea953b2f96cb15#diff-9879d6db96fd29134fc802214163b95a
 
-    http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-    requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
-    MIT license
+ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+ http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+ requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+ MIT license
 
-    Adapted from https://gist.github.com/paulirish/1579671 which derived from 
-    http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+ Adapted from https://gist.github.com/paulirish/1579671 which derived from
+ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+ http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 
-    requestAnimationFrame polyfill by Erik Möller.
-    Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
-*/
-
+ requestAnimationFrame polyfill by Erik Möller.
+ Fixes from Paul Irish, Tino Zijdel, Andrew Mao, Klemen Slavič, Darius Bacon
+ */
 
 
 if (!Date.now)
-    Date.now = function() {
+    Date.now = function () {
         "use strict";
         return new Date().getTime();
     };
 
-(function() {
+(function () {
     "use strict";
-    var vendors = ["webkit", "moz","ms"];
+    var vendors = ["webkit", "moz", "ms"];
     for (var i = 0; i < vendors.length && !window.requestAnimationFrame; ++i) {
         var vp = vendors[i];
-        window.requestAnimationFrame = window[vp+"RequestAnimationFrame"];
-        window.cancelAnimationFrame = (window[vp+"CancelAnimationFrame"] || window[vp+"CancelRequestAnimationFrame"]);
+        window.requestAnimationFrame = window[vp + "RequestAnimationFrame"];
+        window.cancelAnimationFrame = (window[vp + "CancelAnimationFrame"] || window[vp + "CancelRequestAnimationFrame"]);
     }
     if (/iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent) || !window.requestAnimationFrame || !window.cancelAnimationFrame) {
         var lastTime = 0;
-        window.requestAnimationFrame = function(callback) {
+        window.requestAnimationFrame = function (callback) {
             var now = Date.now();
             var nextTime = Math.max(lastTime + 16, now);
-            return setTimeout(function() { callback(lastTime = nextTime); },
-                              nextTime - now);
+            return setTimeout(function () {
+                    callback(lastTime = nextTime);
+                },
+                    nextTime - now);
         };
         window.cancelAnimationFrame = clearTimeout;
     }
@@ -1002,14 +1007,14 @@ if (!Date.now)
  * Copyright 2013 - Intel
  */
 
-(function($) {
+(function ($) {
     "use strict";
     var cache = [];
-    var objId = function(obj) {
+    var objId = function (obj) {
         if (!obj.afAnimateId) obj.afAnimateId = $.uuid();
         return obj.afAnimateId;
     };
-    var getEl = function(elID) {
+    var getEl = function (elID) {
         if (typeof elID === "string" || elID instanceof String) {
             return document.getElementById(elID);
         } else if ($.is$(elID)) {
@@ -1018,12 +1023,12 @@ if (!Date.now)
             return elID;
         }
     };
-    var getAnimate = function(obj, options) {
+    var getAnimate = function (obj, options) {
         var tmp, id, el = getEl(obj);
         //first one
         id = objId(el);
         if (cache[id]) {
-            if(options)
+            if (options)
                 cache[id].animate(options);
             tmp = cache[id];
         } else {
@@ -1032,122 +1037,123 @@ if (!Date.now)
         }
         return tmp;
     };
-    $.fn.animateCss = function(opts) {
+    $.fn.animateCss = function (opts) {
         var tmp = getAnimate(this[0], opts);
         return tmp;
     };
 
 
-
-    var Animate = function(elID, options) {
+    var Animate = function (elID, options) {
         if (!(this instanceof Animate)) return new Animate(elID, options);
 
-        this.el=elID;
+        this.el = elID;
         //start doing stuff
         if (!this.el) return;
 
-        if(options)
+        if (options)
             this.animate(options);
 
         var that = this;
-        af(this.el).bind("destroy", function() {
+        af(this.el).bind("destroy", function () {
             var id = that.el.afAnimateId;
             if (cache[id]) delete cache[id];
         });
     };
     Animate.prototype = {
-        animationTimer:null,
-        isAnimating:false,
-        startX:0,
-        startY:0,
-        runTime:0,
-        endX:0,
-        endY:0,
-        currX:0,
-        currY:0,
-        animationStartTime:0,
-        pauseTime:0,
-        completeCB:null,
-        easingFn:"linear",
-        animateOpts:{},
-        updateCb:null,
-        animate: function(options) {
-            var that=this;
-            if(that.isAnimating) return;
-            that.isAnimating=true;
+        animationTimer: null,
+        isAnimating: false,
+        startX: 0,
+        startY: 0,
+        runTime: 0,
+        endX: 0,
+        endY: 0,
+        currX: 0,
+        currY: 0,
+        animationStartTime: 0,
+        pauseTime: 0,
+        completeCB: null,
+        easingFn: "linear",
+        animateOpts: {},
+        updateCb: null,
+        animate: function (options) {
+            var that = this;
+            if (that.isAnimating) return;
+            that.isAnimating = true;
             window.cancelAnimationFrame(that.animationTimer);
             if (!options) {
-                options={
-                    x:0,
-                    y:0,
-                    duration:0
+                options = {
+                    x: 0,
+                    y: 0,
+                    duration: 0
                 };
             }
-            this.easingFn=options.easing||"linear";
+            this.easingFn = options.easing || "linear";
 
-            this.completeCB=options.complete||null;
-            this.updateCB=options.update||null;
-            this.runTime=numOnly(options.duration);
-            options.complete&&(delete options.complete);
-            this.animateOpts=options;
-            this.startTime=Date.now();
-            this.startMatrix=$.getCssMatrix(this.el);
+            this.completeCB = options.complete || null;
+            this.updateCB = options.update || null;
+            this.runTime = numOnly(options.duration);
+            options.complete && (delete options.complete);
+            this.animateOpts = options;
+            this.startTime = Date.now();
+            this.startMatrix = $.getCssMatrix(this.el);
 
-            if(this.runTime===0)
+            if (this.runTime === 0)
                 this.doAnimate();
         },
-        start:function(){
+        start: function () {
             this.doAnimate();
         },
-        doAnimate:function(){
-            var now = Date.now(), nextX, nextY,easeStep,that=this;
+        doAnimate: function () {
+            var now = Date.now(), nextX, nextY, easeStep, that = this;
 
-            if (this.runTime===0||(now >= this.startTime + this.runTime)) {
-                that.setPosition(this.animateOpts.x,this.animateOpts.y);
+            if (this.runTime === 0 || (now >= this.startTime + this.runTime)) {
+                that.setPosition(this.animateOpts.x, this.animateOpts.y);
                 that.isAnimating = false;
-                if(this.updateCB)
-                    this.updateCB({x:this.animateOpts.x,y:this.animateOpts.y});
-                if(this.completeCB)
+                if (this.updateCB)
+                    this.updateCB({x: this.animateOpts.x, y: this.animateOpts.y});
+                if (this.completeCB)
                     this.completeCB();
                 return;
             }
 
             now = (now - this.startTime) / this.runTime;
-            now=now>1?1:now;
+            now = now > 1 ? 1 : now;
             easeStep = tweens[this.easingFn](now);
             nextX = (this.animateOpts.x - this.startMatrix.e) * easeStep + this.startMatrix.e;
             nextY = (this.animateOpts.y - this.startMatrix.f) * easeStep + this.startMatrix.f;
-            this.setPosition(nextX,nextY);
-            if(this.updateCB)
-                this.updateCB({x:nextX,y:nextY});
+            this.setPosition(nextX, nextY);
+            if (this.updateCB)
+                this.updateCB({x: nextX, y: nextY});
 
             if (this.isAnimating)
-                this.animationTimer = window.requestAnimationFrame(function(){that.doAnimate();});
+                this.animationTimer = window.requestAnimationFrame(function () {
+                    that.doAnimate();
+                });
         },
-        setPosition:function(x,y){
-            this.el.style[$.feat.cssPrefix+"Transform"]="matrix3d( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, "+x+", "+y+", 0, 1 )";
-            this.currX=x;
-            this.currY=y;
+        setPosition: function (x, y) {
+            this.el.style[$.feat.cssPrefix + "Transform"] = "matrix3d( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, " + x + ", " + y + ", 0, 1 )";
+            this.currX = x;
+            this.currY = y;
         },
-        stop:function(){
-            this.isAnimating=false;
+        stop: function () {
+            this.isAnimating = false;
             window.cancelAnimationFrame(this.animationTimer);
-            this.pauseTime=Date.now()-this.startTime;
+            this.pauseTime = Date.now() - this.startTime;
         },
-        resume:function(){
-            this.isAnimating=true;
-            this.startTime=Date.now()-this.pauseTime;
+        resume: function () {
+            this.isAnimating = true;
+            this.startTime = Date.now() - this.pauseTime;
             this.doAnimate();
         }
     };
 
 
     var tweens = {
-        linear:function (k) {
+        linear: function (k) {
             return k;
         },
-        easeOutSine:function (k) {
-            return Math.sin(k * Math.PI / 2 );
+        easeOutSine: function (k) {
+            return Math.sin(k * Math.PI / 2);
         }
     };
 })(af);
@@ -1156,7 +1162,7 @@ if (!Date.now)
  * af.passwordBox - password box replacement for html5 mobile apps on android due to a bug with CSS3 translate3d
  * @copyright 2011 - Intel
  */
- /* global af*/
+/* global af*/
 (function ($) {
     "use strict";
     $.passwordBox = function () {
@@ -1164,12 +1170,12 @@ if (!Date.now)
     };
 
     var passwordBox = function () {
-            this.oldPasswords = {};
-        };
+        this.oldPasswords = {};
+    };
     passwordBox.prototype = {
         showPasswordPlainText: false,
         getOldPasswords: function (elID) {
-         //   if ($.os.android == false) return; -  iOS users seem to want this too, so we'll let everyone join the party
+            //   if ($.os.android == false) return; -  iOS users seem to want this too, so we'll let everyone join the party
             var container = elID && document.getElementById(elID) ? document.getElementById(elID) : document;
             if (!container) {
                 window.alert("Could not find container element for passwordBox " + elID);
@@ -1179,27 +1185,27 @@ if (!Date.now)
             for (var i = 0; i < sels.length; i++) {
                 if (sels[i].type !== "password") continue;
 
-                if($.os.webkit){
+                if ($.os.webkit) {
                     sels[i].type = "text";
-                    $(sels[i]).vendorCss("TextSecurity","disc");
+                    $(sels[i]).vendorCss("TextSecurity", "disc");
                 }
             }
         },
 
         changePasswordVisiblity: function (what, id) {
-            what = parseInt(what,10);
+            what = parseInt(what, 10);
             var theEl = document.getElementById(id);
 
             if (what === 1) { //show
-                $(theEl).vendorCss("TextSecurity","none");
+                $(theEl).vendorCss("TextSecurity", "none");
             } else {
-                $(theEl).vendorCss("TextSecurity","disc");
+                $(theEl).vendorCss("TextSecurity", "disc");
             }
-            if(!$.os.webkit) {
-                if(what === 1)
-                    theEl.type="text";
+            if (!$.os.webkit) {
+                if (what === 1)
+                    theEl.type = "text";
                 else
-                    theEl.type="password";
+                    theEl.type = "password";
             }
             theEl = null;
         }
@@ -1207,13 +1213,13 @@ if (!Date.now)
 })(af);
 
 /**
- * af.scroller 
+ * af.scroller
  * created by Intel with modifications by Carlos Ouro @ Badoo and Intel
  * Supports iOS native touch scrolling
  * Optimizations and bug improvements by Intel
  * @copyright Intel
  */
- /* global numOnly*/
+/* global numOnly*/
 (function ($) {
     "use strict";
     var HIDE_REFRESH_TIME = 325; // hide animation of pull2ref duration in ms
@@ -1265,6 +1271,7 @@ if (!Date.now)
         }
         boundTouchLayer = true;
     }
+
     var scroller = (function () {
         var jsScroller, nativeScroller;
 
@@ -1284,13 +1291,13 @@ if (!Date.now)
                 window.alert("Could not find element for scroller " + elID);
                 return;
             }
-            var checkClassEl=$(el);
-            if(opts.hasParent)
-                checkClassEl=checkClassEl.parent();
-            if(checkClassEl.hasClass("x-scroll"))
-                opts.horizontalScroll=true;
-            if(checkClassEl.hasClass("y-scroll"))
-                opts.verticalScroll=true;
+            var checkClassEl = $(el);
+            if (opts.hasParent)
+                checkClassEl = checkClassEl.parent();
+            if (checkClassEl.hasClass("x-scroll"))
+                opts.horizontalScroll = true;
+            if (checkClassEl.hasClass("y-scroll"))
+                opts.verticalScroll = true;
             if ($.os.desktop)
                 return new scrollerCore(el, opts);
             else if (opts.useJsScroll) return new jsScroller(el, opts);
@@ -1335,9 +1342,9 @@ if (!Date.now)
             scrollSkip: false,
             scrollTopInterval: null,
             scrollLeftInterval: null,
-            bubbles:true,
-            lockBounce:false,
-            initScrollProgress:false,
+            bubbles: true,
+            lockBounce: false,
+            initScrollProgress: false,
             _scrollTo: function (params, time) {
                 time = parseInt(time, 10);
                 if (time === 0 || isNaN(time)) {
@@ -1352,7 +1359,7 @@ if (!Date.now)
                 var self = this;
                 var toRunY = Math.ceil(this.el.scrollTop - params.y) / distPerTick;
                 var toRunX = Math.ceil(this.el.scrollLeft - params.x) / distPerTick;
-                var xRun =0, yRun = 0;
+                var xRun = 0, yRun = 0;
                 self.scrollTopInterval = window.setInterval(function () {
                     self.el.scrollTop -= distPerTick;
                     yRun++;
@@ -1371,10 +1378,14 @@ if (!Date.now)
                     }
                 }, singleTick);
             },
-            enable: function () {},
-            disable: function () {},
-            hideScrollbars: function () {},
-            addPullToRefresh: function () {},
+            enable: function () {
+            },
+            disable: function () {
+            },
+            hideScrollbars: function () {
+            },
+            addPullToRefresh: function () {
+            },
             /**
              * We do step animations for "native" - iOS is acceptable and desktop browsers are fine
              * instead of css3
@@ -1410,7 +1421,7 @@ if (!Date.now)
                 var that = this;
                 var orientationChangeProxy = function () {
                     //no need to readjust if disabled...
-                    if (that.eventsActive && !$.feat.nativeTouchScroll&&(!$.ui || ($.ui.activeDiv === that.container)) ) {
+                    if (that.eventsActive && !$.feat.nativeTouchScroll && (!$.ui || ($.ui.activeDiv === that.container))) {
                         that.adjustScroll();
                     }
                 };
@@ -1429,29 +1440,29 @@ if (!Date.now)
             handleEvent: function (e) {
                 if (!this.scrollingLocked) {
                     switch (e.type) {
-                    case "touchstart":
-                        clearInterval(this.scrollTopInterval);
-                        this.preventHideRefresh = !this.refreshRunning; // if it's not running why prevent it xD
-                        this.moved = false;
-                        if(e.target.getAttribute("no-scroll")) return e.preventDefault();
-                        this.onTouchStart(e);
-                        if(!this.bubbles)
-                            e.stopPropagation();
-                        break;
-                    case "touchmove":
+                        case "touchstart":
+                            clearInterval(this.scrollTopInterval);
+                            this.preventHideRefresh = !this.refreshRunning; // if it's not running why prevent it xD
+                            this.moved = false;
+                            if (e.target.getAttribute("no-scroll")) return e.preventDefault();
+                            this.onTouchStart(e);
+                            if (!this.bubbles)
+                                e.stopPropagation();
+                            break;
+                        case "touchmove":
 
-                        this.onTouchMove(e);
-                        if(!this.bubbles)
-                            e.stopPropagation();
-                        break;
-                    case "touchend":
-                        this.onTouchEnd(e);
-                        if(!this.bubbles)
-                            e.stopPropagation();
-                        break;
-                    case "scroll":
-                        this.onScroll(e);
-                        break;
+                            this.onTouchMove(e);
+                            if (!this.bubbles)
+                                e.stopPropagation();
+                            break;
+                        case "touchend":
+                            this.onTouchEnd(e);
+                            if (!this.bubbles)
+                                e.stopPropagation();
+                            break;
+                        case "scroll":
+                            this.onScroll(e);
+                            break;
                     }
                 }
             },
@@ -1485,8 +1496,8 @@ if (!Date.now)
                 if (autoCancel) {
                     var that = this;
                     if (this.refreshHangTimeout > 0) this.refreshCancelCB = setTimeout(function () {
-                            that.hideRefresh();
-                        }, this.refreshHangTimeout);
+                        that.hideRefresh();
+                    }, this.refreshHangTimeout);
                 }
             },
             setRefreshContent: function (content) {
@@ -1509,7 +1520,7 @@ if (!Date.now)
             },
             scrollToItem: function (el, where) { //TODO: add functionality for x position
                 if (!$.is$(el)) el = $(el);
-                var newTop,itemPos,panelTop,itemTop;
+                var newTop, itemPos, panelTop, itemTop;
                 if (where === "bottom") {
                     itemPos = el.offset();
                     newTop = itemPos.top - this.afEl.offset().bottom + itemPos.height;
@@ -1553,25 +1564,26 @@ if (!Date.now)
                 this.infiniteTriggered = false;
                 this.scrollSkip = true;
             },
-            scrollTo:function (pos, time) {
+            scrollTo: function (pos, time) {
                 return this._scrollTo(pos, time);
             },
-            updateP2rHackPosition:function(){}
+            updateP2rHackPosition: function () {
+            }
         };
 
         //extend to jsScroller and nativeScroller (constructs)
         jsScroller = function (el, opts) {
             this.init(el, opts);
 
-            if(opts.hasParent)
+            if (opts.hasParent)
                 this.container = this.el.parentNode;
             else {
                 //copy/etc
-                var $div=$.create("div",{});
+                var $div = $.create("div", {});
                 $div.append($(this.el).contents());
                 $(this.el).append($div);
-                this.container=this.el;
-                this.el=$div.get(0);
+                this.container = this.el;
+                this.el = $div.get(0);
             }
             this.container.afScrollerId = el.afScrollerId;
             this.afEl = $(this.container);
@@ -1579,8 +1591,8 @@ if (!Date.now)
             if (this.container.style.overflow !== "hidden") this.container.style.overflow = "hidden";
 
             this.addPullToRefresh(null, true);
-            if(opts.autoEnable)
-                this.autoEnable=opts.autoEnable;
+            if (opts.autoEnable)
+                this.autoEnable = opts.autoEnable;
             if (this.autoEnable) this.enable(true);
             var scrollDiv;
             //create vertical scroll
@@ -1589,7 +1601,7 @@ if (!Date.now)
                 scrollDiv.style.top = "0px";
                 if (this.vScrollCSS) scrollDiv.className = this.vScrollCSS;
                 //scrollDiv.style.opacity = "0";
-                scrollDiv.style.display="none";
+                scrollDiv.style.display = "none";
                 this.container.appendChild(scrollDiv);
                 this.vscrollBar = scrollDiv;
                 scrollDiv = null;
@@ -1601,7 +1613,7 @@ if (!Date.now)
 
                 if (this.hScrollCSS) scrollDiv.className = this.hScrollCSS;
                 //scrollDiv.style.opacity = "0";
-                scrollDiv.style.display="none";
+                scrollDiv.style.display = "none";
                 this.container.appendChild(scrollDiv);
                 this.hscrollBar = scrollDiv;
                 scrollDiv = null;
@@ -1611,8 +1623,8 @@ if (!Date.now)
             this.el.hasScroller = true;
         };
         nativeScroller = function (el, opts) {
-            if(opts.nativeParent){
-                el=el.parentNode;
+            if (opts.nativeParent) {
+                el = el.parentNode;
             }
             this.init(el, opts);
             var $el = $(el);
@@ -1628,9 +1640,9 @@ if (!Date.now)
             this.container = this.el;
             $el.css("-webkit-overflow-scrolling", "touch");
 
-            if(opts.autoEnable)
-                this.autoEnable=opts.autoEnable;
-            if(this.autoEnable)
+            if (opts.autoEnable)
+                this.autoEnable = opts.autoEnable;
+            if (this.autoEnable)
                 this.enable();
         };
         nativeScroller.prototype = new scrollerCore();
@@ -1645,12 +1657,12 @@ if (!Date.now)
             this.cancelPropagation = false;
             this.loggedPcentY = 0;
             this.loggedPcentX = 0;
-            this.xReset=0;
-            this.yReset=0;
+            this.xReset = 0;
+            this.yReset = 0;
             var that = this;
             this.adjustScrollOverflowProxy = function () {
                 that.afEl.css("overflow", "auto");
-                that.afEl.parent().css("overflow","hidden");
+                that.afEl.parent().css("overflow", "hidden");
             };
         };
         nativeScroller.prototype.enable = function (firstExecution) {
@@ -1675,7 +1687,7 @@ if (!Date.now)
             //log current scroll
             this.logPos(this.el.scrollLeft, this.el.scrollTop);
             //lock overflow
-            if (!destroy&&!$.ui) {
+            if (!destroy && !$.ui) {
                 this.el.style.overflow = "hidden";
             }
             //remove events
@@ -1696,53 +1708,53 @@ if (!Date.now)
                 this.updateP2rHackPosition();
             }
         };
-        nativeScroller.prototype.updateP2rHackPosition=function(){
-            if(!this.refresh)
+        nativeScroller.prototype.updateP2rHackPosition = function () {
+            if (!this.refresh)
                 return $(this.el).find(".p2rhack").remove();
-            var el=$(this.el).find(".p2rhack");
-            if(el.length === 0){
+            var el = $(this.el).find(".p2rhack");
+            if (el.length === 0) {
                 $(this.el).append("<div class='p2rhack' style='position:absolute;width:1px;height:1px;opacity:0;background:transparent;z-index:-1;-webkit-transform:translate3d(-1px,0,0);'></div>");
-                el=$(this.el).find(".p2rhack");
+                el = $(this.el).find(".p2rhack");
             }
 
-            el.css("top",this.el.scrollHeight+this.refreshHeight+1+"px");
+            el.css("top", this.el.scrollHeight + this.refreshHeight + 1 + "px");
         };
         nativeScroller.prototype.onTouchStart = function (e) {
-            this.lastScrollInfo= {
-                top:0
+            this.lastScrollInfo = {
+                top: 0
             };
-            this.xReset=this.yReset=0;
-            if(this.verticalScroll){
-                if(this.el.scrollTop===0&&this.refresh){
-                    this.el.scrollTop=1;
-                    this.yReset=-1;
+            this.xReset = this.yReset = 0;
+            if (this.verticalScroll) {
+                if (this.el.scrollTop === 0 && this.refresh) {
+                    this.el.scrollTop = 1;
+                    this.yReset = -1;
                 }
-                if(this.el.scrollTop===(this.el.scrollHeight - this.el.clientHeight)&&this.infinite){
-                    this.el.scrollTop-=1;
-                    this.yReset=1;
+                if (this.el.scrollTop === (this.el.scrollHeight - this.el.clientHeight) && this.infinite) {
+                    this.el.scrollTop -= 1;
+                    this.yReset = 1;
                 }
             }
 
-            if(this.horizontalScroll){
-                if(this.el.scrollLeft===0){
-                    this.el.scrollLeft=1;
-                    this.xReset=-1;
+            if (this.horizontalScroll) {
+                if (this.el.scrollLeft === 0) {
+                    this.el.scrollLeft = 1;
+                    this.xReset = -1;
                 }
-                if(this.el.scrollLeft===(this.el.scrollWidth-this.el.clientWidth)){
-                    this.el.scrollLeft-=1;
-                    this.xReset=1;
+                if (this.el.scrollLeft === (this.el.scrollWidth - this.el.clientWidth)) {
+                    this.el.scrollLeft -= 1;
+                    this.xReset = 1;
                 }
             }
             if (this.refreshCancelCB) clearTimeout(this.refreshCancelCB);
             //get refresh ready
-            if(this.refresh)
-                this.el.addEventListener("touchend",this,false);
+            if (this.refresh)
+                this.el.addEventListener("touchend", this, false);
 
-            this.el.addEventListener("touchmove", this,false);
+            this.el.addEventListener("touchmove", this, false);
             this.dY = e.touches[0].pageY;
             this.dX = e.touches[0].pageX;
-            this.startTop=this.el.scrollTop;
-            this.startLeft=this.el.scrollLeft;
+            this.startTop = this.el.scrollTop;
+            this.startLeft = this.el.scrollLeft;
             if (this.refresh || this.infinite) {
 
 
@@ -1757,35 +1769,35 @@ if (!Date.now)
             var newcX = e.touches[0].pageX - this.dX;
 
             //var scorllTop
-            var atTop=(this.el.scrollHeight-this.el.scrollTop)===this.el.clientHeight&&newcY<0;
-            var atRight=(this.el.scrollWidth-this.el.scrollLeft)===this.el.clientWidth&&newcX<0;
-            var preventDefault=e.target.tagName.toLowerCase()!=="input";
-            if(this.verticalScroll){
-                if(this.startTop===0&&this.el.scrollTop===0&&newcY>0)
-                    preventDefault&&e.preventDefault();
+            var atTop = (this.el.scrollHeight - this.el.scrollTop) === this.el.clientHeight && newcY < 0;
+            var atRight = (this.el.scrollWidth - this.el.scrollLeft) === this.el.clientWidth && newcX < 0;
+            var preventDefault = e.target.tagName.toLowerCase() !== "input";
+            if (this.verticalScroll) {
+                if (this.startTop === 0 && this.el.scrollTop === 0 && newcY > 0)
+                    preventDefault && e.preventDefault();
             }
-            if(this.horizontalScroll&&this.startTop===0&&this.el.scrollLeft===0&&newcX>0){
-                preventDefault&&e.preventDefault();
+            if (this.horizontalScroll && this.startTop === 0 && this.el.scrollLeft === 0 && newcX > 0) {
+                preventDefault && e.preventDefault();
             }
 
-            if(this.verticalScroll&&atTop){
-                preventDefault&&e.preventDefault();
+            if (this.verticalScroll && atTop) {
+                preventDefault && e.preventDefault();
 
             }
-            if(this.horizontalScroll&&atRight){
-                preventDefault&&e.preventDefault();
+            if (this.horizontalScroll && atRight) {
+                preventDefault && e.preventDefault();
             }
 
             if (!this.moved) {
-                $.trigger(this, "scrollstart", [this.el,{x:newcX,y:newcY}]);
-                $.trigger($.touchLayer, "scrollstart", [this.el,{x:newcX,y:newcY}]);
-                if(!this.refresh)
+                $.trigger(this, "scrollstart", [this.el, {x: newcX, y: newcY}]);
+                $.trigger($.touchLayer, "scrollstart", [this.el, {x: newcX, y: newcY}]);
+                if (!this.refresh)
                     this.el.addEventListener("touchend", this, false);
                 this.moved = true;
             }
 
-            if(this.horizontalScroll){
-                if(Math.abs(newcY)>Math.abs(newcX)){
+            if (this.horizontalScroll) {
+                if (Math.abs(newcY) > Math.abs(newcX)) {
                     e.preventDefault();
                 }
             }
@@ -1793,7 +1805,7 @@ if (!Date.now)
             //check for trigger
             if (this.refresh && (this.el.scrollTop < -this.refreshHeight)) {
                 this.showRefresh();
-            //check for cancel when refresh is running
+                //check for cancel when refresh is running
             } else if (this.refresh && this.refreshTriggered && this.refreshRunning && (this.el.scrollTop > this.refreshHeight)) {
                 this.refreshTriggered = false;
                 this.refreshRunning = false;
@@ -1801,7 +1813,7 @@ if (!Date.now)
                 this.hideRefresh(false);
                 this.setRefreshContent("下拉获取新订单..");
                 $.trigger(this, "refresh-cancel");
-            //check for cancel when refresh is not running
+                //check for cancel when refresh is not running
             } else if (this.refresh && this.refreshTriggered && !this.refreshRunning && (this.el.scrollTop > -this.refreshHeight)) {
                 this.refreshTriggered = false;
                 this.refreshRunning = false;
@@ -1813,11 +1825,15 @@ if (!Date.now)
 
             this.cY = newcY;
             this.cX = newcX;
-            this.lastScrollInfo.top=this.cY;
+            this.lastScrollInfo.top = this.cY;
 
-            if(this.initScrollProgress){
-                $.trigger(this,"scroll",[{x:-this.el.scrollLeft,y:-this.el.scrollTop}]);
-                $.trigger($.touchLayer,"scroll",[{x:-this.el.scrollLeft,y:-this.el.scrollTop}]);
+            if (this.initScrollProgress) {
+                $.trigger(this, "scroll", [
+                    {x: -this.el.scrollLeft, y: -this.el.scrollTop}
+                ]);
+                $.trigger($.touchLayer, "scroll", [
+                    {x: -this.el.scrollLeft, y: -this.el.scrollTop}
+                ]);
             }
 
         };
@@ -1831,22 +1847,22 @@ if (!Date.now)
         nativeScroller.prototype.onTouchEnd = function () {
 
             var triggered = this.el.scrollTop <= -(this.refreshHeight);
-            var that=this;
+            var that = this;
             this.fireRefreshRelease(triggered, true);
-            if(!this.moved){
-                this.el.scrollTop+=this.yReset;
-                this.el.scrollLeft+=this.xReset;
+            if (!this.moved) {
+                this.el.scrollTop += this.yReset;
+                this.el.scrollLeft += this.xReset;
             }
-            if (triggered&&this.refresh) {
+            if (triggered && this.refresh) {
                 //lock in place
                 //that.refreshContainer.style.position = "";
                 //iOS has a bug that it will jump when scrolling back up, so we add a fake element while we reset the pull to refresh position
                 //then we remove it right away
-                var tmp=$.create("<div style='height:"+this.el.clientHeight+this.refreshHeight+"px;width:1px;-webkit-transform:translated3d(-1px,0,0)'></div>");
+                var tmp = $.create("<div style='height:" + this.el.clientHeight + this.refreshHeight + "px;width:1px;-webkit-transform:translated3d(-1px,0,0)'></div>");
                 $(this.el).append(tmp);
                 that.refreshContainer.style.top = "0px";
-                that.refreshContainer.style.position="";
-                setTimeout(function(){
+                that.refreshContainer.style.position = "";
+                setTimeout(function () {
                     tmp.remove();
                 });
             }
@@ -1872,17 +1888,25 @@ if (!Date.now)
             clearInterval(self.nativePolling);
             self.nativePolling = setInterval(function () {
                 counter++;
-                if(counter === parseInt(max/8,10)) {
-                    if(self.initScrollProgress){
-                        $.trigger(self,"scroll",[{x:-self.el.scrollLeft+self.cX,y:-self.el.scrollTop+self.cY}]);
-                        $.trigger($.touchLayer,"scroll",[{x:-self.el.scrollLeft+self.cX,y:-self.el.scrollTop+self.cY}]);
+                if (counter === parseInt(max / 8, 10)) {
+                    if (self.initScrollProgress) {
+                        $.trigger(self, "scroll", [
+                            {x: -self.el.scrollLeft + self.cX, y: -self.el.scrollTop + self.cY}
+                        ]);
+                        $.trigger($.touchLayer, "scroll", [
+                            {x: -self.el.scrollLeft + self.cX, y: -self.el.scrollTop + self.cY}
+                        ]);
                     }
                 }
                 if (counter >= max) {
                     clearInterval(self.nativePolling);
-                    if(self.initScrollProgress){
-                        $.trigger(self,"scroll",[{x:-self.el.scrollLeft,y:-self.el.scrollTop}]);
-                        $.trigger($.touchLayer,"scroll",[{x:-self.el.scrollLeft,y:-self.el.scrollTop}]);
+                    if (self.initScrollProgress) {
+                        $.trigger(self, "scroll", [
+                            {x: -self.el.scrollLeft, y: -self.el.scrollTop}
+                        ]);
+                        $.trigger($.touchLayer, "scroll", [
+                            {x: -self.el.scrollLeft, y: -self.el.scrollTop}
+                        ]);
                     }
 
                     return;
@@ -1891,9 +1915,13 @@ if (!Date.now)
                     clearInterval(self.nativePolling);
                     $.trigger($.touchLayer, "scrollend", [self.el]); //notify touchLayer of this elements scrollend
                     $.trigger(self, "scrollend", [self.el]);
-                    if(self.initScrollProgress){
-                        $.trigger(self,"scroll",[{x:-self.el.scrollLeft,y:-self.el.scrollTop}]);
-                        $.trigger($.touchLayer,"scroll",[{x:-self.el.scrollLeft,y:-self.el.scrollTop}]);
+                    if (self.initScrollProgress) {
+                        $.trigger(self, "scroll", [
+                            {x: -self.el.scrollLeft, y: -self.el.scrollTop}
+                        ]);
+                        $.trigger($.touchLayer, "scroll", [
+                            {x: -self.el.scrollLeft, y: -self.el.scrollTop}
+                        ]);
                     }
                 }
 
@@ -1932,7 +1960,8 @@ if (!Date.now)
             this.refreshTriggered = false;
             //this.el.addEventListener("touchend", this, false);
         };
-        nativeScroller.prototype.hideScrollbars = function () {};
+        nativeScroller.prototype.hideScrollbars = function () {
+        };
         nativeScroller.prototype.scrollTo = function (pos, time) {
             this.logPos(pos.x, pos.y);
             pos.x *= -1;
@@ -2020,7 +2049,7 @@ if (!Date.now)
             this.scrollingFinishCB = null;
             this.loggedPcentY = 0;
             this.loggedPcentX = 0;
-            this.androidPerfHack=0;
+            this.androidPerfHack = 0;
         };
 
         function createScrollBar(width, height) {
@@ -2030,7 +2059,7 @@ if (!Date.now)
             scrollDiv.style.height = height + "px";
             scrollDiv.style[$.feat.cssPrefix + "BorderRadius"] = "2px";
             scrollDiv.style.borderRadius = "2px";
-            scrollDiv.style.display="none";
+            scrollDiv.style.display = "none";
             scrollDiv.className = "scrollBar";
             scrollDiv.style.background = "black";
             return scrollDiv;
@@ -2079,11 +2108,11 @@ if (!Date.now)
         };
         jsScroller.prototype.hideScrollbars = function () {
             if (this.hscrollBar) {
-                this.hscrollBar.style.display="none";
+                this.hscrollBar.style.display = "none";
                 this.hscrollBar.style[$.feat.cssPrefix + "TransitionDuration"] = "0ms";
             }
             if (this.vscrollBar) {
-                this.vscrollBar.style.display="none";
+                this.vscrollBar.style.display = "none";
                 this.vscrollBar.style[$.feat.cssPrefix + "TransitionDuration"] = "0ms";
             }
         };
@@ -2121,7 +2150,7 @@ if (!Date.now)
             if (event.touches[0].target && event.touches[0].target.type !== undefined) {
                 var tagname = event.touches[0].target.tagName.toLowerCase();
 
-                if (tagname === "select" ) // stuff we need to allow
+                if (tagname === "select") // stuff we need to allow
                 // access to legit calls
                     return;
             }
@@ -2192,7 +2221,7 @@ if (!Date.now)
             //vertical scroll bar
             if (this.setVScrollBar(scrollInfo, 0, 0)) {
                 if (this.container.clientWidth > window.innerWidth)
-                    this.vscrollBar.style.right =  "0px";
+                    this.vscrollBar.style.right = "0px";
                 else
                     this.vscrollBar.style.right = "0px";
                 this.vscrollBar.style[$.feat.cssPrefix + "Transition"] = "";
@@ -2212,7 +2241,7 @@ if (!Date.now)
             //save scrollInfo
             this.lastScrollInfo = scrollInfo;
             this.hasMoved = false;
-            if(this.elementInfo.maxTop === 0 && this.elementInfo.maxLeft === 0 && this.lockBounce)
+            if (this.elementInfo.maxTop === 0 && this.elementInfo.maxLeft === 0 && this.lockBounce)
                 this.scrollToTop(0);
             else
                 this.scrollerMoveCSS(this.lastScrollInfo, 0);
@@ -2223,8 +2252,8 @@ if (!Date.now)
         jsScroller.prototype.getCSSMatrix = function (el) {
             if (this.androidFormsMode) {
                 //absolute mode
-                var top = parseInt(el.style.marginTop,10);
-                var left = parseInt(el.style.marginLeft,10);
+                var top = parseInt(el.style.marginTop, 10);
+                var left = parseInt(el.style.marginLeft, 10);
                 if (isNaN(top)) top = 0;
                 if (isNaN(left)) left = 0;
                 return {
@@ -2255,8 +2284,8 @@ if (!Date.now)
         jsScroller.prototype.setVScrollBar = function (scrollInfo, time, timingFunction) {
             if (!this.elementInfo.requiresVScrollBar) return false;
             var newHeight = (parseFloat(this.elementInfo.bottomMargin / this.elementInfo.divHeight) * this.elementInfo.bottomMargin) + "px";
-            if(numOnly(newHeight) > this.elementInfo.bottomMargin)
-                newHeight = this.elementInfo.bottomMargin+"px";
+            if (numOnly(newHeight) > this.elementInfo.bottomMargin)
+                newHeight = this.elementInfo.bottomMargin + "px";
             if (newHeight !== this.vscrollBar.style.height)
                 this.vscrollBar.style.height = newHeight;
 
@@ -2290,17 +2319,17 @@ if (!Date.now)
         jsScroller.prototype.onTouchMove = function (event) {
 
             if (this.currentScrollingObject === null) return;
-            if(event.target&&event.target.getAttribute("type")&&event.target.getAttribute("type").toLowerCase().indexOf("range")!==-1) return;
+            if (event.target && event.target.getAttribute("type") && event.target.getAttribute("type").toLowerCase().indexOf("range") !== -1) return;
             //event.preventDefault();
             var scrollInfo = this.calculateMovement(event);
             this.calculateTarget(scrollInfo);
 
             this.lastScrollInfo = scrollInfo;
             if (!this.moved) {
-                $.trigger(this, "scrollstart",[this.el,{x:this.lastScrollInfo.top,y:this.lastScrollInfo.left}]);
-                $.trigger($.touchLayer, "scrollstart", [this.el,{x:this.lastScrollInfo.top,y:this.lastScrollInfo.left}]);
-                if (this.elementInfo.requiresVScrollBar) this.vscrollBar.style.display="block";
-                if (this.elementInfo.requiresHScrollBar) this.hscrollBar.style.display="block";
+                $.trigger(this, "scrollstart", [this.el, {x: this.lastScrollInfo.top, y: this.lastScrollInfo.left}]);
+                $.trigger($.touchLayer, "scrollstart", [this.el, {x: this.lastScrollInfo.top, y: this.lastScrollInfo.left}]);
+                if (this.elementInfo.requiresVScrollBar) this.vscrollBar.style.display = "block";
+                if (this.elementInfo.requiresHScrollBar) this.hscrollBar.style.display = "block";
             }
             this.moved = true;
 
@@ -2318,7 +2347,7 @@ if (!Date.now)
 
 
             this.saveEventInfo(event);
-            if (this.isScrolling===false){ // && (this.lastScrollInfo.x != this.lastScrollInfo.left || this.lastScrollInfo.y != this.lastScrollInfo.top)) {
+            if (this.isScrolling === false) { // && (this.lastScrollInfo.x != this.lastScrollInfo.left || this.lastScrollInfo.y != this.lastScrollInfo.top)) {
                 this.isScrolling = true;
                 if (this.onScrollStart) this.onScrollStart();
             }
@@ -2338,7 +2367,7 @@ if (!Date.now)
             //pull to refresh elastic
             var positiveOverflow = this.lastScrollInfo.y > 0 && this.lastScrollInfo.deltaY > 0;
             var negativeOverflow = this.lastScrollInfo.y < -this.elementInfo.maxTop && this.lastScrollInfo.deltaY < 0;
-            var overflow,pcent,baseTop;
+            var overflow, pcent, baseTop;
             if (positiveOverflow || negativeOverflow) {
                 overflow = positiveOverflow ? this.lastScrollInfo.y : -this.lastScrollInfo.y - this.elementInfo.maxTop;
                 pcent = (this.container.clientHeight - overflow) / this.container.clientHeight;
@@ -2356,14 +2385,14 @@ if (!Date.now)
                 this.lastScrollInfo.y = baseTop + changeY;
             }
 
-            if(this.elementInfo.hasHorScroll){
+            if (this.elementInfo.hasHorScroll) {
                 positiveOverflow = this.lastScrollInfo.x > 0 && this.lastScrollInfo.deltaX > 0;
                 negativeOverflow = this.lastScrollInfo.x < -this.elementInfo.maxLeft && this.lastScrollInfo.deltaX < 0;
                 if (positiveOverflow || negativeOverflow) {
                     overflow = positiveOverflow ? this.lastScrollInfo.x : -this.lastScrollInfo.x - this.elementInfo.maxLeft;
                     pcent = (this.container.clientWidth - overflow) / this.container.clientWidth;
                     if (pcent < 0.5) pcent = 0.5;
-                //cur top, maxTop or 0?
+                    //cur top, maxTop or 0?
                     baseTop = 0;
                     if ((positiveOverflow && this.lastScrollInfo.left > 0) || (negativeOverflow && this.lastScrollInfo.left < -this.elementInfo.maxLeft)) {
                         baseTop = this.lastScrollInfo.left;
@@ -2376,23 +2405,23 @@ if (!Date.now)
                     this.lastScrollInfo.x = baseTop + changeX;
                 }
             }
-            if(this.lockBounce&&(!this.refresh)){
+            if (this.lockBounce && (!this.refresh)) {
 
-                if(this.lastScrollInfo.x>0){
-                    this.lastScrollInfo.x=0;
-                  //  this.hscrollBar.style.display="none";
+                if (this.lastScrollInfo.x > 0) {
+                    this.lastScrollInfo.x = 0;
+                    //  this.hscrollBar.style.display="none";
                 }
-                else if(this.lastScrollInfo.x*-1>this.elementInfo.maxLeft){
-                    this.lastScrollInfo.x=this.elementInfo.maxLeft*-1;
-                   // this.hscrollBar.style.display="none";
+                else if (this.lastScrollInfo.x * -1 > this.elementInfo.maxLeft) {
+                    this.lastScrollInfo.x = this.elementInfo.maxLeft * -1;
+                    // this.hscrollBar.style.display="none";
                 }
-                if(this.lastScrollInfo.y>0){
-                    this.lastScrollInfo.y=0;
+                if (this.lastScrollInfo.y > 0) {
+                    this.lastScrollInfo.y = 0;
                     //this.vscrollBar.style.display="none";
                 }
-                else if(this.lastScrollInfo.y*-1>this.elementInfo.maxTop){
-                   // this.vscrollBar.style.display="none";
-                    this.lastScrollInfo.y=this.elementInfo.maxTop*-1;
+                else if (this.lastScrollInfo.y * -1 > this.elementInfo.maxTop) {
+                    // this.vscrollBar.style.display="none";
+                    this.lastScrollInfo.y = this.elementInfo.maxTop * -1;
                 }
             }
 
@@ -2461,11 +2490,11 @@ if (!Date.now)
         jsScroller.prototype.calculateTarget = function (scrollInfo) {
             scrollInfo.y = this.lastScrollInfo.y + scrollInfo.deltaY;
             scrollInfo.x = this.lastScrollInfo.x + scrollInfo.deltaX;
-            if(Math.abs(scrollInfo.deltaY)>0)
-                scrollInfo.y+=(scrollInfo.deltaY>0?1:-1)*(this.elementInfo.divHeight*this.androidPerfHack);
-            if(Math.abs(scrollInfo.deltaX)>0)
-                scrollInfo.x+=(scrollInfo.deltaX>0?1:-1)*(this.elementInfo.divWidth*this.androidPerfHack);
-           
+            if (Math.abs(scrollInfo.deltaY) > 0)
+                scrollInfo.y += (scrollInfo.deltaY > 0 ? 1 : -1) * (this.elementInfo.divHeight * this.androidPerfHack);
+            if (Math.abs(scrollInfo.deltaX) > 0)
+                scrollInfo.x += (scrollInfo.deltaX > 0 ? 1 : -1) * (this.elementInfo.divWidth * this.androidPerfHack);
+
         };
         jsScroller.prototype.checkYboundary = function (scrollInfo) {
             var minTop = this.container.clientHeight / 2;
@@ -2479,8 +2508,8 @@ if (!Date.now)
         jsScroller.prototype.checkXboundary = function (scrollInfo) {
             //x boundaries
 
-            var minLeft=this.container.clientWidth/2;
-            var maxLeft=this.elementInfo.maxLeft+minLeft;
+            var minLeft = this.container.clientWidth / 2;
+            var maxLeft = this.elementInfo.maxLeft + minLeft;
 
             if (scrollInfo.x > minLeft) scrollInfo.x = minLeft;
             else if (-scrollInfo.x > maxLeft) scrollInfo.x = -maxLeft;
@@ -2540,15 +2569,14 @@ if (!Date.now)
             scrollInfo.absDeltaX = Math.abs(scrollInfo.deltaX);
 
 
-
             //set momentum
             if (scrollInfo.absDeltaY > 0) {
                 scrollInfo.deltaY = (scrollInfo.deltaY < 0 ? -1 : 1) * (scrollInfo.absSpeedY * scrollInfo.absSpeedY) / (2 * deceleration);
                 scrollInfo.absDeltaY = Math.abs(scrollInfo.deltaY);
                 scrollInfo.duration = scrollInfo.absSpeedY / deceleration;
                 scrollInfo.speedY = scrollInfo.deltaY / scrollInfo.duration;
-                scrollInfo.absSpeedY = Math.abs(scrollInfo.speedY);                
-                if (scrollInfo.absSpeedY < deceleration * 100 || scrollInfo.absDeltaY < 5) 
+                scrollInfo.absSpeedY = Math.abs(scrollInfo.speedY);
+                if (scrollInfo.absSpeedY < deceleration * 100 || scrollInfo.absDeltaY < 5)
                     scrollInfo.deltaY = scrollInfo.absDeltaY = scrollInfo.duration = scrollInfo.speedY = scrollInfo.absSpeedY = 0;
             } else if (scrollInfo.absDeltaX) {
                 scrollInfo.deltaX = (scrollInfo.deltaX < 0 ? -1 : 1) * (scrollInfo.absSpeedX * scrollInfo.absSpeedX) / (2 * deceleration);
@@ -2556,14 +2584,14 @@ if (!Date.now)
                 scrollInfo.duration = scrollInfo.absSpeedX / deceleration;
                 scrollInfo.speedX = scrollInfo.deltaX / scrollInfo.duration;
                 scrollInfo.absSpeedX = Math.abs(scrollInfo.speedX);
-                if (scrollInfo.absSpeedX < deceleration * 100 || scrollInfo.absDeltaX < 5) 
+                if (scrollInfo.absSpeedX < deceleration * 100 || scrollInfo.absDeltaX < 5)
                     scrollInfo.deltaX = scrollInfo.absDeltaX = scrollInfo.duration = scrollInfo.speedX = scrollInfo.absSpeedX = 0;
             } else scrollInfo.duration = 0;
         };
 
         jsScroller.prototype.onTouchEnd = function () {
 
-            var self=this;
+            var self = this;
             if (this.currentScrollingObject === null || !this.moved) return;
 
             //event.preventDefault();
@@ -2576,7 +2604,6 @@ if (!Date.now)
                 this.setMomentum(scrollInfo);
             }
             this.calculateTarget(scrollInfo);
-
 
 
             //get the current top
@@ -2607,22 +2634,21 @@ if (!Date.now)
                 if (-scrollInfo.top > this.elementInfo.maxTop) scrollInfo.duration = HIDE_REFRESH_TIME;
                 //all others
             }
-            if(this.elementInfo.hasHorScroll){
-                if(scrollInfo.x>=0)
-                {
-                    scrollInfo.x=0;
-                    if(scrollInfo.left>=0&&this.refresh) scrollInfo.duration=HIDE_REFRESH_TIME;
+            if (this.elementInfo.hasHorScroll) {
+                if (scrollInfo.x >= 0) {
+                    scrollInfo.x = 0;
+                    if (scrollInfo.left >= 0 && this.refresh) scrollInfo.duration = HIDE_REFRESH_TIME;
                 }
-                else if(-scrollInfo.x>this.elementInfo.maxLeft||this.elementInfo.maxLeft===0){
-                    scrollInfo.x=-this.elementInfo.maxLeft;
-                    if(-scrollInfo.left>this.elementInfo.maxLeft&&this.refresh) scrollInfo.duration=HIDE_REFRESH_TIME;
+                else if (-scrollInfo.x > this.elementInfo.maxLeft || this.elementInfo.maxLeft === 0) {
+                    scrollInfo.x = -this.elementInfo.maxLeft;
+                    if (-scrollInfo.left > this.elementInfo.maxLeft && this.refresh) scrollInfo.duration = HIDE_REFRESH_TIME;
                 }
             }
             if ((scrollInfo.x === scrollInfo.left && scrollInfo.y === scrollInfo.top) || this.androidFormsMode)
                 scrollInfo.duration = 0;
 
             //hack for android 4.3
-            setTimeout(function(){
+            setTimeout(function () {
                 self.scrollerMoveCSS(scrollInfo, scrollInfo.duration, "cubic-bezier(0.33,0.66,0.66,1)");
             });
             this.setVScrollBar(scrollInfo, scrollInfo.duration, "cubic-bezier(0.33,0.66,0.66,1)");
@@ -2631,10 +2657,10 @@ if (!Date.now)
             if (this.infinite && !this.infiniteTriggered) {
                 if ((Math.abs(scrollInfo.y) >= (this.el.clientHeight - this.container.clientHeight))) {
                     var self = this;
-                    setTimeout(function(){
+                    setTimeout(function () {
                         self.infiniteTriggered = true;
                         $.trigger(self, "infinite-scroll");
-                    },scrollInfo.duration-50);
+                    }, scrollInfo.duration - 50);
                 }
             }
         };
@@ -2648,7 +2674,7 @@ if (!Date.now)
                 $.trigger(that, "scrollend", [that.el]);
                 that.isScrolling = false;
                 that.elementInfo = null; //reset elementInfo when idle)
-                if (that.infinite&&that.infiniteTriggered) $.trigger(that, "infinite-scroll-end");
+                if (that.infinite && that.infiniteTriggered) $.trigger(that, "infinite-scroll-end");
             }, duration);
         };
 
@@ -2724,7 +2750,7 @@ if (!Date.now)
             if (!time) time = 0;
             if (!timingFunction) timingFunction = "linear";
             time = numOnly(time);
-            var self=this;
+            var self = this;
 
             if (this.el && this.el.style) {
 
@@ -2734,17 +2760,17 @@ if (!Date.now)
                         this.el.style.marginTop = Math.round(distanceToMove.y) + "px";
                         this.el.style.marginLeft = Math.round(distanceToMove.x) + "px";
                     } else {
-                        var opts={
-                            x:distanceToMove.x,
-                            y:distanceToMove.y,
-                            duration:time,
-                            easing:"easeOutSine"
+                        var opts = {
+                            x: distanceToMove.x,
+                            y: distanceToMove.y,
+                            duration: time,
+                            easing: "easeOutSine"
                         };
 
-                        if(self.initScrollProgress){
-                            opts.update=function(pos){
-                                $.trigger(self,"scroll",[pos]);
-                                $.trigger($.touchLayer,"scroll",[pos]);
+                        if (self.initScrollProgress) {
+                            opts.update = function (pos) {
+                                $.trigger(self, "scroll", [pos]);
+                                $.trigger($.touchLayer, "scroll", [pos]);
                             };
                         }
                         $(this.el).animateCss(opts).start();
@@ -2780,7 +2806,7 @@ if (!Date.now)
                     el.style.marginTop = Math.round(distanceToMove.y) + "px";
                     el.style.marginLeft = Math.round(distanceToMove.x) + "px";
                 } else {
-                    $(el).animateCss({x:distanceToMove.x,y:distanceToMove.y,duration:time,easing:"easeOutSine"}).start();
+                    $(el).animateCss({x: distanceToMove.x, y: distanceToMove.y, duration: time, easing: "easeOutSine"}).start();
                 }
             }
         };
@@ -2818,12 +2844,12 @@ if (!Date.now)
  * with the old drop down box as normal with javascript, and this will be reflected
  */
 
- /* global af*/
- /* global numOnly*/
-(function($) {
+/* global af*/
+/* global numOnly*/
+(function ($) {
     /*jshint camelcase: false,
-    validthis:true
-    */
+     validthis:true
+     */
     "use strict";
     function updateOption(prop, oldValue, newValue) {
         if (newValue === true) {
@@ -2849,10 +2875,11 @@ if (!Date.now)
         delete el.linker;
         e.stopPropagation();
     }
+
     $.selectBox = {
         scroller: null,
         currLinker: null,
-        getOldSelects: function(elID) {
+        getOldSelects: function (elID) {
             if (!$.os.android || $.os.androidICS) return;
             if (!$.fn.scroller) {
                 window.alert("This library requires af.scroller");
@@ -2886,14 +2913,14 @@ if (!Date.now)
             }
             that.createHtml();
         },
-        updateDropdown: function(el) {
+        updateDropdown: function (el) {
             if (!el) return;
             for (var j = 0; j < el.options.length; j++) {
                 if (el.options[j].selected) el.linker.innerHTML = el.options[j].text;
             }
             el = null;
         },
-        initDropDown: function(el) {
+        initDropDown: function (el) {
 
             if (el.disabled) return;
             if (!el || !el.options || el.options.length === 0) return;
@@ -2932,17 +2959,17 @@ if (!Date.now)
             $("#afSelectWrapper").height((numOnly($("#afSelectBoxContainer").height()) - selClose) + "px");
 
         },
-        updateMaskValue: function(linker, value, val2) {
+        updateMaskValue: function (linker, value, val2) {
 
             $(linker).html(val2);
         },
-        setDropDownValue: function(el, value) {
+        setDropDownValue: function (el, value) {
 
             if (!el) return;
             var $el = $(el);
 
             value = parseInt(value, 10);
-            if(isNaN(value)) return;
+            if (isNaN(value)) return;
             if (!el.getAttribute("multiple")) {
                 el.selectedIndex = value;
                 $el.find("option").prop("selected", false);
@@ -2968,17 +2995,17 @@ if (!Date.now)
             $(el).trigger("change");
             el = null;
         },
-        hideDropDown: function() {
+        hideDropDown: function () {
             $("#afModalMask").hide();
             $("#afSelectBoxfix").html("");
         },
-        createHtml: function() {
+        createHtml: function () {
             var that = this;
             if (document.getElementById("afSelectBoxfix")) {
                 return;
             }
-            $(document).ready(function() {
-                $(document).on("click", ".afFakeSelect", function() {
+            $(document).ready(function () {
+                $(document).on("click", ".afFakeSelect", function () {
                     if (this.linker.disabled)
                         return;
                     that.currLinker = this;
@@ -3007,7 +3034,7 @@ if (!Date.now)
                 });
 
                 var modalMask = $.create("div", {
-                    id:"afModalMask"
+                    id: "afModalMask"
                 });
 
                 var $afui = $("#afui");
@@ -3019,26 +3046,26 @@ if (!Date.now)
                     scroller: false,
                     verticalScroll: true,
                     vScrollCSS: "afselectscrollBarV",
-                    hasParent:true
+                    hasParent: true
                 });
 
-                $("#afModalMask").on("click",function(e){
-                    var $e=$(e.target);
-                    if($e.closest("#afSelectBoxContainer").length === 0)
+                $("#afModalMask").on("click", function (e) {
+                    var $e = $(e.target);
+                    if ($e.closest("#afSelectBoxContainer").length === 0)
                         that.hideDropDown();
                 });
 
-                $("#afSelectBoxfix").on("click", "li", function(e) {
+                $("#afSelectBoxfix").on("click", "li", function (e) {
                     var $el = $(e.target);
                     that.setDropDownValue(that.currLinker.linker, $el.data("ind"));
                 });
-                $("#afSelectBoxContainer").on("click", "a", function(e) {
+                $("#afSelectBoxContainer").on("click", "a", function (e) {
                     if (e.target.id === "afSelectCancel")
                         return that.hideDropDown();
                     var $sel = $(that.currLinker.linker);
                     $sel.find("option").prop("selected", false);
 
-                    $("#afSelectBoxfix li").each(function() {
+                    $("#afSelectBoxfix li").each(function () {
                         var $el = $(this);
                         if ($el.hasClass("selected")) {
                             var ind = parseInt($el.data("ind"), 10);
@@ -3061,13 +3088,13 @@ if (!Date.now)
     //https://gist.github.com/384583
     //We use HTMLElement to not cause problems with other objects
     if (!HTMLElement.prototype.watch) {
-        HTMLElement.prototype.watch = function(prop, handler) {
+        HTMLElement.prototype.watch = function (prop, handler) {
             var oldval = this[prop],
                 newval = oldval,
-                getter = function() {
+                getter = function () {
                     return newval;
                 },
-                setter = function(val) {
+                setter = function (val) {
                     oldval = newval;
                     newval = handler.call(this, prop, oldval, val);
                     return newval;
@@ -3088,7 +3115,7 @@ if (!Date.now)
         };
     }
     if (!HTMLElement.prototype.unwatch) {
-        HTMLElement.prototype.unwatch = function(prop) {
+        HTMLElement.prototype.unwatch = function (prop) {
             var val = this[prop];
             delete this[prop]; // remove accessors
             this[prop] = val;
@@ -3111,7 +3138,7 @@ if (!Date.now)
  * swipeDown
  */
 /* global af*/
-(function($) {
+(function ($) {
     "use strict";
     var touch = {}, touchTimeout;
 
@@ -3128,18 +3155,20 @@ if (!Date.now)
         }
     }
 
-    var longTapDelay = 750,touchThreshold = 3;
+    var longTapDelay = 750, touchThreshold = 3;
+
     function longTap() {
         if (touch.last && (Date.now() - touch.last >= longTapDelay)) {
             touch.el.trigger("longTap");
             touch = {};
         }
     }
+
     var longTapTimer;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var prevEl;
-        $(document.body).bind("touchstart", function(e) {
+        $(document.body).bind("touchstart", function (e) {
             if (e.originalEvent)
                 e = e.originalEvent;
             if (!e.touches || e.touches.length === 0) return;
@@ -3160,16 +3189,16 @@ if (!Date.now)
             if (prevEl && $.ui.useAutoPressed && !prevEl.data("ignore-pressed") && prevEl[0] !== touch.el[0])
                 prevEl.removeClass("pressed");
             prevEl = touch.el;
-        }).bind("touchmove", function(e) {
-            if(e.originalEvent)
+        }).bind("touchmove", function (e) {
+            if (e.originalEvent)
                 e = e.originalEvent;
             touch.x2 = e.touches[0].pageX;
             touch.y2 = e.touches[0].pageY;
-            if(Math.abs(touch.x2-touch.x1)>touchThreshold||Math.abs(touch.y2-touch.y1)>touchThreshold)
+            if (Math.abs(touch.x2 - touch.x1) > touchThreshold || Math.abs(touch.y2 - touch.y1) > touchThreshold)
                 clearTimeout(longTapTimer);
-        }).bind("touchend", function(e) {
-            if(e.originalEvent)
-                e=e.originalEvent;
+        }).bind("touchend", function (e) {
+            if (e.originalEvent)
+                e = e.originalEvent;
             if (!touch.el)
                 return;
             if ($.ui.useAutoPressed && !touch.el.data("ignore-pressed"))
@@ -3184,23 +3213,23 @@ if (!Date.now)
                 touch.x1 = touch.x2 = touch.y1 = touch.y2 = touch.last = 0;
             } else if ("last" in touch) {
                 touch.el.trigger("tap");
-                touchTimeout = setTimeout(function() {
+                touchTimeout = setTimeout(function () {
                     touchTimeout = null;
                     if (touch.el)
                         touch.el.trigger("singleTap");
                     touch = {};
                 }, 250);
             }
-        }).bind("touchcancel", function() {
-            if(touch.el && $.ui.useAutoPressed && !touch.el.data("ignore-pressed"))
+        }).bind("touchcancel", function () {
+            if (touch.el && $.ui.useAutoPressed && !touch.el.data("ignore-pressed"))
                 touch.el.removeClass("pressed");
             touch = {};
             clearTimeout(longTapTimer);
         });
     });
 
-    ["swipe", "swipeLeft", "swipeRight", "swipeUp", "swipeDown", "doubleTap", "tap", "singleTap", "longTap"].forEach(function(m) {
-        $.fn[m] = function(callback) {
+    ["swipe", "swipeLeft", "swipeRight", "swipeUp", "swipeDown", "doubleTap", "tap", "singleTap", "longTap"].forEach(function (m) {
+        $.fn[m] = function (callback) {
             return this.bind(m, callback);
         };
     });
@@ -3228,29 +3257,29 @@ if (!Date.now)
 //reshape - window.resize/window.scroll event (ignores onfocus "shaking") - general reshape notice
 /* global numOnly*/
 /* jshint camelcase:false */
-(function($) {
+(function ($) {
     "use strict";
     //singleton
-    $.touchLayer = function(el) {
+    $.touchLayer = function (el) {
         //  if($.os.desktop||!$.os.webkit) return;
         $.touchLayer = new touchLayer(el);
         return $.touchLayer;
     };
     //configuration stuff
-    var inputElements = ["input", "select", "textarea","range"];
+    var inputElements = ["input", "select", "textarea", "range"];
     var autoBlurInputTypes = ["button", "radio", "checkbox", "range", "date"];
-    var requiresJSFocus = $.os.ios||($.os.androidICS&&$.os.chrome); //devices which require .focus() on dynamic click events
+    var requiresJSFocus = $.os.ios || ($.os.androidICS && $.os.chrome); //devices which require .focus() on dynamic click events
     var verySensitiveTouch = $.os.blackberry; //devices which have a very sensitive touch and touchmove is easily fired even on simple taps
-    var inputElementRequiresNativeTap = $.os.blackberry||$.os.fennec || ($.os.android&&!$.os.androidICS); //devices which require the touchstart event to bleed through in order to actually fire the click on select elements
+    var inputElementRequiresNativeTap = $.os.blackberry || $.os.fennec || ($.os.android && !$.os.androidICS); //devices which require the touchstart event to bleed through in order to actually fire the click on select elements
 //    var selectElementRequiresNativeTap = $.os.blackberry||$.os.fennec || ($.os.android && !$.os.chrome); //devices which require the touchstart event to bleed through in order to actually fire the click on select elements
 //    var focusScrolls = $.os.ios; //devices scrolling on focus instead of resizing
-    var requirePanning = $.os.ios&&!$.os.ios7; //devices which require panning feature
+    var requirePanning = $.os.ios && !$.os.ios7; //devices which require panning feature
     var addressBarError = 0.97; //max 3% error in position
     var maxHideTries = 2; //HideAdressBar does not retry more than 2 times (3 overall)
     var skipTouchEnd = false; //Fix iOS bug with alerts/confirms
     var cancelClick = false;
 
-    var touchLayer = function(el) {
+    var touchLayer = function (el) {
         this.clearTouchVars();
         el.addEventListener("touchstart", this, false);
         el.addEventListener("touchmove", this, false);
@@ -3266,16 +3295,16 @@ if (!Date.now)
         this.exitEditProxy_ = $.proxy(this.exitExit, this, []);
         this.launchFixUIProxy_ = $.proxy(this.launchFixUI, this);
         var that = this;
-        this.scrollTimeoutExpireProxy_ = function() {
+        this.scrollTimeoutExpireProxy_ = function () {
             that.scrollTimeout_ = null;
             that.scrollTimeoutEl_.addEventListener("scroll", that.scrollEndedProxy_, false);
         };
-        this.retestAndFixUIProxy_ = function() {
+        this.retestAndFixUIProxy_ = function () {
             if ($.os.android && !$.os.chrome) that.layer.style.height = "100%";
             $.asap(that.testAndFixUI, that, arguments);
         };
         //iPhone double clicks workaround
-        document.addEventListener("click", function(e) {
+        document.addEventListener("click", function (e) {
 
             if (cancelClick) {
                 e.preventDefault();
@@ -3290,21 +3319,21 @@ if (!Date.now)
             }
         }, true);
         //js scrollers self binding
-        $.bind(this, "scrollstart", function(el) {
+        $.bind(this, "scrollstart", function (el) {
             that.isScrolling = true;
             that.scrollingEl_ = el;
             if (!$.feat.nativeTouchScroll)
                 that.scrollerIsScrolling = true;
             that.fireEvent("UIEvents", "scrollstart", el, false, false);
         });
-        $.bind(this, "scrollend", function(el) {
+        $.bind(this, "scrollend", function (el) {
             that.isScrolling = false;
             if (!$.feat.nativeTouchScroll)
                 that.scrollerIsScrolling = false;
             that.fireEvent("UIEvents", "scrollend", el, false, false);
         });
         //fix layer positioning
-        this.hideAddressBar(0,1);
+        this.hideAddressBar(0, 1);
         this.launchFixUI(5); //try a lot to set page into place
     };
 
@@ -3347,48 +3376,48 @@ if (!Date.now)
         trackingClick: false,
         scrollerIsScrolling: false,
 
-        handleEvent: function(e) {
+        handleEvent: function (e) {
             switch (e.type) {
-            case "touchstart":
-                this.onTouchStart(e);
-                break;
-            case "touchmove":
-                this.onTouchMove(e);
-                break;
-            case "touchend":
-                this.onTouchEnd(e);
-                break;
-            case "click":
-                this.onClick(e);
-                break;
-            case "blur":
-                this.onBlur(e);
-                break;
-            case "scroll":
-                this.onScroll(e);
-                break;
-            case "orientationchange":
-                this.onOrientationChange(e);
-                break;
-            case "resize":
-                this.onResize(e);
-                break;
-            case "focusin":
-                this.onFocusIn(e);
-                break;
+                case "touchstart":
+                    this.onTouchStart(e);
+                    break;
+                case "touchmove":
+                    this.onTouchMove(e);
+                    break;
+                case "touchend":
+                    this.onTouchEnd(e);
+                    break;
+                case "click":
+                    this.onClick(e);
+                    break;
+                case "blur":
+                    this.onBlur(e);
+                    break;
+                case "scroll":
+                    this.onScroll(e);
+                    break;
+                case "orientationchange":
+                    this.onOrientationChange(e);
+                    break;
+                case "resize":
+                    this.onResize(e);
+                    break;
+                case "focusin":
+                    this.onFocusIn(e);
+                    break;
             }
         },
-        launchFixUI: function(maxTries) {
+        launchFixUI: function (maxTries) {
             //this.log("launchFixUI");
             if (!maxTries) maxTries = maxHideTries;
             if (this.reHideAddressBarTimeout_ === null) return this.testAndFixUI(0, maxTries);
         },
-        resetFixUI: function() {
+        resetFixUI: function () {
             //this.log("resetFixUI");
             if (this.reHideAddressBarTimeout_) clearTimeout(this.reHideAddressBarTimeout_);
             this.reHideAddressBarTimeout_ = null;
         },
-        testAndFixUI: function(retry, maxTries) {
+        testAndFixUI: function (retry, maxTries) {
             //this.log("testAndFixUI");
             //for ios or if the heights are incompatible (and not close)
             var refH = this.getReferenceHeight();
@@ -3401,15 +3430,15 @@ if (!Date.now)
             if ($.os.android) this.resetFixUI();
             return false;
         },
-        hideAddressBar: function(retry, maxTries) {
-            if($.ui && $.ui.isIntel) return;
+        hideAddressBar: function (retry, maxTries) {
+            if ($.ui && $.ui.isIntel) return;
             if (retry >= maxTries) {
                 this.resetFixUI();
                 return; //avoid a possible loop
             }
 
             //this.log("hiding address bar");
-            if($.os.ios7){
+            if ($.os.ios7) {
                 window.scrollTo(1, 1);
             }
             else if ($.os.desktop || $.os.kindle) {
@@ -3430,34 +3459,34 @@ if (!Date.now)
                 this.layer.style.height = window.innerHeight + "px";
             }
         },
-        getReferenceHeight: function() {
+        getReferenceHeight: function () {
             //the height the page should be at
             return window.innerHeight;
         },
-        getCurrentHeight: function() {
+        getCurrentHeight: function () {
             //the height the page really is at
             if ($.os.android) {
                 return window.innerHeight;
             } else
                 return numOnly(document.documentElement.style.height); //TODO: works well on iPhone, test BB
         },
-        onOrientationChange: function() {
+        onOrientationChange: function () {
             //this.log("orientationchange");
             //if a resize already happened, fire the orientationchange
-            var self=this;
-            var didBlur=false;
-            if(this.focusedElement){
-                didBlur=true;
+            var self = this;
+            var didBlur = false;
+            if (this.focusedElement) {
+                didBlur = true;
                 this.focusedElement.blur();
             }
             if (!this.holdingReshapeType_ && this.reshapeTimeout_) {
                 this.fireReshapeEvent("orientationchange");
             } else this.previewReshapeEvent("orientationchange");
-            if($.os.android && $.os.chrome) {
+            if ($.os.android && $.os.chrome) {
                 this.layer.style.height = "100%";
             }
         },
-        onResize: function() {
+        onResize: function () {
             //avoid infinite loop on iPhone
             if (this.ignoreNextResize_) {
                 //this.log("ignored resize");
@@ -3469,7 +3498,7 @@ if (!Date.now)
                 this.reshapeAction();
             }
         },
-        onClick: function(e) {
+        onClick: function (e) {
             //handle forms
             var tag = e.target && e.target.tagName !== undefined ? e.target.tagName.toLowerCase() : "";
 
@@ -3493,7 +3522,7 @@ if (!Date.now)
                         //fire / preview reshape event
                         if ($.os.ios) {
                             var that = this;
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 that.fireReshapeEvent("enter-edit");
                             }, 300); //TODO: get accurate reading from window scrolling motion and get rid of timeout
                         } else this.previewReshapeEvent("enter-edit");
@@ -3515,22 +3544,22 @@ if (!Date.now)
                 this.focusedElement.blur();
             }
         },
-        previewReshapeEvent: function(ev) {
+        previewReshapeEvent: function (ev) {
             //a reshape event of this type should fire within the next 750 ms, otherwise fire it yourself
             var that = this;
-            this.reshapeTimeout_ = setTimeout(function() {
+            this.reshapeTimeout_ = setTimeout(function () {
                 that.fireReshapeEvent(ev);
                 that.reshapeTimeout_ = null;
                 that.holdingReshapeType_ = null;
             }, 750);
             this.holdingReshapeType_ = ev;
         },
-        fireReshapeEvent: function(ev) {
+        fireReshapeEvent: function (ev) {
             //this.log(ev?ev+"-reshape":"unknown-reshape");
             $.trigger(this, "reshape"); //trigger a general reshape notice
             $.trigger(this, ev ? ev + "-reshape" : "unknown-reshape"); //trigger the specific reshape
         },
-        reshapeAction: function() {
+        reshapeAction: function () {
             if (this.reshapeTimeout_) {
                 //we have a specific reshape event waiting for a reshapeAction, fire it now
                 clearTimeout(this.reshapeTimeout_);
@@ -3539,11 +3568,11 @@ if (!Date.now)
                 this.reshapeTimeout_ = null;
             } else this.previewReshapeEvent();
         },
-        onFocusIn: function(e) {
+        onFocusIn: function (e) {
             if (!this.isFocused_)
                 this.onClick(e);
         },
-        onBlur: function(e) {
+        onBlur: function (e) {
             if ($.os.android && e.target === window) return; //ignore window blurs
 
             this.isFocused_ = false;
@@ -3554,7 +3583,7 @@ if (!Date.now)
             this.justBlurred_ = true;
             $.asap(this.exitEditProxy_, this, [e.target]);
         },
-        exitExit: function(el) {
+        exitExit: function (el) {
             this.justBlurred_ = false;
             if (!this.isFocused_) {
                 //this.log("exit edit mode");
@@ -3564,13 +3593,13 @@ if (!Date.now)
                 //fire / preview reshape event
                 if ($.os.ios) {
                     var that = this;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         that.fireReshapeEvent("exit-edit");
                     }, 300); //TODO: get accurate reading from window scrolling motion and get rid of timeout
                 } else this.previewReshapeEvent("exit-edit");
             }
         },
-        onScroll: function(e) {
+        onScroll: function (e) {
             //this.log("document scroll detected "+document.body.scrollTop);
             if (!this.allowDocumentScroll_ && !this.isPanning_ && e.target === document) {
                 this.allowDocumentScroll_ = true;
@@ -3585,7 +3614,7 @@ if (!Date.now)
             }
         },
 
-        onTouchStart: function(e) {
+        onTouchStart: function (e) {
             //setup initial touch position
             this.dX = e.touches[0].pageX;
             this.dY = e.touches[0].pageY;
@@ -3596,7 +3625,7 @@ if (!Date.now)
                 if (skipTouchEnd === e.touches[0].identifier) {
                     cancelClick = true;
                     e.preventDefault();
-                    skipTouchEnd=false;
+                    skipTouchEnd = false;
                     return false;
                 }
                 skipTouchEnd = e.touches[0].identifier;
@@ -3625,7 +3654,7 @@ if (!Date.now)
                     else this.blockPossibleClick_ = true;
                     //check if event was already set
 
-                } else  {
+                } else {
                     //trigger
                     this.scrollEnded(true);
                     this.blockPossibleClick_ = false;
@@ -3655,7 +3684,7 @@ if (!Date.now)
             }
 
             //do not prevent default on chrome.  Chrome >=33 has issues with this
-            if($.os.chrome||$.os.fennec||$.os.androidICS) return;
+            if ($.os.chrome || $.os.fennec || $.os.androidICS) return;
             //prevent default if possible
 
             if (!this.isPanning_ && !this.requiresNativeTap) {
@@ -3666,7 +3695,7 @@ if (!Date.now)
                 this.demandVerticalScroll();
             }
         },
-        demandVerticalScroll: function() {
+        demandVerticalScroll: function () {
             //if at top or bottom adjust scroll
             var atTop = this.scrollingEl_.scrollTop <= 0;
             if (atTop) {
@@ -3684,20 +3713,20 @@ if (!Date.now)
 
         //set rules here to ignore scrolling check on these elements
         //consider forcing user to use scroller object to assess these... might be causing bugs
-        ignoreScrolling: function(el) {
+        ignoreScrolling: function (el) {
             if (el.scrollWidth === undefined || el.clientWidth === undefined) return true;
             if (el.scrollHeight === undefined || el.clientHeight === undefined) return true;
 
             return false;
         },
 
-        allowsVerticalScroll: function(el, styles) {
+        allowsVerticalScroll: function (el, styles) {
             var overflowY = styles.overflowY;
             if (overflowY === "scroll") return true;
             if (overflowY === "auto" && el.scrollHeight > el.clientHeight) return true;
             return false;
         },
-        allowsHorizontalScroll: function(el, styles) {
+        allowsHorizontalScroll: function (el, styles) {
             var overflowX = styles.overflowX;
             if (overflowX === "scroll") return true;
             if (overflowX === "auto" && el.scrollWidth > el.clientWidth) return true;
@@ -3705,7 +3734,7 @@ if (!Date.now)
         },
 
         //check if pan or native scroll is possible
-        checkDOMTree: function(el, parentTarget) {
+        checkDOMTree: function (el, parentTarget) {
 
             //check panning
             //temporarily disabled for android - click vs panning issues
@@ -3741,15 +3770,17 @@ if (!Date.now)
             if (!isTarget && el.parentNode) this.checkDOMTree(el.parentNode, parentTarget);
         },
         //scroll finish detectors
-        scrollEnded: function(e) {
+        scrollEnded: function (e) {
             //this.log("scrollEnded");
-            if (this.scrollTimeoutEl_ === null) { return; }
+            if (this.scrollTimeoutEl_ === null) {
+                return;
+            }
             if (e) this.scrollTimeoutEl_.removeEventListener("scroll", this.scrollEndedProxy_, false);
             this.fireEvent("UIEvents", "scrollend", this.scrollTimeoutEl_, false, false);
             this.scrollTimeoutEl_ = null;
         },
 
-        onTouchMove: function(e) {
+        onTouchMove: function (e) {
             //set it as moved
             var wasMoving = this.moved;
             this.moved = true;
@@ -3778,9 +3809,9 @@ if (!Date.now)
             }
             //non-native scroll devices
 
-            if ((!$.os.blackberry10&&!this.requiresNativeTap)) {
+            if ((!$.os.blackberry10 && !this.requiresNativeTap)) {
                 //legacy stuff for old browsers
-                if (!this.isScrolling || (!$.feat.nativeTouchScroll&&!this.requiresNativeTap))
+                if (!this.isScrolling || (!$.feat.nativeTouchScroll && !this.requiresNativeTap))
                     e.preventDefault();
                 return;
             }
@@ -3788,7 +3819,7 @@ if (!Date.now)
             //e.stopPropagation();
         },
 
-        onTouchEnd: function(e) {
+        onTouchEnd: function (e) {
 
             //double check moved for sensitive devices)
             var itMoved = this.moved;
@@ -3847,7 +3878,7 @@ if (!Date.now)
                     if (!this.isFocused_) $.trigger(this, "cancel-enter-edit", [e.target]);
                 }
             }
-            if($.os.blackberry10) {
+            if ($.os.blackberry10) {
                 this.lastTouchStartX = this.dX;
                 this.lastTouchStartY = this.dY;
             }
@@ -3855,7 +3886,7 @@ if (!Date.now)
             this.clearTouchVars();
         },
 
-        clearTouchVars: function() {
+        clearTouchVars: function () {
             //this.log("clearing touchVars");
             this.speedY = this.lastY = this.cY = this.cX = this.dX = this.dY = 0;
             this.moved = false;
@@ -3867,14 +3898,14 @@ if (!Date.now)
             this.trackingClick = false;
         },
 
-        fireEvent: function(eventType, eventName, target, bubbles, mouseToTouch, data) {
+        fireEvent: function (eventType, eventName, target, bubbles, mouseToTouch, data) {
             //this.log("Firing event "+eventName);
             //create the event and set the options
             var theEvent = document.createEvent(eventType);
             theEvent.initEvent(eventName, bubbles, true);
             //theEvent.target = target;
             if (data) {
-                $.each(data, function(key, val) {
+                $.each(data, function (key, val) {
                     theEvent.key = val;
                 });
             }
@@ -3885,6 +3916,8 @@ if (!Date.now)
     };
 
 })(af);
+
+
 /**
  * af.popup - a popup/alert library for html5 mobile apps
  * copyright Indiepath 2011 - Tim Fisher
@@ -3893,21 +3926,21 @@ if (!Date.now)
  */
 /* EXAMPLE
  $.query("body").popup({
-        title:"Alert! Alert!",
-        message:"This is a test of the emergency alert system!! Don't PANIC!",
-        cancelText:"Cancel me",
-        cancelCallback: function(){console.log("cancelled");},
-        doneText:"I'm done!",
-        doneCallback: function(){console.log("Done for!");},
-        cancelOnly:false,
-        doneClass:'button',
-        cancelClass:'button',
-        onShow:function(){console.log("showing popup");}
-        autoCloseDone:true, //default is true will close the popup when done is clicked.
-        suppressTitle:false //Do not show the title if set to true
-  });
+ title:"Alert! Alert!",
+ message:"This is a test of the emergency alert system!! Don't PANIC!",
+ cancelText:"Cancel me",
+ cancelCallback: function(){console.log("cancelled");},
+ doneText:"I'm done!",
+ doneCallback: function(){console.log("Done for!");},
+ cancelOnly:false,
+ doneClass:'button',
+ cancelClass:'button',
+ onShow:function(){console.log("showing popup");}
+ autoCloseDone:true, //default is true will close the popup when done is clicked.
+ suppressTitle:false //Do not show the title if set to true
+ });
 
-  You can programatically trigger a close by dispatching a "close" event to it.
+ You can programatically trigger a close by dispatching a "close" event to it.
 
  $.query("body").popup({title:'Alert',id:'myTestPopup'});
  $("#myTestPopup").trigger("close");
@@ -3946,7 +3979,8 @@ if (!Date.now)
                 this.title = opts.suppressTitle ? "" : (opts.title || "Alert");
                 this.message = opts.message || "";
                 this.cancelText = opts.cancelText || "Cancel";
-                this.cancelCallback = opts.cancelCallback || function () {};
+                this.cancelCallback = opts.cancelCallback || function () {
+                };
                 this.cancelClass = opts.cancelClass || "button";
                 this.doneText = opts.doneText || "Done";
                 this.doneCallback = opts.doneCallback || function () {
@@ -3954,7 +3988,8 @@ if (!Date.now)
                 };
                 this.doneClass = opts.doneClass || "button";
                 this.cancelOnly = opts.cancelOnly || false;
-                this.onShow = opts.onShow || function () {};
+                this.onShow = opts.onShow || function () {
+                };
                 this.autoCloseDone = opts.autoCloseDone !== undefined ? opts.autoCloseDone : true;
 
                 queue.push(this);
@@ -3983,15 +4018,15 @@ if (!Date.now)
             suppressTitle: false,
             show: function () {
                 var self = this;
-                var markup = "<div id='" + this.id + "' class='afPopup hidden "+ this.addCssClass + "'>"+
-                            "<header>" + this.title + "</header>"+
-                            "<div>" + this.message + "</div>"+
-                            "<footer>"+
-                                 "<a href='javascript:;' class='" + this.cancelClass + "' id='cancel'>" + this.cancelText + "</a>"+
-                                 "<a href='javascript:;' class='" + this.doneClass + "' id='action'>" + this.doneText + "</a>"+
-                                 "<div style='clear:both'></div>"+
-                            "</footer>"+
-                            "</div>";
+                var markup = "<div id='" + this.id + "' class='afPopup hidden " + this.addCssClass + "'>" +
+                    "<header>" + this.title + "</header>" +
+                    "<div>" + this.message + "</div>" +
+                    "<footer>" +
+                    "<a href='javascript:;' class='" + this.cancelClass + "' id='cancel'>" + this.cancelText + "</a>" +
+                    "<a href='javascript:;' class='" + this.doneClass + "' id='action'>" + this.doneText + "</a>" +
+                    "<div style='clear:both'></div>" +
+                    "</footer>" +
+                    "</div>";
 
                 $(this.container).append($(markup));
                 var $el = $.query("#" + this.id);
@@ -4027,17 +4062,17 @@ if (!Date.now)
                 //force header/footer showing to fix CSS style bugs
                 $el.find("header").show();
                 $el.find("footer").show();
-                setTimeout(function(){
+                setTimeout(function () {
                     $el.removeClass("hidden").addClass("show");
                     self.onShow(self);
-                },50);
+                }, 50);
             },
 
             hide: function () {
                 var self = this;
                 $.query("#" + self.id).addClass("hidden");
                 $.unblockUI();
-                if(!$.os.ie&&!$.os.android){
+                if (!$.os.ie && !$.os.android) {
                     setTimeout(function () {
                         self.remove();
                     }, 250);
@@ -4099,27 +4134,27 @@ if (!Date.now)
  * @author Intel
  * @version 2.0
  */
- /* global af*/
- /* global numOnly*/
- /* global intel*/
- /* jshint camelcase:false*/
-(function($) {
+/* global af*/
+/* global numOnly*/
+/* global intel*/
+/* jshint camelcase:false*/
+(function ($) {
     "use strict";
 
     var startPath = window.location.pathname + window.location.search;
     var defaultHash = window.location.hash;
     var previousTarget = defaultHash;
-    var ui = function() {
+    var ui = function () {
         // Init the page
         var that = this;
 
         /**
          * Helper function to setup the transition objects
          * Custom transitions can be added via $.ui.availableTransitions
-           ```
-           $.ui.availableTransitions['none']=function();
-           ```
-           */
+         ```
+         $.ui.availableTransitions['none']=function();
+         ```
+         */
 
         this.availableTransitions = {};
         this.availableTransitions["default"] = this.availableTransitions.none = this.noTransition;
@@ -4127,11 +4162,11 @@ if (!Date.now)
 
         //Hack  for AMD/requireJS support
         //set autolaunch = false
-        if ((typeof define === "function" && define.amd)||(typeof module !== "undefined" && module.exports)) {
-            that.autoLaunch=false;
+        if ((typeof define === "function" && define.amd) || (typeof module !== "undefined" && module.exports)) {
+            that.autoLaunch = false;
         }
 
-        var setupAFDom = function() {
+        var setupAFDom = function () {
             //boot touchLayer
             //create afui element if it still does not exist
             var afui = document.getElementById("afui");
@@ -4139,12 +4174,12 @@ if (!Date.now)
                 afui = document.createElement("div");
                 afui.id = "afui";
                 var body = document.body;
-                while (body&&body.firstChild) {
+                while (body && body.firstChild) {
                     afui.appendChild(body.firstChild);
                 }
                 $(document.body).prepend(afui);
             }
-            that.isIntel="intel" in window&&window.intel&&window.intel.xdk&&"app" in window.intel.xdk;
+            that.isIntel = "intel" in window && window.intel && window.intel.xdk && "app" in window.intel.xdk;
             if ($.os.supportsTouch) $.touchLayer(afui);
             setupCustomTheme();
 
@@ -4153,36 +4188,35 @@ if (!Date.now)
 
         if (document.readyState === "complete" || document.readyState === "loaded") {
             setupAFDom();
-            if(that.init)
+            if (that.init)
                 that.autoBoot();
-            else{
-                $(window).one("afui:init", function() {
+            else {
+                $(window).one("afui:init", function () {
                     that.autoBoot();
                 });
             }
         } else $(document).ready(
-            function() {
+            function () {
                 setupAFDom();
-                if(that.init)
+                if (that.init)
                     that.autoBoot();
-                else{
-                    $(window).one("afui:init", function() {
+                else {
+                    $(window).one("afui:init", function () {
                         that.autoBoot();
                     });
                 }
             },
-        false);
+            false);
 
 
-
-        if (!("intel" in window)){
-            window.intel = {xdk:{}};
+        if (!("intel" in window)) {
+            window.intel = {xdk: {}};
             window.intel.xdk.webRoot = "";
         }
 
         //click back event
-        window.addEventListener("popstate", function() {
-            if(!that.useInternalRouting) return;
+        window.addEventListener("popstate", function () {
+            if (!that.useInternalRouting) return;
             var id = that.getPanelId(document.location.hash);
             var hashChecker = document.location.href.replace(document.location.origin + "/", "");
             //make sure we allow hash changes outside afui
@@ -4201,51 +4235,51 @@ if (!Date.now)
                 if ($.os.android) $("#afui").addClass("android");
                 else if ($.os.ie) {
                     $("#afui").addClass("win8");
-                } else if ($.os.blackberry||$.os.blackberry10||$.os.playbook) {
+                } else if ($.os.blackberry || $.os.blackberry10 || $.os.playbook) {
                     $("#afui").addClass("bb");
                     that.backButtonText = "Back";
-                } else if ($.os.ios7){
+                } else if ($.os.ios7) {
                     $("#afui").addClass("ios7");
 
                 } else if ($.os.ios)
                     $("#afui").addClass("ios");
-                else if($.os.tizen)
+                else if ($.os.tizen)
                     $("#afui").addClass("tizen");
-                else if($.os.fennec){
+                else if ($.os.fennec) {
                     $("#afui").addClass("firefox");
-                    that.animateHeaders=false;
+                    that.animateHeaders = false;
                 }
             }
 
-            if($.os.ios){
+            if ($.os.ios) {
                 $("head").find("#iosBlurrHack").remove();
-                var hackStyle="-webkit-backface-visibility: hidden;";
+                var hackStyle = "-webkit-backface-visibility: hidden;";
                 //ios webview still has issues
                 //if(navigator.userAgent.indexOf("Safari") === -1) {
-                hackStyle+="-webkit-perspective:1000;";
+                hackStyle += "-webkit-perspective:1000;";
                 //}
                 //$("head").append("<style id='iosBlurrHack'>#afui .panel  {"+hackStyle+"} #afui .panel > * {-webkit-backface-visibility:hidden;}</style>");
-                $("head").append("<style id='iosBlurrHack'>#afui .y-scroll > *, #afui .x-scroll > * {"+hackStyle+"}</style>");
+                $("head").append("<style id='iosBlurrHack'>#afui .y-scroll > *, #afui .x-scroll > * {" + hackStyle + "}</style>");
             }
-            else if ($.os.android&&!$.os.androidICS){
+            else if ($.os.android && !$.os.androidICS) {
                 that.transitionTime = "150ms";
             }
-            else if($.os.fennec){
-                that.ready(function(){
-                    window.addEventListener("deviceorientation",function(){
-                        var tmpH=numOnly($("#header").css('height'))+numOnly($("#navbar").css('height'));
-                        $("#content").css("height",window.innerHeight-tmpH);
+            else if ($.os.fennec) {
+                that.ready(function () {
+                    window.addEventListener("deviceorientation", function () {
+                        var tmpH = numOnly($("#header").css('height')) + numOnly($("#navbar").css('height'));
+                        $("#content").css("height", window.innerHeight - tmpH);
                     });
                 });
             }
 
-            if($.os.ios7&&$("#afui").hasClass("ios7")){
-                if(that.overlayStatusbar){
-                    that.ready(function(){
+            if ($.os.ios7 && $("#afui").hasClass("ios7")) {
+                if (that.overlayStatusbar) {
+                    that.ready(function () {
                         $("#afui").addClass("overlayStatusbar");
                     });
 
-                    $(document.body).css("background","rgb(249,249,249)");
+                    $(document.body).css("background", "rgb(249,249,249)");
                 }
             }
 
@@ -4254,7 +4288,7 @@ if (!Date.now)
 
 
     ui.prototype = {
-        init:false,
+        init: false,
         transitionTime: "230ms",
         showLoading: true,
         loadingText: "Loading Content",
@@ -4274,8 +4308,8 @@ if (!Date.now)
         defaultFooter: "",
         defaultHeader: null,
         customMenu: false,
-        customAside:false,
-        defaultAside:"",
+        customAside: false,
+        defaultAside: "",
         defaultMenu: "",
         _readyFunc: null,
         doingTransition: false,
@@ -4286,7 +4320,7 @@ if (!Date.now)
         scrollingDivs: {},
         firstDiv: "",
         hasLaunched: false,
-        isLaunching:false,
+        isLaunching: false,
         launchCompleted: false,
         activeDiv: "",
         customClickHandler: "",
@@ -4300,108 +4334,108 @@ if (!Date.now)
         lockPageBounce: true,
         animateHeaders: true,
         useAutoPressed: true,
-        horizontalScroll:false,
-        _currentHeaderID:"defaultHeader",
-        useInternalRouting:true,
+        horizontalScroll: false,
+        _currentHeaderID: "defaultHeader",
+        useInternalRouting: true,
 
-        autoBoot: function() {
+        autoBoot: function () {
             this.hasLaunched = true;
-            var that=this;
+            var that = this;
             if (this.autoLaunch) {
-                if(this.isIntel){
-                    var xdkLaunch=function(){
+                if (this.isIntel) {
+                    var xdkLaunch = function () {
                         that.launch();
-                        document.removeEventListener("intel.xdk.device.ready",xdkLaunch);
+                        document.removeEventListener("intel.xdk.device.ready", xdkLaunch);
                     };
-                    document.addEventListener("intel.xdk.device.ready",xdkLaunch);
+                    document.addEventListener("intel.xdk.device.ready", xdkLaunch);
                 }
                 else {
                     this.launch();
                 }
             }
         },
-        css3animate: function(el, opts) {
+        css3animate: function (el, opts) {
             el = $(el);
             return el.css3Animate(opts);
         },
-        dispatchPanelEvent:function(fnc,myPanel){
+        dispatchPanelEvent: function (fnc, myPanel) {
             if (typeof fnc === "string" && window[fnc]) {
                 return window[fnc](myPanel);
             }
-            else if(fnc.indexOf(".")!==-1){
-                var scope=window,items=fnc.split("."),len=items.length,i=0;
-                for(i;i<len-1;i++){
-                    scope=scope[items[i]];
-                    if(scope===undefined) return;
+            else if (fnc.indexOf(".") !== -1) {
+                var scope = window, items = fnc.split("."), len = items.length, i = 0;
+                for (i; i < len - 1; i++) {
+                    scope = scope[items[i]];
+                    if (scope === undefined) return;
                 }
                 return scope[items[i]](myPanel);
             }
         },
         /**
          * This enables the tab bar ability to keep pressed states on elements
-           ```
-           $.ui.enableTabBar();
-           ```
-           @title $.ui.enableTabBar
+         ```
+         $.ui.enableTabBar();
+         ```
+         @title $.ui.enableTabBar
          */
-        enableTabBar:function(){
-            $(document).on("click",".button-grouped.tabbed",function(e){
-                var $el=$(e.target);
-                $el.closest(".tabbed").find(".button").data("ignore-pressed","true").removeClass("pressed");
+        enableTabBar: function () {
+            $(document).on("click", ".button-grouped.tabbed", function (e) {
+                var $el = $(e.target);
+                $el.closest(".tabbed").find(".button").data("ignore-pressed", "true").removeClass("pressed");
                 //this is a hack, but the touchEvents plugn will remove pressed
                 $el.closest(".button").addClass("pressed");
-                setTimeout(function(){
+                setTimeout(function () {
                     $el.closest(".button").addClass("pressed");
                 });
             });
         },
-         /**
+        /**
          * This disables the tab bar ability to keep pressed states on elements
-           ```
-           $.ui.disableTabBar();
-           ```
+         ```
+         $.ui.disableTabBar();
+         ```
          * @title $.ui.disableTabBar
          */
-        disableTabBar:function(){
-            $(document).off("click",".button-grouped.tabbed");
+        disableTabBar: function () {
+            $(document).off("click", ".button-grouped.tabbed");
             $(".button-grouped.tabbed .button").removeAttr("data-ignore-pressed");
         },
         /**
          * This changes the side menu width
-           ```
-           $.ui.setLeftSideMenuWidth('300px');
-           ```
+         ```
+         $.ui.setLeftSideMenuWidth('300px');
+         ```
          * @title $.ui.setLeftSideMenuWidth
          */
 
-        setLeftSideMenuWidth: function(width) {
+        setLeftSideMenuWidth: function (width) {
             this.sideMenuWidth = width;
             //override the css style
             width = width + "";
             width = width.replace("px", "") + "px";
-            var theWidth=numOnly(window.innerWidth)-numOnly(width);
+            var theWidth = numOnly(window.innerWidth) - numOnly(width);
             $("head").find("style#afui_sideMenuWidth").remove();
-            var css = "@media handheld, only screen and (min-width: 768px) {"+
-                        "#afui > #navbar.hasMenu.splitview, #afui > #header.hasMenu.splitview, #afui > #content.hasMenu.splitview  {"+
-                        "    margin-left:"+width+" !important;"+
-                        "    width: "+(theWidth)+"px !important;"+
-                        "}"+
-                    "}"+
-                    "#afui #menu {width:" + width + "  !important}";
-            $("head").append("<style id='afui_sideMenuWidth'>"+css+"</style>");
+            var css = "@media handheld, only screen and (min-width: 768px) {" +
+                "#afui > #navbar.hasMenu.splitview, #afui > #header.hasMenu.splitview, #afui > #content.hasMenu.splitview  {" +
+                "    margin-left:" + width + " !important;" +
+                "    width: " + (theWidth) + "px !important;" +
+                "}" +
+                "}" +
+                "#afui #menu {width:" + width + "  !important}";
+            $("head").append("<style id='afui_sideMenuWidth'>" + css + "</style>");
         },
-        setSideMenuWidth:function(){
-            this.setLeftSideMenuWidth.apply(this,arguments);
+        setSideMenuWidth: function () {
+            this.setLeftSideMenuWidth.apply(this, arguments);
         },
         /**
          * This changes the side menu width
-           ```
-           $.ui.setRightSideMenuWidth('300px');
-           ```
+         ```
+         $.ui.setRightSideMenuWidth('300px');
+         ```
          *@title $.ui.setRightSideMenuWidth
          */
 
-        setRightSideMenuWidth: function(width) {
+        setRightSideMenuWidth: function (width) {
             this.sideMenuWidth = width;
             //override the css style
             width = width + "";
@@ -4413,47 +4447,47 @@ if (!Date.now)
 
         /**
          * this will disable native scrolling on iOS
-            ```
-            $.ui.disableNativeScrolling);
-            ```
+         ```
+         $.ui.disableNativeScrolling);
+         ```
          *@title $.ui.disableNativeScrolling
          */
-        disableNativeScrolling: function() {
+        disableNativeScrolling: function () {
             $.feat.nativeTouchScroll = false;
         },
 
         /**
-          * This is a boolean property.   When set to true, we manage history and update the hash
-             ```
-            $.ui.manageHistory=false;//Don't manage for apps using Backbone
-            ```
-          *@title $.ui.manageHistory
-          */
+         * This is a boolean property.   When set to true, we manage history and update the hash
+         ```
+         $.ui.manageHistory=false;//Don't manage for apps using Backbone
+         ```
+         *@title $.ui.manageHistory
+         */
         manageHistory: true,
 
         /**
          * This is a boolean property.  When set to true (default) it will load that panel when the app is started
-           ```
-           $.ui.loadDefaultHash=false; //Never load the page from the hash when the app is started
-           $.ui.loadDefaultHash=true; //Default
-           ```
+         ```
+         $.ui.loadDefaultHash=false; //Never load the page from the hash when the app is started
+         $.ui.loadDefaultHash=true; //Default
+         ```
          *@title $.ui.loadDefaultHash
          */
         loadDefaultHash: true,
         /**
          * This is a boolean that when set to true will add "&cache=_rand_" to any ajax loaded link
-           The default is false
-           ```
-           $.ui.useAjaxCacheBuster=true;
-           ```
-          *@title $.ui.useAjaxCacheBuster
-          */
+         The default is false
+         ```
+         $.ui.useAjaxCacheBuster=true;
+         ```
+         *@title $.ui.useAjaxCacheBuster
+         */
         useAjaxCacheBuster: false,
         /**
          * This is a shorthand call to the $.actionsheet plugin.  We wire it to the afui div automatically
-           ```
-           $.ui.actionsheet("<a href='javascript:;' class='button'>Settings</a> <a href='javascript:;' class='button red'>Logout</a>")
-           $.ui.actionsheet("[{
+         ```
+         $.ui.actionsheet("<a href='javascript:;' class='button'>Settings</a> <a href='javascript:;' class='button red'>Logout</a>")
+         $.ui.actionsheet("[{
                         text: 'back',
                         cssClasses: 'red',
                         handler: function () { $.ui.goBack(); ; }
@@ -4466,18 +4500,18 @@ if (!Date.now)
                         cssClasses: '',
                         handler: function () { alert("goodbye"); }
                     }]");
-           ```
+         ```
          * @param {(string|Array.<string>)} links
          * @title $.ui.actionsheet()
          */
-        actionsheet: function(opts) {
+        actionsheet: function (opts) {
             return $.query("#afui").actionsheet(opts);
         },
         /**
          * This is a wrapper to $.popup.js plugin.  If you pass in a text string, it acts like an alert box and just gives a message
-           ```
-           $.ui.popup(opts);
-           $.ui.popup( {
+         ```
+         $.ui.popup(opts);
+         $.ui.popup( {
                         title:"Alert! Alert!",
                         message:"This is a test of the emergency alert system!! Don't PANIC!",
                         cancelText:"Cancel me",
@@ -4486,12 +4520,12 @@ if (!Date.now)
                         doneCallback: function(){console.log("Done for!");},
                         cancelOnly:false
                       });
-           $.ui.popup('Hi there');
-           ```
+         $.ui.popup('Hi there');
+         ```
          * @param {(object|string)} options
          * @title $.ui.popup(opts)
          */
-        popup: function(opts) {
+        popup: function (opts) {
             return $.query("#afui").popup(opts);
         },
 
@@ -4503,7 +4537,7 @@ if (!Date.now)
          * @param {number} opacity
          * @title $.ui.blockUI(opacity)
          */
-        blockUI: function(opacity) {
+        blockUI: function (opacity) {
             $.blockUI(opacity);
         },
         /**
@@ -4513,101 +4547,101 @@ if (!Date.now)
          ````
          * @title $.ui.unblockUI()
          */
-        unblockUI: function() {
+        unblockUI: function () {
             $.unblockUI();
         },
         /**
          * Will remove the bottom nav bar menu from your application
-           ```
-           $.ui.removeFooterMenu();
-           ```
+         ```
+         $.ui.removeFooterMenu();
+         ```
          * @title $.ui.removeFooterMenu
          */
-        removeFooterMenu: function() {
+        removeFooterMenu: function () {
             $.query("#navbar").hide();
             //$.query("#content").css("bottom", "0px");
             this.showNavMenu = false;
         },
         /**
          * Boolean if you want to show the bottom nav menu.
-           ```
-           $.ui.showNavMenu = false;
-           ```
+         ```
+         $.ui.showNavMenu = false;
+         ```
          * @api private
          * @title $.ui.showNavMenu
          */
         showNavMenu: true,
         /**
          * Boolean if you want to auto launch afui
-           ```
-           $.ui.autoLaunch = false; //
+         ```
+         $.ui.autoLaunch = false; //
          * @title $.ui.autoLaunch
          */
         autoLaunch: true,
         /**
          * Boolean if you want to show the back button
-           ```
-           $.ui.showBackButton = false; //
+         ```
+         $.ui.showBackButton = false; //
          * @title $.ui.showBackButton
          */
         showBackbutton: true, // Kept for backward compatibility.
         showBackButton: true,
         /**
          *  Override the back button text
-            ```
-            $.ui.backButtonText="Back"
-            ```
+         ```
+         $.ui.backButtonText="Back"
+         ```
          * @title $.ui.backButtonText
          */
         backButtonText: "",
         /**
          * Boolean if you want to reset the scroller position when navigating panels.  Default is true
-           ```
-           $.ui.resetScrollers=false; //Do not reset the scrollers when switching panels
-           ```
+         ```
+         $.ui.resetScrollers=false; //Do not reset the scrollers when switching panels
+         ```
          * @title $.ui.resetScrollers
          */
         resetScrollers: false,
         /**
          * function to fire when afui is ready and completed launch
-           ```
-           $.ui.ready(function(){console.log('afui is ready');});
-           ```
+         ```
+         $.ui.ready(function(){console.log('afui is ready');});
+         ```
          * @param {function} param function to execute
          * @title $.ui.ready
          */
-        ready: function(param) {
+        ready: function (param) {
 
             if (this.launchCompleted)
                 param();
             else {
-                $(document).one("afui:ready", function() {
+                $(document).one("afui:ready", function () {
                     param();
                 });
             }
         },
         /**
          * Override the back button class name
-           ```
-           $.ui.setBackButtonStyle('newClass');
-           ```
+         ```
+         $.ui.setBackButtonStyle('newClass');
+         ```
          * @param {string} className new class name
          * @title $.ui.setBackButtonStyle(class)
          */
-        setBackButtonStyle: function(className) {
-            $.query("#header .backButton").get(0).className=className;
+        setBackButtonStyle: function (className) {
+            $.query("#header .backButton").get(0).className = className;
 
         },
         /**
          * Initiate a back transition
-           ```
-           $.ui.goBack()
-           ```
+         ```
+         $.ui.goBack()
+         ```
 
          * @title $.ui.goBack()
          * @param {number=} delta relative position from the last element (> 0)
          */
-        goBack: function(delta) {
+        goBack: function (delta) {
             delta = Math.min(Math.abs(~~delta || 1), this.history.length);
 
             if (delta) {
@@ -4619,26 +4653,26 @@ if (!Date.now)
         },
         /**
          * Clear the history queue
-           ```
-           $.ui.clearHistory()
-           ```
+         ```
+         $.ui.clearHistory()
+         ```
 
          * @title $.ui.clearHistory()
          */
-        clearHistory: function() {
+        clearHistory: function () {
             this.history = [];
             this.setBackButtonVisibility(false);
         },
 
         /**
          * PushHistory
-           ```
-           $.ui.pushHistory(previousPage, newPage, transition, hashExtras)
-           ```
+         ```
+         $.ui.pushHistory(previousPage, newPage, transition, hashExtras)
+         ```
          * @api private
          * @title $.ui.pushHistory()
          */
-        pushHistory: function(previousPage, newPage, transition, hashExtras) {
+        pushHistory: function (previousPage, newPage, transition, hashExtras) {
             //push into local history
 
             this.history.push({
@@ -4653,7 +4687,8 @@ if (!Date.now)
                     newUrl: startPath + "#" + newPage + hashExtras,
                     oldUrl: startPath + previousPage
                 });
-            } catch (e) {}
+            } catch (e) {
+            }
         },
 
 
@@ -4664,7 +4699,7 @@ if (!Date.now)
          * @title $.ui.updateHash(newHash)
          * @api private
          */
-        updateHash: function(newHash) {
+        updateHash: function (newHash) {
             if (!this.manageHistory) return;
             newHash = newHash.indexOf("#") === -1 ? "#" + newHash : newHash; //force having the # in the begginning as a standard
             previousTarget = newHash;
@@ -4677,30 +4712,31 @@ if (!Date.now)
                     newUrl: startPath + newHash,
                     oldUrl: startPath + previousHash
                 });
-            } catch (e) {}
+            } catch (e) {
+            }
         },
         /*gets the panel name from an hash*/
-        getPanelId: function(hash) {
+        getPanelId: function (hash) {
             var firstSlash = hash.indexOf("/");
             return firstSlash === -1 ? hash : hash.substring(0, firstSlash);
         },
 
         /**
          * Update a badge on the selected target.  Position can be
-            bl = bottom left
-            tl = top left
-            br = bottom right
-            tr = top right (default)
-           ```
-           $.ui.updateBadge("#mydiv","3","bl","green");
-           ```
+         bl = bottom left
+         tl = top left
+         br = bottom right
+         tr = top right (default)
+         ```
+         $.ui.updateBadge("#mydiv","3","bl","green");
+         ```
          * @param {string} target
          * @param {string} value
          * @param {string=} position
          * @param {(string=|object)} color Color or CSS hash
          * @title $.ui.updateBadge(target,value,[position],[color])
          */
-        updateBadge: function(target, value, position, color) {
+        updateBadge: function (target, value, position, color) {
             if (position === undefined) position = "";
 
             var $target = $(target);
@@ -4728,25 +4764,25 @@ if (!Date.now)
         },
         /**
          * Removes a badge from the selected target.
-           ```
-           $.ui.removeBadge("#mydiv");
-           ```
+         ```
+         $.ui.removeBadge("#mydiv");
+         ```
          * @param {string} target
          * @title $.ui.removeBadge(target)
          */
-        removeBadge: function(target) {
+        removeBadge: function (target) {
             $(target).find("span.af-badge").remove();
         },
         /**
          * Toggles the bottom nav menu.  Force is a boolean to force show or hide.
-           ```
-           $.ui.toggleNavMenu();//toggle it
-           $.ui.toggleNavMenu(true); //force show it
-           ```
+         ```
+         $.ui.toggleNavMenu();//toggle it
+         $.ui.toggleNavMenu(true); //force show it
+         ```
          * @param {boolean=} force
          * @title $.ui.toggleNavMenu([force])
          */
-        toggleNavMenu: function(force) {
+        toggleNavMenu: function (force) {
             if (!this.showNavMenu) return;
             if ($.query("#navbar").css("display") !== "none" && ((force !== undefined && force !== true) || force === undefined)) {
                 $.query("#navbar").hide();
@@ -4757,13 +4793,13 @@ if (!Date.now)
         },
         /**
          * Toggles the top header menu.  Force is a boolean to force show or hide.
-           ```
-           $.ui.toggleHeaderMenu();//toggle it
-           ```
+         ```
+         $.ui.toggleHeaderMenu();//toggle it
+         ```
          * @param {boolean=} force
          * @title $.ui.toggleHeaderMenu([force])
          */
-        toggleHeaderMenu: function(force) {
+        toggleHeaderMenu: function (force) {
             if ($.query("#header").css("display") !== "none" && ((force !== undefined && force !== true) || force === undefined)) {
                 $.query("#header").hide();
             } else if (force === undefined || (force !== undefined && force === true)) {
@@ -4772,72 +4808,72 @@ if (!Date.now)
         },
 
         /**
-        * Toggles the right hand side menu
-        */
-        toggleAsideMenu:function(){
-            this.toggleRightSideMenu.apply(this,arguments);
+         * Toggles the right hand side menu
+         */
+        toggleAsideMenu: function () {
+            this.toggleRightSideMenu.apply(this, arguments);
         },
-        toggleRightSideMenu:function(force,callback,time){
-            if(!this.isAsideMenuEnabled()) return;
-            return this.toggleLeftSideMenu(force,callback,time,true);
+        toggleRightSideMenu: function (force, callback, time) {
+            if (!this.isAsideMenuEnabled()) return;
+            return this.toggleLeftSideMenu(force, callback, time, true);
         },
         /**
          * Toggles the side menu.  Force is a boolean to force show or hide.
-           ```
-           $.ui.toggleSideMenu();//toggle it
-           ```
+         ```
+         $.ui.toggleSideMenu();//toggle it
+         ```
          * @param {boolean=} force
          * @param {function=} callback Callback function to execute after menu toggle is finished
          * @param {number=} time Time to run the transition
          * @param {boolean=} aside
          * @title $.ui.toggleSideMenu([force],[callback],[time])
          */
-        toggleLeftSideMenu: function(force, callback, time, aside) {
-            if ((!this.isSideMenuEnabled()&&!this.isAsideMenuEnabled()) || this.togglingSideMenu) return;
+        toggleLeftSideMenu: function (force, callback, time, aside) {
+            if ((!this.isSideMenuEnabled() && !this.isAsideMenuEnabled()) || this.togglingSideMenu) return;
 
 
-            if(!aside&&!this.isSideMenuEnabled()) return;
+            if (!aside && !this.isSideMenuEnabled()) return;
 
-            if(!aside&&$.ui.splitview && window.innerWidth >= $.ui.handheldMinWidth) return;
+            if (!aside && $.ui.splitview && window.innerWidth >= $.ui.handheldMinWidth) return;
 
             var that = this;
             var menu = $.query("#menu");
-            var asideMenu= $.query("#aside_menu");
+            var asideMenu = $.query("#aside_menu");
             var els = $.query("#content,  #header, #navbar");
             var panelMask = $.query(".afui_panel_mask");
             time = time || this.transitionTime;
             var open = this.isSideMenuOn();
-            var toX=aside?"-"+numOnly(asideMenu.css("width")):numOnly(menu.css("width"));
+            var toX = aside ? "-" + numOnly(asideMenu.css("width")) : numOnly(menu.css("width"));
             // add panel mask to block when side menu is open for phone devices
-            if(panelMask.length === 0 && window.innerWidth < $.ui.handheldMinWidth){
+            if (panelMask.length === 0 && window.innerWidth < $.ui.handheldMinWidth) {
                 els.append("<div class='afui_panel_mask'></div>");
                 panelMask = $.query(".afui_panel_mask");
-                $(".afui_panel_mask").bind("click", function(){
+                $(".afui_panel_mask").bind("click", function () {
                     $.ui.toggleSideMenu(false, null, null, aside);
                 });
             }
             //Here we need to check if we are toggling the left to right, or right to left
-            var menuPos=this.getSideMenuPosition();
-            if(open&&!aside&&menuPos<0)
-                open=false;
-            else if(open&&aside&&menuPos>0)
-                open=false;
+            var menuPos = this.getSideMenuPosition();
+            if (open && !aside && menuPos < 0)
+                open = false;
+            else if (open && aside && menuPos > 0)
+                open = false;
 
             if (force === 2 || (!open && ((force !== undefined && force !== false) || force === undefined))) {
 
                 this.togglingSideMenu = true;
-                if(!aside)
+                if (!aside)
                     menu.show();
                 else
                     asideMenu.show();
                 that.css3animate(els, {
                     x: toX,
                     time: time,
-                    complete: function(canceled) {
+                    complete: function (canceled) {
                         that.togglingSideMenu = false;
                         els.vendorCss("Transition", "");
                         if (callback) callback(canceled);
-                        if(panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth){
+                        if (panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth) {
                             panelMask.show();
                         }
                     }
@@ -4848,81 +4884,81 @@ if (!Date.now)
                 that.css3animate(els, {
                     x: "0px",
                     time: time,
-                    complete: function(canceled) {
+                    complete: function (canceled) {
                         // els.removeClass("on");
                         els.vendorCss("Transition", "");
                         els.vendorCss("Transform", "");
                         that.togglingSideMenu = false;
                         if (callback) callback(canceled);
-                        if(!$.ui.splitview)
+                        if (!$.ui.splitview)
                             menu.hide();
                         asideMenu.hide();
-                        if(panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth){
+                        if (panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth) {
                             panelMask.hide();
                         }
                     }
                 });
             }
         },
-        toggleSideMenu:function(){
+        toggleSideMenu: function () {
 
-            this.toggleLeftSideMenu.apply(this,arguments);
+            this.toggleLeftSideMenu.apply(this, arguments);
         },
         /**
          * Disables the side menu
-           ```
-           $.ui.disableSideMenu();
-           ```
-        * @title $.ui.disableSideMenu();
-        */
-        disableSideMenu: function() {
+         ```
+         $.ui.disableSideMenu();
+         ```
+         * @title $.ui.disableSideMenu();
+         */
+        disableSideMenu: function () {
             this.disableLeftSideMenu();
         },
-        disableLeftSideMenu:function(){
+        disableLeftSideMenu: function () {
             var els = $.query("#content, #header, #navbar");
             if (this.isSideMenuOn()) {
-                this.toggleSideMenu(false, function(canceled) {
+                this.toggleSideMenu(false, function (canceled) {
                     if (!canceled) els.removeClass("hasMenu");
                 });
             } else els.removeClass("hasMenu");
         },
         /**
          * Enables the side menu if it has been disabled
-           ```
-           $.ui.enableSideMenu();
-           ```
-        * @title $.ui.enableSideMenu();
-        */
-        enableLeftSideMenu: function() {
+         ```
+         $.ui.enableSideMenu();
+         ```
+         * @title $.ui.enableSideMenu();
+         */
+        enableLeftSideMenu: function () {
             $.query("#content, #header, #navbar").addClass("hasMenu");
         },
-        enableSideMenu:function(){
+        enableSideMenu: function () {
             return this.enableLeftSideMenu();
         },
 
         /**
          * Disables the side menu
-           ```
-           $.ui.disableSideMenu();
-           ```
-        * @title $.ui.disableSideMenu();
-        */
-        disableRightSideMenu:function(){
+         ```
+         $.ui.disableSideMenu();
+         ```
+         * @title $.ui.disableSideMenu();
+         */
+        disableRightSideMenu: function () {
             var els = $.query("#content, #header, #navbar");
             if (this.isSideMenuOn()) {
-                this.toggleSideMenu(false, function(canceled) {
+                this.toggleSideMenu(false, function (canceled) {
                     if (!canceled) els.removeClass("hasAside");
                 });
             } else els.removeClass("hasAside");
         },
         /**
          * Enables the side menu if it has been disabled
-           ```
-           $.ui.enableRightSideMenu();
-           ```
-        * @title $.ui.enableRightSideMenu();
-        */
-        enableRightSideMenu: function() {
+         ```
+         $.ui.enableRightSideMenu();
+         ```
+         * @title $.ui.enableRightSideMenu();
+         */
+        enableRightSideMenu: function () {
             $.query("#content, #header, #navbar").addClass("hasAside");
         },
         /**
@@ -4930,7 +4966,7 @@ if (!Date.now)
          * @title $.ui.isSideMenuEnabled();
          * @api private
          */
-        isSideMenuEnabled: function() {
+        isSideMenuEnabled: function () {
             return $.query("#content").hasClass("hasMenu");
         },
         /**
@@ -4938,7 +4974,7 @@ if (!Date.now)
          * @title $.ui.isAsideMenuEnabled();
          * @api private
          */
-        isAsideMenuEnabled: function() {
+        isAsideMenuEnabled: function () {
             return $.query("#content").hasClass("hasAside");
         },
         /**
@@ -4946,35 +4982,35 @@ if (!Date.now)
          * @title $.ui.enableSideMenu();
          * @api private
          */
-        isSideMenuOn: function() {
-            var menu = this.getSideMenuPosition() !==0 ? true : false;
-            return (this.isSideMenuEnabled()||this.isAsideMenuEnabled) && menu;
+        isSideMenuOn: function () {
+            var menu = this.getSideMenuPosition() !== 0 ? true : false;
+            return (this.isSideMenuEnabled() || this.isAsideMenuEnabled) && menu;
         },
         /**
          * @title $.ui.getSideMenuPosition();
          * @api private
          */
-        getSideMenuPosition:function(){
+        getSideMenuPosition: function () {
             return numOnly(parseFloat($.getCssMatrix($("#content")).e));
         },
         /**
          * Boolean that will disable the splitview before launch
-           ```
-           $.ui.splitView=false;
-           ```
-          * @title $.ui.splitview
-          */
-        splitview:true,
+         ```
+         $.ui.splitView=false;
+         ```
+         * @title $.ui.splitview
+         */
+        splitview: true,
         /**
          * Disables the split view on tablets
-           ```
-           $.ui.disableSplitView();
-           ```
+         ```
+         $.ui.disableSplitView();
+         ```
          * @title $.ui.disableSplitView();
          */
-        disableSplitView:function(){
+        disableSplitView: function () {
             $.query("#content, #header, #navbar, #menu").removeClass("splitview");
-            this.splitview=false;
+            this.splitview = false;
         },
 
 
@@ -4985,17 +5021,17 @@ if (!Date.now)
         prevFooter: null,
         /**
          * Updates the elements in the navbar
-           ```
-           $.ui.updateNavbarElements(elements);
-           ```
+         ```
+         $.ui.updateNavbarElements(elements);
+         ```
          * @param {(string|object)} elems
          * @title $.ui.updateNavbarElements(Elements)
          */
-        updateNavbarElements: function(elems) {
+        updateNavbarElements: function (elems) {
             if (this.prevFooter) {
-                if (this.prevFooter.data("parent")){
+                if (this.prevFooter.data("parent")) {
                     var useScroller = this.scrollingDivs.hasOwnProperty(this.prevFooter.data("parent"));
-                    if($.feat.nativeTouchScroll||$.os.desktop || !useScroller ){
+                    if ($.feat.nativeTouchScroll || $.os.desktop || !useScroller) {
                         this.prevFooter.appendTo("#" + this.prevFooter.data("parent"));
                     }
                     else {
@@ -5034,29 +5070,29 @@ if (!Date.now)
         prevHeader: null,
         /**
          * Updates the elements in the header
-           ```
-           $.ui.updateHeaderElements(elements);
-           ```
+         ```
+         $.ui.updateHeaderElements(elements);
+         ```
          * @param {(string|object)} elems
          * @param {boolean} goBack
          * @title $.ui.updateHeaderElements(Elements)
          */
-        updateHeaderElements: function(elems, goBack) {
+        updateHeaderElements: function (elems, goBack) {
             var that = this;
             if (!$.is$(elems)) //inline footer
             {
                 elems = $.query("#" + elems);
             }
             if (elems === this.prevHeader) return;
-            this._currentHeaderID=elems.prop("id");
+            this._currentHeaderID = elems.prop("id");
             if (this.prevHeader) {
                 var useScroller = this.scrollingDivs.hasOwnProperty(this.prevHeader.data("parent"));
                 //Let's slide them out
                 $.query("#header").append(elems);
                 //Do not animate - sometimes they act funky
                 if (!$.ui.animateHeaders) {
-                    if (that.prevHeader.data("parent")){
-                        if($.feat.nativeTouchScroll||$.os.desktop || !useScroller ){
+                    if (that.prevHeader.data("parent")) {
+                        if ($.feat.nativeTouchScroll || $.os.desktop || !useScroller) {
                             this.prevHeader.appendTo("#" + this.prevHeader.data("parent"));
                         }
                         else {
@@ -5082,9 +5118,9 @@ if (!Date.now)
                     opacity: 0.3,
                     time: that.transitionTime,
                     delay: numOnly(that.transitionTime) / 5 + "ms",
-                    complete: function() {
-                        if (that.prevHeader.data("parent")){
-                            if($.feat.nativeTouchScroll||$.os.desktop || !useScroller ){
+                    complete: function () {
+                        if (that.prevHeader.data("parent")) {
+                            if ($.feat.nativeTouchScroll || $.os.desktop || !useScroller) {
                                 that.prevHeader.appendTo("#" + that.prevHeader.data("parent"));
                             }
                             else {
@@ -5116,15 +5152,15 @@ if (!Date.now)
         /**
          * @api private
          */
-        previAsideMenu:null,
+        previAsideMenu: null,
         /**
          * Updates the right hand aside menus
          */
 
-        updateAsideElements:function(){
-            return this.updateRightSideMenuElements.apply(this,arguments);
+        updateAsideElements: function () {
+            return this.updateRightSideMenuElements.apply(this, arguments);
         },
-        updateRightSideMenuElements:function(elems){
+        updateRightSideMenuElements: function (elems) {
             if (elems === undefined || elems === null) return;
             var nb = $.query("#aside_menu_scroller");
 
@@ -5135,10 +5171,10 @@ if (!Date.now)
 
             if (!$.is$(elems)) elems = $.query("#" + elems);
 
-            if($(elems).attr("title")){
+            if ($(elems).attr("title")) {
                 $(elems).prepend(
-                    $.create("header", {className:"header"}).append(
-                        $.create("h1", {html:$(elems).attr("title")}).get(0))
+                    $.create("header", {className: "header"}).append(
+                        $.create("h1", {html: $(elems).attr("title")}).get(0))
                 );
                 $(elems).removeAttr("title");
             }
@@ -5154,21 +5190,21 @@ if (!Date.now)
          * @api private
          * Kept for backwards compatibility
          */
-        updateSideMenu: function(elems) {
+        updateSideMenu: function (elems) {
             return this.updateSideMenuElements(elems);
         },
         /**
          * Updates the elements in the side menu
-           ```
-           $.ui.updateSideMenuElements(elements);
-           ```
+         ```
+         $.ui.updateSideMenuElements(elements);
+         ```
          * @param {...(string|object)} elements
          * @title $.ui.updateSideMenuElements(elements)
          */
-        updateSideMenuElements: function() {
-            return this.updateLeftSideMenuElements.apply(this,arguments);
+        updateSideMenuElements: function () {
+            return this.updateLeftSideMenuElements.apply(this, arguments);
         },
-        updateLeftSideMenuElements:function(elems) {
+        updateLeftSideMenuElements: function (elems) {
             if (elems === undefined || elems === null) return;
             var nb = $.query("#menu_scroller");
 
@@ -5179,10 +5215,10 @@ if (!Date.now)
 
             if (!$.is$(elems)) elems = $.query("#" + elems);
 
-            if($(elems).attr("title")){
+            if ($(elems).attr("title")) {
                 $(elems).prepend(
-                    $.create("header", {className:"header"}).append(
-                        $.create("h1", {html:$(elems).attr("title")}).get(0))
+                    $.create("header", {className: "header"}).append(
+                        $.create("h1", {html: $(elems).attr("title")}).get(0))
                 );
                 $(elems).removeAttr("title");
             }
@@ -5197,51 +5233,52 @@ if (!Date.now)
 
         /**
          * Set the title of the current panel
-           ```
-           $.ui.setTitle("new title");
-           ```
+         ```
+         $.ui.setTitle("new title");
+         ```
 
          * @param {string} val
          * @title $.ui.setTitle(value)
          */
-        setTitle: function(val) {
-            if(this._currentHeaderID !== "defaultHeader") return;
+        setTitle: function (val) {
+            if (this._currentHeaderID !== "defaultHeader") return;
             $.query("#header header:not(.ignore)  #pageTitle").html(val);
         },
         /**
          * Override the text for the back button
-           ```
-           $.ui.setBackButtonText("GO...");
-           ```
+         ```
+         $.ui.setBackButtonText("GO...");
+         ```
 
          * @param {string} text
          * @title $.ui.setBackButtonText(text)
          */
-        setBackButtonText: function(text) {
-            if(this._currentHeaderID !== "defaultHeader") return;
+        setBackButtonText: function (text) {
+            if (this._currentHeaderID !== "defaultHeader") return;
             if (this.trimBackButtonText && text.length >= 7)
                 text = text.substring(0, 5) + "...";
-            if (this.backButtonText.length > 0) $.query("#header header:not(.ignore) .backButton").html(this.backButtonText);
+            if (this.backButtonText.length > 0)
+            $.query("#header header:not(.ignore) .backButton").html(this.backButtonText);
             else $.query("#header header:not(.ignore)  .backButton").html(text);
         },
         /**
          * Toggle visibility of the back button
          */
-        setBackButtonVisibility: function(show) {
+        setBackButtonVisibility: function (show) {
             if (!show) $.query("#header .backButton").css("visibility", "hidden");
             else $.query("#header .backButton").css("visibility", "visible");
         },
         /**
          * Show the loading mask
-           ```
-           $.ui.showMask()
-           $.ui.showMask('Doing work')
-           ```
+         ```
+         $.ui.showMask()
+         $.ui.showMask('Doing work')
+         ```
 
          * @param {string=} text
          * @title $.ui.showMask(text);
          */
-        showMask: function(text) {
+        showMask: function (text) {
             if (!text) text = this.loadingText || "";
             $.query("#afui_mask>h1").html(text);
             $.query("#afui_mask").show();
@@ -5250,50 +5287,50 @@ if (!Date.now)
          * Hide the loading mask
          * @title $.ui.hideMask();
          */
-        hideMask: function() {
+        hideMask: function () {
             $.query("#afui_mask").hide();
         },
         /**
          * @api private
          */
-        modalReference_:null,
+        modalReference_: null,
         /**
          * Load a content panel in a modal window.
-           ```
-           $.ui.showModal("#myDiv","fade");
-           ```
+         ```
+         $.ui.showModal("#myDiv","fade");
+         ```
          * @param {(string|object)} id panel to show
          * @param {string=} trans
          * @title $.ui.showModal();
          */
-        showModal: function(id, trans) {
+        showModal: function (id, trans) {
             var that = this;
             this.modalTransition = trans || "up";
             var modalDiv = $.query("#modalContainer");
             if (typeof(id) === "string")
                 id = "#" + id.replace("#", "");
             var $panel = $.query(id);
-            this.modalReference_=$panel;
-            var modalParent=$.query("#afui_modal");
+            this.modalReference_ = $panel;
+            var modalParent = $.query("#afui_modal");
             if ($panel.length) {
                 var useScroller = this.scrollingDivs.hasOwnProperty($panel.attr("id"));
                 //modalDiv.html($.feat.nativeTouchScroll || !useScroller ? $.query(id).html() : $.query(id).get(0).childNodes[0].innerHTML + '', true);
 
                 var elemsToCopy;
-                if($.feat.nativeTouchScroll||$.os.desktop || !useScroller ){
-                    elemsToCopy=$panel.contents();
+                if ($.feat.nativeTouchScroll || $.os.desktop || !useScroller) {
+                    elemsToCopy = $panel.contents();
                     modalDiv.append(elemsToCopy);
                 }
                 else {
-                    elemsToCopy=$($panel.get(0).childNodes[0]).contents();
+                    elemsToCopy = $($panel.get(0).childNodes[0]).contents();
                     //modalDiv.append(elemsToCopy);
                     modalDiv.children().eq(0).append(elemsToCopy);
                 }
 
 
                 this.runTransition(this.modalTransition, that.modalTransContainer, that.modalWindow, false);
-                $(that.modalWindow).css("display","");
-                $(that.modalWindow).addClass("display","flexContainer");
+                $(that.modalWindow).css("display", "");
+                $(that.modalWindow).addClass("display", "flexContainer");
                 if (useScroller) {
 
                     this.scrollingDivs.modal_container.enable(that.resetScrollers);
@@ -5303,22 +5340,22 @@ if (!Date.now)
                 }
                 modalDiv.addClass("panel").show();
                 //modal header
-                if($panel.data("header") === "none"){ // no header
+                if ($panel.data("header") === "none") { // no header
                     modalParent.find("#modalHeader").hide();
-                } else if(elemsToCopy.filter("header").length>0){ // custom header
+                } else if (elemsToCopy.filter("header").length > 0) { // custom header
                     modalParent.find("#modalHeader").append(elemsToCopy.filter("header")).show();
                 } else { // add default header with close
                     modalParent.find("#modalHeader").append(
                         $.create("header", {}).append(
-                            $.create("h1", {html:$panel.data("title")}).get(0))
-                        .append(
-                            $.create("a", {className:"button icon close"}).attr("onclick","$.ui.hideModal()").get(0)
+                            $.create("h1", {html: $panel.data("title")}).get(0))
+                            .append(
+                            $.create("a", {className: "button icon close"}).attr("onclick", "$.ui.hideModal()").get(0)
                         )).show();
                 }
                 //modal footer
-                if($panel.data("footer") === "none"){ // no footer
+                if ($panel.data("footer") === "none") { // no footer
                     modalParent.find("#modalFooter").hide();
-                } else if(elemsToCopy.filter("footer").length>0){ // custom footer
+                } else if (elemsToCopy.filter("footer").length > 0) { // custom footer
                     modalParent.find("#modalFooter").append(elemsToCopy.filter("footer")).show();
                     var tmpAnchors = $.query("#modalFooter > footer > a:not(.button)");
                     if (tmpAnchors.length > 0) {
@@ -5339,26 +5376,26 @@ if (!Date.now)
 
                 this.scrollToTop("modal");
                 modalDiv.data("panel", id);
-                var myPanel=$panel.get(0);
+                var myPanel = $panel.get(0);
                 var fnc = myPanel.getAttribute("data-load");
-                if(fnc)
-                    this.dispatchPanelEvent(fnc,myPanel);
+                if (fnc)
+                    this.dispatchPanelEvent(fnc, myPanel);
                 $panel.trigger("loadpanel");
 
             }
         },
         /**
          * Hide the modal window and remove the content.  We remove any event listeners on the contents.
-           ```
-           $.ui.hideModal("");
-           ```
+         ```
+         $.ui.hideModal("");
+         ```
          * @title $.ui.hideModal();
          */
-        hideModal: function() {
+        hideModal: function () {
             var self = this;
-            var $cnt=$.query("#modalContainer");
+            var $cnt = $.query("#modalContainer");
 
-            if(!this.modalReference_) return;
+            if (!this.modalReference_) return;
             var useScroller = this.scrollingDivs.hasOwnProperty(this.modalReference_.attr("id"));
 
 
@@ -5367,11 +5404,11 @@ if (!Date.now)
 
             var tmp = $.query($cnt.data("panel"));
             var fnc = tmp.data("unload");
-            if(fnc)
-                this.dispatchPanelEvent(fnc,tmp.get(0));
+            if (fnc)
+                this.dispatchPanelEvent(fnc, tmp.get(0));
             tmp.trigger("unloadpanel");
-            setTimeout(function(){
-                if($.feat.nativeTouchScroll||$.os.desktop || !useScroller){
+            setTimeout(function () {
+                if ($.feat.nativeTouchScroll || $.os.desktop || !useScroller) {
                     self.modalReference_.append($("#modalHeader header"));
                     self.modalReference_.append($cnt.contents());
                     self.modalReference_.append($("#modalFooter footer"));
@@ -5381,21 +5418,21 @@ if (!Date.now)
                     $(self.modalReference_.get(0).childNodes[0]).append($cnt.children().eq(0).contents());
                     self.modalReference_.children().eq(0).append($("#modalFooter footer"));
                 }
-                self.modalReference_=null;
-               // $cnt.html("", true);
-            },this.transitionTime);
+                self.modalReference_ = null;
+                // $cnt.html("", true);
+            }, this.transitionTime);
         },
 
         /**
          * Update the HTML in a content panel
-           ```
-           $.ui.updatePanel("#myDiv","This is the new content");
-           ```
+         ```
+         $.ui.updatePanel("#myDiv","This is the new content");
+         ```
          * @param {(string|object)} id
          * @param {string} content HTML to update with
          * @title $.ui.updatePanel(id,content);
          */
-        updatePanel: function(id, content) {
+        updatePanel: function (id, content) {
             id = "#" + id.replace("#", "");
             var el = $.query(id).get(0);
             if (!el) return;
@@ -5415,30 +5452,30 @@ if (!Date.now)
                 $(el).html(content);
             }
 
-            var scr=this.scrollingDivs[el.id];
-            if(scr&&scr.refresh)
+            var scr = this.scrollingDivs[el.id];
+            if (scr && scr.refresh)
                 scr.addPullToRefresh();
 
             if (newDiv.getAttribute("data-title"))
-                el.setAttribute("data-title",newDiv.getAttribute("data-title"));
+                el.setAttribute("data-title", newDiv.getAttribute("data-title"));
         },
         /**
          * Same as $.ui.updatePanel.  kept for backwards compatibility
-           ```
-           $.ui.updateContentDiv("#myDiv","This is the new content");
-           ```
+         ```
+         $.ui.updateContentDiv("#myDiv","This is the new content");
+         ```
          * @param {(string|object)} id
          * @param {string} content HTML to update with
          * @title $.ui.updateContentDiv(id, content);
          */
-        updateContentDiv: function(id, content) {
+        updateContentDiv: function (id, content) {
             return this.updatePanel(id, content);
         },
         /**
          * Dynamically creates a new panel.  It wires events, creates the scroller, applies Android fixes, etc.
-           ```
-           $.ui.addContentDiv("myDiv","This is the new content","Title");
-           ```
+         ```
+         $.ui.addContentDiv("myDiv","This is the new content","Title");
+         ```
          * @param {(string|object)} el Element to add
          * @param {string} content
          * @param {string} title
@@ -5446,12 +5483,12 @@ if (!Date.now)
          * @param {function=} refreshFunc
          * @title $.ui.addContentDiv(id, content, title);
          */
-        addContentDiv: function(el, content, title, refresh, refreshFunc) {
+        addContentDiv: function (el, content, title, refresh, refreshFunc) {
             var myEl;
-            if(typeof(el) === "string") {
-                if(el.lastIndexOf("#", 1) === -1) el = "#" + el;
+            if (typeof(el) === "string") {
+                if (el.lastIndexOf("#", 1) === -1) el = "#" + el;
                 myEl = $.query(el).get(0);
-            } else if($.is$(el)) {
+            } else if ($.is$(el)) {
                 myEl = el.get(0);
                 el = myEl.id;
             } else {
@@ -5466,7 +5503,7 @@ if (!Date.now)
                 if (newDiv.children(".panel") && newDiv.children(".panel").length > 0) newDiv = newDiv.children(".panel").get(0);
                 else newDiv = newDiv.get(0);
 
-                if (!newDiv.getAttribute("data-title") && title) newDiv.setAttribute("data-title",title);
+                if (!newDiv.getAttribute("data-title") && title) newDiv.setAttribute("data-title", title);
                 newId = (newDiv.id) ? newDiv.id : el.replace("#", ""); //figure out the new id - either the id from the loaded div.panel or the crc32 hash
                 newDiv.id = newId;
                 if (newDiv.id !== el) newDiv.setAttribute("data-crc", el.replace("#", ""));
@@ -5482,9 +5519,9 @@ if (!Date.now)
         },
         /**
          *  Takes a div and sets up scrolling for it..
-           ```
-           $.ui.addDivAndScroll(object);
-           ```
+         ```
+         $.ui.addDivAndScroll(object);
+         ```
          * @param {object} tmp Element
          * @param {boolean=} refreshPull
          * @param {function} refreshFunc
@@ -5492,8 +5529,8 @@ if (!Date.now)
          * @title $.ui.addDivAndScroll(element);
          * @api private
          */
-        addDivAndScroll: function(tmp, refreshPull, refreshFunc, container) {
-            var self=this;
+        addDivAndScroll: function (tmp, refreshPull, refreshFunc, container) {
+            var self = this;
             var jsScroll = false,
                 scrollEl;
             var overflowStyle = tmp.style.overflow;
@@ -5502,45 +5539,45 @@ if (!Date.now)
             container = container || this.content;
             //sets up scroll when required and not supported
 
-            if (!$.feat.nativeTouchScroll && hasScroll&&!$.os.desktop) tmp.setAttribute("js-scrolling", "true");
+            if (!$.feat.nativeTouchScroll && hasScroll && !$.os.desktop) tmp.setAttribute("js-scrolling", "true");
 
             if (tmp.getAttribute("js-scrolling") && (tmp.getAttribute("js-scrolling").toLowerCase() === "yes" || tmp.getAttribute("js-scrolling").toLowerCase() === "true")) {
                 jsScroll = true;
                 hasScroll = true;
             }
-            var title = tmp.getAttribute("data-title")||tmp.title;
+            var title = tmp.getAttribute("data-title") || tmp.title;
             tmp.title = "";
-            tmp.setAttribute("data-title",title);
+            tmp.setAttribute("data-title", title);
 
 
-            if($(tmp).hasClass("no-scroll") || (tmp.getAttribute("scrolling") && tmp.getAttribute("scrolling") === "no")) {
+            if ($(tmp).hasClass("no-scroll") || (tmp.getAttribute("scrolling") && tmp.getAttribute("scrolling") === "no")) {
                 hasScroll = false;
                 jsScroll = false;
                 tmp.removeAttribute("js-scrolling");
             }
 
-            if (!jsScroll ) {
+            if (!jsScroll) {
                 container.appendChild(tmp);
                 scrollEl = tmp;
                 tmp.style["-webkit-overflow-scrolling"] = "none";
             } else {
                 //WE need to clone the div so we keep events
-                scrollEl=tmp;
+                scrollEl = tmp;
                 container.appendChild(tmp);
                 /*scrollEl = tmp.cloneNode(false);
 
 
-                tmp.title = null;
-                tmp.id = null;
-                var $tmp = $(tmp);
-                $tmp.removeAttr("data-footer data-aside data-nav data-header selected data-load data-unload data-tab data-crc title data-title");
+                 tmp.title = null;
+                 tmp.id = null;
+                 var $tmp = $(tmp);
+                 $tmp.removeAttr("data-footer data-aside data-nav data-header selected data-load data-unload data-tab data-crc title data-title");
 
-                $tmp.replaceClass("panel", "afScrollPanel");
+                 $tmp.replaceClass("panel", "afScrollPanel");
 
-                scrollEl.appendChild(tmp);
+                 scrollEl.appendChild(tmp);
 
-                container.appendChild(scrollEl);
-                */
+                 container.appendChild(scrollEl);
+                 */
 
                 if (this.selectBox !== false) this.selectBox.getOldSelects(scrollEl.id);
                 if (this.passwordBox !== false) this.passwordBox.getOldPasswords(scrollEl.id);
@@ -5561,16 +5598,16 @@ if (!Date.now)
                 }));
                 //backwards compatibility
                 $(tmp).addClass("y-scroll");
-                if(self.horizontalScroll)
+                if (self.horizontalScroll)
                     $(tmp).addClass("x-scroll");
                 if (refreshFunc)
-                    $.bind(this.scrollingDivs[scrollEl.id], "refresh-release", function(trigger) {
+                    $.bind(this.scrollingDivs[scrollEl.id], "refresh-release", function (trigger) {
                         if (trigger) {
                             refreshFunc();
                             return false;
                         }
                     });
-                if(jsScroll){
+                if (jsScroll) {
                     $(tmp).children().eq(0).addClass("afScrollPanel");
                 }
             }
@@ -5579,14 +5616,14 @@ if (!Date.now)
 
         /**
          *  Scrolls a panel to the top
-           ```
-           $.ui.scrollToTop(id);
-           ```
+         ```
+         $.ui.scrollToTop(id);
+         ```
          * @param {string} id
          * @param {string} time Time to scroll
          * @title $.ui.scrollToTop(id);
          */
-        scrollToTop: function(id, time) {
+        scrollToTop: function (id, time) {
             time = time || "300ms";
             id = id.replace("#", "");
             if (this.scrollingDivs[id]) {
@@ -5595,14 +5632,14 @@ if (!Date.now)
         },
         /**
          *  Scrolls a panel to the bottom
-           ```
-           $.ui.scrollToBottom(id,time);
-           ```
+         ```
+         $.ui.scrollToBottom(id,time);
+         ```
          * @param {string} id
          * @param {string} time Time to scroll
          * @title $.ui.scrollToBottom(id);
          */
-        scrollToBottom: function(id, time) {
+        scrollToBottom: function (id, time) {
             id = id.replace("#", "");
             if (this.scrollingDivs[id]) {
                 this.scrollingDivs[id].scrollToBottom(time);
@@ -5612,16 +5649,16 @@ if (!Date.now)
         /**
          *  This is used when a transition fires to do helper events.  We check to see if we need to change the nav menus, footer, and fire
          * the load/onload functions for panels
-           ```
-           $.ui.parsePanelFunctions(currentDiv, oldDiv);
-           ```
+         ```
+         $.ui.parsePanelFunctions(currentDiv, oldDiv);
+         ```
          * @param {object} what current div
          * @param {object=} oldDiv old div
          * @param {boolean=} goBack
          * @title $.ui.parsePanelFunctions(currentDiv, oldDiv);
          * @api private
          */
-        parsePanelFunctions: function(what, oldDiv, goBack) {
+        parsePanelFunctions: function (what, oldDiv, goBack) {
             //check for custom footer
             var that = this;
             var hasFooter = what.getAttribute("data-footer");
@@ -5642,7 +5679,7 @@ if (!Date.now)
             }
             if (hasHeader && hasHeader.toLowerCase() === "none") {
                 that.toggleHeaderMenu(false);
-                hasHeader=false;
+                hasHeader = false;
             } else {
                 that.toggleHeaderMenu(true);
             }
@@ -5680,7 +5717,7 @@ if (!Date.now)
                 $.query("#navbar #" + what.getAttribute("data-tab")).addClass("pressed");
             }
 
-            var hasMenu = what.getAttribute("data-left-menu")||what.getAttribute("data-nav");
+            var hasMenu = what.getAttribute("data-left-menu") || what.getAttribute("data-nav");
             if (hasMenu && this.customMenu !== hasMenu) {
                 this.customMenu = hasMenu;
                 this.updateSideMenuElements(hasMenu);
@@ -5692,28 +5729,28 @@ if (!Date.now)
             }
 
 
-            var hasAside =what.getAttribute("data-right-menu")|| what.getAttribute("data-aside");
-            if(hasAside && this.customAside !== hasAside){
-                this.customAside= hasAside;
+            var hasAside = what.getAttribute("data-right-menu") || what.getAttribute("data-aside");
+            if (hasAside && this.customAside !== hasAside) {
+                this.customAside = hasAside;
                 this.updateAsideElements(hasAside);
             }
-            else if(hasAside !== this.customAside) {
-                if(this.customAside){
+            else if (hasAside !== this.customAside) {
+                if (this.customAside) {
                     this.updateAsideElements(this.defaultAside);
                 }
-                this.customAside=false;
+                this.customAside = false;
             }
 
 
             if (oldDiv) {
                 fnc = oldDiv.getAttribute("data-unload");
-                if(fnc)
-                    this.dispatchPanelEvent(fnc,oldDiv);
+                if (fnc)
+                    this.dispatchPanelEvent(fnc, oldDiv);
                 $(oldDiv).trigger("unloadpanel");
             }
             var fnc = what.getAttribute("data-load");
-            if(fnc)
-                this.dispatchPanelEvent(fnc,what);
+            if (fnc)
+                this.dispatchPanelEvent(fnc, what);
             $(what).trigger("loadpanel");
             if (this.isSideMenuOn()) {
                 that.toggleSideMenu(false);
@@ -5723,18 +5760,18 @@ if (!Date.now)
          * Helper function that parses a contents html for any script tags and either adds them or executes the code
          * @api private
          */
-        parseScriptTags: function(div) {
+        parseScriptTags: function (div) {
             if (!div) return;
-            if(!$.fn||$.fn.namespace!=="appframework") return;
+            if (!$.fn || $.fn.namespace !== "appframework") return;
 
             $.parseJS(div);
         },
         /**
          * This is called to initiate a transition or load content via ajax.
          * We can pass in a hash+id or URL and then we parse the panel for additional functions
-           ```
-           $.ui.loadContent("#main",false,false,"up");
-           ```
+         ```
+         $.ui.loadContent("#main",false,false,"up");
+         ```
          * @param {string} target
          * @param {boolean=} newtab (resets history)
          * @param {boolean=} go back (initiate the back click)
@@ -5743,7 +5780,7 @@ if (!Date.now)
          * @title $.ui.loadContent(target, newTab, goBack, transition, anchor);
          * @api public
          */
-        loadContent: function(target, newTab, back, transition, anchor) {
+        loadContent: function (target, newTab, back, transition, anchor) {
 
             if (this.doingTransition) {
                 this.loadContentQueue.push([target, newTab, back, transition, anchor]);
@@ -5783,9 +5820,9 @@ if (!Date.now)
         },
         /**
          * This is called internally by loadContent.  Here we are loading a div instead of an Ajax link
-           ```
-           $.ui.loadDiv("#main",false,false,"up");
-           ```
+         ```
+         $.ui.loadDiv("#main",false,false,"up");
+         ```
          * @param {string} target
          * @param {boolean=} newtab (resets history)
          * @param {boolean=} back Go back (initiate the back click)
@@ -5793,7 +5830,7 @@ if (!Date.now)
          * @title $.ui.loadDiv(target,newTab,goBack,transition);
          * @api private
          */
-        loadDiv: function(target, newTab, back, transition) {
+        loadDiv: function (target, newTab, back, transition) {
             // load a div
             var that = this;
             var what = target.replace("#", "");
@@ -5826,7 +5863,6 @@ if (!Date.now)
             }
 
 
-
             if (oldDiv === currWhat) //prevent it from going to itself
                 return;
 
@@ -5854,8 +5890,8 @@ if (!Date.now)
             this.loadContentData(what, newTab, back, transition);
 
             //this fixes a bug in iOS where a div flashes when the the overflow property is changed from auto to hidden
-            if($.feat.nativeTouchScroll) {
-                setTimeout(function() {
+            if ($.feat.nativeTouchScroll) {
+                setTimeout(function () {
                     if (that.scrollingDivs[oldDiv.id]) {
                         that.scrollingDivs[oldDiv.id].disable();
                     }
@@ -5867,16 +5903,16 @@ if (!Date.now)
         },
         /**
          * This is called internally by loadDiv.  This sets up the back button in the header and scroller for the panel
-           ```
-           $.ui.loadContentData("#main",false,false,"up");
-           ```
+         ```
+         $.ui.loadContentData("#main",false,false,"up");
+         ```
          * @param {string} target
          * @param {boolean=} newtab (resets history)
          * @param {boolean=} go back (initiate the back click)
          * @title $.ui.loadContentData(target,newTab,goBack);
          * @api private
          */
-        loadContentData: function(what, newTab, back) {
+        loadContentData: function (what, newTab, back) {
 
             var prevId, el, val, slashIndex;
             if (back) {
@@ -5909,7 +5945,7 @@ if (!Date.now)
                 this.history = [];
                 $("#header #menubadge").css("float", "left");
             } else {
-                this.setBackButtonVisibility( this.showBackButton && this.showBackbutton );
+                this.setBackButtonVisibility(this.showBackButton && this.showBackbutton);
             }
             this.activeDiv = what;
             if (this.scrollingDivs[this.activeDiv.id]) {
@@ -5918,9 +5954,9 @@ if (!Date.now)
         },
         /**
          * This is called internally by loadContent.  Here we are using Ajax to fetch the data
-           ```
-           $.ui.loadDiv("page.html",false,false,"up");
-           ```
+         ```
+         $.ui.loadDiv("page.html",false,false,"up");
+         ```
          * @param {string} target
          * @param {boolean=} newtab (resets history)
          * @param {boolean=} go back (initiate the back click)
@@ -5929,7 +5965,7 @@ if (!Date.now)
          * @title $.ui.loadDiv(target,newTab,goBack,transition);
          * @api private
          */
-        loadAjax: function(target, newTab, back, transition, anchor) {
+        loadAjax: function (target, newTab, back, transition, anchor) {
             // XML Request
             if (this.activeDiv.id === "afui_ajax" && target === this.ajaxUrl) return;
             var urlHash = "url" + crc32(target); //Ajax urls
@@ -5943,7 +5979,7 @@ if (!Date.now)
             }
 
             anchor = anchor || document.createElement("a");
-            xmlhttp.onreadystatechange = function() {
+            xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     this.doingTransition = false;
                     var refreshFunction;
@@ -5951,7 +5987,7 @@ if (!Date.now)
                     var retainDiv = $.query("#" + urlHash);
                     var contentClasses = '';
 
-                    var hideRefresh = function(scrid) {
+                    var hideRefresh = function (scrid) {
                         var scr = that.scrollingDivs[scrid];
                         if (scr && scr.refresh)
                             scr.hideRefresh();
@@ -5961,12 +5997,12 @@ if (!Date.now)
                     if (retainDiv.length > 0) {
                         hideRefresh(urlHash);
                         that.updatePanel(urlHash, xmlhttp.responseText);
-                        retainDiv.get(0).setAttribute("data-title",anchor.title ? anchor.title : target);
+                        retainDiv.get(0).setAttribute("data-title", anchor.title ? anchor.title : target);
                     } else if (anchor.getAttribute("data-persist-ajax") || that.isAjaxApp) {
 
                         var refresh = (anchor.getAttribute("data-pull-scroller") === "true") ? true : false;
-                        refreshFunction = refresh ? function() {
-                            setTimeout(function() {
+                        refreshFunction = refresh ? function () {
+                            setTimeout(function () {
                                 anchor.refresh = true;
                                 that.loadContent(target, newTab, back, transition, anchor);
                                 anchor.refresh = false;
@@ -5977,7 +6013,7 @@ if (!Date.now)
 
                         if (contents.hasClass("panel")) {
                             contentClasses = contents.get(0).className;
-                            urlHash=contents.attr("id");
+                            urlHash = contents.attr("id");
                             contents = contents.get(0).innerHTML;
                         }
                         else {
@@ -5997,7 +6033,7 @@ if (!Date.now)
                     } else {
 
                         that.updatePanel("afui_ajax", xmlhttp.responseText);
-                        $.query("#afui_ajax").attr("data-title",anchor.title ? anchor.title : target);
+                        $.query("#afui_ajax").attr("data-title", anchor.title ? anchor.title : target);
                         that.loadContent("#afui_ajax", newTab, back, transition);
 
                         doReturn = true;
@@ -6014,10 +6050,10 @@ if (!Date.now)
                         return;
                     }
 
-                    if (contentClasses){
+                    if (contentClasses) {
                         var contentClassList = contentClasses.split(" ");
-                        for (var i=0; i < contentClassList.length; i++){
-                            if (contentClassList[i].trim() !== "panel"){
+                        for (var i = 0; i < contentClassList.length; i++) {
+                            if (contentClassList[i].trim() !== "panel") {
                                 $("#" + urlHash).addClass(contentClassList[i]);
                             }
                         }
@@ -6027,7 +6063,7 @@ if (!Date.now)
                     if (that.showLoading) that.hideMask();
                     return null;
                 }
-                else if(xmlhttp.readyState === 4) {
+                else if (xmlhttp.readyState === 4) {
                     $.ui.hideMask();
                 }
             };
@@ -6041,17 +6077,17 @@ if (!Date.now)
         },
         /**
          * This executes the transition for the panel
-            ```
-            $.ui.runTransition(transition,oldDiv,currDiv,back)
-            ```
+         ```
+         $.ui.runTransition(transition,oldDiv,currDiv,back)
+         ```
          * @api private
          * @title $.ui.runTransition(transition,oldDiv,currDiv,back)
          */
-        runTransition: function(transition, oldDiv, currWhat, back) {
+        runTransition: function (transition, oldDiv, currWhat, back) {
             if (!this.availableTransitions[transition]) transition = "default";
-            if(oldDiv.style.display==="none")
+            if (oldDiv.style.display === "none")
                 oldDiv.style.display = "block";
-            if(currWhat.style.display==="none")
+            if (currWhat.style.display === "none")
                 currWhat.style.display = "block";
             this.availableTransitions[transition].call(this, oldDiv, currWhat, back);
         },
@@ -6059,21 +6095,21 @@ if (!Date.now)
         /**
          * This is callled when you want to launch afui.  If autoLaunch is set to true, it gets called on DOMContentLoaded.
          * If autoLaunch is set to false, you can manually invoke it.
-           ```
-           $.ui.autoLaunch=false;
-           $.ui.launch();
-           ```
+         ```
+         $.ui.autoLaunch=false;
+         $.ui.launch();
+         ```
          * @title $.ui.launch();
          */
-        launch: function() {
+        launch: function () {
 
             if (this.hasLaunched === false || this.launchCompleted) {
                 this.hasLaunched = true;
                 return;
             }
-            if(this.isLaunching)
+            if (this.isLaunching)
                 return true;
-            this.isLaunching=true;
+            this.isLaunching = true;
 
             var that = this;
 
@@ -6083,8 +6119,8 @@ if (!Date.now)
             this.header = af.query("#header").get(0);
             this.menu = af.query("#menu").get(0);
             //set anchor click handler for UI
-            this.viewportContainer.on("click", "a", function(e) {
-                if(that.useInternalRouting)
+            this.viewportContainer.on("click", "a", function (e) {
+                if (that.useInternalRouting)
                     checkAnchorClick(e, e.currentTarget);
             });
 
@@ -6094,25 +6130,24 @@ if (!Date.now)
             var enterEditEl = null;
 
             //on enter-edit keep a reference of the actioned element
-            $.bind($.touchLayer, "enter-edit", function(el) {
+            $.bind($.touchLayer, "enter-edit", function (el) {
                 enterEditEl = el;
             });
             //enter-edit-reshape panel padding and scroll adjust
-            if($.os.android)
-            {
-                $.bind($.touchLayer, "enter-edit-reshape", function() {
+            if ($.os.android) {
+                $.bind($.touchLayer, "enter-edit-reshape", function () {
                     //onReshape UI fixes
                     //check if focused element is within active panel
                     var jQel = $(enterEditEl);
                     var jQactive = jQel.closest(that.activeDiv);
                     if (jQactive && jQactive.size() > 0) {
-                        if($.os.androidICS){
+                        if ($.os.androidICS) {
                             //get the top
-                            var scroller=that.scrollingDivs[that.activeDiv.id];
-                            var top=scroller.scrollTop;
+                            var scroller = that.scrollingDivs[that.activeDiv.id];
+                            var top = scroller.scrollTop;
                             scroller.scrollBy({
-                                x:0,
-                                y:((jQel.offset().top-jQactive.offset().top+top)/2)
+                                x: 0,
+                                y: ((jQel.offset().top - jQactive.offset().top + top) / 2)
                             });
                         } else if ($.os.android || $.os.blackberry) {
                             var elPos = jQel.offset();
@@ -6124,7 +6159,7 @@ if (!Date.now)
                         }
                     }
                 });
-                $.bind($.touchLayer, "exit-edit-reshape", function() {
+                $.bind($.touchLayer, "exit-edit-reshape", function () {
                     if (that.activeDiv && that.activeDiv.id && that.scrollingDivs.hasOwnProperty(that.activeDiv.id)) {
                         that.scrollingDivs[that.activeDiv.id].setPaddings(0, 0);
                     }
@@ -6165,7 +6200,7 @@ if (!Date.now)
                     useJsScroll: !$.feat.nativeTouchScroll,
                     autoEnable: true,
                     lockBounce: this.lockPageBounce,
-                    hasParent:true
+                    hasParent: true
                 });
                 if ($.feat.nativeTouchScroll) $.query("#menu_scroller").css("height", "100%");
 
@@ -6182,17 +6217,16 @@ if (!Date.now)
                     useJsScroll: !$.feat.nativeTouchScroll,
                     autoEnable: true,
                     lockBounce: this.lockPageBounce,
-                    hasParent:true
+                    hasParent: true
                 });
                 if ($.feat.nativeTouchScroll) $.query("#aside_menu_scroller").css("height", "100%");
             }
 
 
-
             //insert backbutton (should optionally be left to developer..)
-            $(this.header).html("<a class='backButton button'></a> <h1 id='pageTitle'></h1>" + this.header.innerHTML);
+            $(this.header).html("<a class='headerBack' onclick='$.ui.goBack()' ><img src='assets/img/backPage.png' height='32' /></a> <h1 id='pageTitle'></h1>" + this.header.innerHTML );
             this.backButton = $.query("#header .backButton").css("visibility", "hidden");
-            $(document).on("click", "#header .backButton", function(e) {
+            $(document).on("click", "#header .backButton", function (e) {
                 e.preventDefault();
                 that.goBack();
             });
@@ -6216,16 +6250,16 @@ if (!Date.now)
                 id: "afui_modal"
             }).get(0);
             $(modalDiv).hide();
-            modalDiv.appendChild($.create("div",{
-                id:"modalHeader",
-                className:"header"
+            modalDiv.appendChild($.create("div", {
+                id: "modalHeader",
+                className: "header"
             }).get(0));
             modalDiv.appendChild($.create("div", {
                 id: "modalContainer"
             }).get(0));
-            modalDiv.appendChild($.create("div",{
-                id:"modalFooter",
-                className:"footer"
+            modalDiv.appendChild($.create("div", {
+                id: "modalFooter",
+                className: "footer"
             }).get(0));
 
             this.modalTransContainer = $.create("div", {
@@ -6268,10 +6302,10 @@ if (!Date.now)
             contentDivs = null;
             var loadingDefer = false;
             var toLoad = Object.keys(defer).length;
-            var loadDeferred=function(j){
+            var loadDeferred = function (j) {
                 $.ajax({
                     url: intel.xdk.webRoot + defer[j],
-                    success: function(data) {
+                    success: function (data) {
                         if (data.length > 0) {
                             that.updatePanel(j, data);
                             that.parseScriptTags($.query("#" + j).get(0));
@@ -6282,7 +6316,7 @@ if (!Date.now)
                             $(document).trigger("defer:loaded");
                         }
                     },
-                    error: function() {
+                    error: function () {
                         //still trigger the file as being loaded to not block $.ui.ready
                         console.log("Error with deferred load " + intel.xdk.webRoot + defer[j]);
                         loaded++;
@@ -6306,7 +6340,7 @@ if (!Date.now)
                     this.scrollingDivs[this.activeDiv.id].enable();
                 }
 
-                var loadFirstDiv = function() {
+                var loadFirstDiv = function () {
 
 
                     $.query("#navbar").append($.create("footer", {
@@ -6323,10 +6357,10 @@ if (!Date.now)
                         that.prevMenu = that.defaultMenu;
                     }
                     var firstAside = $.query("aside").get(0);
-                    if(firstAside) {
-                        that.defaultAside=$(firstAside);
+                    if (firstAside) {
+                        that.defaultAside = $(firstAside);
                         that.updateAsideElements(that.defaultAside);
-                        that.prevAsideMenu=that.defaultAside;
+                        that.prevAsideMenu = that.defaultAside;
                     }
                     //get default header
                     that.defaultHeader = "defaultHeader";
@@ -6337,34 +6371,34 @@ if (!Date.now)
                     $.query("#header").addClass("header");
                     $.query("#navbar").addClass("footer");
                     //
-                    $.query("#navbar").on("click", "footer>a:not(.button)", function(e) {
+                    $.query("#navbar").on("click", "footer>a:not(.button)", function (e) {
                         $.query("#navbar>footer>a").not(e.currentTarget).removeClass("pressed");
                         $(e.currentTarget).addClass("pressed");
                     });
 
                     //There is a bug in chrome with @media queries where the header was not getting repainted
                     if ($.query("nav").length > 0) {
-                        var splitViewClass=that.splitview?" splitview":"";
-                        $.query("#afui #header").addClass("hasMenu"+splitViewClass);
-                        $.query("#afui #content").addClass("hasMenu"+splitViewClass);
-                        $.query("#afui #navbar").addClass("hasMenu"+splitViewClass);
-                        $.query("#afui #menu").addClass("hasMenu"+splitViewClass);
+                        var splitViewClass = that.splitview ? " splitview" : "";
+                        $.query("#afui #header").addClass("hasMenu" + splitViewClass);
+                        $.query("#afui #content").addClass("hasMenu" + splitViewClass);
+                        $.query("#afui #navbar").addClass("hasMenu" + splitViewClass);
+                        $.query("#afui #menu").addClass("hasMenu" + splitViewClass);
                         $.query("#afui #aside_menu").addClass(splitViewClass);
                     }
-                    if($.query("aside").length > 0) {
+                    if ($.query("aside").length > 0) {
                         $.query("#afui #header, #afui #content, #afui #navbar").addClass("hasAside");
                     }
                     $.query("#afui #menu").addClass("tabletMenu");
                     //go to activeDiv
 
 
-                    if($.ui.splitview&&window.innerWidth>parseInt($.ui.handheldMinWidth,10)){
-                        $.ui.sideMenuWidth=$("#menu").css("width")+"px";
+                    if ($.ui.splitview && window.innerWidth > parseInt($.ui.handheldMinWidth, 10)) {
+                        $.ui.sideMenuWidth = $("#menu").css("width") + "px";
                     }
 
                     var firstPanelId = that.getPanelId(defaultHash);
                     //that.history=[{target:'#'+that.firstDiv.id}];   //set the first id as origin of path
-                    var isFirstPanel = (firstPanelId!==null&&firstPanelId === "#" + that.firstDiv.id);
+                    var isFirstPanel = (firstPanelId !== null && firstPanelId === "#" + that.firstDiv.id);
                     if (firstPanelId.length > 0 && that.loadDefaultHash && !isFirstPanel) {
                         that.loadContent(defaultHash, true, false, "none"); //load the active page as a newTab with no transition
                     }
@@ -6387,11 +6421,11 @@ if (!Date.now)
                     that.launchCompleted = true;
                     //trigger ui ready
                     $.query("#afui #splashscreen").remove();
-                    if($.os.fennec){
+                    if ($.os.fennec) {
                         $(document).trigger("afui:ready");
                     }
                     else
-                        setTimeout(function(){
+                        setTimeout(function () {
                             $(document).trigger("afui:ready");
                         });
                 };
@@ -6401,17 +6435,17 @@ if (!Date.now)
             }
             else {
                 //Don't block afui:ready from dispatching, even though there's no content
-                setTimeout(function(){
-                        $(document).trigger("afui:ready");
-                    });
+                setTimeout(function () {
+                    $(document).trigger("afui:ready");
+                });
             }
-            $.bind(that, "content-loaded", function() {
+            $.bind(that, "content-loaded", function () {
                 if (that.loadContentQueue.length > 0) {
                     var tmp = that.loadContentQueue.splice(0, 1)[0];
                     that.loadContent(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]);
                 }
             });
-            if (window.navigator.standalone||this.isIntel) {
+            if (window.navigator.standalone || this.isIntel) {
                 this.blockPageScroll();
             }
             this.enableTabBar();
@@ -6420,9 +6454,9 @@ if (!Date.now)
         /**
          * This simulates the click and scroll to top of browsers
          */
-        topClickScroll: function() {
+        topClickScroll: function () {
             var that = this;
-            document.getElementById("header").addEventListener("click", function(e) {
+            document.getElementById("header").addEventListener("click", function (e) {
                 if (e.clientY <= 15 && e.target.nodeName.toLowerCase() === "h1") //hack - the title spans the whole width of the header
                     that.scrollingDivs[that.activeDiv.id].scrollToTop("100");
             });
@@ -6431,15 +6465,15 @@ if (!Date.now)
         /**
          * This blocks the page from scrolling/panning.  Usefull for native apps
          */
-        blockPageScroll: function() {
-            $.query("#afui #header").bind("touchmove", function(e) {
+        blockPageScroll: function () {
+            $.query("#afui #header").bind("touchmove", function (e) {
                 e.preventDefault();
             });
         },
         /**
          * This is the default transition.  It simply shows the new panel and hides the old
          */
-        noTransition: function(oldDiv, currDiv) {
+        noTransition: function (oldDiv, currDiv) {
             currDiv.style.display = "block";
             oldDiv.style.display = "block";
             var that = this;
@@ -6459,12 +6493,12 @@ if (!Date.now)
          * @param {object=} currDiv
          * @title $.ui.finishTransition(oldDiv)
          */
-        finishTransition: function(oldDiv, currDiv) {
+        finishTransition: function (oldDiv, currDiv) {
             oldDiv.style.display = "none";
             this.doingTransition = false;
-            if(oldDiv)
+            if (oldDiv)
                 $(oldDiv).trigger("unloadpanelcomplete");
-            if(currDiv)
+            if (currDiv)
                 $(currDiv).trigger("loadpanelcomplete");
 
             if (currDiv) this.clearAnimations(currDiv);
@@ -6478,7 +6512,7 @@ if (!Date.now)
          * @param {object} inViewDiv Div that transitioned out
          * @title $.ui.finishTransition(oldDiv)
          */
-        clearAnimations: function(inViewDiv) {
+        clearAnimations: function (inViewDiv) {
             inViewDiv.style[$.feat.cssPrefix + "Transform"] = "none";
             inViewDiv.style[$.feat.cssPrefix + "Transition"] = "none";
         }
@@ -6491,7 +6525,7 @@ if (!Date.now)
 
 
     //lookup for a clicked anchor recursively and fire UI own actions when applicable
-    var checkAnchorClick = function(e, theTarget) {
+    var checkAnchorClick = function (e, theTarget) {
         var afui = document.getElementById("afui");
         if (theTarget === (afui)) {
             return;
@@ -6504,7 +6538,7 @@ if (!Date.now)
 
             var custom = (typeof $.ui.customClickHandler === "function") ? $.ui.customClickHandler : false;
             if (custom !== false) {
-                if ($.ui.customClickHandler(theTarget,e)) return e.preventDefault();
+                if ($.ui.customClickHandler(theTarget, e)) return e.preventDefault();
 
             }
             if (theTarget.href.toLowerCase().indexOf("javascript:") !== -1 || theTarget.getAttribute("data-ignore")) {
@@ -6537,10 +6571,10 @@ if (!Date.now)
 
             //internal links
             //http urls
-            var urlRegex=/^((http|https|file):\/\/)/;
+            var urlRegex = /^((http|https|file):\/\/)/;
             //only call prevent default on http/fileurls.  If it's a protocol handler, do not call prevent default.
             //It will fall through to the ajax call and fail
-            if(theTarget.href.indexOf(":") !== -1 &&urlRegex.test(theTarget.href))
+            if (theTarget.href.indexOf(":") !== -1 && urlRegex.test(theTarget.href))
                 e.preventDefault();
             var mytransition = theTarget.getAttribute("data-transition");
             var resetHistory = theTarget.getAttribute("data-resetHistory");
@@ -6551,8 +6585,9 @@ if (!Date.now)
         }
     };
 
-    var table = "00000000 77073096 EE0E612C 990951BA 076DC419 706AF48F E963A535 9E6495A3 0EDB8832 79DCB8A4 E0D5E91E 97D2D988 09B64C2B 7EB17CBD E7B82D07 90BF1D91 1DB71064 6AB020F2 F3B97148 84BE41DE 1ADAD47D 6DDDE4EB F4D4B551 83D385C7 136C9856 646BA8C0 FD62F97A 8A65C9EC 14015C4F 63066CD9 FA0F3D63 8D080DF5 3B6E20C8 4C69105E D56041E4 A2677172 3C03E4D1 4B04D447 D20D85FD A50AB56B 35B5A8FA 42B2986C DBBBC9D6 ACBCF940 32D86CE3 45DF5C75 DCD60DCF ABD13D59 26D930AC 51DE003A C8D75180 BFD06116 21B4F4B5 56B3C423 CFBA9599 B8BDA50F 2802B89E 5F058808 C60CD9B2 B10BE924 2F6F7C87 58684C11 C1611DAB B6662D3D 76DC4190 01DB7106 98D220BC EFD5102A 71B18589 06B6B51F 9FBFE4A5 E8B8D433 7807C9A2 0F00F934 9609A88E E10E9818 7F6A0DBB 086D3D2D 91646C97 E6635C01 6B6B51F4 1C6C6162 856530D8 F262004E 6C0695ED 1B01A57B 8208F4C1 F50FC457 65B0D9C6 12B7E950 8BBEB8EA FCB9887C 62DD1DDF 15DA2D49 8CD37CF3 FBD44C65 4DB26158 3AB551CE A3BC0074 D4BB30E2 4ADFA541 3DD895D7 A4D1C46D D3D6F4FB 4369E96A 346ED9FC AD678846 DA60B8D0 44042D73 33031DE5 AA0A4C5F DD0D7CC9 5005713C 270241AA BE0B1010 C90C2086 5768B525 206F85B3 B966D409 CE61E49F 5EDEF90E 29D9C998 B0D09822 C7D7A8B4 59B33D17 2EB40D81 B7BD5C3B C0BA6CAD EDB88320 9ABFB3B6 03B6E20C 74B1D29A EAD54739 9DD277AF 04DB2615 73DC1683 E3630B12 94643B84 0D6D6A3E 7A6A5AA8 E40ECF0B 9309FF9D 0A00AE27 7D079EB1 F00F9344 8708A3D2 1E01F268 6906C2FE F762575D 806567CB 196C3671 6E6B06E7 FED41B76 89D32BE0 10DA7A5A 67DD4ACC F9B9DF6F 8EBEEFF9 17B7BE43 60B08ED5 D6D6A3E8 A1D1937E 38D8C2C4 4FDFF252 D1BB67F1 A6BC5767 3FB506DD 48B2364B D80D2BDA AF0A1B4C 36034AF6 41047A60 DF60EFC3 A867DF55 316E8EEF 4669BE79 CB61B38C BC66831A 256FD2A0 5268E236 CC0C7795 BB0B4703 220216B9 5505262F C5BA3BBE B2BD0B28 2BB45A92 5CB36A04 C2D7FFA7 B5D0CF31 2CD99E8B 5BDEAE1D 9B64C2B0 EC63F226 756AA39C 026D930A 9C0906A9 EB0E363F 72076785 05005713 95BF4A82 E2B87A14 7BB12BAE 0CB61B38 92D28E9B E5D5BE0D 7CDCEFB7 0BDBDF21 86D3D2D4 F1D4E242 68DDB3F8 1FDA836E 81BE16CD F6B9265B 6FB077E1 18B74777 88085AE6 FF0F6A70 66063BCA 11010B5C 8F659EFF F862AE69 616BFFD3 166CCF45 A00AE278 D70DD2EE 4E048354 3903B3C2 A7672661 D06016F7 4969474D 3E6E77DB AED16A4A D9D65ADC 40DF0B66 37D83BF0 A9BCAE53 DEBB9EC5 47B2CF7F 30B5FFE9 BDBDF21C CABAC28A 53B39330 24B4A3A6 BAD03605 CDD70693 54DE5729 23D967BF B3667A2E C4614AB8 5D681B02 2A6F2B94 B40BBE37 C30C8EA1 5A05DF1B 2D02EF8D"; /* Number */
-    var crc32 = function( /* String */ str, /* Number */ crc) {
+    var table = "00000000 77073096 EE0E612C 990951BA 076DC419 706AF48F E963A535 9E6495A3 0EDB8832 79DCB8A4 E0D5E91E 97D2D988 09B64C2B 7EB17CBD E7B82D07 90BF1D91 1DB71064 6AB020F2 F3B97148 84BE41DE 1ADAD47D 6DDDE4EB F4D4B551 83D385C7 136C9856 646BA8C0 FD62F97A 8A65C9EC 14015C4F 63066CD9 FA0F3D63 8D080DF5 3B6E20C8 4C69105E D56041E4 A2677172 3C03E4D1 4B04D447 D20D85FD A50AB56B 35B5A8FA 42B2986C DBBBC9D6 ACBCF940 32D86CE3 45DF5C75 DCD60DCF ABD13D59 26D930AC 51DE003A C8D75180 BFD06116 21B4F4B5 56B3C423 CFBA9599 B8BDA50F 2802B89E 5F058808 C60CD9B2 B10BE924 2F6F7C87 58684C11 C1611DAB B6662D3D 76DC4190 01DB7106 98D220BC EFD5102A 71B18589 06B6B51F 9FBFE4A5 E8B8D433 7807C9A2 0F00F934 9609A88E E10E9818 7F6A0DBB 086D3D2D 91646C97 E6635C01 6B6B51F4 1C6C6162 856530D8 F262004E 6C0695ED 1B01A57B 8208F4C1 F50FC457 65B0D9C6 12B7E950 8BBEB8EA FCB9887C 62DD1DDF 15DA2D49 8CD37CF3 FBD44C65 4DB26158 3AB551CE A3BC0074 D4BB30E2 4ADFA541 3DD895D7 A4D1C46D D3D6F4FB 4369E96A 346ED9FC AD678846 DA60B8D0 44042D73 33031DE5 AA0A4C5F DD0D7CC9 5005713C 270241AA BE0B1010 C90C2086 5768B525 206F85B3 B966D409 CE61E49F 5EDEF90E 29D9C998 B0D09822 C7D7A8B4 59B33D17 2EB40D81 B7BD5C3B C0BA6CAD EDB88320 9ABFB3B6 03B6E20C 74B1D29A EAD54739 9DD277AF 04DB2615 73DC1683 E3630B12 94643B84 0D6D6A3E 7A6A5AA8 E40ECF0B 9309FF9D 0A00AE27 7D079EB1 F00F9344 8708A3D2 1E01F268 6906C2FE F762575D 806567CB 196C3671 6E6B06E7 FED41B76 89D32BE0 10DA7A5A 67DD4ACC F9B9DF6F 8EBEEFF9 17B7BE43 60B08ED5 D6D6A3E8 A1D1937E 38D8C2C4 4FDFF252 D1BB67F1 A6BC5767 3FB506DD 48B2364B D80D2BDA AF0A1B4C 36034AF6 41047A60 DF60EFC3 A867DF55 316E8EEF 4669BE79 CB61B38C BC66831A 256FD2A0 5268E236 CC0C7795 BB0B4703 220216B9 5505262F C5BA3BBE B2BD0B28 2BB45A92 5CB36A04 C2D7FFA7 B5D0CF31 2CD99E8B 5BDEAE1D 9B64C2B0 EC63F226 756AA39C 026D930A 9C0906A9 EB0E363F 72076785 05005713 95BF4A82 E2B87A14 7BB12BAE 0CB61B38 92D28E9B E5D5BE0D 7CDCEFB7 0BDBDF21 86D3D2D4 F1D4E242 68DDB3F8 1FDA836E 81BE16CD F6B9265B 6FB077E1 18B74777 88085AE6 FF0F6A70 66063BCA 11010B5C 8F659EFF F862AE69 616BFFD3 166CCF45 A00AE278 D70DD2EE 4E048354 3903B3C2 A7672661 D06016F7 4969474D 3E6E77DB AED16A4A D9D65ADC 40DF0B66 37D83BF0 A9BCAE53 DEBB9EC5 47B2CF7F 30B5FFE9 BDBDF21C CABAC28A 53B39330 24B4A3A6 BAD03605 CDD70693 54DE5729 23D967BF B3667A2E C4614AB8 5D681B02 2A6F2B94 B40BBE37 C30C8EA1 5A05DF1B 2D02EF8D";
+    /* Number */
+    var crc32 = function (/* String */ str, /* Number */ crc) {
         if (crc === undefined) crc = 0;
         var n = 0; //a number between 0 and 255
         var x = 0; //an hex number
@@ -6562,11 +6597,11 @@ if (!Date.now)
             x = "0x" + table.substr(n * 9, 8);
             crc = (crc >>> 8) ^ x;
         }
-        return (crc ^ (-1))>>>0;
+        return (crc ^ (-1)) >>> 0;
     };
 
     $.ui = new ui();
-    $.ui.init=true;
+    $.ui.init = true;
     $(window).trigger("afui:preinit");
     $(window).trigger("afui:init");
 })(af);
@@ -6574,31 +6609,31 @@ if (!Date.now)
 
 //The following functions are utilitiy functions for afui within intel xdk.
 
-(function($) {
+(function ($) {
     "use strict";
-    var xdkDeviceReady=function(){
-        $.ui.isIntel=true;
-        setTimeout(function() {
+    var xdkDeviceReady = function () {
+        $.ui.isIntel = true;
+        setTimeout(function () {
             document.getElementById("afui").style.height = "100%";
             document.body.style.height = "100%";
             document.documentElement.style.minHeight = window.innerHeight;
         }, 30);
-        document.removeEventListener("intel.xdk.device.ready",xdkDeviceReady);
+        document.removeEventListener("intel.xdk.device.ready", xdkDeviceReady);
     };
-    document.addEventListener("intel.xdk.device.ready",xdkDeviceReady);
+    document.addEventListener("intel.xdk.device.ready", xdkDeviceReady);
     //Fix an ios bug where scrolling will not work with rotation
     if ($.feat.nativeTouchScroll) {
-        document.addEventListener("orientationchange", function() {
+        document.addEventListener("orientationchange", function () {
             if ($.ui.scrollingDivs[$.ui.activeDiv.id]) {
                 var tmpscroller = $.ui.scrollingDivs[$.ui.activeDiv.id];
-                if(!tmpscroller) return;
+                if (!tmpscroller) return;
                 if (tmpscroller.el.scrollTop === 0) {
                     tmpscroller.disable();
-                    setTimeout(function() {
+                    setTimeout(function () {
                         tmpscroller.enable();
                     }, 300);
                 }
-                if(tmpscroller.refresh)
+                if (tmpscroller.refresh)
                     tmpscroller.updateP2rHackPosition();
             }
         });
@@ -6606,9 +6641,9 @@ if (!Date.now)
 })(af);
 
 /* global af*/
-(function($ui){
+(function ($ui) {
     "use strict";
-    function fadeTransition (oldDiv, currDiv, back) {
+    function fadeTransition(oldDiv, currDiv, back) {
         /*jshint validthis:true */
         var that = this;
         if (back) {
@@ -6619,8 +6654,8 @@ if (!Date.now)
                 x: "0%",
                 time: $ui.transitionTime,
                 opacity: 0.1,
-                complete: function(canceled) {
-                    if(canceled) {
+                complete: function (canceled) {
+                    if (canceled) {
                         that.finishTransition(oldDiv, currDiv);
                         return;
                     }
@@ -6628,7 +6663,7 @@ if (!Date.now)
                     that.css3animate(oldDiv, {
                         x: "-100%",
                         opacity: 1,
-                        complete: function() {
+                        complete: function () {
                             that.finishTransition(oldDiv);
                         }
 
@@ -6644,13 +6679,13 @@ if (!Date.now)
             that.css3animate(currDiv, {
                 x: "0%",
                 opacity: 0.1,
-                complete: function() {
+                complete: function () {
                     that.css3animate(currDiv, {
                         x: "0%",
                         time: $ui.transitionTime,
                         opacity: 1,
-                        complete:function(canceled){
-                            if(canceled) {
+                        complete: function (canceled) {
+                            if (canceled) {
                                 that.finishTransition(oldDiv, currDiv);
                                 return;
                             }
@@ -6659,7 +6694,7 @@ if (!Date.now)
                             that.css3animate(oldDiv, {
                                 x: "-100%",
                                 y: 0,
-                                complete: function() {
+                                complete: function () {
                                     that.finishTransition(oldDiv);
                                 }
                             });
@@ -6669,6 +6704,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.fade = fadeTransition;
 })(af.ui);
 /* global af*/
@@ -6753,6 +6789,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.flip = flipTransition;
 })(af.ui);
 /* global af*/
@@ -6766,11 +6803,11 @@ if (!Date.now)
             oldDiv.style.zIndex = 2;
             that.clearAnimations(currDiv);
             that.css3animate(oldDiv, {
-                x:"0%",
+                x: "0%",
                 time: $ui.transitionTime,
                 opacity: 0.1,
                 scale: 0.2,
-                origin:"50% 50%",
+                origin: "50% 50%",
                 complete: function (canceled) {
                     if (canceled) {
                         that.finishTransition(oldDiv);
@@ -6796,7 +6833,7 @@ if (!Date.now)
                 scale: 0.2,
                 origin: "50%" + " 50%",
                 opacity: 0.1,
-                time:"0ms",
+                time: "0ms",
                 complete: function () {
                     that.css3animate(currDiv, {
                         x: "0%",
@@ -6824,6 +6861,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.pop = popTransition;
 })(af.ui);
 /* global af*/
@@ -6881,6 +6919,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.slide = slideTransition;
     $ui.availableTransitions["default"] = slideTransition;
 })(af.ui);
@@ -6912,7 +6951,7 @@ if (!Date.now)
             that.css3animate(currDiv, {
                 y: "-100%",
                 x: "0%",
-                time:"10ms",
+                time: "10ms",
                 complete: function () {
                     that.css3animate(currDiv, {
                         y: "0%",
@@ -6925,6 +6964,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.down = slideDownTransition;
 })(af.ui);
 /* global af*/
@@ -6955,7 +6995,7 @@ if (!Date.now)
             that.css3animate(currDiv, {
                 y: "100%",
                 x: "0%",
-                time:"10ms",
+                time: "10ms",
                 complete: function () {
                     that.css3animate(currDiv, {
                         y: "0%",
@@ -6968,6 +7008,7 @@ if (!Date.now)
             });
         }
     }
+
     $ui.availableTransitions.up = slideUpTransition;
 })(af.ui);
 /**
@@ -6975,9 +7016,9 @@ if (!Date.now)
  * Copyright 2012 - Intel
  * This plugin is meant to be used inside App Framework UI
  */
- /* global af*/
+/* global af*/
 
-(function($) {
+(function ($) {
     "use strict";
 
     if (!$) {
@@ -6988,10 +7029,10 @@ if (!Date.now)
         if (!$.os.ie) return;
         if (!$.ui.isSideMenuEnabled()) return;
 
-        $.ui.ready(function() {
-            if($.ui.tilesLoaded) return;
-            $.ui.tilesLoaded=true;
-            if(window.innerWidth>$.ui.handheldMinWidth) return true;
+        $.ui.ready(function () {
+            if ($.ui.tilesLoaded) return;
+            $.ui.tilesLoaded = true;
+            if (window.innerWidth > $.ui.handheldMinWidth) return true;
 
             if ($.ui.slideSideMenu) $.ui.slideSideMenu = false;
             //we need to make sure the menu button shows up in the bottom navbar
@@ -7003,59 +7044,59 @@ if (!Date.now)
                 tmpAnchors.css("width", width + "%");
             }
             var oldUpdate = $.ui.updateNavbarElements;
-            $.ui.updateNavbarElements = function() {
+            $.ui.updateNavbarElements = function () {
                 oldUpdate.apply($.ui, arguments);
                 if ($.query("#afui #navbar #metroMenu").length === 1) return;
                 $.query("#afui #navbar footer").append("<a id='metroMenu' onclick='$.ui.toggleSideMenu()'>•••</a>");
             };
-            $.ui.isSideMenuOn = function() {
+            $.ui.isSideMenuOn = function () {
 
-                var menu = parseInt($.getCssMatrix($("#navbar")).f,10) < 0 ? true : false;
+                var menu = parseInt($.getCssMatrix($("#navbar")).f, 10) < 0 ? true : false;
                 return this.isSideMenuEnabled() && menu;
             };
-            $.ui.toggleRightSideMenu=function(force,callback,time) {
+            $.ui.toggleRightSideMenu = function (force, callback, time) {
                 if ((!this.isAsideMenuEnabled()) || this.togglingAsideMenu) return;
-                var aside=true;
-                if(!aside&&!this.isSideMenuEnabled()) return;
-                if(!aside&&$.ui.splitview) return;
+                var aside = true;
+                if (!aside && !this.isSideMenuEnabled()) return;
+                if (!aside && $.ui.splitview) return;
                 var that = this;
-                var menu=$("#menu");
-                var asideMenu= $.query("#aside_menu");
+                var menu = $("#menu");
+                var asideMenu = $.query("#aside_menu");
                 var els = $.query("#content,  #header, #navbar");
                 var panelMask = $.query(".afui_panel_mask");
                 time = time || this.transitionTime;
-                var open = $("#aside_menu").css("display")==="block";
-                var toX=aside?"-"+that.sideMenuWidth:that.sideMenuWidth;
+                var open = $("#aside_menu").css("display") === "block";
+                var toX = aside ? "-" + that.sideMenuWidth : that.sideMenuWidth;
                 // add panel mask to block when side menu is open for phone devices
-                if(panelMask.length === 0 && window.innerWidth < $.ui.handheldMinWidth){
+                if (panelMask.length === 0 && window.innerWidth < $.ui.handheldMinWidth) {
                     els.append("<div class='afui_panel_mask'></div>");
                     panelMask = $.query(".afui_panel_mask");
-                    $(".afui_panel_mask").bind("click", function(){
+                    $(".afui_panel_mask").bind("click", function () {
                         $.ui.toggleSideMenu(false, null, null, aside);
                     });
                 }
                 //Here we need to check if we are toggling the left to right, or right to left
-                var menuPos=this.getSideMenuPosition();
-                if(open&&!aside&&menuPos<0)
-                    open=false;
-                else if(open&&aside&&menuPos>0)
-                    open=false;
+                var menuPos = this.getSideMenuPosition();
+                if (open && !aside && menuPos < 0)
+                    open = false;
+                else if (open && aside && menuPos > 0)
+                    open = false;
 
 
                 if (force === 2 || (!open && ((force !== undefined && force !== false) || force === undefined))) {
                     this.togglingSideMenu = true;
-                    if(!aside)
+                    if (!aside)
                         menu.show();
                     else
                         asideMenu.show();
                     that.css3animate(els, {
                         x: toX,
                         time: time,
-                        complete: function(canceled) {
+                        complete: function (canceled) {
                             that.togglingSideMenu = false;
                             els.vendorCss("Transition", "");
                             if (callback) callback(canceled);
-                            if(panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth){
+                            if (panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth) {
                                 panelMask.show();
                             }
                         }
@@ -7066,23 +7107,23 @@ if (!Date.now)
                     that.css3animate(els, {
                         x: "0px",
                         time: time,
-                        complete: function(canceled) {
+                        complete: function (canceled) {
                             // els.removeClass("on");
                             els.vendorCss("Transition", "");
                             els.vendorCss("Transform", "");
                             that.togglingSideMenu = false;
                             if (callback) callback(canceled);
-                            if(!$.ui.splitview)
+                            if (!$.ui.splitview)
                                 menu.hide();
                             asideMenu.hide();
-                            if(panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth){
+                            if (panelMask.length !== 0 && window.innerWidth < $.ui.handheldMinWidth) {
                                 panelMask.hide();
                             }
                         }
                     });
                 }
             };
-            $.ui.toggleLeftSideMenu = function(force, callback) {
+            $.ui.toggleLeftSideMenu = function (force, callback) {
                 if (!this.isSideMenuEnabled() || this.togglingSideMenu) return;
                 this.togglingSideMenu = true;
                 var that = this;
@@ -7096,7 +7137,7 @@ if (!Date.now)
                     that.css3animate(els, {
                         y: "-150px",
                         time: $.ui.transitionTime,
-                        complete: function() {
+                        complete: function () {
                             that.togglingSideMenu = false;
 
                             if (callback) callback(true);
@@ -7113,7 +7154,7 @@ if (!Date.now)
                     that.css3animate(els, {
                         y: "0",
                         time: $.ui.transitionTime,
-                        complete: function() {
+                        complete: function () {
                             that.togglingSideMenu = false;
                             if (callback) callback(true);
                             menu.hide();
@@ -7129,11 +7170,11 @@ if (!Date.now)
     }
 
     if (!$.ui) {
-        $(document).ready(function() {
+        $(document).ready(function () {
             wire8Tiles();
         });
     } else {
-        $.ui.ready(function(){
+        $.ui.ready(function () {
             wire8Tiles();
         });
     }
