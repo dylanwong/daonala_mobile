@@ -95,7 +95,6 @@ function logisticboard_panel(){
 
 }
 function ownerboard_panel(){
-
     init_orderboardheader();
     initBoardSearchPage();
     initLogisticBoard();
@@ -137,9 +136,9 @@ function driverboard_panel(){
             "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
             "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
             " ><div class='btn-group' role='group'><button" +
-            " onclick='toggleTaskTabs(this)' status='0' type='button' " +
+            " style='width:70px;' onclick='toggleTaskTabs(this)' status='0' type='button' " +
             "class='btn btn-default tabTaskN'>当前任务</button>" +
-            " <button onclick='toggleTaskTabs(this)' status='1'  type='button' " +
+            " <button style='width:70px;' onclick='toggleTaskTabs(this)' status='1'  type='button' " +
             "class='btn btn-default tabTaskY'  >" +
             "历史任务</button></div></div>" +
             "<div style='clear:both;width:10%'></div>");
@@ -309,10 +308,90 @@ function qrcode_load()
     }
 }
 
+//初始化首页看板
+function initHomeModuleTable(){
 
+    getAjax(queryIndexOrderCountUrl ,{'orderEnterpriseNo':enterpriseNo,
+            'systemNo':systemNo, 'orderNo':orderNo,
+            'dispatchNo':dispatchNo},
+        "queryIndexOrderCountSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
+    $('#home-module-table').html('');
+}
 
+function queryIndexOrderCountSucc(){
+//    if( data.isSucc ){
+//
+//    }
+    var user = JSON.parse(localStorage.getItem("user"));
+    var userType = user.obj.userType;
+    var result = '';
+    if(userType == 0 || userType == 1) {
+        result = '<tr><td style="width:20%;">'+
+        '<div style="color:#ef8305;font-size:24px;">156</div>'+
+        '<div style="color:#636363;font-size:18px;">今日送</div>'+
+        '</td><td style="width:20%;border-left:1px solid #e6e6e6;'+
+        'border-right: 1px solid #e6e6e6">'+
+        '<div style="color:#ef8305;font-size:24px;">367</div>'+
+        '<div style="color:#636363;font-size:18px;">在途中</div>'+
+        '</td><td style="width:20%;border-right: 1px solid #e6e6e6">'+
+        '<div style="color:#ef8305;font-size:24px;">4</div>'+
+        '<div style="color:#636363;font-size:18px;">逾期</div>'+
+        '</td><td style="width:20%;">'+
+        '<div style="color:#ef8305;font-size:24px;">4</div>'+
+        '<div style="color:#636363;font-size:18px;">异常</div></td></tr>';
+    }  else if (userType == 2){
+        result = '<tr><td style="width:33%;">'+
+            '<div style="color:#ef8305;font-size:24px;">156</div>'+
+            '<div style="color:#636363;font-size:18px;">今日达</div>'+
+            '</td><td style="width:33%;border-left:1px solid #e6e6e6;'+
+            'border-right: 1px solid #e6e6e6">'+
+            '<div style="color:#ef8305;font-size:24px;">367</div>'+
+            '<div style="color:#636363;font-size:18px;">在途中</div>'+
+            '</td><td style="width:33%;">'+
+            '<div style="color:#ef8305;font-size:24px;">4</div>'+
+            '<div style="color:#636363;font-size:18px;">逾期</div>'+
+            '</td></tr>';
+    }
+    $('#home-module-table').empty();
+    $('#home-module-table').append(result);
+}
 
+//初始化首页底部panel 和 绑定事件
+function initHomeFooter(userType){
+    if(userType == 2 ){
+//        $('#addOrderPanel').find('i').removeClass('icon-songhuo icon-kefu').addClass('icon-kefu');
+//        $('#addOrderPanelText').text('客服');
+        $('#addOrderPanel').unbind('click');
+        $('#addOrderPanel').empty();
+        $('#addOrderPanel').append('<div style="width:80px;'+
+            'height:80px;border-radius:80px;background-color:#01cd88;">'+
+            '<a href="tel:4001110005" >'+
+            '<i class="iconfont icon-kefu "  style="color:#fff;font-size:56px;line-height:80px">'+
+            '</i></a></div>'+
+            '<div  id="addOrderPanelText" style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">'+
+            '客服</div>');
+    } else {
+//        $('#addOrderPanel').find('i').addClass('icon-songhuo icon-kefu').addClass('icon-songhuo');
+//        $('#addOrderPanelText').text('下单');
+        $('#addOrderPanel').empty();
+        $('#addOrderPanel').append('<div style="width:80px;'+
+            'height:80px;border-radius:80px;background-color:#01cd88;">'+
+
+            '<i class="iconfont icon-songhuo "  style="color:#fff;font-size:56px;line-height:80px">'+
+            '</i></div>'+
+            '<div  id="addOrderPanelText" style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">'+
+            '下单</div>');
+        $('#addOrderPanel').unbind('click');
+        $('#addOrderPanel').bind('click',function(){
+            addorder_panel();
+        });
+        if(userType == 1 ){
+
+        }
+    }
+
+}
 
 function trace_panel(elm)
 {
@@ -403,6 +482,37 @@ function getLoad(){
 function orderBoard_panel() {
     $.ui.loadContent('#orderBoard', false, false, 'slide');
 }
+
+
+function init_chart(){
+    $("#orderBoardChart").height($("#orderBoard").height()-160-60);
+    $("#myChart").width($("#orderBoard").width() * 0.6);
+    $("#myChart").height($("#orderBoardChart").height() * 0.8);
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var chartdata = [
+        {
+            value: 0,
+            color:"#2ec7c9"
+        },
+        {
+            value : 0,
+            color : "#b6a2de"
+        },
+        {
+            value : 0,
+            color : "#5ab1ef"
+        },
+        {
+            value : 0,
+            color : "#ffb980"
+        },
+        {
+            value : 0,
+            color : "#ffb980"
+        }
+    ];
+    new Chart(ctx).Doughnut(chartdata,{});
+}
 function init_orderBoard(data)
 {
     var count ;
@@ -433,7 +543,14 @@ function init_orderBoard(data)
     $("#myChart").width($("#orderBoard").width() * 0.6);
     $("#myChart").height($("#orderBoardChart").height() * 0.8);
     var ctx = document.getElementById("myChart").getContext("2d");
-    var data = [
+    var chartdata;
+    var noneData ;
+    if( count.count10 == 0 && count.count40 == 0 && count.count70 == 0 && count.count90 == 0){
+        noneData = 1;
+    } else {
+        noneData = 0;
+    }
+        chartdata = [
         {
             value: parseInt(count.count10),
             color:"#2ec7c9"
@@ -449,9 +566,15 @@ function init_orderBoard(data)
         {
             value : parseInt(count.count90),
             color : "#ffb980"
+        },
+        {
+            value : noneData,
+            color : "#CD3700"
         }
     ]
-    new Chart(ctx).Doughnut(data,{});
+    new Chart(ctx).Doughnut(chartdata,{});
+    //$(".close").alert()
+
 }
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
