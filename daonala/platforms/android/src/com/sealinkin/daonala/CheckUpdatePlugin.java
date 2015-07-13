@@ -19,7 +19,11 @@ import android.util.Log;
 		        	boolean flag=updateVersion();
 		        	 this.checkVersion(flag,callbackContext);
 		            return flag;
-		        }
+		        }else if (action.equals("queryInstallId")) {
+			        	Log.i("out","queryInstallId");
+			        	 this.queryInstallId(callbackContext);
+			            return true;
+			   }
 		        return false;
 		    }
 		 
@@ -32,6 +36,16 @@ import android.util.Log;
 		            callbackContext.success("New Version");
 		        } else {
 		            callbackContext.error("Same Version.");
+		        }
+		    }
+		
+		private void queryInstallId(CallbackContext callbackContext) {
+			System.out.println("queryInstallId--------------------------");
+			String installId = Cons.INSTALLATIONID;
+		        if (installId!="") {
+		            callbackContext.success(installId);
+		        } else {
+		            callbackContext.error("no installId");
 		        }
 		    }
 		

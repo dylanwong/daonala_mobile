@@ -18,3 +18,17 @@ function init_mine(){
 
 }
 
+function showQrDiv() {
+    $("#transparentBg").fadeIn(200);
+    $("#qrImg").fadeIn(400);
+    var height = $("#mine").height();
+    var width = $("#mine").width();
+    var imgHeight = $("#qrcodeImg").height();
+    var imgWidth = $("#qrcodeImg").width();
+    $("#qrImg").css('top', (height - imgHeight) / 2).css('left', (width - imgWidth) / 2);
+}
+function hideQrDiv() {
+    $("#qrImg").fadeOut(200);
+    $("#transparentBg").fadeOut(400);
+}
+

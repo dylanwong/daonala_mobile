@@ -26,6 +26,7 @@ include("assets/js/order/custboard.js");
 include("assets/js/order/addOrder.js");
 include("assets/js/order/city.js");
 include("assets/js/public/iscroll.js");
+include("assets/js/setup/share.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
@@ -42,8 +43,17 @@ function message_panel(){
 }
 function mine_panel()
 {
-    $("#userpart").height($("#mine").height()/2);
-    $("#mine_module").height($("#mine").height()-$("#userpart").height());
+    //$("#userpart").height($("#mine").height()/2);
+    //$("#mine_module").height($("#mine").height()-$("#userpart").height());
+
+    var height = $("#mine").height();
+    $("#mineContent").css('height', height-$("#navbar").height());
+
+    var headDivHeihgt = ($("#mineContent").height() * 0.4);
+    var headContentDivTop = headDivHeihgt - 37;
+    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
+    $("#headContentDiv").css('top',headContentDivTop);
+    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
     $.ui.loadContent("#mine", false, false, "slide");
 }
 function main_panel()
@@ -306,6 +316,9 @@ function qrcode_load()
     if ($.os.ios) {
         $("#shareButton").hide();
     }
+}
+function qrcode_panel() {
+    $.ui.loadContent("#qrcode", false, false, "slide");
 }
 
 //初始化首页看板
@@ -579,7 +592,7 @@ function init_orderBoard(data)
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
     });*/
-    $('.swipebox.img'+objectNo ).swipebox();
+    $('.swipebox' ).swipebox();
 }
 
 /*获取消息列表*/

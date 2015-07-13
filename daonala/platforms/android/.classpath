@@ -14,6 +14,8 @@
 	<classpathentry kind="lib" path="libs/httpmime-4.2.4.jar"/>
 	<classpathentry kind="lib" path="libs/Msc.jar"/>
 	<classpathentry kind="lib" path="libs/Sunflower.jar"/>
+	<classpathentry kind="lib" path="libs/libammsdk.jar"/>
+	<classpathentry kind="lib" path="libs/locSDK_5.01.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
