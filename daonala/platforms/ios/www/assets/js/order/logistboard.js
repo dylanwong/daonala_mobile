@@ -4,13 +4,18 @@
 //初始化更精确查询页面（分公司初始化）
 function initBoardSearchPage(){
     //initAutoData();
-   /* if(getUserType() == 0){
-        $('#ownerText').attr('placeholder','请输入货主编号或名称模糊查询...');
+    $('#select_city').val('');
+    $('#product_search').val('');
+    if(getUserType() == 0){
+        $('#product_search').attr('placeholder','请输入货主编号或名称模糊查询...');
     }else if(getUserType() == 1){
-        $('#ownerText').attr('placeholder','请输入客户编号或名称模糊查询...');
-    }*/
+        $('#product_search').attr('placeholder','请输入客户编号或名称模糊查询...');
+    }
     getAjax(searchSubCompanyUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
-        "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");//初始化分公司
+    getAjax(searchOwnerOrCustUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
+        "updateBoardSearchPage2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        //linkSource();//初始化客户或货主
 }
 
 //确认精确查询条件
@@ -21,6 +26,19 @@ function confirmSearch(){
     $('#subCompany').empty();
     $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
     $('#subCompany').attr('value',subcompany);
+
+    var owner = $('#product_search').attr('productid');
+    var ownerName = $('#product_search').val();
+    if(owner!=undefined){
+    $('#boardowner').empty();
+    var userType = JSON.parse(localStorage.getItem('user')).obj.userType;
+    if(userType == 0) {
+        $('#boardowner').append('<b>货&nbsp;&nbsp;&nbsp;主&nbsp;:</b>&nbsp;' + ownerName);
+    }else if(userType == 1) {
+        $('#boardowner').append('<b>客&nbsp;&nbsp;&nbsp;户&nbsp;:</b>&nbsp;' + ownerName);
+    }
+    $('#boardowner').attr('value',owner);
+    }
     // var ownerOrCustText = $('#ownerText').val();
     initLogisticBoardAgain();
 }
@@ -53,16 +71,38 @@ function updateBoardSearchPage(data){
     });
 }
 
+function updateBoardSearchPage2(data){
+    if(data.isSucc){
+        var products = new Array();
+        for( var k in data.obj ){
+            var a ={
+                "id": data.obj[k].enterpriseNo,
+                "name": data.obj[k].enterpriseName
+            };
+            products.push(a);
+        }
+        linkSource(products);
+    }
+
+}
+
+function init_orderboardheader() {
+    $("#orderboard-buttons").delegate('button', 'click', function () {
+        var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+        $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+        $("#" + target).hide();
+        $(this).addClass('selectTotalDay');
+        $("#" + $(this).attr('target')).fadeIn(300)//show();//;
+        var s = init_orderBoard($(this).val());
+
+    });
+}
 //初始化物流/货主看板
 function initLogisticBoard(){
+    clearboard();
     var user =  JSON.parse( localStorage.getItem('user') );
-
-
     $('#subCompany').empty();
-//  $('#subCompany').append('<b class="">分公司：</b>'+user.obj.enterpriseN);
-//    $('#subCompany').attr('value',user.obj.enterpriseNo);
-    //$('#boardOwner').text(user.obj.enterpriseName);
-   // $('#boardOwner').text('');
+    $('#boardowner').empty();
     var option ={
         enterpriseNo : user.obj.enterpriseNo,
         ownerNo :'',
@@ -72,7 +112,22 @@ function initLogisticBoard(){
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
 }
+
+function clearboard(){
+    var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+    $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    $("#" + target).hide();
+    $("#oneId").addClass('selectTotalDay');
+    $("#" + $('#oneId').attr('target')).fadeIn(300);
+}
+
 function initLogisticBoardAgain(){
+    var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
+    $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
+    $("#" + target).hide();
+    $("#oneId").addClass('selectTotalDay');
+    $("#" + $('#oneId').attr('target')).fadeIn(300);
+
     var user =  JSON.parse( localStorage.getItem('user') );
 
     //$('#subCompany').attr('value',user.obj.enterpriseNo);
@@ -81,10 +136,8 @@ function initLogisticBoardAgain(){
     // $('#boardOwner').text('');
     var option ={
         enterpriseNo : user.obj.enterpriseNo,
-
         subCompanyNo : $('#subCompany').attr('value'),
-        ownerNo :'',
-        //   userNo : '',
+        ownerNo :$('#boardowner').attr('value'),
         userType : user.obj.userType
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
@@ -159,21 +212,34 @@ function queryLogisticCount_Result_Suc(data) {
         $("#allCount_1").html(count1001+count4001+count7001+count9001);
         $("#allCount_7").html(count1007+count4007+count7007+count9007);
         $("#allCount_30").html(count1030+count4030+count7030+count9030);
+        var allCount_1 = {
+            "count10":count1001,
+            "count40":count4001,
+            "count70":count7001,
+            "count90":count9001
+        }
+        var allCount_7 = {
+            "count10":count1007,
+            "count40":count4007,
+            "count70":count7007,
+            "count90":count9007
+        }
+        var allCount_30 = {
+            "count10":count1030,
+            "count40":count4030,
+            "count70":count7030,
+            "count90":count9030
+        }
+        localStorage.setItem("allCount_1",JSON.stringify(allCount_1));
+        localStorage.setItem("allCount_7",JSON.stringify(allCount_7));
+        localStorage.setItem("allCount_30",JSON.stringify(allCount_30));
+        init_orderBoard(1);
     } else {
 
     }
-    $.ui.loadContent("#logisticboard", false, false, "slide");
+    $.ui.loadContent("#orderBoard", false, false, "slide");
 }
 
-function init_orderboard() {
-    $("#orderboard-buttons").delegate('button', 'click', function () {
-        var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
-        $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
-        $("#" + target).hide();
-        $(this).addClass('selectTotalDay');
-        $("#" + $(this).attr('target')).fadeIn(300);
-    });
-}
 function toggleBoardBtn(type) {
 
         var list1 ;
@@ -232,6 +298,8 @@ function orderlist_panel(statustype){
       //  timeType='N';
         status='';
     }
+    $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
@@ -249,5 +317,5 @@ function orderlist_panel(statustype){
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
             'ownerText':'','custText':'','userNo':getUserNo(),'userType':getUserTypeFromsession()}, true), true);
-
+    $('#orderlist_ul').empty();
 }

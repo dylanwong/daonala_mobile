@@ -9,9 +9,10 @@ function toggleTaskTabs(elm) {
 
     $(elm).removeClass('tabTaskY');
     $(elm).addClass('tabTaskN');
-
+    $("#taskList").empty();
     taskTabStatus = $(elm).attr('status')
     taskPanelLoad(taskTabStatus);
+
 }
 
 function taskPanelLoad(taskStatus) {
@@ -23,16 +24,18 @@ function taskPanelLoad(taskStatus) {
     $.ui.showMask("获取我的任务..");
     $("ul#taskList").empty();
     setCacheData("taskFilter",
-        {'start': '1', 'length':'10', 'queryDate': '', 'status': tdStatus,'phone':phone}, true);
+        {'start': '0', 'length':'10', 'queryDate': '', 'status': tdStatus,'phone':phone}, true);
     getAjax(taskqueryUrl, JSON.parse(localStorage.getItem("taskFilter")),
         "updateTaskPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 
 
 function getTodoPullToRefresh(that){
-
     setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
-        {'queryType':'1'},true),true);
+        {'start':0},true),true);
+//    setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
+//        {'queryType':'1'},true),true);
+    $("ul#taskList").empty();
     jQuery.ajax({
         url: taskqueryUrl,
         timeout: 20000, //超时X秒
@@ -77,6 +80,10 @@ function getTodoPullToRefresh(that){
 
 
 function getRequestFromTaskInfinite(self) {
+    var taskFilter =  JSON.parse(localStorage.getItem("taskFilter"));
+    var start = parseInt(taskFilter.start) + 10;
+    setCacheData("taskFilter",mergeJson(JSON.parse(localStorage.getItem("taskFilter")),
+        {'start':start},true),true);
     jQuery.ajax({
         url: taskqueryUrl,
         timeout: 20000, //超时X秒
@@ -98,6 +105,7 @@ function getRequestFromTaskInfinite(self) {
                         self.clearInfinite();
                         updateTaskPanel(data);
                     }catch(e){
+                        errorPopup('下拉刷新异常');
                     };
                 }
             }
@@ -194,13 +202,14 @@ function updateTaskPanel(data, prepend) {
                     "<p style='text-align: center;text-color:orange;'>暂无剩余任务..</p>" +
                     "</div>").appendTo(containNode);
             }
-            $(containNode).appendTo("#taskList");
+            $("#taskList").prepend(containNode);
+            //$(containNode).appendTo("#taskList");
         }
 
     }
 
-    setCacheData("taskFilter", mergeJson(oldmyFilter, {'start': (oldmyFilter.start -= 0) +
-        data.obj.data.length, 'queryDate': data.obj.queryDate}, true), true);
+//    setCacheData("taskFilter", mergeJson(oldmyFilter, {'start': (oldmyFilter.start -= 0) +
+//        data.obj.data.length, 'queryDate': data.obj.queryDate}, true), true);
 }
 
 //任务

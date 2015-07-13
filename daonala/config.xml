@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.sealinkin.daonala" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>daonala</name>
+    <name>共速达e订单</name>
     <description>
-        到哪啦是一款订单管理应用，由海联天下出品.
+        共速达e订单是一款订单管理应用，由海联天下出品.
     </description>
     <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
         深圳市海联天下科技有限公司

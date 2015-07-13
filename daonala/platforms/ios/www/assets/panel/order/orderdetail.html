@@ -1,67 +1,45 @@
 <div>
-        <div align="center" id="orderdetail-buttons">
+        <!--<div align="center" id="orderdetail-buttons">
             <div class="btn-group btn-group-justified width90 margin10" role="group">
                 <div class="btn-group" role="group">
-                    <button target="orderDetailInfo"  type="button" class="btn btn-default
+                    <button target="orderDetailInfo"  id="orderDetailInfoId" type="button" class="btn btn-default
                     selectTotalDay">订单</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailProduct"  type="button" class="btn btn-default">产品</button>
+                    <button target="orderDetailProduct" id="orderDetailProductId" type="button" class="btn btn-default">产品</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailTrace"  type="button" class="btn btn-default">轨迹</button>
+                    <button target="orderDetailTrace" id="orderDetailTraceId" type="button" class="btn btn-default">轨迹</button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button target="orderDetailEvaluate"  type="button" class="btn btn-default">评价</button>
+                    <button target="orderDetailEvaluate" id="orderDetailEvaluateId" type="button" class="btn btn-default">评价</button>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div align="center" id="orderDetailInfos">
             <div id="orderDetailInfo">
-                <div style="border-bottom: 10px solid #EFEFEF;
-            border-top: 10px solid #EFEFEF;">
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">单据信息</div>
-                            <div class="fl" style="margin-left: 10px;color: #FB7046;font-size: 16px;" id="status_d" ></div>
-                        </li>
-                        <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">物流商单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="transNo_d"></div>
-                        </li>
-                        <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">货主单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerNo_d">AF2015012365410</div>
-                        </li>
-                        <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">货主客户单号</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="custNo_d"></div>
-                        </li>
-                        <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">下单时间</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="orderDate_d"></div>
-                        </li>
-                    </ul>
-                </div>
+
 
                 <div id="orderDetailSend" style="border-bottom: 10px solid #EFEFEF;">
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">
-                                发货人</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">
+                                发货人信息</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">发货人</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerName_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">发货人</div>
+                            <div cclass="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;"  id="ownerName_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">地  址</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="ownerAddr_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">地  址</div>
+                            <div class="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;" id="ownerAddr_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">联系人</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">联系人</div>
                             <div class="fl width70"
-                                 style="padding-left: 10px;padding-right:20px;color: #000;">
+                                 style="padding-left: 10px;padding-right:20px;color:#b2b2b2;font-size:16px;">
                                 <div class="fl" id="ownerContacts_d" ></div>
                                 <div class="fr"><i class="icon-local-phone fs24">
                                     <a id="ownerPhone_d" href=""></a></i></div>
@@ -74,27 +52,30 @@
             ">
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">
-                                收货人</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">
+                                收货人信息</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">收货人</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="custName_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">收货人</div>
+                            <div class="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;"  id="custName_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">地  址</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="custAddr_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">地  址</div>
+                            <div class="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;" id="custAddr_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">子客户名称</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="addrName_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">子客户名称</div>
+                            <div class="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;"  id="addrName_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">联系人</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">联系人</div>
                             <div class="fl width70"
-                                 style="padding-left: 10px;padding-right:20px;color: #000;">
+                                 style="padding-left: 10px;padding-right:20px;color:#b2b2b2;font-size:16px;">
                                 <div class="fl" id="custContacts_d"></div>
-                                <div class="fr"><i class="icon-local-phone fs24"></i></div>
+                                <div class="fr"><i class="icon-perm-phone-msg fs24"></i></div>
                             </div>
                         </li>
 
@@ -105,17 +86,18 @@
             ">
                     <ul>
                         <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">
-                                承运商</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">
+                                承运商信息</div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">承运商</div>
-                            <div class="fl" style="margin-left: 10px;color: #000;" id="shipNo_d"></div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">承运商</div>
+                            <div class="fr" style="width: 70%;text-align: left;line-height: 20px;
+                                padding-left: 10px;color:#b2b2b2;font-size:16px;"  id="shipNo_d"></div>
                         </li>
                         <li>
-                            <div class="fl width30" align="right" style="color:#7C7B78;">电 话</div>
+                            <div class="fl width30" align="right" style="color:#5b5b5b;font-size:16px;">电 话</div>
                             <div class="fl width70"
-                                 style="padding-left: 10px;padding-right:20px;color: #000;">
+                                 style="padding-left: 10px;padding-right:20px;color:#b2b2b2;font-size:16px;">
                                 <div class="fl" id="shipPhone_d"></div>
                                 <div class="fr"><i class="icon-local-phone fs24"></i></div>
                             </div>
@@ -123,242 +105,5 @@
                     </ul>
                 </div>
             </div>
-
-            <div id="orderDetailProduct" class="none">
-             <!--   <div style="border-top: 10px solid #EFEFEF;">
-                    <ul>
-                        <li>
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;" id="articleName"></div>
-                        </li>
-                        <li style="height: 80px;padding-top: 10px;">
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="border-left: 1px solid #E3E3E3;
-                                    border-right: 1px solid #E3E3E3;line-height:60px;" align="center">
-                                 <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                 <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="width95">
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">电子产品</div>
-                        </li>
-                        <li style="height: 80px;padding-top: 10px;">
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="border-left: 1px solid #E3E3E3;
-                                    border-right: 1px solid #E3E3E3;line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div style="">
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width30" align="right" style="color:#26B6D9;font-size:16px;">电子产品</div>
-                        </li>
-                        <li style="height: 80px;padding-top: 10px;">
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="border-left: 1px solid #E3E3E3;
-                                    border-right: 1px solid #E3E3E3;line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                            <div class="fl width33 overflowHidden percent80"
-                                 style="line-height:60px;" align="center">
-                                <b class="fl" style="padding-left:10px;padding-top:5px;padding-right:5px;">送货</b>
-                                <span class="fl fs32" style="color: #06ABD4">32</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>-->
-            </div>
-
-            <div id="orderDetailTrace" class="none">
-                <div class="width95">
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;"><span id="topdeliverNo_d"></span></div>
-                            <div onclick="changeTraceOrder()" class="fr width20" align="right"
-                                 style="color:#26B6D9;font-size:16px;">
-                                <i style="display:block;" class="icon-expand-more fs32"></i>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div id="orderDetailTraceContent" class="none">
-                    </div>
-                <!--
-
-                <div style="overflow:hidden;border-bottom: 1px dashed #09ACD4;" class="width95">
-                    <div class="fl" style="width:25%;margin:25px auto;">
-                        <div style="width:46px;height:46px;background:#F53274;
-                border: 4px solid #fffff;border-radius:46px;font-size:18px;color:#FFFFFF;
-                font-weight:bold;text-align:center;line-height:46px;margin:0px auto;">
-                            在途
-                        </div>
-                    </div>
-                    <div class="fl" style="width:75%;">
-                        <div class="send">
-                            <div class="arrow"></div>
-                            <div style="position:relative;right:5px;top:0px;float:right;">
-                                <div style="height:20px;width:30px;background-color:#1EA389;
-                        border-radius:5px;color:#ffffff;font-size:12px;text-align:center;line-height:20px;">
-                                    最新
-                                </div>
-                            </div>
-                            <div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;
-                            text-align: left;">
-                                04-28 15:300
-                            </div>
-                            <div style="font-size:12px;margin-left:10px;text-align: left;">
-                                订单号[T20151212012]&nbsp;
-                                货物已经送到[杭州蒋妮渠],交接人[李四],服务营业员[张三],备注[交接正常].
-                            </div>
-                            <div>
-                                <img src="assets/img/a.png" width="50" height="50" />
-                                <img src="assets/img/a.png" width="50" height="50" />
-                                <img src="assets/img/a.png" width="50" height="50" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="overflow:hidden;border-bottom: 1px dashed #09ACD4;" class="width95">
-                    <div class="fl" style="width:25%;margin:25px auto;">
-                        <div style="width:46px;height:46px;background:#51A351;
-                border: 4px solid #fffff;border-radius:46px;font-size:18px;color:#FFFFFF;
-                font-weight:bold;text-align:center;line-height:46px;margin:0px auto;">
-                            签收
-                        </div>
-                    </div>
-                    <div class="fl" style="width:75%;">
-                        <div class="send">
-                            <div class="arrow"></div>
-                            <div style="margin-left:10px;padding-top:10px;font-size:14px;font-weight:bold;
-                            text-align: left;">
-                                04-28 15:300
-                            </div>
-                            <div style="font-size:12px;margin-left:10px;text-align: left;">
-                                订单号[T20151212012]&nbsp;
-                                货物已经送到[杭州蒋妮渠],交接人[李四],服务营业员[张三],备注[交接正常].
-                            </div>
-                            <div>
-                                <img src="assets/img/a.png" width="50" height="50" />
-                                <img src="assets/img/a.png" width="50" height="50" />
-                                <img src="assets/img/a.png" width="50" height="50" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
--->
-            </div>
-            <div id="orderDetailEvaluate" class="none">
-                <div class="width95">
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;">
-                            <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;"><span >评价</span></div>
-                            <div class="fr width20" align="right"
-                                 style="color:#26B6D9;font-size:16px;">
-                                <a href="#evaluate" >
-                                <button type="button" id="evaluteBtn" class="btn btn-primary"
-                                        style="width:60px;height:24px;font-size:14px;
-                                        text-align:center;line-height:24px;padding:0px 12px;">去评价</button>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                    <div align="left" style="padding-left:10px;" id="evaluteInfo">
-                        <p id="evaluteName">程先生[2015-01-23 11:30]</p>
-                        <p style="color:#06ABD4" id="reviewsDemo">物流速度很快，送货司机态度不错!</p>
-                        <div>
-                            <div class="overflowHidden">
-                                <p class="fl width30" align="right">商品完好度：</p>
-                                <p class="fl" id="reviewsItem1">
-                                <!--<ul class="star1">
-                                <li><img src="assets/img/star.png"/></li>
-                                <li><img src="assets/img/star.png"/></li>
-                                <li><img src="assets/img/star.png"/></li>
-                                <li><img src="assets/img/star.png"/></li>
-                                <li><img src="assets/img/star.png"/></li>
-                                </ul> --></p>
-                            </div>
-                            <div class="overflowHidden">
-                                <p class="fl width30" align="right">回单及时性：</p>
-                                <p class="fl" id="reviewsItem2">
-                                <!--<ul class="star1">
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                </ul>-->
-                                </p>
-                            </div>
-                            <div class="overflowHidden">
-                                <p class="fl width30" align="right">送货人态度：</p>
-                                <p class="fl"  id="reviewsItem3">
-                                <!--<ul class="star1">
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                    <li><img src="assets/img/star.png"/></li>
-                                </ul>-->
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li style="border-bottom: 1px dashed #09ACD4;" >
-                            <div class="fl width80" align="right"
-                                 style="color:#26B6D9;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>
-                            <div class="fr width20" align="right"
-                                 style="color:#26B6D9;font-size:16px;">
-                                <a href="#reply">
-                                <button type="button" id="replyBtn"
-                                        class="btn btn-primary"
-                                        style="width:60px;height:24px;font-size:14px;
-                                        text-align:center;line-height:24px;padding:0px 12px;">回复</button>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                    <div align="left" style="padding-left:10px;" id="replyInfo">
-                        <!--<p>客服人员[2015-01-23 11:30]</p>
-                        <p style="color:#06ABD4">谢谢您的评价!</p>-->
-                    </div>
-                </div>
-            </div>
+        </div>
     </div>
-</div>

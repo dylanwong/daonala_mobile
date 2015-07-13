@@ -27,9 +27,9 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
-    <name>daonala</name>
+    <name>共速达e订单</name>
     <description>
-        到哪啦是一款订单管理应用，由海联天下出品.
+        共速达e订单是一款订单管理应用，由海联天下出品.
     </description>
     <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
         深圳市海联天下科技有限公司

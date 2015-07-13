@@ -571,11 +571,20 @@ function init_orderBoard(data)
             value : noneData,
             color : "#CD3700"
         }
+<<<<<<< HEAD
         ];
 
 
     new Chart(ctx).Doughnut(chartdata,{});
+=======
+    ]
+    new Chart(ctx).Doughnut(data,{});
+<<<<<<< HEAD
+    $(".close").alert()
+=======
+>>>>>>> 80b9d2230533b93cd9f1ce3a72ce4e1220593c82
     //$(".close").alert()
+>>>>>>> 814e0b68a69989f53d98f0bb7ec99b311fb56ee8
 }
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {

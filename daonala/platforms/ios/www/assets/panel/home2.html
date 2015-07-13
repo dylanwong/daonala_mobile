@@ -1,0 +1,86 @@
+<div id="home-content-panel">
+    <div style="width:100%;" id="ad">
+        <img src="assets/img/home/banner/home-banner01.png" style="width:100%;height:100%;" />
+    </div>
+    <div id="home-module">
+        <div id="home-module-total" style="background-color:#fff;height:39%;">
+            <div style="height:60px;width:100%;padding: 12px;" align="center" onclick="searchorder_panel();">
+                <div style="width:95%;border: 1px solid #e6e6e6;
+                background-color: #f9fafb;border-radius:5px;overflow:hidden;">
+                    <div class="fl" style="padding-left: 5px;padding-right: 5px;">
+                        <i class="icon-search" style="font-size:32px;color:#bbbbbb"></i>
+                    </div>
+                    <div class="fl" style="padding-left: 5px;font-size:16px;padding-top: 6px;color:#b8b8b8;">
+                        请输入运单号查询...
+                    </div>
+                </div>
+            </div>
+            <div id="home-module-total-num" style="width:100%;border-top:1px solid #e6e6e6;
+            border-bottom:1px solid #e6e6e6">
+                <table style="height:100%;width:100%;text-align:center;">
+                    <tr>
+                        <td style="width:33%;">
+                            <div style="color:#ef8305;font-size:24px;">156</div>
+                            <div style="color:#636363;font-size:18px;">今日到达</div>
+                        </td>
+                        <td style="width:33%;border-left:1px solid #e6e6e6;
+                        border-right: 1px solid #e6e6e6">
+                            <div style="color:#ef8305;font-size:24px;">367</div>
+                            <div style="color:#636363;font-size:18px;">在途中</div>
+                        </td>
+                        <td style="width:33%;">
+                            <div style="color:#ef8305;font-size:24px;">4</div>
+                            <div style="color:#636363;font-size:18px;">逾期</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="home-module-buttons" style="background-color:#f2f2f2;height:61%;">
+            <div id="home-module-buttons-text"
+                 style="height:60px;color:#2c2c2c;font-size: 14px;padding-top: 20px;" align="center">
+                 <div>可视化您的订单交付</div>
+                 <div>Visualizing your order delivery</div>
+            </div>
+            <div id="home-module-buttons-button"
+                 style="width:100%;color:#2c2c2c;font-size: 18px;" align="center">
+                <table style="height:100%;width:100%;text-align:center;">
+                    <tr>
+
+                        <td onclick="$.ui.loadContent('#orderBoard', false, false, 'slide');"
+                            id="" style="width:33%;"  align="center">
+                            <div style="width:80px;
+                            height:80px;border-radius:80px;background-color:#57b9de;">
+                                <i class="iconfont icon-quanbudingdan "
+                                   style="color:#fff;font-size:56px;line-height:80px"></i>
+                            </div>
+                            <div style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">
+                                订单
+                            </div>
+                        </td>
+                        <td style="width:33%;" align="center">
+                            <div style="width:80px;
+                            height:80px;border-radius:80px;background-color:#01cd88;">
+                                <i class="iconfont icon-kefu " style="color:#fff;font-size:56px;line-height:80px">
+                                    </i>
+                            </div>
+                            <div style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">
+                                客服
+                            </div>
+                        </td>
+                        <td onclick="$.ui.loadContent('#lightbox', false, false, 'slide');" style="width:33%;" align="center">
+                            <div style="width:80px;
+                            height:80px;border-radius:80px;background-color:#ef8305;">
+                                <i class="iconfont icon-wo" style="color:#fff;font-size:56px;line-height:80px"></i>
+                            </div>
+                            <div style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">
+                                我
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

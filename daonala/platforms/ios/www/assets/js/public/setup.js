@@ -24,8 +24,8 @@ function getMySetup()
 }
 function getMySetupSucc(data)
 {
-    if(data.isSucc)
-    {
+//    if(data.isSucc)
+//    {
         var soundFlagCheck = '';
         var vibrateFlagCheck = '';
         var movementFlagCheck = '';
@@ -73,7 +73,7 @@ function getMySetupSucc(data)
         $("#switchDiv").append(switchHtml);
         $("[name='my-checkbox']").bootstrapSwitch();
         initSwitch();
-    }
+ //   }
 
 }
 function getMySetupError(data){
@@ -109,7 +109,7 @@ function updateMySetup(data)
     if(user!=null)
     {
         //如果是IOS的设备 device全部改为cloudId
-        var deviceNo = 'nokia';//device.uuid;
+        var deviceNo = device.uuid;
         if(window.OSInfo!= null && window.OSInfo.os.toLocaleUpperCase()=="IOS")
         {
             deviceNo = window.OSInfo.push;
@@ -138,6 +138,11 @@ function updateMySetupError(data){}
 function initSetup()
 {
     getMySetup();
+    if(localStorage.getItem('user')==null){
+        $('#logoutBtn').hide();
+    }else{
+
+    }
     $("#versionNo").html(currentVersion+".1");//默认加.1
 }
 
@@ -212,6 +217,8 @@ function saveFeedBackSucc(data){
     {
         toastrTip('','反馈成功,感谢您的意见!','success');
         $.ui.goBack();
+        $("#feedbackContent").val('');
+        $('#feedbacker').val('');
     }else
     {
         toastrTip('',data.msg.substring(data.msg.indexOf('-')+1,data.msg.length),'error');

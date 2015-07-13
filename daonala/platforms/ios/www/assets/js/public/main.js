@@ -15,7 +15,7 @@ include("assets/js/order/trace.js");
 include("assets/js/driver/task.js");
 include("assets/js/board/boards.js");
 include("assets/js/order/orderdetail.js");
-//include("assets/js/.js");
+include("assets/js/order/linkData.js");
 include("assets/js/driver/feedback.js");
 include("assets/js/driver/operateguide.js");
 include("assets/js/public/filetooms.js");
@@ -25,6 +25,7 @@ include("assets/js/order/logistboard.js");
 include("assets/js/order/custboard.js");
 include("assets/js/order/addOrder.js");
 include("assets/js/order/city.js");
+include("assets/js/public/iscroll.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
@@ -52,7 +53,7 @@ function main_panel()
 
 function home_panel()
 {
-    $.ui.loadContent("#home", false, false, "slide");
+    $.ui.loadContent("#home2", false, false, "slide");
 }
 
 function login_panel()
@@ -85,14 +86,17 @@ function setup(){
 function myorders_panel(){
     $.ui.loadContent("#myorders", false, false, "slide");
 }
+//物流看板初始化页面
 function logisticboard_panel(){
-    init_orderboard();
-    initBoardSearchPage();
+
+    init_orderboardheader();//初始化头部和圆形图标
+    initBoardSearchPage();//初始化看板刷选页
     initLogisticBoard();
 
 }
 function ownerboard_panel(){
-    init_orderboard();
+
+    init_orderboardheader();
     initBoardSearchPage();
     initLogisticBoard();
 }
@@ -103,18 +107,15 @@ function custboard_panel(elm){
     }else
     {
         $.ui.loadContent("#custboard", false, false, "slide");
-        $("#custboard_head").html("<div style='float:left;width:15%;cursor:pointer;'>" +
-            "<a onclick='home_panel()'>" +
-            "<img src='assets/img/back.png' />" +
-            "<b style='margin-left:0px;position:relative;top:4px;font-size:12px;color:#FFFFFF;'>首页</b></a></div>" +
-            "<div style='float:left;width:75%;text-align:center;margin:5px auto;' " +
-            " ><div class='btn-group' role='group'><button" +
-            " onclick='toggleCustTabs(this)' status='0' type='button' " +
-            "class='btn btn-default tabTaskN'>未签收</button>" +
+        $("#custboard_head").html(
+            "<div class='row'' style='height:60px;'' id='custBoarfButtons'>" +
+            "<div class='col-xs-1'></div>" +
+            " <div class='col-xs-10 text-center' style='padding-top: 10px;'>" +
+            "<button onclick='toggleCustTabs(this)' status='0' type='button' " +
+            "class='btn btn-default selectTotalDay' style=' font-size:18px;' >未签收</button>" +
             " <button onclick='toggleCustTabs(this)' status='1'  type='button' " +
-            "class='btn btn-default tabTaskY'  >" +
-            "已签收</button></div></div>" +
-            "<div style='clear:both;width:10%'></div>");
+            "class='btn btn-default ' style=' font-size:18px;' >已签收</button>" +
+            "</div> <div class='col-xs-1'> </div></div>");
         custTabStatus = 0;
         cust_orderlist_panel();
     }
@@ -152,12 +153,21 @@ function searchorder_panel(){
     init_search_panel();
     $.ui.loadContent("#search", false, false, "slide");
 }
+
+//function inittrace(elm){
+//    if(loginStatus == 0) {
+//        traceInfo(this);
+//    }else {
+//        traceInfo33(this);
+//    }
+//}
 /*订单跟踪 未登录*/
-function traceInfo(elm){
+function traceInfo(){
     /*init_search_panel();*/
   //  $(elm).attr('data-todo-detail')
+    clear_orderdetailPage();
     if(elm!=null){
-        setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
+       // setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
         initTraceInfo();
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }else{
@@ -165,30 +175,77 @@ function traceInfo(elm){
         $.ui.loadContent("#ordertrace", false, false, "slide");
     }
 }
-/*订单跟踪 登录*/
-function traceInfo33(elm){
-//    alert(1);
+//订单跟踪 登录
+function traceInfo33(){
 //    /*init_search_panel();*/
-    setCacheData("currentorder",JSON.parse($(elm).attr('data-order-detail')) ,1);
-    initTraceInfo2();
-    $.ui.loadContent("#orderdetail33", false, false, "slide");
+    clear_orderdetailPage();
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+    }else{
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
+    }
+    initTraceInfo2();//初始化订单详情
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
-
+// 登陆时 单条订单新跟踪
 function traceSingleInfo33(){
-//    alert(1);
-//    /*init_search_panel();*/
+    clear_orderdetailPage();
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+    }else{
 
+        if( $("#orderdetailBackId").attr('onclick') ==
+            "$.ui.loadContent('#search', false, false, 'slide')"){
+
+        }else{
+            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+        }
+    }
     initTraceInfo2();
-    $.ui.loadContent("#orderdetail33", false, false, "slide");
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
 
 function traceSingleInfo(){
-//    alert(1);
-//    /*init_search_panel();*/
+    var user = JSON.parse(localStorage.getItem('user'));
+    if(user.obj.userType == 2){
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+
+    }else{
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+    }
+    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
     initTraceInfo();
-    $.ui.loadContent("#ordertrace", false, false, "slide");
+    $.ui.loadContent("#orderMaindetail", false, false, "slide");
+}
+
+
+
+//商品详情页面
+function productPanel(){
+    queryDetailProduct();
+    $.ui.loadContent("#orderDetailProduct", false, false, "slide");
+}
+
+//商品评价
+function evalutePanel(){
+    queryEvalute();
 
 }
+
+//订单详情（收发货人详情）
+function orderDetailPanel(){
+    $.ui.loadContent("#orderdetail", false, false, "slide");
+}
+//物流轨迹页面
+function tracePanel(){
+    queryDetailTrace_login();
+    $.ui.loadContent("#orderDetailTrace", false, false, "slide");
+}
+
 
 
 /**/
@@ -221,8 +278,10 @@ function init_search_panel(){
 
 function init_home_ad()
 {
-    $("#ad").height($("#home").height()/3);
+    $("#ad").height($("#home").height()*0.32);
     $("#home-module").height($("#home").height()-$("#ad").height());
+    $("#home-module-total-num").height($("#home-module-total").height()-60);
+    $("#home-module-buttons-button").height($("#home-module-buttons").height()-60);
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
         '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
         '</div>' +
@@ -238,6 +297,8 @@ function init_home_ad()
         parallax: true,
         autoplayDisableOnInteraction: false
     });
+
+    init_homepage();
 }
 
 
@@ -312,8 +373,8 @@ function register_panel()
 }
 
 function addorder_panel(){
-    queryOwnerInfo();
-
+    //queryOwnerInfo();
+    $.ui.loadContent("addorder",false,false,"slide");
 }
 
 
@@ -339,7 +400,69 @@ function getLoad(){
     $('#load_select').mobiscroll('show');
 }
 
-
+function orderBoard_panel() {
+    $.ui.loadContent('#orderBoard', false, false, 'slide');
+}
+function init_orderBoard(data)
+{
+    var count ;
+    if( data == 1){
+        count = JSON.parse(localStorage.getItem("allCount_1"));
+    } else if( data == 7){
+        count = JSON.parse(localStorage.getItem("allCount_7"));
+    } else if( data == 30){
+        count = JSON.parse(localStorage.getItem("allCount_30"));
+    } else {
+//        count = {
+//            "count10":0,
+//            "count40":0,
+//            "count70":0,
+//            "count90":0
+//        }
+        errorPopup('无数据');
+        return ;
+    }
+//    "count10":count1001,
+//    "count40":count4001,
+//    "count70":count7001,
+//    "count90":count9001
+//    localStorage.setItem("allCount_1",allCount_1);
+//    localStorage.setItem("allCount_7",allCount_7);
+//    localStorage.setItem("allCount_30",allCount_30);
+    $("#orderBoardChart").height($("#orderBoard").height()-160-60);
+    $("#myChart").width($("#orderBoard").width() * 0.6);
+    $("#myChart").height($("#orderBoardChart").height() * 0.8);
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var data = [
+        {
+            value: parseInt(count.count10),
+            color:"#2ec7c9"
+        },
+        {
+            value : parseInt(count.count40),
+            color : "#b6a2de"
+        },
+        {
+            value : parseInt(count.count70),
+            color : "#5ab1ef"
+        },
+        {
+            value : parseInt(count.count90),
+            color : "#ffb980"
+        }
+    ]
+    new Chart(ctx).Doughnut(data,{});
+<<<<<<< HEAD
+    $(".close").alert()
+=======
+    //$(".close").alert()
+>>>>>>> 814e0b68a69989f53d98f0bb7ec99b311fb56ee8
+}
+function init_lightbox(objectNo) {
+    /*lightbox = baguetteBox.run('.baguetteBoxOne', {
+    });*/
+    $('.swipebox.img'+objectNo ).swipebox();
+}
 
 /*获取消息列表*/
 function getMessageList(user){
@@ -356,13 +479,20 @@ function getMsgListSucc(data){
         var t = data.obj[i].noticeTitle;
         var c = data.obj[i].noticeContent;
         msgliststr += " <tr><td onclick='msgdetail_panel(this)' title='"+data.obj[i].noticeTitle+"' content='"+data.obj[i].noticeContent+"'>"
-            +data.obj[i].noticeTitle+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
+            +changeContent(data.obj[i].noticeTitle)+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
     }
     $("#msglist").empty();
     $('#msglist').append(msgliststr);
 }
 function getMsgListError(data){
 
+}
+function changeContent(content){
+    if(content.length>10){
+        return content.substring(0,10)+"......";
+    }else{
+        return content
+    }
 }
 
 

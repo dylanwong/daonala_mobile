@@ -430,7 +430,7 @@ $.ui.ready(function(){
 
                 if (ajaxFlag) {
                     ajaxFlag = false
-                    getRequestFromInfinite(self)
+                    getRequestFromTaskInfinite(self)
 
                 }
             });
@@ -449,6 +449,7 @@ $.ui.ready(function(){
 
    
   
+/*
 
     custorderlistScroller = $("#custboard").scroller(); //Fetch the scroller from cache
     custorderlistScroller.addInfinite();
@@ -469,9 +470,22 @@ $.ui.ready(function(){
     });
     var hideClose;
     $.bind(custorderlistScroller, "refresh-release", function () {
+//        var that = this;
+//        getCustOrderPullToRefresh(that);
+//        return false; //tells it to not auto-cancel the refresh
         var that = this;
-        getCustOrderPullToRefresh(that);
-        return false; //tells it to not auto-cancel the refresh
+        if(!visitor){
+            getCustOrderPullToRefresh(that);
+        }else{
+            setTimeout(function () {
+                that.hideRefresh();
+                getRequestFromCustOrderinite();
+            }, 1000);
+
+
+        }
+
+        return false;
     });
 
     $.bind(custorderlistScroller, "refresh-cancel", function () {
@@ -502,59 +516,60 @@ $.ui.ready(function(){
         }
     });
 
+*/
 
-    orderlistScroller = $("#orderlist").scroller(); //Fetch the scroller from cache
-    orderlistScroller.addInfinite();
-    orderlistScroller.addPullToRefresh();
-    orderlistScroller.runCB=true;
-    $.bind(orderlistScroller, 'scrollend', function () {
-        console.log("scroll end");
-    });
-
-    $.bind(orderlistScroller, 'scrollstart', function () {
-        console.log("scroll start");
-    });
-    $.bind(orderlistScroller,"scroll",function(position){
-
-    })
-    $.bind(orderlistScroller, "refresh-trigger", function () {
-        console.log("Refresh trigger");
-    });
-    var hideClose;
-    $.bind(orderlistScroller, "refresh-release", function () {
-        var that = this;
-        getOrderListPullToRefresh(that);
-        return false; //tells it to not auto-cancel the refresh
-    });
-
-    $.bind(orderlistScroller, "refresh-cancel", function () {
-    });
-    orderlistScroller.enable();
-
-    $.bind(orderlistScroller, "infinite-scroll", function () {
-        var self = this;
-        if($("#nullTodoSelf").length) {
-            self.clearInfinite();
-        }else{
-            console.log("infinite triggered");
-
-            if($("#infinite").length == 0)
-            {
-                $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
-                    "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
-            }
-
-            $.bind(orderlistScroller, "infinite-scroll-end", function () {
-                $.unbind(orderlistScroller, "infinite-scroll-end");
-
-                if (ajaxFlag) {
-                    ajaxFlag = false
-                    getRequestFromOrderListinite(self)
-                }
-            });
-        }
-    });
-
+//    orderlistScroller = $("#orderlist").scroller(); //Fetch the scroller from cache
+//    orderlistScroller.addInfinite();
+//    orderlistScroller.addPullToRefresh();
+//    orderlistScroller.runCB=true;
+//    $.bind(orderlistScroller, 'scrollend', function () {
+//        console.log("scroll end");
+//    });
+//
+//    $.bind(orderlistScroller, 'scrollstart', function () {
+//        console.log("scroll start");
+//    });
+//    $.bind(orderlistScroller,"scroll",function(position){
+//
+//    })
+//    $.bind(orderlistScroller, "refresh-trigger", function () {
+//        console.log("Refresh trigger");
+//    });
+//    var hideClose;
+//    $.bind(orderlistScroller, "refresh-release", function () {
+//        var that = this;
+//        getOrderListPullToRefresh(that);
+//        return false; //tells it to not auto-cancel the refresh
+//    });
+//
+//    $.bind(orderlistScroller, "refresh-cancel", function () {
+//    });
+//    orderlistScroller.enable();
+//
+//    $.bind(orderlistScroller, "infinite-scroll", function () {
+//        var self = this;
+//        if($("#nullOrderListSelf").length) {
+//            self.clearInfinite();
+//        }else{
+//            console.log("infinite triggered");
+//
+//            if($("#infinite").length == 0)
+//            {
+//                $(this.el).append("<div id='infinite' style='margin-top:10px;width:100%;" +
+//                    "height:40px;font-size: 20px;text-align: center'>获取订单中 ...</div>");
+//            }
+//
+//            $.bind(orderlistScroller, "infinite-scroll-end", function () {
+//                $.unbind(orderlistScroller, "infinite-scroll-end");
+//
+//                if (ajaxFlag) {
+//                    ajaxFlag = false
+//                    getRequestFromOrderListinite(self)
+//                }
+//            });
+//        }
+//    });
+//
 
 
     $("#selfOrder").css("overflow", "auto");
@@ -760,14 +775,19 @@ function uiBackPopup(msg) {
     });
 }
 function errorPopup(msg) {
-    setTimeout(function(){$.ui.blockUI(.5);},10);
-    $.ui.popup({
+
+    if(msg == undefined){
+
+    }else{
+        setTimeout(function(){$.ui.blockUI(.5);},10);
+        $.ui.popup({
         title: "温馨提示",
         message: msg,
         cancelText: "关闭",
         cancelOnly: true,
         cancelClass: 'popup-btn'
     });
+    }
 }
 function loginTimeoutPopup(msg) {
     setTimeout(function(){$.ui.blockUI(.5);},10);
@@ -942,16 +962,27 @@ function iosUpdatePlugin(flag) {
     });
 }
 
-//竞价抢单成功回调
-function saveOfferDonSucc(data)
+function toastrTip(title,msg,type)
 {
-    if(data.isSucc)
-    {
-        $("#"+ETID).remove();
-    }
-    offerDone(data);
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "1000",
+        "hideDuration": "1000",
+        "timeOut": "2000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+    toastr[type](msg, title)
 }
-
 function updateApp(appUpdateUrl) {
     var _url ="itms-services://?action=download-manifest&url="+appUpdateUrl;
     window.open(_url, '_system');
