@@ -430,6 +430,7 @@ function init_orderBoard()
         }
     ]
     new Chart(ctx).Doughnut(data,{});
+    $(".close").alert()
 }
 function init_lightbox() {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
