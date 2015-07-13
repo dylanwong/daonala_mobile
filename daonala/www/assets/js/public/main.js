@@ -452,11 +452,6 @@ function init_orderBoard(data)
         }
     ]
     new Chart(ctx).Doughnut(data,{});
-<<<<<<< HEAD
-    $(".close").alert()
-=======
-    //$(".close").alert()
->>>>>>> 814e0b68a69989f53d98f0bb7ec99b311fb56ee8
 }
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
