@@ -27,9 +27,6 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
-    <feature name="CheckUpdatePlugin">
-        <param name="android-package" value="com.sealink.huoyuntong.CheckUpdatePlugin"/>
-    </feature>
     <name>共速达e订单</name>
     <description>
         共速达e订单是一款订单管理应用，由海联天下出品.

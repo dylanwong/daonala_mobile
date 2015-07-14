@@ -63,7 +63,6 @@ public class CordovaApp extends CordovaActivity {
 			e.printStackTrace();
 		} finally {
 		   loadUrl(launchUrl);
-		   
 		   try
 		   {
 			   Bundle bundle = getIntent().getExtras();

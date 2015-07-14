@@ -9,13 +9,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.avos.avoscloud.PushService" />
+        <service android:exported="true" android:name="com.avos.avoscloud.PushService" />
         <receiver android:name="com.sealinkin.daonala.CustomReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="com.sealinkin.daonala.Push" />
+                <action android:name="com.sealinkin.daonala.PUSH" />
             </intent-filter>
         </receiver>
     </application>
