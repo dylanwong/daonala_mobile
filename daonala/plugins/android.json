@@ -36,6 +36,12 @@
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_VIDEO\" />",
                             "count": 1
                         }
+                    ],
+                    "/manifest/application": [
+                        {
+                            "xml": "<activity android:exported=\"true\" android:label=\"@string/launcher_name\" android:name=\".wxapi.WXEntryActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><data android:scheme=\"$WechatAppId\" /></intent-filter></activity>",
+                            "count": 2
+                        }
                     ]
                 }
             },
@@ -73,6 +79,14 @@
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Wechat\"><param name=\"android-package\" value=\"xu.li.cordova.wechat.Wechat\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"WechatAppId\" value=\"$WechatAppId\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -105,6 +119,10 @@
             "PACKAGE_NAME": "com.sealinkin.daonala"
         },
         "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.sealinkin.daonala"
+        },
+        "xu.li.cordova.wechat": {
+            "WECHATAPPID": "wx6dad58d163286c60",
             "PACKAGE_NAME": "com.sealinkin.daonala"
         }
     },

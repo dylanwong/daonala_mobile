@@ -18,6 +18,13 @@
                 <action android:name="com.sealinkin.daonala.PUSH" />
             </intent-filter>
         </receiver>
+        <activity android:exported="true" android:label="@string/launcher_name" android:name=".wxapi.WXEntryActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="$WechatAppId" />
+            </intent-filter>
+        </activity>
     </application>
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19" />
     <uses-permission android:autoLink="phone" android:name="android.permission.CALL_PHONE" />
