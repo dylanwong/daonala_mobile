@@ -313,9 +313,6 @@ function init_home_ad()
 
 function qrcode_load()
 {
-    if ($.os.ios) {
-        $("#shareButton").hide();
-    }
 }
 function qrcode_panel() {
     $.ui.loadContent("#qrcode", false, false, "slide");
