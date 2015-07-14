@@ -64,6 +64,10 @@
 
     <script type="text/javascript" charset="utf-8"
             src="assets/libs/swipebox/js/jquery.swipebox.js"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=5ppUGd9yKd3MRwZwZ4CwFY3I"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
 </head>
 <body>
 <div id="afui" class="af">
@@ -119,26 +123,37 @@ data-defer:加载一个html进来
 </div>
 
 <div class="panel p0"
+     title="地图" id="map" data-defer="assets/panel/setup/map.html"
+     data-load="init_map"
+     data-header=""
+     data-unload=""
+     data-tab=""
+     data-footer="none">
+</div>
+
+<div class="panel p0"
      title="我" id="mine" data-defer="assets/panel/mine2.html"
      data-load="init_mine"
-     data-header="homeHeader"
+     data-header=""
      data-unload=""
      data-tab="navbar_mine">
 </div>
 
 <div class="panel p0"
-     title="" id="search" data-defer="assets/panel/order/search.html"
+     title="订单搜索" id="search" data-defer="assets/panel/order/search.html"
      data-load=""
-     data-header="homeHeader"
+     data-header=""
      data-unload=""
-     data-tab="navbar_search">
+     data-tab=""
+     data-footer="none">
 </div>
 
 <div class="panel p0"
-     title="" id="orderlist" data-defer="assets/panel/order/orderlist.html"
+     title="订单列表" id="orderlist" data-defer="assets/panel/order/orderlist.html"
      data-load=""
-     data-header="orderlistHeader"
+     data-header=""
      data-unload=""
+     data-footer="none"
      >
 </div>
 
@@ -179,17 +194,18 @@ data-defer:加载一个html进来
 
 
 <div class="panel p0"
-     title="" id="message" data-defer="assets/panel/message.html"
-     data-header="allHeader"
+     title="我的消息" id="message" data-defer="assets/panel/message.html"
+     data-header=""
      data-load="init_home_ad"
-     data-tab="nabar_welcome">
+     data-tab=""
+     data-footer="none">
 </div>
 
 <div class="panel p0"
-     title="" id="messagedetail" data-defer="assets/panel/detailmsg.html"
+     title="消息详情" id="messagedetail" data-defer="assets/panel/detailmsg.html"
      data-load=""
      data-unload=""
-     data-header="allHeader"
+     data-header=""
      data-footer="none">
 </div>
 
@@ -212,31 +228,31 @@ data-defer:加载一个html进来
 </div>
 
 
-<div class="panel "
-     title="" id="setup" data-defer="assets/panel/setup.html"
+<div class="panel p0"
+     title="设置" id="setup" data-defer="assets/panel/setup.html"
      data-load=""
      data-unload=""
-     data-header="allHeader"
+     data-header=""
      data-footer="none">
     <!--data-load="loginPageLoad"-->
 </div>
 
-<div class="panel "
-         title="设置" id="feedback" data-defer="assets/panel/feedback.html"
+<div class="panel p0"
+         title="反馈建议" id="feedback" data-defer="assets/panel/feedback.html"
          data-load=""
          data-unload=""
-         data-header="allHeader"
+         data-header=""
          data-footer="none">
         <!--data-load="loginPageLoad"-->
 </div>
 
 
-<div class="panel "
-     title="" id="about" data-defer="assets/panel/about.html"
+<div class="panel p0"
+     title="关于" id="about" data-defer="assets/panel/about.html"
      data-load=""
      data-unload=""
-     data-header="allHeader"
-     data-footer="register-footer">
+     data-header=""
+     data-footer="none">
     <!--data-load="loginPageLoad"-->
 </div>
 
@@ -268,14 +284,14 @@ data-defer:加载一个html进来
      title="订单详情" id="orderMaindetail" data-defer="assets/panel/order/orderMainDetail.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="orderdetailHeader"
+     data-header=""
      data-footer="none">
 </div>
 <div class="panel p0"
      title="订单详情" id="orderdetail" data-defer="assets/panel/order/orderdetail.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header="detailgobackHeader"
+     data-header=""
      data-footer="none">
 </div>
 <div class="panel p0"
@@ -317,10 +333,10 @@ data-defer:加载一个html进来
 </div>
 
 <div class="panel p0"
-     title="" id="addorder" data-defer="assets/panel/order/addOrder.html"
+     title="下单" id="addorder" data-defer="assets/panel/order/addOrder.html"
      data-load=""
      data-unload=""
-     data-header="allHeader"
+     data-header=""
      data-footer="none">
 </div>
 
