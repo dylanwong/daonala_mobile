@@ -21,4 +21,6 @@ public class Cons implements Serializable {
 	public static String PARAMETER = "";
 	//内容
 	public static String MESSAGE = "";
+	//安装唯一ID
+	public static String INSTALLATIONID = "";
 }

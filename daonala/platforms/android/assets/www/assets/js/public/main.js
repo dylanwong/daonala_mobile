@@ -26,6 +26,8 @@ include("assets/js/order/custboard.js");
 include("assets/js/order/addOrder.js");
 include("assets/js/order/city.js");
 include("assets/js/public/iscroll.js");
+include("assets/js/setup/share.js");
+include("assets/js/setup/map.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
@@ -40,10 +42,23 @@ function message_panel(){
         $.ui.loadContent("#login", false, false, "slide");
     }
 }
+
+function map_panel() {
+    $.ui.loadContent("#map", false, false, "slide");
+}
 function mine_panel()
 {
-    $("#userpart").height($("#mine").height()/2);
-    $("#mine_module").height($("#mine").height()-$("#userpart").height());
+    //$("#userpart").height($("#mine").height()/2);
+    //$("#mine_module").height($("#mine").height()-$("#userpart").height());
+
+    var height = $("#mine").height();
+    $("#mineContent").css('height', height-$("#navbar").height());
+
+    var headDivHeihgt = ($("#mineContent").height() * 0.4);
+    var headContentDivTop = headDivHeihgt - 37;
+    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
+    $("#headContentDiv").css('top',headContentDivTop);
+    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
     $.ui.loadContent("#mine", false, false, "slide");
 }
 function main_panel()
@@ -303,9 +318,9 @@ function init_home_ad()
 
 function qrcode_load()
 {
-    if ($.os.ios) {
-        $("#shareButton").hide();
-    }
+}
+function qrcode_panel() {
+    $.ui.loadContent("#qrcode", false, false, "slide");
 }
 
 //初始化首页看板
@@ -462,10 +477,12 @@ function msgdetail_panel(elm){
     TDID = $(elm).attr('id');
     var t = $(elm).attr('title');
     var c = $(elm).attr('content');
+    var d = $(elm).attr('date');
    // var titles = $(this).attr('title');
     $('#msgtitle').text(t);
    // $('#msgtitle').html('<p>'+t+'</p>');
     $('#msgcontent').text(c);
+    $('#msgDate').text(d);
     $.ui.loadContent('#messagedetail', false, false, 'slide');
 }
 function getArea(){
@@ -571,25 +588,15 @@ function init_orderBoard(data)
             value : noneData,
             color : "#CD3700"
         }
-<<<<<<< HEAD
-        ];
-
-
-    new Chart(ctx).Doughnut(chartdata,{});
-=======
     ]
-    new Chart(ctx).Doughnut(data,{});
-<<<<<<< HEAD
-    $(".close").alert()
-=======
->>>>>>> 80b9d2230533b93cd9f1ce3a72ce4e1220593c82
+    new Chart(ctx).Doughnut(chartdata,{});
     //$(".close").alert()
->>>>>>> 814e0b68a69989f53d98f0bb7ec99b311fb56ee8
+
 }
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
     });*/
-    $('.swipebox.img'+objectNo ).swipebox();
+    $('.swipebox' ).swipebox();
 }
 
 /*获取消息列表*/
@@ -601,16 +608,26 @@ function getMessageList(user){
 }
 function getMsgListSucc(data){
 
-    var msgliststr="";
+    template.helper('changeContent', function (content) {
+        if(content.length>24){
+            return content.substring(0,24)+"......";
+        }else{
+            return content
+        }
+    });
+
+    var html = template('messageContentListTemp',data);
+
+    /*var msgliststr="";
     for(var i = 0 ;i<data.obj.length;i++){
        // data.obj[i].noticeTitle;
         var t = data.obj[i].noticeTitle;
         var c = data.obj[i].noticeContent;
         msgliststr += " <tr><td onclick='msgdetail_panel(this)' title='"+data.obj[i].noticeTitle+"' content='"+data.obj[i].noticeContent+"'>"
             +changeContent(data.obj[i].noticeTitle)+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
-    }
-    $("#msglist").empty();
-    $('#msglist').append(msgliststr);
+    }*/
+    $("#messageContentList").empty();
+    $('#messageContentList').append(html);
 }
 function getMsgListError(data){
 
@@ -622,6 +639,8 @@ function changeContent(content){
         return content
     }
 }
+
+
 
 
 function getPullToRefresh(that){

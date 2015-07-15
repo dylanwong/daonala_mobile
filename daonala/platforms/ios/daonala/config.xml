@@ -64,4 +64,9 @@
     <access launch-external="yes" origin="mailto:*" />
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
+    <feature name="Wechat">
+        <param name="ios-package" value="CDVWechat" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="WechatAppId" value="$WechatAppId" />
 </widget>

@@ -127,6 +127,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/xu.li.cordova.wechat/www/wechat.js",
+        "id": "xu.li.cordova.wechat.Wechat",
+        "clobbers": [
+            "Wechat"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -285,6 +292,7 @@ module.exports.metadata =
     "org.apache.cordova.device": "0.3.0",
     "org.apache.cordova.camera": "0.3.6",
     "org.apache.cordova.geolocation": "0.3.12",
+    "xu.li.cordova.wechat": "0.6.1",
     "org.apache.cordova.file": "1.3.3"
 }
 // BOTTOM OF METADATA

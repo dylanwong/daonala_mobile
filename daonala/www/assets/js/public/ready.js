@@ -1011,6 +1011,19 @@ function androidUpdatePluginResultHandler(data) {
 function androidUpdatePluginErrorHandler(data) {
 }
 
+function androidQueryInstallId() {
+    //发起请求android 更新
+    cordova.exec(androidQueryInstallIdResultHandler,
+        androidQueryInstallIdErrorHandler, "CheckUpdatePlugin",
+        "queryInstallId", []);
+}
+function androidQueryInstallIdResultHandler(data){
+    window.OSInfo ={os:'android',push:data};
+}
+function androidQueryInstallIdErrorHandler(data){
+    console.log(data);
+}
+
 function imvisitor(){
     visitor=true;
     $.ui.loadContent("#main", false, false, "slide");

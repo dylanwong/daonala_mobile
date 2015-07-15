@@ -27,6 +27,10 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
+    <feature name="Wechat">
+        <param name="android-package" value="xu.li.cordova.wechat.Wechat" />
+    </feature>
+    <preference name="WechatAppId" value="$WechatAppId" />
     <name>共速达e订单</name>
     <description>
         共速达e订单是一款订单管理应用，由海联天下出品.
@@ -41,4 +45,6 @@
     <access launch-external="yes" origin="mailto:*" />
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="wechatappid" value="wx6dad58d163286c60" />
 </widget>

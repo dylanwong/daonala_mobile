@@ -22,10 +22,10 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 //var queryOrderList=baseUrl+"order/query_deliverorderlistfordirver.action";
 
 
-var fileUrl ="http://192.168.16.93:8080/fileserver/struts_uploadReturnUrl.action";
+var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.125:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.98/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -40,7 +40,7 @@ var taskqueryUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
 var queryTaskUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
 //var goodSearchUrl = baseUrl+"order/query_goodslist.action";
 var ordercount = baseUrl +"order/order_count.action";
-
+var queryVersion = baseUrl + "base/query_new_version.action";
 var searchProductUrl = baseUrl + "order/query_order_detail.action";
 var queryDeliverordertraceListUrl = baseUrl + "order/queryDeliverordertraceList.action";
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
@@ -86,11 +86,11 @@ function onDeviceReadySettingEvents() {
 //    setTimeout(function () {
 //        getLocation()
 //    }, 3000);
-    //checkVersion();
+    checkVersion();
     init_home_ad();
     init_homepage();
-
-
+    navigator.splashscreen.hide();
+    androidQueryInstallId();
 }
 
 function init_homepage(){

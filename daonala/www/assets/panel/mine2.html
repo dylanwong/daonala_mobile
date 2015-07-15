@@ -1,0 +1,78 @@
+<div id="mineContent">
+    <div style="width:100%;
+            height:40%;text-align:center;background-image: url(assets/img/mine/myBg.png);
+        margin: auto auto;" id="mineHeadDiv">
+        <div style="overflow:hidden;height:100%;width:100%;position:relative;">
+            <div style="">
+                <div style="position: absolute;left: 20px" id="headLogoImageDiv" class="fl">
+                    <img onclick="address_panel()" style="border-radius:120px;"
+                         src="assets/img/home/Touxiang.png" id="headLogoImage"
+                         width="120" height="120">
+                </div>
+                <div class="clearfix"></div>
+
+                <div id="headContentDiv"
+                     style="line-height:40px;color:white;text-align:left;position: absolute;width:100%;
+                    background-image: url(assets/img/mine/Touming.png);
+                    background-repeat: repeat fixed!important;" class="clearfix">
+                    <div class="fl">
+                            <span id="userNameMine" style="font-size:24px;font-weight:none;
+                            padding-left: 5px;padding-right: 5px;">
+                                超级玛丽奥
+                            </span>
+
+                    </div>
+                    <div class="fr" onclick="showQrDiv()" style="text-align: center;line-height:40px;
+                        padding-right: 10px;">
+                        <img
+                                style=""
+                                src="assets/img/mine/iconfont-qrcode.png" height="16" width="16"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #F2F2F2;width:100%;height:60%;">
+
+        <table style="margin:0px 5px;text-align:center;
+        width:100%;height:100%;">
+            <tr style="height: 50%;border-bottom:1px solid #E0E0E0;">
+                <td id="mineCarInfo" onclick="$.ui.loadContent('#addorder',false,false,'slide')"
+                    style="width:50%;">
+                    <i class="iconfont icon-songhuo" style="font-size:42px;color:#EF8305;"></i>
+                    <p style="font-weight:bold;color:#33393C;" id="myCarTitle">我要下单</p>
+                </td>
+                <td id="mineTodolist" onclick="message_panel()"
+                    style="width:50%;">
+                    <i class="icon-message" style="font-size:42px;color:#EF8305;"></i>
+
+                    <p style="font-weight:bold;color:#33393C;">我的消息</p>
+                </td>
+            </tr>
+            <tr style="height: 50%;">
+                <td onclick="qrcode_panel()"
+                    style="width:50%;">
+                    <i class="icon-share" style="font-size:42px;color:#EF8305;"></i>
+                    <p style="font-weight:bold;color:#33393C;">推荐朋友</p>
+                </td>
+                <td onclick="setup()"
+                    style="width:50%;border-left:1px solid #E0E0E0;border-right:1px solid #E0E0E0;">
+                    <i class="icon-settings" style="font-size:42px;color:#EF8305;"></i>
+
+                    <p style="font-weight:bold;color:#33393C;">系统设置</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="transparentBg" onclick="hideQrDiv()"
+     style="display:none;position:fixed;width:100%;height:100%;
+        background:#000;z-index:2;top:0;left:0;opacity:0.7;">
+</div>
+<div id="qrImg"
+     style="display:none;
+        position:fixed;
+        z-index:3;">
+    <img onclick="hideQrDiv()" id="qrcodeImg" src="assets/img/qrcode.png"/>
+</div>
