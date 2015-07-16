@@ -1,79 +1,115 @@
 <div>
-    <div>
-        <div onclick="" style="height:30px; overflow:hidden;line-height:30px;
-            background-color:#F2F2F2;border-radius:5px;">
-            <div class="clearfix" >
-                <div class="fl"><span style="font-size:20px;color:#06ABD4"></span>发货信息</div>
+    <div  class="clearfix" >
+        <div onclick="" style="height:80px; overflow:hidden;line-height:30px;
+            border-radius:5px;border-bottom:1px solid #ededed;">
+            <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
+                <div class="fl"><span style="font-size:16px;padding-left: 5px;">发货信息</span></div>
             </div>
-            <div class="clearfix" >
+            <div class="clearfix" onclick="toconfirmownerPanel();">
                 <div class="fl" style="width: 70%;">
                     <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
-                        <p class="fl" style="width:10px;height:10px;border-radius:10px;
+                       <!-- <p class="fl" style="width:10px;height:10px;border-radius:10px;
                         background-color: #089c2e;
-                        margin-right: 10px; margin-top: 10px;"></p>
-                        <p style="font-size: 18px;color: #383838">
+                        margin-right: 10px; margin-top: 10px;"></p>-->
+                        <p style="font-size: 16px;color: #383838">
                             请选择发货人
                         </p>
                     </div>
                 </div>
-                <div class="fr" onclick="choiceOwnerAddr();">
-                    <i style="font-size:18px;line-height:30px" class="icon-more-horiz"></i>
+                <div class="fr" style="padding-top: 5px;" >
+                    <a>
+                    <span style="font-size: 14px;color: #383838;padding-right:0px;">
+                            <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
+                    </span>
+                    </a>
                 </div>
-        </div>
+            </div>
         </div>
         <div>
-            <form class="form-horizontal" role="form">
-
-                <div class="form-group">
-                    <div class="col-sm-10 aform">
-                        <input type="text" class="form-control" id="deliveryDate"
-                               placeholder="请输入要求发货时间">
-                        <!--  <input name="" id="search-end-pay" type="text" placeholder="请选择结算时间.." >-->
-                        <!--  <div  class="phone-code arrow f32 width10">-->
-                        <span id="showdeliveryDateDate"  style="width:110px;font-size:30px;"
+            <form style="  padding-top: 10px;" class="form-horizontal" role="form">
+                <div class="fl" style="width: 30%;padding-left: 10px;">
+                    <p style="font-size: 16px;color: #383838">
+                    发货时间
+                </p></div>
+                <div class="fr" style="width: 70%;">
+                    <div class="form-group" style="margin-left: -50px;">
+                        <div class="col-sm-10 aform" style="padding-right: 20px;">
+                            <input style="background-color:#F2F2F2;" type="text" class="form-control" id="deliveryDate"
+                                   placeholder="请输入要求发货时间">
+                            <!--  <input name="" id="search-end-pay" type="text" placeholder="请选择结算时间.." >-->
+                            <!--  <div  class="phone-code arrow f32 width10">-->
+                        <span id="showdeliveryDateDate"  style="width:70px;font-size:30px;"
                               class="phone-code unit-box icon-keyboard-arrow-down f32"></span>
-                        <!-- </div>-->
+                            <!-- </div>-->
+                        </div>
                     </div>
+
                 </div>
+
             </form>
 
         </div>
-    </div>
 
+    </div>
+    <div class="gray10"></div>
+    <div  class="clearfix" >
         <div onclick=""
-             style="height:30px; overflow:hidden;line-height:30px;
-            background-color:#F2F2F2;border-radius:5px;">
-            <div class="clearfix" >
-                <div class="fl"><span style="font-size:20px;color:#06ABD4"></span>收货信息</div>
+             style="height:80px; line-height:30px;
+            border-radius:5px;">
+            <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
+                <div class="fl"><span style="font-size:16px;padding-left: 5px;">收货信息</span></div>
+            </div>
+            <div class="clearfix"  onclick="toconfirmcustPanel();">
+                <div class="fl" style="width: 70%;">
+                    <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
+                        <!--<p class="fl" style="width:10px;height:10px;border-radius:10px;
+                        background-color: #089c2e;
+                        margin-right: 10px; margin-top: 10px;"></p>-->
+                        <p style="font-size: 18px;color: #383838">
+                            请选择收货人
+                        </p>
+                    </div>
+                </div>
+                <div class="fr" style="padding-top: 5px;" ><!--onclick="choiceCustAddr();"-->
+               <span style="font-size: 14px;color: #383838;padding-right:0px;">
+                            <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
+                            </span></div>
+            </div>
+
+        </div>
+
+        <div>
+            <form class="form-horizontal" role="form">
+            </form>
+        </div>
+
+    </div>
+    <div class="gray10"></div>
+    <div>
+        <div onclick=""
+             style="height:80px; line-height:30px;
+            border-radius:5px;">
+            <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
+                <div class="fl"><span style="font-size:16px;padding-left: 5px;">货物信息</span></div>
             </div>
             <div class="clearfix" >
                 <div class="fl" style="width: 70%;">
                     <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
-                        <p class="fl" style="width:10px;height:10px;border-radius:10px;
+                        <!--<p class="fl" style="width:10px;height:10px;border-radius:10px;
                         background-color: #089c2e;
-                        margin-right: 10px; margin-top: 10px;"></p>
+                        margin-right: 10px; margin-top: 10px;"></p>-->
                         <p style="font-size: 18px;color: #383838">
-                            请选择发货人
+                            请输入货物信息
                         </p>
                     </div>
                 </div>
-                <div class="fr" onclick="choiceCustAddr();">
-                <i style="font-size:20px;line-height:30px" class="icon-more-horiz"></i>选择收货人</div>
-        </div>
-        <div>
-            <form class="form-horizontal" role="form">
-
-            </form>
-        </div>
-    </div>
-
-
-    <div>
-        <div>
-            <p><span style="color:#06ABD4"></span>货物信息</p>
-            <div>
-
+                <div class="fr" style="padding-top: 5px;" onclick="choiceCustAddr();">
+               <span style="font-size: 14px;color: #383838;padding-right:0px;">
+                            <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
+                            </span></div>
             </div>
+
+        </div>
 
             <!--<div class="form-group">
                 &lt;!&ndash;<label for="o_owner" class="col-sm-2 control-label">发货人：</label>&ndash;&gt;
@@ -127,81 +163,11 @@
         </div>
     </div>
 
-    <div  align="center" > <button role="button" id="loginButton"
-                                   style="width:80%;background:#00B2EE;font-size:x-large;" onclick="saveOrUpdate()"
-                                   class="btn  btn-block">提交订单</button>
+    <div  align="center" style="  background: #f2f2f2;padding-top: 40px;
+  padding-bottom: 30px;position: relative;margin-top: 10px;clear: both;" >
+        <button role="button" id="loginButton"
+         style="width:80%;background:#ef8305;font-size:x-large;" onclick="saveOrUpdate()"
+         class="btn  btn-block">提交订单</button>
     </div>
 
 </div>
-                <!--<div class="form-group" >
-                    &lt;!&ndash;<label for="o_city" class="col-sm-2 control-label">城市</label>&ndash;&gt;
-                    <div class="col-sm-10 aform" >
-                        <input type="text" class="form-control"
-                               id="o_provice"placeholder="请输入省">
-                        <span onclick="select_city_panel('o_city')"
-                        style="width:110px;font-size:30px;" class="phone-code unit-box icon-keyboard-arrow-down" ></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    &lt;!&ndash;<label for="o_addr" class="col-sm-2 control-label">详细地址：</label>&ndash;&gt;
-                    <div class="col-sm-10 aform">
-                        <input type="text" class="form-control" id="o_addr"
-                               placeholder="请输入详细地址">
-                    </div>
-                </div>
-                <div class="form-group">
-                    &lt;!&ndash;<label for="o_linker" class="col-sm-2 control-label">联系人：</label>&ndash;&gt;
-                    <div class="col-sm-10 aform">
-                        <input type="text" class="form-control" id="o_linker"
-                               placeholder="请输入联系人">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    &lt;!&ndash;<label for="o_linkPhone" class="col-sm-2 control-label">联系电话：</label>&ndash;&gt;
-                    <div class="col-sm-10 aform">
-                        <input type="text" class="form-control" id="o_linkPhone"
-                               placeholder="请输入电话">
-                    </div>
-                </div>-->
-
-
-            <!--<div class="form-group">
-                &lt;!&ndash;<label for="c_city" class="col-sm-2 control-label">城市：</label>&ndash;&gt;
-                <div class="col-sm-10 aform">
-                    <input type="text" class="form-control" id="c_provice"
-                           placeholder="请输入城市">
-                    <span onclick="select_Ccity_panel('o_city')"
-                          style="width:110px;font-size:30px;"
-                          class="phone-code unit-box icon-keyboard-arrow-down" ></span>
-                </div>
-            </div>
-            <div class="form-group">
-                &lt;!&ndash;<label for="c_addr" class="col-sm-2 control-label">详细地址：</label>&ndash;&gt;
-                <div class="col-sm-10 aform">
-                    <input type="text" class="form-control" id="c_addr"
-                           placeholder="请输入详细地址">
-                </div>
-            </div>
-            <div class="form-group">
-                &lt;!&ndash;<label for="c_linker" class="col-sm-2 control-label">联系人：</label>&ndash;&gt;
-                <div class="col-sm-10 aform">
-                    <input type="text" class="form-control" id="c_linker"
-                           placeholder="请输入联系人">
-                </div>
-            </div>
-            <div class="form-group">
-                &lt;!&ndash;<label for="c_linkPhone" class="col-sm-2 control-label">联系电话：</label>&ndash;&gt;
-                <div class="col-sm-10 aform">
-                    <input type="text" class="form-control" id="c_linkPhone"
-                           placeholder="请输入联系电话">
-                </div>
-            </div>-->
-            <!--<div class="form-group">
-                &lt;!&ndash;<label for="c_linkDate" class="col-sm-2 control-label">联系时间：</label>&ndash;&gt;
-                <div class="col-sm-10 aform">
-                    <input type="text" class="form-control" id="c_linkDate"
-                           placeholder="请输入联系时间">
-                </div>
-            </div>-->

@@ -59,11 +59,20 @@ function mine_panel()
     var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
     $("#headContentDiv").css('top',headContentDivTop);
     $("#headLogoImageDiv").css('top',headLogoImageDivTop);
-    $.ui.loadContent("#mine", false, false, "slide");
+    if ( localStorage.getItem('user') == null){
+        login_panel();
+    }else{
+        $.ui.loadContent("#mine", false, false, "slide");
+    }
+
 }
 function main_panel()
 {
-    $.ui.loadContent("#main", false, false, "slide");
+    if ( localStorage.getItem('user') == null){
+        login_panel();
+    }else{
+        $.ui.loadContent("#main", false, false, "slide");
+    }
 }
 
 function home_panel()
@@ -101,9 +110,29 @@ function setup(){
 function myorders_panel(){
     $.ui.loadContent("#myorders", false, false, "slide");
 }
+
+function toconfirmownerPanel(){
+    //$("#ownerswitchDiv").empty();
+    //$("#ownerswitchDiv").append(switchHtml);
+  /*  $.fn.bootstrapSwitch.default.onText = 'save';
+    $.fn.bootstrapSwitch.default.ffText = 'no';
+    $("[name='o-checkbox']").bootstrapSwitch('state', true, true);
+    initOwnerOrcustSwith();*/
+    clearConfirmPanelData();//清除数据
+    $.ui.loadContent("#confirmowner", false, false, "slide");
+}
+function toconfirmcustPanel(){
+    clearConfirmPanelData();
+    $.ui.loadContent("#confirmcust", false, false, "slide");
+}
+
+function clearConfirmPanelData(){
+    $('#confirmcustContent').find('input:[type=text]').val('');
+    $('#confirmownerContent').find('input:[type=text]').val('');
+}
 //物流看板初始化页面
 function logisticboard_panel(){
-
+    $(".alert").hide();
     init_orderboardheader();//初始化头部和圆形图标
     initBoardSearchPage();//初始化看板刷选页
     initLogisticBoard();
@@ -325,51 +354,55 @@ function qrcode_panel() {
 
 //初始化首页看板
 function initHomeModuleTable(){
-
-    getAjax(queryIndexOrderCountUrl ,{'orderEnterpriseNo':enterpriseNo,
-            'systemNo':systemNo, 'orderNo':orderNo,
-            'dispatchNo':dispatchNo},
+   // userType,  userNo,enterpriseNo,ownerNo,custNo
+    var user = JSON.parse(localStorage.getItem('user'));
+    getAjax(queryIndexOrderCountUrl ,{'enterpriseNo':user.obj.logisticNo,
+            'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo
+           },
         "queryIndexOrderCountSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
-    $('#home-module-table').html('');
+
 }
 
-function queryIndexOrderCountSucc(){
-//    if( data.isSucc ){
-//
-//    }
+function queryIndexOrderCountSucc(data){
+    if( data.isSucc ){
+
+    $('#home-module-table').html('');
     var user = JSON.parse(localStorage.getItem("user"));
     var userType = user.obj.userType;
     var result = '';
+
     if(userType == 0 || userType == 1) {
         result = '<tr><td style="width:20%;">'+
-        '<div style="color:#ef8305;font-size:24px;">156</div>'+
+        '<div style="color:#ef8305;font-size:24px;">'+data.obj.deliveryCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">今日送</div>'+
         '</td><td style="width:20%;border-left:1px solid #e6e6e6;'+
         'border-right: 1px solid #e6e6e6">'+
-        '<div style="color:#ef8305;font-size:24px;">367</div>'+
+        '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">在途中</div>'+
         '</td><td style="width:20%;border-right: 1px solid #e6e6e6">'+
-        '<div style="color:#ef8305;font-size:24px;">4</div>'+
+        '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">逾期</div>'+
         '</td><td style="width:20%;">'+
-        '<div style="color:#ef8305;font-size:24px;">4</div>'+
+        '<div style="color:#ef8305;font-size:24px;">'+data.obj.exceptionCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">异常</div></td></tr>';
     }  else if (userType == 2){
         result = '<tr><td style="width:33%;">'+
-            '<div style="color:#ef8305;font-size:24px;">156</div>'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.arriviedCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">今日达</div>'+
             '</td><td style="width:33%;border-left:1px solid #e6e6e6;'+
             'border-right: 1px solid #e6e6e6">'+
-            '<div style="color:#ef8305;font-size:24px;">367</div>'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">在途中</div>'+
             '</td><td style="width:33%;">'+
-            '<div style="color:#ef8305;font-size:24px;">4</div>'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">逾期</div>'+
             '</td></tr>';
     }
     $('#home-module-table').empty();
     $('#home-module-table').append(result);
+    }
+
 }
 
 //初始化首页底部panel 和 绑定事件

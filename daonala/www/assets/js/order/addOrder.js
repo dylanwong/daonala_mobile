@@ -36,8 +36,8 @@ function choiceCustAddr(){
     var owners = JSON.parse(localStorage.getItem("ownerInfo"));
     if(user.userType==1){
         option = {
-            enterpriseno:'10001',
-            ownerNo:user.obj.enterpriseNo
+            enterpriseno:user.obj.logisticsNo,
+            ownerNo:user.obj.ownerNo
         };
     }else if(user.obj.userType==0){
         option = {
@@ -456,4 +456,43 @@ function saveOrderFromPhoneSucc(data){
     }else{
         errorPopup('下单失败');
     }
+}
+
+
+
+
+
+
+function initOwnerOrcustSwith() {
+    $('input[name="o-checkbox"]').unbind('switchChange.bootstrapSwitch');
+    $('input[name="o-checkbox"]').on('switchChange.bootstrapSwitch', function (event, state) {
+
+        //console.log(this); // DOM element
+        //console.log(event); // jQuery event
+        //console.log(state); // true | false
+
+        var data = [];
+        var id = $(this).attr('id');
+        var flag = 0;
+        state == true ? flag = 1 : flag = 0;
+        if (id == 'ownerFlag') {
+            data = [flag, ''];
+        } else if (id == 'custFlag') {
+            data = ['', flag];
+        } else {
+            data = ['', ''];
+        }
+
+        saveOrUpdateOwnerOrCuster(data);
+    });
+}
+    function saveOrUpdateOwnerOrCuster(data){
+        if( data[0] == 0 ) {
+
+        } else if (  data[1] == 0 ) {
+
+        } else {
+
+        }
+
 }

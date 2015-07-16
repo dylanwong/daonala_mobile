@@ -46,6 +46,8 @@ var queryDeliverordertraceListUrl = baseUrl + "order/queryDeliverordertraceList.
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
 var searchSubCompanyUrl = baseUrl + "order/query_subcompany.action";
 var searchOwnerOrCustUrl = baseUrl + "order/getLinkDataList.action";
+
+var queryIndexOrderCountUrl = baseUrl + "order/queryIndexOrderCount.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
 //event target ID
 var ETID = null;
@@ -118,7 +120,8 @@ function init_homepage(){
 
 
     }else{
-        queryIndexOrderCountSucc();
+        initHomeModuleTable();
+        //queryIndexOrderCountSucc();
         initHomeFooter(user.obj.userType);
         loginStatus=1;
         var result = '';

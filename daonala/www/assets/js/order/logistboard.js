@@ -9,6 +9,7 @@ function initBoardSearchPage(){
     if(getUserType() == 0){
         $('#product_search').attr('placeholder','请输入货主编号或名称模糊查询...');
     }else if(getUserType() == 1){
+        $('#select_city').hide();
         $('#product_search').attr('placeholder','请输入客户编号或名称模糊查询...');
     }
     getAjax(searchSubCompanyUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
@@ -124,6 +125,7 @@ function clearboard(){
 }
 
 function initLogisticBoardAgain(){
+    $(".alert").show();
     var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
     $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
     $("#" + target).hide();
