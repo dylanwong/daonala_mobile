@@ -27,6 +27,7 @@ include("assets/js/order/addOrder.js");
 include("assets/js/order/city.js");
 include("assets/js/public/iscroll.js");
 include("assets/js/setup/share.js");
+include("assets/js/setup/map.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
@@ -40,6 +41,10 @@ function message_panel(){
     }else{
         $.ui.loadContent("#login", false, false, "slide");
     }
+}
+
+function map_panel() {
+    $.ui.loadContent("#map", false, false, "slide");
 }
 function mine_panel()
 {
@@ -472,10 +477,12 @@ function msgdetail_panel(elm){
     TDID = $(elm).attr('id');
     var t = $(elm).attr('title');
     var c = $(elm).attr('content');
+    var d = $(elm).attr('date');
    // var titles = $(this).attr('title');
     $('#msgtitle').text(t);
    // $('#msgtitle').html('<p>'+t+'</p>');
     $('#msgcontent').text(c);
+    $('#msgDate').text(d);
     $.ui.loadContent('#messagedetail', false, false, 'slide');
 }
 function getArea(){
@@ -601,16 +608,26 @@ function getMessageList(user){
 }
 function getMsgListSucc(data){
 
-    var msgliststr="";
+    template.helper('changeContent', function (content) {
+        if(content.length>24){
+            return content.substring(0,24)+"......";
+        }else{
+            return content
+        }
+    });
+
+    var html = template('messageContentListTemp',data);
+
+    /*var msgliststr="";
     for(var i = 0 ;i<data.obj.length;i++){
        // data.obj[i].noticeTitle;
         var t = data.obj[i].noticeTitle;
         var c = data.obj[i].noticeContent;
         msgliststr += " <tr><td onclick='msgdetail_panel(this)' title='"+data.obj[i].noticeTitle+"' content='"+data.obj[i].noticeContent+"'>"
             +changeContent(data.obj[i].noticeTitle)+"</td><td>"+data.obj[i].noticeEndDate+"</td></tr>";
-    }
-    $("#msglist").empty();
-    $('#msglist').append(msgliststr);
+    }*/
+    $("#messageContentList").empty();
+    $('#messageContentList').append(html);
 }
 function getMsgListError(data){
 
@@ -622,6 +639,8 @@ function changeContent(content){
         return content
     }
 }
+
+
 
 
 function getPullToRefresh(that){

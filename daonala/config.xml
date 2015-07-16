@@ -17,7 +17,7 @@
 
     <!--升级时候替换android config.xml -->
     <feature name="CheckUpdatePlugin">
-        <param name="android-package" value="com.sealink.huoyuntong.CheckUpdatePlugin"/>
+        <param name="android-package" value="com.sealinkin.daonala.CheckUpdatePlugin"/>
     </feature>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
