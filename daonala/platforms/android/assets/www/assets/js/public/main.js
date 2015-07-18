@@ -125,10 +125,15 @@ function toconfirmcustPanel(){
     clearConfirmPanelData();
     $.ui.loadContent("#confirmcust", false, false, "slide");
 }
+function choiceGood(){
+    clearConfirmPanelData();
+    $.ui.loadContent("#confirmgood", false, false, "slide");
+}
 
 function clearConfirmPanelData(){
-    $('#confirmcustContent').find('input:[type=text]').val('');
-    $('#confirmownerContent').find('input:[type=text]').val('');
+    $('#confirmcustContent').find('input[type=text]').val('');
+    $('#confirmownerContent').find('input[type=text]').val('');
+    $('#confirmgoodContent').find('input[type=text]').val('');
 }
 //物流看板初始化页面
 function logisticboard_panel(){
@@ -501,6 +506,7 @@ function register_panel()
 
 function addorder_panel(){
     //queryOwnerInfo();
+    clearConfirmData();
     $.ui.loadContent("addorder",false,false,"slide");
 }
 

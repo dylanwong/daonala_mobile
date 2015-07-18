@@ -336,7 +336,7 @@ data-defer:加载一个html进来
      title="下单" id="addorder" data-defer="assets/panel/order/addOrder.html"
      data-load=""
      data-unload=""
-     data-header=""
+     data-header="addOrderHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
@@ -353,7 +353,13 @@ data-defer:加载一个html进来
      data-header=""
      data-footer="none">
 </div>
-
+<div class="panel p0"
+     title="确认货物" id="confirmgood" data-defer="assets/panel/order/confirmGoods.html"
+     data-load=""
+     data-unload=""
+     data-header=""
+     data-footer="none">
+</div>
 <div class="panel p0"
      title="" id="chocieOwner" data-defer="assets/panel/order/choiceOwner.html"
      data-load=""
@@ -563,6 +569,15 @@ data-defer:加载一个html进来
     <h1 id="home2Title" class="">订单列表</h1>
     <div></div>
 </header>
+
+<header id="addOrderHeader" style="background-color:#ef8305;">
+    <a class="backButton button"  onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
+
+    </a>
+    <h1 id="addOrderTitle" class="">快速下单</h1>
+    <div></div>
+</header>
+
 <header id="orderlistHeader" style="background-color:#ef8305;">
     <a class="backButton button" id="orderlistHeaderId" onclick="$.ui.loadContent('#orderBoard', false, false, 'slide')" >
 

@@ -10,7 +10,8 @@
             <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
                 <div class="fl"  class="form-group" style="width:80%;">
                     <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
-                        <input style="" type="text" class="form-control" id="o_ownername"
+                        <input style="" type="text"  name="ownerInfoInput"
+                               class="form-control" id="o_ownername"
                            placeholder="请输入或选择发货人">
                     </div>
                 </div>
@@ -32,9 +33,9 @@
                     <div class="fl"  class="form-group" style="width:90%;">
                         <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
                             <input type="text" class="form-control"
-                                   id="o_provice" placeholder="请选择省份城市">
+                                   id="o_provice"  name="ownerInfoInput" placeholder="请选择省份城市">
                             <span onclick="select_city_panel('o_city')"
-                              style="width:110px;font-size:30px;" class="phone-code unit-box icon-keyboard-arrow-down" ></span>
+                              style="width:40px;font-size:30px;" class="phone-code unit-box icon-keyboard-arrow-down" ></span>
 
                         </div>
                     </div>
@@ -51,7 +52,7 @@
                 <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
                     <div class="fl"  class="form-group" style="width:90%;">
                         <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
-                            <input type="text" class="form-control" id="o_addr"
+                            <input type="text"  name="ownerInfoInput" class="form-control" id="o_addr"
                                    placeholder="请输入详细地址">
                         </div>
                     </div>
@@ -69,7 +70,7 @@
             <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
                     <div class="fl"  class="form-group" style="width:90%;">
                         <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
-                            <input type="text" class="form-control" id="o_linker"
+                            <input type="text" name="ownerInfoInput" class="form-control" id="o_linker"
                             placeholder="请输入联系人">
                         </div>
                  </div>
@@ -86,7 +87,7 @@
                 <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
                     <div class="fl"  class="form-group" style="width:90%;">
                         <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
-                            <input type="text" class="form-control" id="o_linkPhone"
+                            <input type="text" name="ownerInfoInput" class="form-control" id="o_linkPhone"
                                    placeholder="请输入电话">
                         </div>
                     </div>
@@ -110,7 +111,7 @@
     <div  align="center" style="  background: #f2f2f2;padding-top: 40px;
   padding-bottom: 30px;position: relative;margin-top: 10px;clear: both;" >
         <button role="button" id="loginButton"
-                style="width:80%;background:#ef8305;font-size:x-large;" onclick="backToAddOrderPage()"
+                style="width:80%;background:#ef8305;font-size:x-large;" onclick="backToOwnerAddOrderPage()"
                 class="btn  btn-block">确认返回</button>
     </div>
 
