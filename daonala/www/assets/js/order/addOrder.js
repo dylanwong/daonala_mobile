@@ -127,7 +127,7 @@ function showOwnerAddrList(data){
                     '<span class=" f12 fco" >'+data.obj[k].ownerContact+'</span>'+
                     '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>'+
                     '<span class=" f12 fco">'+data.obj[k].ownerPhone+'</span>'+
-                    '<br><span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>'+
+                    '<br><span class="ownerName f12 fco p0-6"  >地址:</span>'+
                     '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj[k].unionAddr+'</span><br>'+
                     '</div></div><div style="float:right;">'+
                     '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">'+

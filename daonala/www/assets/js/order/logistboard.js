@@ -5,7 +5,9 @@
 function initBoardSearchPage(){
     //initAutoData();
     $('#select_city').val('');
+    $('#select_city').attr('selectid','');
     $('#product_search').val('');
+    $('#product_search').attr('productid','');
     if(getUserType() == 0){
         $('#product_search').attr('placeholder','请输入货主编号或名称模糊查询...');
     }else if(getUserType() == 1){
@@ -18,27 +20,56 @@ function initBoardSearchPage(){
         "updateBoardSearchPage2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         //linkSource();//初始化客户或货主
 }
-
+function clearSearchText(){
+    $('#select_city').val('');
+    $('#product_search').val();
+    // $('#boardowner').attr('value','');
+  //  $('#product_search').attr('productid','');
+}
+function hideAlert(){
+    $('#boardalert').hide();
+}
+function removeInputIds(){
+    $('#product_search').val();
+   // $('#boardowner').attr('value','');
+    $('#product_search').attr('productid','');
+}
 //确认精确查询条件
 function confirmSearch(){
+
+   // $(".close").show();
+    $('#subCompany').attr('value','');
     var subcompany = $('#select_city').attr('selectid');
     var subcompanyName = $('#select_city').val();
-
+    var searchFlag = false;
     $('#subCompany').empty();
-    $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
-    $('#subCompany').attr('value',subcompany);
-
+    if( subcompany != undefined && subcompany != '' && subcompanyName != undefined && subcompanyName != ''){
+        $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
+        $('#subCompany').attr('value',subcompany);
+        searchFlag = true;
+    } else {
+        searchFlag = false;
+    }
+    $('#boardowner').attr('value','');
     var owner = $('#product_search').attr('productid');
     var ownerName = $('#product_search').val();
-    if(owner!=undefined){
-    $('#boardowner').empty();
-    var userType = JSON.parse(localStorage.getItem('user')).obj.userType;
-    if(userType == 0) {
-        $('#boardowner').append('<b>货&nbsp;&nbsp;&nbsp;主&nbsp;:</b>&nbsp;' + ownerName);
-    }else if(userType == 1) {
-        $('#boardowner').append('<b>客&nbsp;&nbsp;&nbsp;户&nbsp;:</b>&nbsp;' + ownerName);
+    if( owner != undefined && owner != '' && ownerName != undefined && ownerName != ''){
+        $('#boardowner').empty();
+        var userType = JSON.parse(localStorage.getItem('user')).obj.userType;
+        if(userType == 0) {
+            $('#boardowner').append('<b>货&nbsp;&nbsp;&nbsp;主&nbsp;:</b>&nbsp;' + ownerName);
+        }else if(userType == 1) {
+            $('#boardowner').append('<b>客&nbsp;&nbsp;&nbsp;户&nbsp;:</b>&nbsp;' + ownerName);
+        }
+        $('#boardowner').attr('value',owner);
+        searchFlag = true;
+    }else {
+        searchFlag = false;
     }
-    $('#boardowner').attr('value',owner);
+    if ( searchFlag == false) {
+        $('#boardalert').hide();
+    } else {
+        $('#boardalert').show();
     }
     // var ownerOrCustText = $('#ownerText').val();
     initLogisticBoardAgain();
@@ -125,7 +156,7 @@ function clearboard(){
 }
 
 function initLogisticBoardAgain(){
-    $(".alert").show();
+
     var target = $($("#orderboard-buttons").find(".selectTotalDay")[0]).attr('target');
     $($("#orderboard-buttons").find(".selectTotalDay")[0]).removeClass('selectTotalDay');
     $("#" + target).hide();
@@ -311,14 +342,23 @@ function orderlist_panel(statustype){
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
+    var user = JSON.parse(localStorage.getItem('user'));
+    var ownerText = '';
+    var custText = ''
+    if( user.obj.userType == '0' ){
+        ownerText = $('#boardowner').val();
+
+    } else if ( user.obj.userType == '0' ){
+        custText = $('#boardowner').val();
+    }
     if ( localStorage.getItem("user")==null ) {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
-            'ownerText':'','custText':''},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').val(),
+            'ownerText':ownerText,'custText':custText},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
-                'ownerText':'','custText':''},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').val(),
+                'ownerText':ownerText ,'custText':custText},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
 

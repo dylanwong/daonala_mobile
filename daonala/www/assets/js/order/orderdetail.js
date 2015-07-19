@@ -156,16 +156,23 @@ function queryDeliverordertraceListUrlSuc(data){
     }
 }
 //订单跟踪信息
-function querySingleTraceInfo(sendNo,status){
+function querySingleTraceInfo(deliveryNo,sendNo,status){
  //   $("#orderDetailTraceContent").empty();
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $.ui.blockUI(.3);
     $("#trace_list_div").empty();
     $('#tracestatus').html(showstatus(status));
+    localStorage.removeItem('currentSendInfo');
+    localStorage.setItem( 'currentSendInfo',
+        JSON.stringify( {'deliveryNo':deliveryNo,'sendNo':sendNo,
+    'status':status} ) )
     getAjax(searchTraceUrl, {'orderEnterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo,
             'sendNo':sendNo},
         "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
+
 }
 
 function queryOrderDoc(){
@@ -250,19 +257,26 @@ function updateTracePanel2(data){
     var html = "",height = "";
     if(data.isSucc){
 
+        $('#orderDetailTraceContent').show();
+        $('#tracecontainerMap').hide();
 
         var obj = data.obj ;
         $.ui.loadContent("#orderDetailTrace", false, false, "slide");
+
         result = template('orderTraceListTemp',data);
 
         $("#trace_list_div").append(result);
         var len = obj.length;
+        var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+        //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
         for(var i = 0; i < len; i++ ) {
             if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
                 console.log(i+' '+obj[i].fileNo);
-                setSmallImgList( obj[i].fileNo,obj[i].deliveryNo );
+                setSmallImgList( obj[i].fileNo,sendinfo.deliveryNo );
             }
         };
+
+
     }else{
         $("#trace_list_div").empty();
         $("#trace_list_div").html("暂无跟踪信息");
@@ -275,6 +289,79 @@ function updateTracePanel2(data){
     $.ui.unblockUI();
     $.ui.hideMask();
 }
+
+function toTrace(){
+    $('#orderDetailTraceContent').show();
+    $('#tracecontainerMap').hide();
+    $('#toTrace').removeClass('bbc');
+    $('#toMap').addClass('bbc');//border-bottom: 25px solid #ef8305
+}
+
+function toMap(){
+    $('#toMap').removeClass('bbc');
+    $('#toTrace').addClass('bbc');
+    $('#orderDetailTraceContent').hide();
+    $('#tracecontainerMap').show();
+
+    //init_tracemap();
+}
+
+function init_LogisticMap(deliveryNo,sendNo){
+    var order = JSON.parse( localStorage.getItem('currentorder') );
+   // var enterpriseNo =
+//    var pram = {
+//        systemNo : order.systemNo,
+//        enterpriseNo : order.enterpriseNo,
+//        dispatchNo : order.dispatchNo,
+//        sendNo:order.sendNo
+//    };
+    getAjax(searchTraceLongitudeUrl, {'systemNo':order.systemNo,'enterpriseNo':order.enterpriseNo,
+            'dispatchNo':order.dispatchNo,
+            'sendNo':sendNo },
+        "inittracemaps(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+
+function inittracemaps(data){
+    var jindu = [];
+    var weidu = [];
+    for ( var i = 0; i < data.obj.length; i++) {
+        jindu[i] = data.obj[i].longitude;
+        weidu[i] = data.obj[i].latitude;
+    }
+    init_tracemap(jindu,weidu);
+}
+// 百度地图API功能
+function init_tracemap(longitudes,latitudes) {
+    var points = [];
+    for ( var i = 0; i < longitudes.length; i++) {
+        points[i] = new BMap.Point(longitudes[i],latitudes[i]);
+    }
+    $("#tracecontainerMap").height($("#map").height());
+    $("#tracecontainerMap").width($("#map").width());
+    var map = new BMap.Map("tracecontainerMap");
+    map.centerAndZoom(new BMap.Point(118.454, 32.955), 11);
+    map.enableScrollWheelZoom();
+    var beijingPosition=new BMap.Point(116.432045,39.910683),
+        hangzhouPosition=new BMap.Point(120.129721,30.314429),
+        xianPosition=new BMap.Point(114.3162,30.581084),
+        taiwanPosition=new BMap.Point(113.950723,22.558888);
+  //  var points = [beijingPosition,hangzhouPosition,xianPosition,taiwanPosition];
+
+    var curve = new BMapLib.CurveLine(points,
+        {strokeColor:"red", strokeWeight:3, strokeOpacity:0.5,strokeStyle:'solid'}); //创建弧线对象
+    map.addOverlay(curve); //添加到地图中
+    curve.enableEditing(); //开启编辑功能
+
+    map.setViewport(points);//自动适应缩放级别
+
+    var myIcon = new BMap.Icon("assets/img/car.png",
+        new BMap.Size(56,34));
+    var marker = new BMap.Marker(new BMap.Point(113.950723,22.558888),{icon:myIcon});  // 创建标注
+    map.addOverlay(marker);               // 将标注添加到地图中
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+}
+
+
 
 function setSmallImgList(fileNo,deliveryNo)
 {

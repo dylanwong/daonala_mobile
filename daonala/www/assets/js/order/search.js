@@ -257,3 +257,13 @@ function getRequestFromOrderListinite(self) {
         });
 
 }
+
+
+function searchOrderFromIndex(type){
+    $('#orderlist_ul').empty();
+    $.ui.blockUI(.3);
+    $.ui.showMask("获取查询的订单..");
+    var user = JSON.parse(localStorage.getItem('user'));
+    getAjax(searchOrderFromIndexUrl,{'start': '0', 'length':'10','type':type,'enterpriseNo':user.obj.logisticNo,
+        'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo},'updateOrderlistPanel(data)','errorPopup("网络异常")');
+}

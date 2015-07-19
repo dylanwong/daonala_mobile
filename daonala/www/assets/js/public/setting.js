@@ -25,7 +25,7 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.92:8080/daonala_mobile/";
+var baseUrl = "http://192.168.16.254:8080/daonala_mobile/";
 
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -46,8 +46,9 @@ var queryDeliverordertraceListUrl = baseUrl + "order/queryDeliverordertraceList.
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
 var searchSubCompanyUrl = baseUrl + "order/query_subcompany.action";
 var searchOwnerOrCustUrl = baseUrl + "order/getLinkDataList.action";
-
+var searchTraceLongitudeUrl = baseUrl + "order/query_trace_longitude.action";
 var queryIndexOrderCountUrl = baseUrl + "order/queryIndexOrderCount.action";
+var searchOrderFromIndexUrl = baseUrl + "order/queryIndexOrderList.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
 //event target ID
 var ETID = null;

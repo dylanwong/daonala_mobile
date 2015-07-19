@@ -1,7 +1,9 @@
 #afui.overlayStatusbar{
     margin-top: 20px;
 }
-
+.bbc{
+    border-bottom: 1px solid #ef8305;
+}
 .input-top input,.input-mid input,.input-bot input{-webkit-appearance:none;-webkit-tap-highlight-color: rgba(255,255,255,0);width: 100%;padding-left:38px;-webkit-box-sizing: border-box;text-indent: 0;}
 .input-top input{
     border-radius:3px 3px 0px 0px;

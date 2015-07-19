@@ -144,6 +144,7 @@ function logisticboard_panel(){
 
 }
 function ownerboard_panel(){
+    $(".alert").hide();
     init_orderboardheader();
     initBoardSearchPage();
     initLogisticBoard();
@@ -378,28 +379,30 @@ function queryIndexOrderCountSucc(data){
     var result = '';
 
     if(userType == 0 || userType == 1) {
-        result = '<tr><td style="width:20%;">'+
+        result =
+        '<tr ><td onclick = "searchOrderFromIndex(0);"style="width:20%;">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.deliveryCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">今日送</div>'+
-        '</td><td style="width:20%;border-left:1px solid #e6e6e6;'+
+        '</td><td onclick = "searchOrderFromIndex(1);"style="width:20%;border-left:1px solid #e6e6e6;'+
         'border-right: 1px solid #e6e6e6">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">在途中</div>'+
-        '</td><td style="width:20%;border-right: 1px solid #e6e6e6">'+
+        '</td><td onclick = "searchOrderFromIndex(4);" style="width:20%;border-right: 1px solid #e6e6e6">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">逾期</div>'+
-        '</td><td style="width:20%;">'+
+        '</td><td onclick = "searchOrderFromIndex(3);" style="width:20%;">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.exceptionCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">异常</div></td></tr>';
     }  else if (userType == 2){
-        result = '<tr><td style="width:33%;">'+
+        result =
+            '<tr><td onclick = "searchOrderFromIndex(2);"style="width:33%;">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.arriviedCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">今日达</div>'+
-            '</td><td style="width:33%;border-left:1px solid #e6e6e6;'+
+            '</td><td onclick = "searchOrderFromIndex(1);" style="width:33%;border-left:1px solid #e6e6e6;'+
             'border-right: 1px solid #e6e6e6">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">在途中</div>'+
-            '</td><td style="width:33%;">'+
+            '</td><td onclick = "searchOrderFromIndex(4);" style="width:33%;">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">逾期</div>'+
             '</td></tr>';
@@ -540,35 +543,35 @@ function orderBoard_panel() {
 }
 
 
-function init_chart(){
-    $("#orderBoardChart").height($("#orderBoard").height()-160-60);
-    $("#myChart").width($("#orderBoard").width() * 0.6);
-    $("#myChart").height($("#orderBoardChart").height() * 0.8);
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var chartdata = [
-        {
-            value: 0,
-            color:"#2ec7c9"
-        },
-        {
-            value : 0,
-            color : "#b6a2de"
-        },
-        {
-            value : 0,
-            color : "#5ab1ef"
-        },
-        {
-            value : 0,
-            color : "#ffb980"
-        },
-        {
-            value : 0,
-            color : "#ffb980"
-        }
-    ];
-    new Chart(ctx).Doughnut(chartdata,{});
-}
+//function init_chart(){
+//    $("#orderBoardChart").height($("#orderBoard").height()-160-60);
+//    $("#myChart").width($("#orderBoard").width() * 0.6);
+//    $("#myChart").height($("#orderBoardChart").height() * 0.8);
+//    var ctx = document.getElementById("myChart").getContext("2d");
+//    var chartdata = [
+//        {
+//            value: 0,
+//            color:"#2ec7c9"
+//        },
+//        {
+//            value : 0,
+//            color : "#b6a2de"
+//        },
+//        {
+//            value : 0,
+//            color : "#5ab1ef"
+//        },
+//        {
+//            value : 0,
+//            color : "#ffb980"
+//        },
+//        {
+//            value : 0,
+//            color : "#ffb980"
+//        }
+//    ];
+//    new Chart(ctx).Doughnut(chartdata,{});
+//}
 function init_orderBoard(data)
 {
     var count ;
