@@ -336,8 +336,9 @@ function init_tracemap(longitudes,latitudes) {
     for ( var i = 0; i < longitudes.length; i++) {
         points[i] = new BMap.Point(longitudes[i],latitudes[i]);
     }
-    $("#tracecontainerMap").height($("#map").height());
-    $("#tracecontainerMap").width($("#map").width());
+    $("#tracecontainerMap").height($("#orderDetailTrace").height()
+        -$('#header').height()-$('#toTrace').height());
+    $("#tracecontainerMap").width($("#orderDetailTrace").width());
     var map = new BMap.Map("tracecontainerMap");
     map.centerAndZoom(new BMap.Point(118.454, 32.955), 11);
     map.enableScrollWheelZoom();
