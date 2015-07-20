@@ -199,6 +199,7 @@ function driverboard_panel(){
 
 /*订单查询*/
 function searchorder_panel(){
+
     init_search_panel();
     $.ui.loadContent("#search", false, false, "slide");
 }
@@ -323,6 +324,81 @@ function init_search_panel(){
     }else{
         $('#searchText').attr("placeholder", "请输入单号查找");
     }
+//    routeList
+//    navContent
+    $('#navContent').empty();
+    var arr_v = [];
+    arr_v = JSON.parse( localStorage.getItem('routeList') );
+    if( arr_v != null && arr_v.length > 0 ) {
+        var results = '';
+        for ( var e = 0,len = arr_v.length; e < len; e++ ){
+            var result = ' <li style="line-height:32px;border-bottom:1px dashed #D0D1D6;" class="clearfix">'+
+             '   <div class="fl" style="color:#696969;font-size:14px;" onclick="searchRoute('+arr_v[e]+')">'+
+             '' + arr_v[e] + '</div>'+
+            '<div class="fr" style="color:#A1A1A1;margin-right:10px;">'+
+              '  <img src="assets/img/detail-icon.png" class="">'+
+               ' </div></li>';
+            results +=result;
+
+        }
+        $('#navContent').append(results);
+
+    }
+}
+
+
+function searchRoute(searchText){
+    $('#searchText').val(searchText);
+    search();
+}
+
+function queryAd() {
+    var os = 'android';
+    if (window.OSInfo != null) {
+        os = window.OSInfo.os;
+    }
+    var options =
+    {
+        version: 0,
+        os: os,
+        type: 1
+    };
+    getAjax(queryAdList, options, 'queryAdListSucc(data)');
+}
+
+/**
+ * 渲染广告到页面
+ */
+function queryAdListSucc(data) {
+    var html = '';
+
+    if (data.obj.length > 0) {
+        html = '<div class="swiper-wrapper">';
+        var img = '';
+        for (var i = 0; len = data.obj.length, i < len; i++) {
+            img = smsManageUrl + data.obj[i].advertisement.photoUrl;
+            html += '<div class="swiper-slide">' +
+                '<img data-notice-detail=\'' + JSON.stringify(data.obj[i]) + '\'' +
+                ' src="' + img + '" width="100%" height="100%" onclick="adDetailShow(this)"/>' +
+                '</div>';
+
+            setCacheData('adVersion', data.obj[0].advertisement.vesionNo, 1);
+        }
+        html += '</div><div class="swiper-pagination"></div>';
+
+        //先注释
+        $("#home_ad").empty();
+        $("#home_ad").append(html);
+        var swiper = new Swiper('#home_ad', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            spaceBetween: 30,
+            centeredSlides: true,
+            autoplay: 5000,
+            parallax: true,
+            autoplayDisableOnInteraction: false
+        });
+    }
 }
 
 function init_home_ad()
@@ -331,6 +407,16 @@ function init_home_ad()
     $("#home-module").height($("#home").height()-$("#ad").height());
     $("#home-module-total-num").height($("#home-module-total").height()-60);
     $("#home-module-buttons-button").height($("#home-module-buttons").height()-60);
+
+/*
+    var adHeight = ($("#home2").height() / 2) - 20;
+    var navHeight = adHeight + 20;
+    var homeWidht = $("#home2").width();
+    $("#ad").height(adHeight);
+    $("#home-module").height($("#home2").height() - $("#ad").height());
+*/
+
+    // queryAd();
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
         '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
         '</div>' +

@@ -115,3 +115,36 @@ function ifNull(data){
     }
 
 }
+
+
+//数组操作
+Array.prototype.contains = function(element) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == element) {
+            return true;
+        }
+    }
+    return false;
+};
+//数组移除
+Array.prototype.remove = function(dx) {
+    if (isNaN(dx) || dx > this.length) {
+        return false;
+    }
+    for (var i = 0, n = 0; i < this.length; i++) {
+        if (this[i] != this[dx]) {
+            this[n++] = this[i];
+        }
+    }
+    this.length -= 1;
+};
+Array.prototype.push = function() {
+    var len = arguments.length;
+    if (len > 0)
+        for (var i = 0; i < len; i++)
+            this[this.length] = arguments[i];
+    return this.length;
+};
+Array.prototype.clear = function() {
+    this.length = 0;
+}  ;

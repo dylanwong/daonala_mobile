@@ -2,7 +2,11 @@
  * Created by wyy on 2015-05-27.
  */
 
-
+//function initSearchPage(){
+//    var arr_v = [];
+//    arr_v = JSON.parse( localStorage.getItem('routeList') );
+//
+//}
 function search(){
 
     $.ui.blockUI(.3);
@@ -45,6 +49,35 @@ function search(){
     }
 }
 
+function setRounteListCache(){
+
+    var searchValue = $('#searchText').val();
+    var arr_v = [];
+    arr_v = JSON.parse( localStorage.getItem('routeList') );
+    if( searchValue != null ){
+
+
+    if (null!=arr_v) {
+        if (arr_v.contains(searchValue)) {
+            ////alert("1");
+            //arr_v = JSON.parse(localStorage.getItem('routeList'));
+            ;
+        } else {
+            arr_v = JSON.parse(localStorage.getItem('routeList'));
+            arr_v.push(searchValue);
+            if (arr_v.length > 5) {
+                arr_v.remove(0);
+            }
+        }
+    } else {
+        arr_v = new Array();
+        arr_v.push(searchValue);
+    }
+    localStorage.setItem('routeList',JSON.stringify( arr_v ) );
+    }
+}
+
+
 function updateOrderlistPanel(data,flag){
     var prependFlag = arguments[1] ? arguments[1] : false;
     var oldmyFilter = JSON.parse(localStorage.getItem("searchFilter"));
@@ -53,10 +86,11 @@ function updateOrderlistPanel(data,flag){
     var nullTrace = "<div align='center' style='margin: 10px;'>查无订单...</div>";
     if(data.isSucc) {
         var result = '';
+
         if(flag){$("#orderlist_ul").empty();}
         var traceFuc = '';
         if (data.obj.recordsTotal >= 1 ){
-
+            setRounteListCache();
             if (data.obj.data.length > 1) {
             //    $("#orderdetailBackId").attr('onclick',"$.ui.goback(-1)");
             //  $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
@@ -67,8 +101,8 @@ function updateOrderlistPanel(data,flag){
                 $('#orderlist').attr('data-header','orderlistHeader');
             }
             //for (var k in data.obj.data) {
-                $.ui.showMask("我们正在拼命的加载数据...");
-                var result = template('orderListTemp',data);
+            $.ui.showMask("我们正在拼命的加载数据...");
+            var result = template('orderListTemp',data);
 
         } else if (data.obj.data.length == 1) {
             setCacheData("currentorder", data.obj[0], 1);

@@ -2,7 +2,7 @@
     <div style="border-bottom:1px solid #ededed;
             border-top: 10px solid #EFEFEF;">
         <div>
-            <div class="clearfix" style="font-size:16px;padding:1px;border-bottom:1px solid #ededed">
+            <div class="clearfix" style="font-size:16px;padding:1px;border-bottom:1px solid #ededed" onclick="queryOrderDoc();">
 
                 <div class="fl" style="padding: 10px;text-align: right;font-size: 16px;
                 color:#5b5b5b;width: 60%;">
@@ -17,7 +17,7 @@
                     <div class="fl" id="status_d" style="
                         color:#ef8305;width: 80%;line-height:30px;">
                     </div>
-                    <div class="fr" style="line-height:30px;" onclick="queryOrderDoc();">
+                    <div class="fr" style="line-height:30px;" >
                         <img src="assets/img/detail-icon.png" style="padding: 0px;" />
                     </div>
                 </div>
@@ -72,22 +72,22 @@
             </li>-->
         </div>
     </div>
-    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed">
+    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed" onclick="productPanel();">
                <div class="fl "  style="font-size: 16px;color:#5b5b5b;width: 40%;">
                     <i class="iconfont icon-quanbushangpin"
                        style="color:#333;;font-size:20px;line-height:30px"></i>
                     商品</div>
-                <div class="fr" style="" onclick="productPanel();">
+                <div class="fr" style="" >
                     <img src="assets/img/detail-icon.png" style="" />
                 </div>
 
     </div>
-    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed">
+    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed" onclick="evalutePanel();">
                 <div class="fl " style="font-size: 16px;color:#5b5b5b;width: 40%;">
                     <i class="iconfont icon-pingjia"
                     style="color:#333;;font-size:20px;line-height:30px"></i>
                     评价</div>
-                <div class="fr" style="" id = "evalutePanelId" onclick="evalutePanel();" >
+                <div class="fr" style="" id = "evalutePanelId"  >
                     <img src="assets/img/detail-icon.png" style="" />
                 </div>
     </div>
@@ -105,9 +105,19 @@
 
             <div class="clearfix" onclick="querySingleTraceInfo('{{obj.deliveryNo}}','{{obj.sendNo}}','{{obj.status}}')"
                  style="width: 100%;border-bottom:1px solid #ededed" >
+
+            <div class="fl" style="width: 100%;">
+                <div class="fl " style="width:40%;padding-top: 10px;padding-left: 10px;">
+                    <p>司机：{{obj.opaName}}</p>
+                </div>
+                <div class="fr " style="width:60%;padding-top: 10px;padding-left: 10px;">
+                    <p>电话：<a href="tel:'{{obj.tel}}'">{{obj.tel}}</a></p>
+                </div>
+                <div></div>
+            </div>
             <div class="fl" style="width: 100%;">
                 <div class="fl" style="width: 90%;">
-                <div class="clearfix" style="padding-top: 10px;padding-left: 10px;">
+                <div class="clearfix" style="padding-left: 10px;">
                     <p class="fl" style="width:10px;height:10px;border-radius:10px;
                         background-color: #089c2e;
                         margin-right: 10px; margin-top: 10px;"></p>
@@ -115,7 +125,7 @@
                         {{obj.sendNo}}<span style="padding-left: 10px;">{{obj.changeTimeDescri}}</span>
                 </div>
             </div>
-            <div class="fr" style="text-align: right;padding-top:10px;width:10%;">
+            <div class="fr" style="text-align: right;width:10%;">
                 <span style="">
                     <img src="assets/img/detail-icon.png" style="padding-top:5px;" />
                 </span>

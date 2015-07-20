@@ -14,6 +14,11 @@ function initBoardSearchPage(){
         $('#select_city').hide();
         $('#product_search').attr('placeholder','请输入客户编号或名称模糊查询...');
     }
+    if( JSON.parse(localStorage.getItem('user')).obj.isSubcompanyUser == '1'){
+        $('#select_city_div').hide();
+    }else {
+        $('#select_city_div').show();
+    }
     getAjax(searchSubCompanyUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
         "updateBoardSearchPage(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");//初始化分公司
     getAjax(searchOwnerOrCustUrl, {'enterpriseNo':getEnterpriseNo() ,'userType':getUserType()},
@@ -42,6 +47,7 @@ function confirmSearch(){
     var subcompany = $('#select_city').attr('selectid');
     var subcompanyName = $('#select_city').val();
     var searchFlag = false;
+    var searchFlag2 = false;
     $('#subCompany').empty();
     if( subcompany != undefined && subcompany != '' && subcompanyName != undefined && subcompanyName != ''){
         $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
@@ -62,11 +68,11 @@ function confirmSearch(){
             $('#boardowner').append('<b>客&nbsp;&nbsp;&nbsp;户&nbsp;:</b>&nbsp;' + ownerName);
         }
         $('#boardowner').attr('value',owner);
-        searchFlag = true;
+        searchFlag2 = true;
     }else {
-        searchFlag = false;
+        searchFlag2 = false;
     }
-    if ( searchFlag == false) {
+    if ( searchFlag == false && searchFlag2 == false) {
         $('#boardalert').hide();
     } else {
         $('#boardalert').show();
@@ -352,7 +358,7 @@ function orderlist_panel(statustype){
         custText = $('#boardowner').val();
     }
     if ( localStorage.getItem("user")==null ) {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').val(),
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').attr(''),
             'ownerText':ownerText,'custText':custText},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         // getAjax(searchUrl,options,searchSuc(data),searchFail(data));

@@ -82,8 +82,9 @@ function initTraceInfo2(){
     $('#custName_d').html(data.custName);
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
     $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
-
+    $('#ownerPhone_d').attr('href',"tel:'"+data.ownerPhone+"'");
+   // $('#custPhone_d').attr('href',"tel:'"+data.custPhone+"'");
+    $('#custPhone_d').html("<a href='tel:"+data.custPhone+"'></a>");
     $('#ownerName_d').html(data.ownerName);
     $('#ownerAddr_d').html(data.ownerAddr);
     $('#ownerContacts_d').html(data.ownerContacts+'  '+data.ownerPhone);
@@ -170,8 +171,7 @@ function querySingleTraceInfo(deliveryNo,sendNo,status){
             'dispatchNo':data.dispatchNo,
             'sendNo':sendNo},
         "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
-    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
+
 
 }
 
@@ -193,9 +193,9 @@ function updataDetailPanel(data){
     var products = "";
     if(data.isSucc) {
        // var productNode = $("<div class='productNode'></div>");
-        for (var i in data.obj) {
+        for (var i = 0,len = data.obj.length; i < len; i++) {
              products +=
-                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:square;">' +
+                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:disc;">' +
                     '<div class="fl width30" align="right" style="color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
@@ -295,6 +295,8 @@ function toTrace(){
     $('#tracecontainerMap').hide();
     $('#toTrace').removeClass('bbc');
     $('#toMap').addClass('bbc');//border-bottom: 25px solid #ef8305
+    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
 }
 
 function toMap(){
