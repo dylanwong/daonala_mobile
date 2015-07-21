@@ -47,6 +47,7 @@ function searchCustAddr(){
 }
 //选择发货人信息
 function choiceOwnerAddr(){
+    $('#choiceOwnerOrCust_ul').empty();
     $.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
     var user = JSON.parse(localStorage.getItem("user"));
@@ -75,6 +76,7 @@ function choiceOwnerAddr(){
 
 //选择收货人信息
 function choiceCustAddr(){
+    $('#choiceOwnerOrCust_ul').empty();
     $.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
     var user = JSON.parse(localStorage.getItem("user"));
@@ -113,7 +115,7 @@ function showOwnerAddrList(data){
         if (data.obj.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
 
-            for (var k in data.obj) {
+            for (var k= 0,len = data.obj.length; k < len; k++) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
                     ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
@@ -161,7 +163,7 @@ function showCustAddrList(data){
         if (data.obj.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
             $.ui.loadContent("#chocieOwner", false, false, "slide");
-            for (var k in data.obj) {
+            for ( var k= 0,len = data.obj.length; k < len; k++ ) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
                     ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
