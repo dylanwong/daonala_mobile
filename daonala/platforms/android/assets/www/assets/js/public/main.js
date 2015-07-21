@@ -309,7 +309,7 @@ function signorderdetail_panel(){
 
 
 function init_search_panel(){
-
+    $('#searchText').val('');
     if(localStorage.getItem("user")!=null) {
         var user = JSON.parse(localStorage.getItem("user"));
         if(user.obj.userType=='0'){
