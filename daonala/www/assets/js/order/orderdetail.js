@@ -76,12 +76,12 @@ function initTraceInfo2(){
 
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $('#shipPhone_d').html(data.shipperPhone);
-    $('#shipNo_d').html(data.ownerName);
+    $('#shipNo_d').html(data.shipperNoText);
 
     $('#custAddr_d').html(data.custAddr);
     $('#custName_d').html(data.custName);
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
-    $('#addrName_d').html(data.addrName);
+   // $('#addrName_d').html(data.addrName);
     $('#ownerPhone_d').attr('href',"tel:'"+data.ownerPhone+"'");
    // $('#custPhone_d').attr('href',"tel:'"+data.custPhone+"'");
     $('#custPhone_d').html("<a href='tel:"+data.custPhone+"'></a>");

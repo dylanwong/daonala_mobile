@@ -144,8 +144,8 @@ function initLogisticBoard(){
     $('#subCompany').empty();
     $('#boardowner').empty();
     var option ={
-        enterpriseNo : user.obj.enterpriseNo,
-        ownerNo :'',
+        enterpriseno : user.obj.logisticNo,
+        ownerNo :user.obj.ownerNo,
         subCompanyNo : '',
      //   userNo : '',
         userType : user.obj.userType
@@ -175,11 +175,22 @@ function initLogisticBoardAgain(){
     //$('#subCompany').attr('value','');
     $('#boardOwner').text(user.obj.enterpriseName);
     // $('#boardOwner').text('');
-    var option ={
-        enterpriseNo : user.obj.enterpriseNo,
-        subCompanyNo : $('#subCompany').attr('value'),
-        ownerNo :$('#boardowner').attr('value'),
-        userType : user.obj.userType
+    if( userobj.userType == '0' ){
+        var option ={
+            enterpriseno : user.obj.logisticNo,
+            subCompanyNo : $('#subCompany').attr('value'),
+            ownerNo :$('#boardowner').attr('value'),
+            custNo:$('#boardowner').attr('value'),
+            userType : user.obj.userType
+        }
+    }else  if( userobj.userType == '1' ){
+        var option ={
+            enterpriseno : user.obj.logisticNo,
+            subCompanyNo : $('#subCompany').attr('value'),
+            ownerNo :user.obj.ownerNo,
+            custNo:$('#boardowner').attr('value'),
+            userType : user.obj.userType
+    }
     }
     getAjax(ordercount,option,'queryLogisticCount_Result_Suc(data)');
 

@@ -332,8 +332,8 @@ function init_search_panel(){
     if( arr_v != null && arr_v.length > 0 ) {
         var results = '';
         for ( var e = 0,len = arr_v.length; e < len; e++ ){
-            var result = ' <li style="line-height:32px;border-bottom:1px dashed #D0D1D6;" class="clearfix">'+
-             '   <div class="fl" style="color:#696969;font-size:14px;" onclick="searchRoute('+arr_v[e]+')">'+
+            var result = ' <li v ='+arr_v[e]+' onclick="searchRoute(this)" style="line-height:32px;border-bottom:1px dashed #D0D1D6;" class="clearfix">'+
+             '   <div class="fl" style="color:#696969;font-size:14px;" >'+
              '' + arr_v[e] + '</div>'+
             '<div class="fr" style="color:#A1A1A1;margin-right:10px;">'+
               '  <img src="assets/img/detail-icon.png" class="">'+
@@ -347,7 +347,8 @@ function init_search_panel(){
 }
 
 
-function searchRoute(searchText){
+function searchRoute(elm){
+    var searchText = $(elm).attr('v')
     $('#searchText').val(searchText);
     search();
 }
