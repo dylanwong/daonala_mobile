@@ -38,27 +38,31 @@ $(document).ready(function(){
     //queryOrderList
     var localStorageVersion= parseFloat(localStorage.getItem("localStorageVersion"));
 
-
     if(localStorageVersion<currentVersion|| isNaN(localStorageVersion) ){
-    //if(1==1){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
-        $.ui.launch();
+        var buttonBottom = $("#splashscreen").height()-200;
+        var swiperDiv = $.create("div", {
+            className: "swiper-container",
+            id: "screenWrapper",
+            html: '<div class="swiper-wrapper">' +
+                '<div class="swiper-slide"><div class="slide1"></div></div>' +
+                '<div class="swiper-slide"><div class="slide2"></div></div>' +
+                '<div class="swiper-slide"><div class="slide3"></div></div>' +
+                '<div class="swiper-slide"><div class="slide4 text-center" >' +
+                '<a onclick="goMainFormSlider()" class="btn btn-lg" ' +
+                'style="padding: 5px 40px;background: #fff;' +
+                'margin-top:'+buttonBottom+'px;">' +
+                '<span class="icon-local-shipping" style="font-size: 40px"></span>' +
+                '<P class="f32">立即体验</P></a></div></div></div>' +
+                '<div class="pagination"></div>'
+        });
+        $(swiperDiv.get(0)).appendTo("#splashscreen");
+        var mySwiper = new Swiper('#screenWrapper', {
+            pagination: '.pagination',
+            paginationClickable: true
+        })
         alertLocationPopup = true;
-//        var swiperDiv = $.create("div", {
-//            className: "swiper-container",
-//            id:"screenWrapper",
-//            html: '<div class="swiper-wrapper">' +
-//            '<div class="swiper-slide"><div class="slide1"></div></div>' +
-//            '<div class="swiper-slide"><div class="slide2"></div></div>' +
-//            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
-//            '<div class="pagination"></div>'
-//        });
-//        $(swiperDiv.get(0)).appendTo("#splashscreen");
-//        var mySwiper = new Swiper('#screenWrapper',{
-//            pagination: '.pagination',
-//            paginationClickable: true
-//        })
     }else{
         $.ui.launch();
         alertLocationPopup = true;
