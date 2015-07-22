@@ -26,7 +26,11 @@ var searchFlag = 0;//0     1为首页查询条件
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
+<<<<<<< HEAD
 var baseUrl = "http://192.168.16.94:8080/daonala_mobile/";
+=======
+var baseUrl = "http://192.168.16.98/daonala_mobile/";
+>>>>>>> 7f0ec18b799fa47bf3d8c0d226efedf081ce9174
 var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";

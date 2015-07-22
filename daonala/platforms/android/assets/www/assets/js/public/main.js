@@ -316,7 +316,11 @@ function signorderdetail_panel(){
 
 
 function init_search_panel(){
+<<<<<<< HEAD
     localStorage.removeItem('searchFilter');
+=======
+
+>>>>>>> 7f0ec18b799fa47bf3d8c0d226efedf081ce9174
    // localStorage.removeItem('routeList');
     $('#searchText').val('');
     if(localStorage.getItem("user")!=null) {
