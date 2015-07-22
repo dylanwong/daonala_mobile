@@ -44,8 +44,10 @@ function cust_orderlist_panel(tdStatus){
 */        // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
         getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':'N',
-                'status':status,'enterpriseNo':'10001','enterpriseText':'',
-                'ownerText':'','custText':'','userNo':getUserNo(),'userType':user.obj.userType},
+                'status':status,'enterpriseNo':user.obj.enterpriseNo,
+                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo,
+                'custText':user.obj.custNo,
+                'userNo':getUserNo(),'userType':user.obj.userType},
             "updateCustOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
 

@@ -91,6 +91,18 @@ function initTraceInfo2(){
 
 
     $('#status_d').html( showstatus(data.status) );
+    if( data.status == '90' ){
+        evalutePanel();
+
+        $('#evalutePanelBtn').unbind('click');
+    }else{
+        $('#evalute_ifNull').text('无');
+        $('#evalutePanelBtn').unbind('click');
+    }
+    queryDetailProduct();
+    $('#productPanelBtn').unbind();
+    //onclick="productPanel();"
+
     $('#transNo_d').html(data.transNo);
     $('#ownerNo_d').html(data.orderNo);
     $('#custNo_d').html(data.custOrderNo);
@@ -109,36 +121,6 @@ function initTraceInfo2(){
 
 
 
-/*
-function queryDetailInfo(){
-    var data = JSON.parse(localStorage.getItem("currentorder"));
-    $('#shipPhone_d').html(data.shipperPhone);
-    $('#shipNo_d').html(data.ownerName);
-
-    $('#custAddr_d').html(data.custAddr);
-    $('#custName_d').html(data.custName);
-    $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
-    $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
-
-    $('#ownerName_d').html(data.ownerName);
-    $('#ownerAddr_d').html(data.ownerAddr);
-    $('#ownerContacts_d').html(data.orderNo);
-
-    $('#status_d').html('状态： '+ showstatus(data.status));
-    $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.orderNo);
-    $('#custNo_d').html(data.custNo);
-    $('#orderDate_d').html(data.orderDate);
-
-    $('#topdeliverNo_d').html(data.topsendNo);
-    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
-    queryDetailProduct();
-    queryDetailTrace_login();
-    queryEvalute();
-}
-*/
-
 //查询最新运输单跟踪记录列表
 function queryDeliverordertraceList(enterpriseNo,systemNo,orderNo,dispatchNo){
     $('#detailTraceListContent').empty();
@@ -150,9 +132,14 @@ function queryDeliverordertraceList(enterpriseNo,systemNo,orderNo,dispatchNo){
 function queryDeliverordertraceListUrlSuc(data){
     if(data.isSucc){
         $.ui.showMask("我们正在拼命的加载数据...");
-
-        var result = template('traceListTemp',data);
-        $('#detailTraceListContent').html(result);
+        var result = '';
+        if ( data.msg.split('-')[0] == 'S0001' ) {
+            result = template('traceListTemp',data);
+            $('#detailTraceListContent').html(result);
+        } else {
+            result = template('traceListTemp2',data);
+            $('#detailTraceListContent').html(result);
+        }
         $.ui.hideMask();
     } else {
         $('#detailTraceListContent').html( data.msg );
@@ -195,9 +182,18 @@ function updataDetailPanel(data){
     var products = "";
     if(data.isSucc) {
        // var productNode = $("<div class='productNode'></div>");
-        for (var i = 0,len = data.obj.length; i < len; i++) {
+        var len = data.obj.length;
+        if ( len > 0 ){
+            $('#good_ifNull').text(len);
+            $('#productPanelBtn').bind('click',function(){
+                $.ui.loadContent("#orderDetailProduct", false, false, "slide");
+            });
+        }else{
+            $('#good_ifNull').text('无');
+        }
+        for (var i = 0; i < len; i++) {
              products +=
-                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:none;  height: 30px;">' +
+                    '<div style="padding-top:10px;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:none;  height: 30px;">' +
                     '<div class="fl width30" align="" style="padding-left:30px;color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
@@ -216,9 +212,11 @@ function updataDetailPanel(data){
             ;
           //  $(products).appendTo(productNode);
         }
+
         $("#orderDetailProduct").html(products);
       //  productNode.appendTo("#Productproducts");
     }else{
+        $('#good_ifNull').text('无');
      /*   productNode=$("<div class='productNode'>暂无产品信息</div>");
         productNode.appendTo("#Productproducts");*/
         $("#orderDetailProduct").html("<div class='productNode'>暂无产品信息</div>");
@@ -227,28 +225,6 @@ function updataDetailPanel(data){
 }
 
 
-
-//function queryDetailTrace_login(){
-//    $("#orderDetailTraceContent").empty();
-//    var data = JSON.parse(localStorage.getItem("currentorder"));
-//    $.ui.blockUI(.3);
-//    getAjax(searchTraceUrl, {'orderEnterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-//            'dispatchNo':data.dispatchNo,
-//            'sendNo':data.topsendNo},
-//        "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-//
-//}
-//
-//function queryDetailTraceAgain_login(){
-//    $("#orderDetailTraceContent").empty();
-//    var data = JSON.parse(localStorage.getItem("currentorder"));
-//    $.ui.blockUI(.3);
-//    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-//            'dispatchNo':data.dispatchNo,
-//            'sendNo':$('#topdeliverNo_d').attr('delivery')},
-//        "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-//
-//}
 
 
 
@@ -259,8 +235,8 @@ function updateTracePanel2(data){
     var html = "",height = "";
     if(data.isSucc){
 
-        $('#orderDetailTraceContent').show();
-        $('#tracecontainerMap').hide();
+      //  $('#orderDetailTraceContent').show();
+      //  $('#tracecontainerMap').hide();
 
         var obj = data.obj ;
         $.ui.loadContent("#orderDetailTrace", false, false, "slide");
@@ -293,19 +269,22 @@ function updateTracePanel2(data){
 }
 
 function toTrace(){
-    $('#orderDetailTraceContent').show();
-    $('#tracecontainerMap').hide();
+   // $('#orderDetailTraceContent').show();
+   // $('#tracecontainerMap').hide();
     $('#toTrace').removeClass('bbc');
     $('#toMap').addClass('bbc');//border-bottom: 25px solid #ef8305
-    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
-    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
+
+
 }
 
 function toMap(){
-    $('#toMap').removeClass('bbc');
-    $('#toTrace').addClass('bbc');
-    $('#orderDetailTraceContent').hide();
-    $('#tracecontainerMap').show();
+    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
+//    $('#toMap').removeClass('bbc');
+//    $('#toTrace').addClass('bbc');
+//    $('#orderDetailTraceContent').hide();
+//    $('#tracecontainerMap').show();
+
 
     //init_tracemap();
 }
@@ -319,20 +298,25 @@ function init_LogisticMap(deliveryNo,sendNo){
 //        dispatchNo : order.dispatchNo,
 //        sendNo:order.sendNo
 //    };
-    getAjax(searchTraceLongitudeUrl, {'systemNo':order.systemNo,'enterpriseNo':order.enterpriseNo,
+    getAjax(searchTraceLongitudeUrl, {'systemNo':order.systemNo,'enterpriseno':order.enterpriseNo,
             'dispatchNo':order.dispatchNo,
             'sendNo':sendNo },
-        "inittracemaps(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        "inittracemapsSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 
-function inittracemaps(data){
-    var jindu = [];
-    var weidu = [];
-    for ( var i = 0; i < data.obj.length; i++) {
-        jindu[i] = data.obj[i].longitude;
-        weidu[i] = data.obj[i].latitude;
+function inittracemapsSucc(data){
+    if(data.isSucc){
+        $.ui.loadContent("#traceMap", false, false, "slide");
+        var jindu = [];
+        var weidu = [];
+        for ( var i = 0; i < data.obj.length; i++) {
+            jindu[i] = data.obj[i].longitude;
+            weidu[i] = data.obj[i].latitude;
+        }
+        init_tracemap(jindu,weidu);
+    }else{
+        errorPopup('未上传经纬度信息');
     }
-    init_tracemap(jindu,weidu);
 }
 // 百度地图API功能
 function init_tracemap(longitudes,latitudes) {
@@ -340,9 +324,9 @@ function init_tracemap(longitudes,latitudes) {
     for ( var i = 0; i < longitudes.length; i++) {
         points[i] = new BMap.Point(longitudes[i],latitudes[i]);
     }
-    $("#tracecontainerMap").height($("#orderDetailTrace").height()
-        -$('#header').height()-$('#toTrace').height());
-    $("#tracecontainerMap").width($("#orderDetailTrace").width());
+    $("#tracecontainerMap").height($("#traceMap").height()
+        -$('#header').height());
+    $("#tracecontainerMap").width($("#traceMap").width());
     var map = new BMap.Map("tracecontainerMap");
     map.centerAndZoom(new BMap.Point(118.454, 32.955), 11);
     map.enableScrollWheelZoom();
@@ -442,7 +426,7 @@ function queryEvalute(){
     }else{
 //        $('evalutePanelId').unbind()
 
-        errorPopup('该单未签收，暂无评价信息');
+      //  errorPopup('该单未签收，暂无评价信息');
 //        $('#orderDetailEvaluate').empty();
 //        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
     }
@@ -455,6 +439,7 @@ function updateEvalute(datas){
     $('#reviewsItem2').empty();
     $('#reviewsItem3').empty();
     if(datas.isSucc){
+
 
         var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
             '<div class="fl width80" align="right"'+
@@ -501,13 +486,17 @@ function updateEvalute(datas){
                 $("#evaluteContent").val('');
                 $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
-                errorPopup('暂无评价信息');
+                $('#evalute_ifNull').text('无');
+               // errorPopup('暂无评价信息');
 //                $('#orderDetailEvaluate').empty();
 //                evaluteResult = '<div><p>无评论信息</p></div>';
             }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-            $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
+            $('#evalute_ifNull').text('有');
+            $('#evalutePanelBtn').bind('click',function(){
+                $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+            });
             if(datas.obj[0].bodmEvaluate != null){
                 $('#orderDetailEvaluate').empty();
                 $('#orderDetailEvaluate').append(info);

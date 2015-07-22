@@ -59,6 +59,8 @@ function mine_panel()
     var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
     $("#headContentDiv").css('top',headContentDivTop);
     $("#headLogoImageDiv").css('top',headLogoImageDivTop);
+    var user = JSON.parse(localStorage.getItem('user'));
+    $('#userNameMine').text(user.obj.userName);
     if ( localStorage.getItem('user') == null){
         login_panel();
     }else{
@@ -82,6 +84,8 @@ function home_panel()
 
 function login_panel()
 {
+    var user = JSON.parse(localStorage.getItem('user'));
+    $('#userNameMine').text(user.obj.userName);
     $.ui.loadContent("#login", false, false, "slide");
 }
 
@@ -245,13 +249,22 @@ function traceSingleInfo33(){
     var user = JSON.parse(localStorage.getItem('user'));
     if(user.obj.userType == 2){
         //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
-        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+        if ($("#orderdetailBackId").attr('onclick')=="$.ui.loadContent('#orderlist', false, false, 'slide')"){
+
+        }else{
+            $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+        }
+
     }else{
 
         if( $("#orderdetailBackId").attr('onclick') ==
             "$.ui.loadContent('#search', false, false, 'slide')"){
 
+        }else if( $("#orderdetailBackId").attr('onclick') ==
+            "$.ui.loadContent('#home2', false, false, 'slide')" ){
+
         }else{
+                //detailgobackHeader
             $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
         }
     }
@@ -283,7 +296,6 @@ function productPanel(){
 //商品评价
 function evalutePanel(){
     queryEvalute();
-
 }
 
 //订单详情（收发货人详情）
@@ -309,7 +321,7 @@ function signorderdetail_panel(){
 
 
 function init_search_panel(){
-
+    localStorage.removeItem('searchFilter');
    // localStorage.removeItem('routeList');
     $('#searchText').val('');
     if(localStorage.getItem("user")!=null) {

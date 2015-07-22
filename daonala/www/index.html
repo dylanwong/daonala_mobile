@@ -284,14 +284,14 @@ data-defer:加载一个html进来
      title="订单详情" id="orderMaindetail" data-defer="assets/panel/order/orderMainDetail.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header=""
+     data-header="orderdetailHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
      title="订单详情" id="orderdetail" data-defer="assets/panel/order/orderdetail.html"
      data-load="init_orderdetail"
      data-unload=""
-     data-header=""
+     data-header="orderdetailHeader"
      data-footer="none">
 </div>
 <div class="panel p0"
@@ -315,7 +315,13 @@ data-defer:加载一个html进来
      data-header="goodDetailgobackHeader"
      data-footer="none">
 </div>
-
+<div class="panel p0"
+     title="地图轨迹" id="traceMap" data-defer="assets/panel/order/traceMap.html"
+     data-load="init_orderdetail"
+     data-unload=""
+     data-header=""
+     data-footer="none">
+</div>
 
 <div class="panel p0"
      title="" id="evaluate" data-defer="assets/panel/order/evaluate.html"
@@ -646,11 +652,11 @@ data-defer:加载一个html进来
     <div></div>
 </header>
 <header id="tracegobackHeader">
-    <a  class="headerBack"  onclick="$.ui.goBack()" >
+    <a  class="headerBack"  onclick="$.ui.loadContent('#orderMaindetail', false, false, 'slide')" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="tracegobackTitle" class="">物流轨迹</h1>
-    <div></div>
+    <div><!--<a style="margin-right: 0px;" class="searchButton" onclick='toMap();' href="tel:" >地图轨迹</a>--></div>
 </header>
 <header id="evalutegobackHeader">
     <a  class="headerBack"   onclick="$.ui.goBack()" >
@@ -660,14 +666,14 @@ data-defer:加载一个html进来
     <div></div>
 </header>
 <header id="detailgobackHeader">
-    <a  class="headerBack"   onclick="$.ui.goBack()" >
+    <a  class="headerBack" id=""  onclick="" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="detailgobackTitle" class="">订单详情</h1>
     <div></div>
 </header>
 <header id="goodDetailgobackHeader">
-    <a class="headerBack"  onclick="$.ui.goBack()" >
+    <a class="headerBack" id="goodorderdetailBackId" onclick="$.ui.goBack()" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="goodDetailgobackTitle" class="">货物详情</h1>

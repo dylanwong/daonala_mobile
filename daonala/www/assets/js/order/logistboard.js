@@ -346,7 +346,7 @@ function orderlist_panel(statustype){
     }else if( statustype=='40' ){
      //   timeType='1';
         status='20,30,31,40,50';
-    }else if( statustype=='50' ){
+    }else if( statustype=='70' ){
      //   timeType='2';
         status='60,70,80';
     }else if( statustype=='90' ){
@@ -364,11 +364,13 @@ function orderlist_panel(statustype){
     var user = JSON.parse(localStorage.getItem('user'));
     var ownerText = '';
     var custText = ''
+    var enterpriseText = '';
     if( user.obj.userType == '0' ){
         ownerText = $('#boardowner').val();
-
-    } else if ( user.obj.userType == '0' ){
+        enterpriseText = $('#subCompany').attr('');
+    } else if ( user.obj.userType == '1' ){
         custText = $('#boardowner').val();
+        enterpriseText = user.obj.logisticNo;
     }
     if ( localStorage.getItem("user")==null ) {
         getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').attr(''),
@@ -376,13 +378,13 @@ function orderlist_panel(statustype){
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
-        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':$('#subCompany').val(),
-                'ownerText':ownerText ,'custText':custText},
+        getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':enterpriseText,
+                'ownerText':user.obj.ownerNo ,'custText':custText},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
 
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-        {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
+        {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':user.obj.enterpriseno,
             'ownerText':'','custText':'','userNo':getUserNo(),'userType':getUserTypeFromsession()}, true), true);
     $('#orderlist_ul').empty();
 }

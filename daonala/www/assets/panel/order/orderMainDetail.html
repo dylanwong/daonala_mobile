@@ -72,23 +72,24 @@
             </li>-->
         </div>
     </div>
-    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed" onclick="productPanel();">
+    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed" id="productPanelBtn">
                <div class="fl "  style="font-size: 16px;color:#5b5b5b;width: 40%;">
                     <i class="iconfont icon-quanbushangpin"
                        style="color:#333;;font-size:20px;line-height:30px"></i>
                     商品</div>
                 <div class="fr" style="" >
-                    <img src="assets/img/detail-icon.png" style="" />
+                    <span id="good_ifNull" style='color: #ef8305;'></span><img src="assets/img/detail-icon.png" style="" />
                 </div>
 
     </div>
-    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed" onclick="evalutePanel();">
+    <div class="clearfix" style="padding:10px;border-bottom:1px solid #ededed"
+         id="evalutePanelBtn" ><!--onclick="evalutePanel();"-->
                 <div class="fl " style="font-size: 16px;color:#5b5b5b;width: 40%;">
                     <i class="iconfont icon-pingjia"
                     style="color:#333;;font-size:20px;line-height:30px"></i>
                     评价</div>
-                <div class="fr" style="" id = "evalutePanelId"  >
-                    <img src="assets/img/detail-icon.png" style="" />
+                <div class="fr" style="font-size: 16px;line-height: 30px;" id = "evalutePanelId"  >
+                    <span id="evalute_ifNull" style='color: #ef8305;'></span><img src="assets/img/detail-icon.png" style="" />
                 </div>
     </div>
     <div class="gray10"></div>
@@ -103,7 +104,7 @@
 
             {{each obj as obj i}}
 
-            <div class="clearfix" onclick="querySingleTraceInfo('{{obj.deliveryNo}}','{{obj.sendNo}}','{{obj.status}}')"
+            <div class="clearfix"
                  style="width: 100%;border-bottom:1px solid #ededed" >
 
             <div class="fl" style="width: 100%;">
@@ -115,6 +116,7 @@
                 </div>
                 <div></div>
             </div>
+            <div  onclick="querySingleTraceInfo('{{obj.deliveryNo}}','{{obj.sendNo}}','{{obj.status}}')">
             <div class="fl" style="width: 100%;">
                 <div class="fl" style="width: 90%;">
                 <div class="clearfix" style="padding-left: 10px;">
@@ -131,9 +133,11 @@
                 </span>
             </div>
             </div>
-            <div class="fl" style="width: 100%;">
+            </div>
+            <div class="fl" onclick="querySingleTraceInfo('{{obj.deliveryNo}}','{{obj.sendNo}}','{{obj.status}}')"
+                 style="width: 100%;">
                <div class="clearfix" style="font-size:16px;padding:5px;">
-                    <div class="fl" style="text-align: right;color:#b2b2b2;width: 100%;">
+                    <div class="fl" style="text-align: left;color:#b2b2b2;width: 100%;">
                     {{obj.statusDesc}}
                     </div>
                 </div>
@@ -146,7 +150,20 @@
 
         </script>
 
+        <script id="traceListTemp2" type="text/html">
 
+            {{each obj as obj i}}
+
+            <div class="gj">
+                <div class="gj_cn">
+                    <div >{{ obj.changeTimeDescri }}</div>
+                    <span >{{ obj.statusDesc }}
+                    </span>
+                </div>
+            </div>
+            {{/each}}
+
+        </script>
 
 </div>
 </div>
