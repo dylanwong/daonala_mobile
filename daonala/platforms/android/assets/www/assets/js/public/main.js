@@ -309,11 +309,8 @@ function signorderdetail_panel(){
 
 
 function init_search_panel(){
-<<<<<<< HEAD
 
    // localStorage.removeItem('routeList');
-=======
->>>>>>> 674b7b2a535164a90667b3f14b19ec6e078db4db
     $('#searchText').val('');
     if(localStorage.getItem("user")!=null) {
         var user = JSON.parse(localStorage.getItem("user"));

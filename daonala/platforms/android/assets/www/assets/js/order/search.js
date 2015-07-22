@@ -148,7 +148,7 @@ function updateOrderlistPanel(data,flag){
     mainLoadingStep = 0;
     $.ui.unblockUI();
     $.ui.hideMask();
-    mainScroll.scrollToTop(100);
+    mainScroll.scrollTo(0,0,1000);
 }
 
 //点击订单列表事件
