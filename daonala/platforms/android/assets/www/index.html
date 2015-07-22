@@ -148,7 +148,7 @@ data-defer:加载一个html进来
      data-footer="none">
 </div>
 
-<div class="panel p0"
+<div class="panel p0 no-scroll"
      title="订单列表" id="orderlist" data-defer="assets/panel/order/orderlist.html"
      data-load=""
      data-header=""
@@ -213,7 +213,7 @@ data-defer:加载一个html进来
 <div class="panel"
      title="" id="login" data-defer="assets/panel/login.html"
      data-load=""
-     data-header="allHeader"
+     data-header="loginHeader"
      data-unload=""
      data-tab="navbar_mine">
         >
@@ -444,7 +444,7 @@ data-defer:加载一个html进来
 </div>-->
 
 
-<div class="panel p0"
+<div class="panel p0 no-scroll"
      title="任务" id="driverboard" data-defer="assets/panel/driver/task.html"
      data-header="taskHeader"
      data-load=""
@@ -569,7 +569,13 @@ data-defer:加载一个html进来
     <h1 id="home2Title" class="">订单列表</h1>
     <div></div>
 </header>
-
+<header id="loginHeader" style="background-color:#ef8305;">
+    <a class="headerBack"  onclick="$.ui.loadContent('#home2', false, false, 'slide')" >
+        <img src="assets/img/backPage.png" height="32" />
+    </a>
+    <h1 id="loginTitle" class="">登陆</h1>
+    <div></div>
+</header>
 <header id="addOrderHeader" style="background-color:#ef8305;">
     <a class="headerBack"
        onclick="$.ui.loadContent('#home2', false, false, 'slide')" >

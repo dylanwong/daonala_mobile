@@ -8,7 +8,7 @@
 //
 //}
 function search(){
-
+    searchFlag = 0;
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     $("ul#todoList").empty();
@@ -42,6 +42,7 @@ function search(){
 
         }
         $('#orderlist_ul').empty();
+     //   mainScroll.scrollToTop(100);
     }else{
         $.ui.unblockUI();
         $.ui.hideMask();
@@ -50,13 +51,11 @@ function search(){
 }
 
 function setRounteListCache(){
-
+    $('#searchHistory').show();
     var searchValue = $('#searchText').val();
     var arr_v = [];
     arr_v = JSON.parse( localStorage.getItem('routeList') );
     if( searchValue != null ){
-
-
     if (null!=arr_v) {
         if (arr_v.contains(searchValue)) {
             ////alert("1");
@@ -149,6 +148,7 @@ function updateOrderlistPanel(data,flag){
     mainLoadingStep = 0;
     $.ui.unblockUI();
     $.ui.hideMask();
+    mainScroll.scrollToTop(100);
 }
 
 //点击订单列表事件
@@ -201,12 +201,17 @@ function querySingleOrderSuc(data){
 
 
 function getOrderListPullToRefresh(that){
-
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':0},true),true);
-
+    if( searchFlag == 0){
+        searchUrls = baseUrl +"order/query_suborderlist.action";
+    }else if( searchFlag == 1){
+        searchUrls = baseUrl + "order/queryIndexOrderList.action";
+    }else{
+        searchUrls = searchUrl;
+    }
     jQuery.ajax({
-        url: searchUrl,
+        url: searchUrls,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("searchFilter"))
@@ -256,8 +261,15 @@ function getRequestFromOrderListinite(self) {
     var start = parseInt(searchFilter.start) + 10;
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':start},true),true);
+    if( searchFlag == 0){
+        searchUrls = baseUrl +"order/query_suborderlist.action";
+    }else if( searchFlag == 1){
+        searchUrls = baseUrl + "order/queryIndexOrderList.action";
+    }else{
+        searchUrls = searchUrl;
+    }
     jQuery.ajax({
-        url: searchUrl,
+        url: searchUrls,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("searchFilter"))
@@ -294,10 +306,31 @@ function getRequestFromOrderListinite(self) {
 
 
 function searchOrderFromIndex(type){
+    searchFlag = 1;
     $('#orderlist_ul').empty();
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     var user = JSON.parse(localStorage.getItem('user'));
-    getAjax(searchOrderFromIndexUrl,{'start': '0', 'length':'10','type':type,'enterpriseNo':user.obj.logisticNo,
+    getAjax(searchOrderFromIndexUrl,{'start': '0', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
         'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo},'updateOrderlistPanel(data)','errorPopup("网络异常")');
+
+    $("#orderlistHeaderId").attr('onclick',
+        "$.ui.loadContent('#home2', false, false, 'slide')");
+   /* $("#orderdetailBackId").attr('onclick',
+        "$.ui.loadContent('#search', false, false, 'slide')");*/
+    if( user!=null ){
+        setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+            {'start': '0', 'length':'10','type':type,'enterpriseNo':user.obj.logisticNo,
+                'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo,'userNo':user.obj.userNo,
+                'userType':user.obj.userType }, true), true);
+    }else {
+        setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+            {'start': '0', 'length': '10', 'type': type, 'enterpriseNo': user.obj.logisticNo,
+                'ownerNo': user.obj.ownerNo, 'custNo': user.obj.custNo}, true), true);
+    }
+
+}
+
+function updateIndexOrderlistPanel(){
+
 }

@@ -334,9 +334,11 @@ function toggleBoardBtn(type) {
 }
 
 function orderlist_panel(statustype){
+    searchFlag = 0;
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
-    $("ul#todoList").empty();
+    $("ul#orderlist_ul").empty();
+
     var timeType = $('.selectTotalDay').val();
     if( statustype=='10' ) {
      //   timeType='0';

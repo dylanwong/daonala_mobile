@@ -83,8 +83,8 @@ function initTraceInfo2(){
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
    // $('#addrName_d').html(data.addrName);
     $('#ownerPhone_d').attr('href',"tel:'"+data.ownerPhone+"'");
-   // $('#custPhone_d').attr('href',"tel:'"+data.custPhone+"'");
-    $('#custPhone_d').html("<a href='tel:"+data.custPhone+"'></a>");
+    $('#custPhone_d').attr('href',"tel:'"+data.custPhone+"'");
+   // $('#custPhone_d').html("<a href='tel:"+data.custPhone+"'></a>");
     $('#ownerName_d').html(data.ownerName);
     $('#ownerAddr_d').html(data.ownerAddr);
     $('#ownerContacts_d').html(data.ownerContacts+'  '+data.ownerPhone);
@@ -93,7 +93,7 @@ function initTraceInfo2(){
     $('#status_d').html( showstatus(data.status) );
     $('#transNo_d').html(data.transNo);
     $('#ownerNo_d').html(data.orderNo);
-    $('#custNo_d').html(data.custNo);
+    $('#custNo_d').html(data.custOrderNo);
     $('#orderDate_d').html(data.orderDate);
     queryDeliverordertraceList(data.enterpriseNo,data.systemNo,data.orderNo,data.dispatchNo);
 
@@ -154,6 +154,8 @@ function queryDeliverordertraceListUrlSuc(data){
         var result = template('traceListTemp',data);
         $('#detailTraceListContent').html(result);
         $.ui.hideMask();
+    } else {
+        $('#detailTraceListContent').html( data.msg );
     }
 }
 //订单跟踪信息
@@ -195,22 +197,22 @@ function updataDetailPanel(data){
        // var productNode = $("<div class='productNode'></div>");
         for (var i = 0,len = data.obj.length; i < len; i++) {
              products +=
-                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:disc;">' +
-                    '<div class="fl width30" align="right" style="color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
+                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:none;  height: 30px;">' +
+                    '<div class="fl width30" align="" style="padding-left:30px;color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
-                    '<span class="fl fs32" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
+                    '<span class="fl fs24" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="border-left: 1px solid #E3E3E3; ' +
                     'border-right: 1px solid #E3E3E3;line-height:60px;" align="center"> ' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
-                    '<span class="fl fs32" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
+                    '<span class="fl fs24" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliveryQty) + '</span> ' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="line-height:60px;" align="center"> ' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
-                    '<span class="fl fs32" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
+                    '<span class="fl fs24" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
             ;
           //  $(products).appendTo(productNode);
         }

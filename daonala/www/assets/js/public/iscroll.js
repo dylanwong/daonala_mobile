@@ -8,8 +8,10 @@ var mainPullUpEl, mainPullUpL,historyPullUpEl, historyPullUpL,custPullUpEl, cust
 var mainLoadingStep,historyLoadingStep,custLoadingStep = 0;//加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
 
 function custLoaded(){
+   //
     if(custboardScroll==undefined || custboardScroll == null)
     {
+
         custPullDownEl = $('#pullDown.custpullDown');
         custPullDownL = custPullDownEl.find('.custPullDownLabel');
         custPullDownEl['class'] = custPullDownEl.attr('class');
@@ -79,12 +81,15 @@ function custLoaded(){
                 }
             }
         });
+        custboardScroll.scrollToTop(100);
     }
 }
 
 function mainLoaded() {
+
     if(mainScroll==undefined || mainScroll == null)
     {
+
         mainPullDownEl = $('#pullDown');
         mainPullDownL = mainPullDownEl.find('.mainPullDownLabel');
         mainPullDownEl['class'] = mainPullDownEl.attr('class');
@@ -154,6 +159,7 @@ function mainLoaded() {
                 }
             }
         });
+
     }
 }
 function historyLoaded() {

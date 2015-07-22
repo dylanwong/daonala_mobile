@@ -16,6 +16,7 @@ $.ui.blockPageScroll();
 var myScroller;
 var loginStatus = 0;//0未登录1登陆界面登陆2注册登陆
 var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面打开页面
+var searchFlag = 0;//0     1为首页查询条件
 //var fileUrl ="http://app.gongsuda.com:8051/smsfile/";
 
 
@@ -103,6 +104,7 @@ function init_homepage(){
     user = JSON.parse(user);
     if(user==null)
     {
+        initUnloginHomeTable();
         $('#myboard').unbind('click');
         $('#myboard').attr('click','login_panel()');
         $('#myboard').bind('click',function(){
@@ -120,7 +122,15 @@ function init_homepage(){
 //        });
 //        $('#myFirstboardText').html('订单跟踪');
         //initHomeModuleTable();
-
+        $('#addOrderPanel').unbind('click');
+        $('#addOrderPanel').empty();
+        $('#addOrderPanel').append('<div style="width:80px;'+
+            'height:80px;border-radius:80px;background-color:#01cd88;">'+
+            '<a href="tel:4001110005" >'+
+            '<i class="iconfont icon-kefu "  style="color:#fff;font-size:56px;line-height:80px">'+
+            '</i></a></div>'+
+            '<div  id="addOrderPanelText" style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">'+
+            '客服</div>');
 
     }else{
         initHomeModuleTable();

@@ -107,9 +107,9 @@ function getQuarterEndDate(){
 
 function ifNull(data){
     if(data==null){
-        return '';
+        return '0';
     }else if(data ==''){
-        return '';
+        return '0';
     }else{
         return data;
     }

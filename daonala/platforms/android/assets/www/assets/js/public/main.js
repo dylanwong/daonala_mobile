@@ -260,15 +260,15 @@ function traceSingleInfo33(){
 }
 
 function traceSingleInfo(){
-    var user = JSON.parse(localStorage.getItem('user'));
-    if(user.obj.userType == 2){
-        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
-
-    }else{
-        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
-    }
+//    var user = JSON.parse(localStorage.getItem('user'));
+//    if(user.obj.userType == 2){
+//        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+//
+//    }else{
+//        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+//    }
     $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
-    initTraceInfo();
+    initTraceInfo2();
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
 
@@ -310,6 +310,8 @@ function signorderdetail_panel(){
 
 function init_search_panel(){
 
+   // localStorage.removeItem('routeList');
+    $('#searchText').val('');
     if(localStorage.getItem("user")!=null) {
         var user = JSON.parse(localStorage.getItem("user"));
         if(user.obj.userType=='0'){
@@ -330,6 +332,7 @@ function init_search_panel(){
     var arr_v = [];
     arr_v = JSON.parse( localStorage.getItem('routeList') );
     if( arr_v != null && arr_v.length > 0 ) {
+        $('#searchHistory').show();
         var results = '';
         for ( var e = 0,len = arr_v.length; e < len; e++ ){
             var result = ' <li v ='+arr_v[e]+' onclick="searchRoute(this)" style="line-height:32px;border-bottom:1px dashed #D0D1D6;" class="clearfix">'+
@@ -343,6 +346,8 @@ function init_search_panel(){
         }
         $('#navContent').append(results);
 
+    }else{
+        $('#searchHistory').hide();
     }
 }
 
@@ -449,14 +454,29 @@ function qrcode_panel() {
 function initHomeModuleTable(){
    // userType,  userNo,enterpriseNo,ownerNo,custNo
     var user = JSON.parse(localStorage.getItem('user'));
-    getAjax(queryIndexOrderCountUrl ,{'enterpriseNo':user.obj.logisticNo,
+    getAjax(queryIndexOrderCountUrl ,{'enterpriseno':user.obj.logisticNo,
             'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo
            },
         "queryIndexOrderCountSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
 
 }
-
+function initUnloginHomeTable(){
+    result =
+        '<tr><td style="width:33%;">'+
+        '<div style="color:#ef8305;font-size:24px;">0</div>'+
+        '<div style="color:#636363;font-size:18px;">今日达</div>'+
+        '</td><td  style="width:33%;border-left:1px solid #e6e6e6;'+
+        'border-right: 1px solid #e6e6e6">'+
+        '<div style="color:#ef8305;font-size:24px;">0</div>'+
+        '<div style="color:#636363;font-size:18px;">在途中</div>'+
+        '</td><td  style="width:33%;">'+
+        '<div style="color:#ef8305;font-size:24px;">0</div>'+
+        '<div style="color:#636363;font-size:18px;">逾期</div>'+
+        '</td></tr>';
+    $('#home-module-table').empty();
+    $('#home-module-table').append(result);
+}
 function queryIndexOrderCountSucc(data){
     if( data.isSucc ){
 
@@ -502,6 +522,7 @@ function queryIndexOrderCountSucc(data){
 
 //初始化首页底部panel 和 绑定事件
 function initHomeFooter(userType){
+
     if(userType == 2 ){
 //        $('#addOrderPanel').find('i').removeClass('icon-songhuo icon-kefu').addClass('icon-kefu');
 //        $('#addOrderPanelText').text('客服');
