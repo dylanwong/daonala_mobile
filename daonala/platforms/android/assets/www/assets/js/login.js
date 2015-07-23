@@ -162,7 +162,7 @@ function findPwdPanel()
 {
     $.ui.loadContent("#findPwd", false, false, "slide");
 }
-
+/*忘记密码*/
 function saveUpdatePwd()
 {
     var phone = $("#findPhone").val();
@@ -213,5 +213,48 @@ function updatePwdsucc(data)
     {
         errorPopup(msgText[1]);
     }
+}
+/*修改密码*/
+function updatePwd(){
+    var oldPwd = $('#oldPwd').val();
+    var newPwd = $('#newPwd').val();
+    if(oldPwd.trim().length<1 || oldPwd.trim().length>15)
+    {
+        errorPopup('请填写合法的原密码(1-15英文数字)!');
+        return;
+    }
+    if(newPwd.trim().length<1 || newPwd.trim().length>15)
+    {
+        errorPopup('请填写合法的原密码(1-15英文数字)!');
+        return;
+    }
+    var url = baseUrl + "account/updatePwdLogin.action";
+    var user = JSON.parse(localStorage.getItem('user'));
+    var option =
+    {
+        userNo:user.obj.userNo,
+        oldPwd:oldPwd,
+        newPwd:newPwd
+    };
+
+    getAjax(url,option,'updatePwdLoginsucc(data)');
+}
+
+function updatePwdLoginsucc(data){
+    if( data.isSucc ){
+        if( data.msg.split("-")[0] == 'S0001' ){
+            errorPopup(data.msg.split("-")[1]);
+            localStorage.removeItem('user');
+            login_panel();
+            $('#oldPwd').val('');
+            $('#newPwd').val('');
+        }
+        else{
+            errorPopup(data.msg.split("-")[1]);
+        }
+    }else{
+        errorPopup(data.msg);
+    }
+
 }
 

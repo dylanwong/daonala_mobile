@@ -51,14 +51,7 @@ function mine_panel()
     //$("#userpart").height($("#mine").height()/2);
     //$("#mine_module").height($("#mine").height()-$("#userpart").height());
 
-    var height = $("#mine").height();
-    $("#mineContent").css('height', height-$("#navbar").height());
 
-    var headDivHeihgt = ($("#mineContent").height() * 0.4);
-    var headContentDivTop = headDivHeihgt - 37;
-    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
-    $("#headContentDiv").css('top',headContentDivTop);
-    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
     var user = JSON.parse(localStorage.getItem('user'));
 
     if ( user == null){
@@ -69,6 +62,12 @@ function mine_panel()
     }
 
 }
+
+function adDetail_panel() {
+    $.ui.loadContent('#adDetail', false, false, 'slide');
+}
+
+
 function main_panel()
 {
     if ( localStorage.getItem('user') == null){
@@ -99,6 +98,12 @@ function register_panel()
 function selfInfo_panel(){
     initselfInfo();
 
+}
+
+function updatePassword_panel(){
+    $('#oldPwd').val('');
+    $('#newPwd').val('');
+    $.ui.loadContent("#updtPwd", false, false, "slide");
 }
 
 function feedback_panel()
@@ -148,6 +153,7 @@ function clearConfirmPanelData(){
 }
 //物流看板初始化页面
 function logisticboard_panel(){
+    localStorage.removeItem('searchFilter');
     $(".alert").hide();
     init_orderboardheader();//初始化头部和圆形图标
     initBoardSearchPage();//初始化看板刷选页
@@ -407,6 +413,8 @@ function queryAd() {
         type: 1
     };
     getAjax(queryAdList, options, 'queryAdListSucc(data)');
+
+    init_homepage();
 }
 
 /**
@@ -414,34 +422,47 @@ function queryAd() {
  */
 function queryAdListSucc(data) {
     var html = '';
-
-    if (data.obj.length > 0) {
-        html = '<div class="swiper-wrapper">';
-        var img = '';
-        for (var i = 0; len = data.obj.length, i < len; i++) {
-            img = smsManageUrl + data.obj[i].advertisement.photoUrl;
-            html += '<div class="swiper-slide">' +
+    if(data.isSucc){
+        if (data.obj.length > 0) {
+            html = '<div id="" class="swiper-wrapper">';
+            var img = '';
+            for (var i = 0; len = data.obj.length, i < len; i++) {
+                img = smsManageUrl + data.obj[i].advertisement.photoUrl;
+                html += '<div class="swiper-slide">' +
                 '<img data-notice-detail=\'' + JSON.stringify(data.obj[i]) + '\'' +
                 ' src="' + img + '" width="100%" height="100%" onclick="adDetailShow(this)"/>' +
                 '</div>';
 
-            setCacheData('adVersion', data.obj[0].advertisement.vesionNo, 1);
-        }
-        html += '</div><div class="swiper-pagination"></div>';
+               /* var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
+                    '<img src="assets/img/home/banner/home-banner01.png" width="100%" height="100%" />' +
+                    '</div>' +
+                    '</div><!-- Add Pagination --><div class="swiper-pagination"></div>';*/
+
+                setCacheData('adVersion', data.obj[0].advertisement.vesionNo, 1);
+            }
+            html += '</div><div class="swiper-pagination"></div>';
 
         //先注释
-        $("#home_ad").empty();
-        $("#home_ad").append(html);
-        var swiper = new Swiper('#home_ad', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: 5000,
-            parallax: true,
-            autoplayDisableOnInteraction: false
-        });
+            $("#home_ad").empty();
+            $("#home_ad").append(html);
+            var swiper = new Swiper('#home_ad', {
+                pagination: '.swiper-pagination',
+                paginationClickable: true,
+                spaceBetween: 30,
+                centeredSlides: true,
+                autoplay: 5000,
+                parallax: true,
+                autoplayDisableOnInteraction: false
+
+
+            });
+        }else{
+            ifAdNull();
+        }
+    }else{
+        ifAdNull();
     }
+
 }
 
 function init_home_ad()
@@ -458,10 +479,13 @@ function init_home_ad()
     $("#ad").height(adHeight);
     $("#home-module").height($("#home2").height() - $("#ad").height());
 */
+   // ifAdNull();
+    queryAd();
 
-    // queryAd();
+}
+function ifAdNull(){
     var swipeContent = '<div class="swiper-wrapper"><div class="swiper-slide">' +
-        '<img src="assets/img/adtest.png" width="100%" height="100%" />' +
+        '<img src="assets/img/home/banner/home-banner01.png" width="100%" height="100%" />' +
         '</div>' +
         '</div><!-- Add Pagination --><div class="swiper-pagination"></div>';
     $("#home_ad").empty();
@@ -475,11 +499,32 @@ function init_home_ad()
         parallax: true,
         autoplayDisableOnInteraction: false
     });
+}
 
-    init_homepage();
+//显示广告详情
+function adDetailShow(elm) {
+    var data = eval('(' + $(elm).attr('data-notice-detail') + ')');
+    if (data.advertisement.hrefUrl != null && data.advertisement.hrefUrl != '') {
+        src = data.advertisement.hrefUrl;
+        title = data.advertisement.title;
+        var frame = $('#map_frame');
+        $(frame).attr('src', src);
+        $("#noticeHeaderTitle").html(title);
+        var height = $("#afui").height() - $("#header").height();
+        $("#map_content").css('height', height);
+        $.ui.loadContent('#map', false, false, 'slide');
+    } else {
+        $("#adTitle").html(data.advertisement.title);
+        $("#adContent").html(data.advertisement.adContent);
+        adDetail_panel();
+    }
 }
 
 
+function removeFrame() {
+    $('#map_frame').attr('src', null);
+    $.ui.goBack();
+}
 function qrcode_load()
 {
 }

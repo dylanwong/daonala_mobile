@@ -26,7 +26,7 @@ var searchFlag = 0;//0     1为首页查询条件
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-
+var smsManageUrl = "http://192.168.16.98:8082/sms_manage/uploadFiles/";
 var baseUrl = "http://192.168.16.98/daonala_mobile/";
 var omsManageUrl = "";
 
@@ -93,13 +93,23 @@ function onDeviceReadySettingEvents() {
 //    setTimeout(function () {
 //        getLocation()
 //    }, 3000);
+    initMine();
     checkVersion();
-    init_home_ad();
+   // init_home_ad();
     init_homepage();
     navigator.splashscreen.hide();
     androidQueryInstallId();
 }
+function initMine(){
+    var height = $("#mine").height();
+    $("#mineContent").css('height', height-$("#navbar").height());
 
+    var headDivHeihgt = ($("#mineContent").height() * 0.4);
+    var headContentDivTop = headDivHeihgt - 37;
+    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
+    $("#headContentDiv").css('top',headContentDivTop);
+    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
+}
 function init_homepage(){
     var user =  localStorage.getItem('user');
     user = JSON.parse(user);
@@ -117,12 +127,7 @@ function init_homepage(){
         $('#boardPanel').bind('click',function(){
             login_panel(); //绑定物流看板
         });
-//        $('#myFirstboard').unbind('click');
-//        $('#myFirstboard').bind('click',function(){
-//            searchorder_panel();
-//        });
-//        $('#myFirstboardText').html('订单跟踪');
-        //initHomeModuleTable();
+
         $('#addOrderPanel').unbind('click');
         $('#addOrderPanel').empty();
         $('#addOrderPanel').append('<div style="width:80px;'+
@@ -140,27 +145,12 @@ function init_homepage(){
         loginStatus=1;
         var result = '';
         if(user.obj.userType=='0'){
-//            $('#myboard').unbind('click');
-//            $('#myboard').bind('click',function(){
-//                logisticboard_panel();
-//            });
-//            $('#myboardText').html('看板');
 
             $('#boardPanel').unbind('click');
             $('#boardPanel').bind('click',function(){
                 logisticboard_panel(); //绑定物流看板
             });
-//            $('#myFirstboard').unbind('click');
-//            $('#myFirstboard').bind('click',function(){
-//                addorder_panel();
-//            });
-//            $('#myFirstboardText').html('我要下单');
         }else if(user.obj.userType=='1'){
-//            $('#myboard').unbind('click');
-//            $('#myboard').bind('click',function(){
-//                ownerboard_panel();
-//            });
-//            $('#myboardText').html('看板');
 
             $('#boardPanel').unbind('click');
             $('#boardPanel').bind('click',function(){

@@ -321,6 +321,7 @@ function inittracemapsSucc(data){
 // 百度地图API功能
 function init_tracemap(longitudes,latitudes) {
     var points = [];
+    var len = longitudes;
     for ( var i = 0; i < longitudes.length; i++) {
         points[i] = new BMap.Point(longitudes[i],latitudes[i]);
     }
@@ -345,7 +346,7 @@ function init_tracemap(longitudes,latitudes) {
 
     var myIcon = new BMap.Icon("assets/img/car.png",
         new BMap.Size(56,34));
-    var marker = new BMap.Marker(new BMap.Point(113.950723,22.558888),{icon:myIcon});  // 创建标注
+    var marker = new BMap.Marker(new BMap.Point(longitudes[len-1],latitudes[len-1]),{icon:myIcon});  // 创建标注
     map.addOverlay(marker);               // 将标注添加到地图中
     marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 }

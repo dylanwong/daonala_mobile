@@ -40,22 +40,22 @@ function initselfInfo(){
     }else{
 
         $.ui.loadContent("#selfInfo",false,false,false,"slide");
-        $('#s_userName').val(user.obj.userName);
+        $('#s_userCName').val(user.obj.userCName);
         if ( user.obj.statusDesc == '1' ){
-            $('#s_userstatus').val('正常');
+            $('#s_userstatus').val('1');
         } else if ( user.obj.statusDesc == '0' ){
-            $('#s_userstatus').val('冻结');
+            $('#s_userstatus').val('0');
         } else {
 
         }
 
        /* $('#s_sex').val(user.obj);*/
         if ( user.obj.userType == '0' ){
-            $('#s_userType').val('物流商');
+            $('#s_userType').val('0');
         } else if ( user.obj.userType == '1' ) {
-            $('#s_userType').val('货主');
+            $('#s_userType').val('1');
         } else if ( user.obj.userType == '2') {
-            $('#s_userType').val('货主客户');
+            $('#s_userType').val('2');
         }
 
         $('#s_phone').val(user.obj.phone);
@@ -67,12 +67,21 @@ function initselfInfo(){
 
 
 function updateSelfInfo(){
+    var user = JSON.parse(localStorage.getItem('user'));
+
+    if ( $("#s_phone").val()!='' && !$("#s_phone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+        errorPopup("手机号码格式不正确！");
+        return;
+    }
+    if ( $("#s_email").val()!='' && !$("#s_email").val().match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)) {
+        errorPopup("邮箱格式不正确");
+        return;
+    }
     var option = {
-        userName: $('#s_userName').val(),
-        status : $('#s_userstatus').val(),
-        userType : $('#s_userType').val(),
-        phone : $('#s_phone').val(user.obj.phone),
-        email : $('#s_email').val(user.obj.email)
+        userNo:user.obj.userNo,
+        userCName: $('#s_userCName').val(),
+        phone : $('#s_phone').val(),
+        email : $('#s_email').val()
     }
     getAjax( updateSelfInfoUrl , option ,'updateSelfInfoSucc(data)','errorPopup("网络异常")' );
 }
@@ -80,5 +89,10 @@ function updateSelfInfo(){
 function updateSelfInfoSucc(data){
     if ( data.isSucc ){
         errorPopup('保存成功！');
+        var user = JSON.parse(localStorage.getItem('user'));
+        user.obj.userCName = $('#s_userCName').val();
+        user.obj.phone = $('#s_phone').val();
+        user.obj.email = $('#s_email').val();
+        localStorage.setItem('user', JSON.stringify(user) );
     }
 }

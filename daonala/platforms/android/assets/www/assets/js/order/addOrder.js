@@ -83,7 +83,7 @@ function choiceCustAddr(){
     var user = JSON.parse(localStorage.getItem("user"));
     var option ;
     var owners = JSON.parse(localStorage.getItem("ownerInfo"));
-    if(user.userType==1){
+    if(user.obj.userType==1){
         option = {
             enterpriseno:user.obj.logisticNo,
             ownerNo:user.obj.ownerNo,

@@ -25,24 +25,25 @@ function search(){
     if( searchText != '' && searchText != null){
         var user = JSON.parse( localStorage.getItem("user") );
         if ( user==null ) {
-            getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
+            getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
             'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
             } else {
-            getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,
+            getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,
                     'timeType':'N','userNo':user.obj.userNo,
                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo ,'custText':user.obj.custNo,
                 'userType':user.obj.userType },
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
         }
         if( user!=null ){
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
                 'userType':user.obj.userType }, true), true);
         }else{
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
 
         }
         $('#orderlist_ul').empty();
@@ -133,6 +134,7 @@ function updateOrderlistPanel(data,flag){
             //result = nullTrace;
         }
         if(flag){
+
             $("#orderlist_ul").append(result);
         }else {
             if (data.obj.data.length < (oldmyFilter.length -= 0)) {
@@ -140,16 +142,21 @@ function updateOrderlistPanel(data,flag){
                     $("#orderlist_ul").append(result);
                 }else{
                     $("#orderlist_ul").append(result);
-                $("<div id='nullOrderListSelf' class='nullOrder'>" +
+                  //  $("#orderlist_ul").removeChild($('#nullOrderListSelf'))
+                  //  $('#nullOrderListSelf').empty();
+               /* $("<div id='nullOrderListSelf' class='nullOrder'>" +
                 "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
-                "</div>").appendTo(orderlist_ul);
+                "</div>").appendTo(orderlist_ul);*/
                 }
             }else{
                 $("#orderlist_ul").append(result);
             }
         }
     }else{
-            //errorPopup('无更多订单');
+            if( lastPage == 'search' ){
+                errorPopup('查无订单');
+            }
+
     }
     }else{
         errorPopup(data.msg);
@@ -163,7 +170,7 @@ function updateOrderlistPanel(data,flag){
     mainLoadingStep = 0;
     $.ui.unblockUI();
     $.ui.hideMask();
-    mainScroll.scrollTo(0,0,1000);
+
 }
 
 //点击订单列表事件
@@ -280,7 +287,13 @@ function getOrderListPullToRefresh(that){
 
 function getRequestFromOrderListinite(self) {
     var searchFilter =  JSON.parse(localStorage.getItem("searchFilter"));
-    var start = parseInt(searchFilter.start) + 10;
+    var start = '';
+//    if(searchFilter.start == '1'){
+//        start = parseInt(searchFilter.start) + 10;
+//    } else {
+//        start = parseInt(searchFilter.start) + 10;
+//    }
+    start = parseInt(searchFilter.start) + 10;
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':start},true),true);
     if( searchFlag == 0){
@@ -334,7 +347,7 @@ function searchOrderFromIndex(type){
     $.ui.showMask("获取查询的订单..");
     lastPage='home2';
     var user = JSON.parse(localStorage.getItem('user'));
-    getAjax(searchOrderFromIndexUrl,{'start': '0', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
+    getAjax(searchOrderFromIndexUrl,{'start': '1', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
         'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo},'updateOrderlistPanel(data)','errorPopup("网络异常")');
 
     $("#orderlistHeaderId").attr('onclick',
@@ -345,12 +358,12 @@ function searchOrderFromIndex(type){
 
     if( user!=null ){
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length':'10','type':type,'enterpriseNo':user.obj.logisticNo,
+            {'start': '1', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
                 'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo,'userNo':user.obj.userNo,
                 'userType':user.obj.userType }, true), true);
     }else {
         setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length': '10', 'type': type, 'enterpriseNo': user.obj.logisticNo,
+            {'start': '1', 'length': '10', 'type': type, 'enterpriseno': user.obj.logisticNo,
                 'ownerNo': user.obj.ownerNo, 'custNo': user.obj.custNo}, true), true);
     }
 
