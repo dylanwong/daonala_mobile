@@ -484,7 +484,12 @@ function updateEvalute(datas){
                 $(".star2 li img").attr("src","assets/img/star.png");
                 $(".star3 li img").attr("src","assets/img/star.png");
                 $("#evaluteContent").val('');
-                $.ui.loadContent("#evaluate", false, false, "slide");
+                $('#evalute_ifNull').text('有');
+                $('#evalutePanelBtn').bind('click',function(){
+                 //   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+                    $.ui.loadContent("#evaluate", false, false, "slide");
+                });
+              //  $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
                 $('#evalute_ifNull').text('无');
                // errorPopup('暂无评价信息');

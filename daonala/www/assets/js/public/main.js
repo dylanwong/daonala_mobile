@@ -60,10 +60,11 @@ function mine_panel()
     $("#headContentDiv").css('top',headContentDivTop);
     $("#headLogoImageDiv").css('top',headLogoImageDivTop);
     var user = JSON.parse(localStorage.getItem('user'));
-    $('#userNameMine').text(user.obj.userName);
-    if ( localStorage.getItem('user') == null){
+
+    if ( user == null){
         login_panel();
     }else{
+        $('#userNameMine').text(user.obj.userName);
         $.ui.loadContent("#mine", false, false, "slide");
     }
 
@@ -84,14 +85,20 @@ function home_panel()
 
 function login_panel()
 {
-    var user = JSON.parse(localStorage.getItem('user'));
-    $('#userNameMine').text(user.obj.userName);
+    //var user = JSON.parse(localStorage.getItem('user'));
+    //$('#userNameMine').text(user.obj.userName);
     $.ui.loadContent("#login", false, false, "slide");
 }
 
 function register_panel()
 {
     $.ui.loadContent("#register", false, false, "slide");
+}
+
+//跳转个人资料页面
+function selfInfo_panel(){
+    initselfInfo();
+
 }
 
 function feedback_panel()
@@ -233,41 +240,58 @@ function traceInfo(){
 function traceInfo33(){
 //    /*init_search_panel();*/
     clear_orderdetailPage();
-    var user = JSON.parse(localStorage.getItem('user'));
-    if(user.obj.userType == 2){
-        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
-        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
-    }else{
-        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
-    }
+    /*$("#orderdetailBackId").attr('onclick',
+     "$.ui.loadContent('#orderlist', false, false, 'slide')");*/
+
+
+ //   var user = JSON.parse(localStorage.getItem('user'));
+//    if(user.obj.userType == 2){
+//        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+//        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+//    }else{
+//        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
+//    }
     initTraceInfo2();//初始化订单详情
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
 // 登陆时 单条订单新跟踪
 function traceSingleInfo33(){
     clear_orderdetailPage();
-    var user = JSON.parse(localStorage.getItem('user'));
-    if(user.obj.userType == 2){
-        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
-        if ($("#orderdetailBackId").attr('onclick')=="$.ui.loadContent('#orderlist', false, false, 'slide')"){
-
-        }else{
-            $('#orderdetailBackId').attr('onclick',"custboard_panel();");
-        }
-
-    }else{
-
-        if( $("#orderdetailBackId").attr('onclick') ==
-            "$.ui.loadContent('#search', false, false, 'slide')"){
-
-        }else if( $("#orderdetailBackId").attr('onclick') ==
-            "$.ui.loadContent('#home2', false, false, 'slide')" ){
-
-        }else{
-                //detailgobackHeader
-            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
-        }
+    if ( lastPage == 'search' ){
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
+    } else if ( lastPage == 'orderlist' ) {
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
+    } else if ( lastPage == 'home2 '){
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#home2', false, false, 'slide')");
+    } else if ( lastPage == 'orderBoard' ){
+        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+    } else if ( lastPage == 'custboard' ){
+        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+    } else {
+        $('#orderdetailBackId').attr('onclick',"$.ui.goBack()" );
     }
+//    var user = JSON.parse(localStorage.getItem('user'));
+//    if(user.obj.userType == 2){
+//        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
+//        if ($("#orderdetailBackId").attr('onclick')=="$.ui.loadContent('#orderlist', false, false, 'slide')"){
+//
+//        }else{
+//            $('#orderdetailBackId').attr('onclick',"custboard_panel();");
+//        }
+//
+//    }else{
+//
+//        if( $("#orderdetailBackId").attr('onclick') ==
+//            "$.ui.loadContent('#search', false, false, 'slide')"){
+//
+//        }else if( $("#orderdetailBackId").attr('onclick') ==
+//            "$.ui.loadContent('#home2', false, false, 'slide')" ){
+//
+//        }else{
+//                //detailgobackHeader
+//            $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+//        }
+//    }
     initTraceInfo2();
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }
@@ -280,7 +304,8 @@ function traceSingleInfo(){
 //    }else{
 //        $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
 //    }
-    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+//    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+    clear_orderdetailPage();
     initTraceInfo2();
     $.ui.loadContent("#orderMaindetail", false, false, "slide");
 }

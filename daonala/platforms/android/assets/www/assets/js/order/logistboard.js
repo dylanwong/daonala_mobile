@@ -84,7 +84,8 @@ function confirmSearch(){
 function updateBoardSearchPage(data){
     if(data.isSucc){
         var result = null;
-        for( var i in data.obj){
+        var len = data.obj.length;
+        for( var i = 0; i < len; i++ ){
             result += '<option value="'+data.obj[i].companyNo+'">'+data.obj[i].companyName+'</option>';
         }
         $('#select_city_panel').append(result);
@@ -175,7 +176,7 @@ function initLogisticBoardAgain(){
     //$('#subCompany').attr('value','');
     $('#boardOwner').text(user.obj.enterpriseName);
     // $('#boardOwner').text('');
-    if( userobj.userType == '0' ){
+    if( user.obj.userType == '0' ){
         var option ={
             enterpriseno : user.obj.logisticNo,
             subCompanyNo : $('#subCompany').attr('value'),
@@ -183,7 +184,7 @@ function initLogisticBoardAgain(){
             custNo:$('#boardowner').attr('value'),
             userType : user.obj.userType
         }
-    }else  if( userobj.userType == '1' ){
+    }else  if( user.obj.userType == '1' ){
         var option ={
             enterpriseno : user.obj.logisticNo,
             subCompanyNo : $('#subCompany').attr('value'),
@@ -335,6 +336,7 @@ function toggleBoardBtn(type) {
 
 function orderlist_panel(statustype){
     searchFlag = 0;
+    lastPage = 'orderBoard';
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     $("ul#orderlist_ul").empty();

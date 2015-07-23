@@ -64,7 +64,7 @@ function init_provices_suc(datas){
         $('#provice_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++  ){
             city_list += "<li><a href='javascript:;' city='' " +
             "province='"+datas.obj[i].codeId+"'  provinceName='"+datas.obj[i].cityName+"'" +
             " onclick='init_city(this)' >" +
@@ -81,7 +81,7 @@ function init_city_suc(datas){
         $('#city_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++  ){
             city_list += "<li><a href='javascript:;' city='"+datas.obj[i].codeId+"' " +
                 "cityName='"+datas.obj[i].cityName+"'  province='' onclick='init_zone(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
@@ -97,7 +97,7 @@ function init_zone_suc(datas){
         $('#zone_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
             city_list += "<li><a href='javascript:;' zone='"+datas.obj[i].codeId+"' city='' " +
                 "zoneName='"+datas.obj[i].cityName+"' province='' onclick='confirm_addr(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
@@ -140,7 +140,7 @@ function init_Cprovices_suc(datas){
         $('#provice_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
             city_list += "<li><a href='javascript:;' Ccity='' " +
                 "Cprovince='"+datas.obj[i].codeId+"'  CprovinceName='"+datas.obj[i].cityName+"'" +
                 " onclick='init_Ccity(this)' >" +
@@ -167,7 +167,7 @@ function init_Ccity_suc(datas){
         $('#city_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
             city_list += "<li><a href='javascript:;' Ccity='"+datas.obj[i].codeId+"' " +
                 "CcityName='"+datas.obj[i].cityName+"'  Cprovince='' onclick='init_Czone(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
@@ -193,7 +193,7 @@ function init_Czone_suc(datas){
         $('#zone_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
             city_list += "<li><a href='javascript:;' Czone='"+datas.obj[i].codeId+"' Ccity='' " +
                 "CzoneName='"+datas.obj[i].cityName+"' Cprovince='' onclick='confirm_Caddr(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"

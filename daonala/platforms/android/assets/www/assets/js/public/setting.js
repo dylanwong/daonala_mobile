@@ -26,11 +26,8 @@ var searchFlag = 0;//0     1为首页查询条件
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-<<<<<<< HEAD
-var baseUrl = "http://192.168.16.94:8080/daonala_mobile/";
-=======
+
 var baseUrl = "http://192.168.16.98/daonala_mobile/";
->>>>>>> 7f0ec18b799fa47bf3d8c0d226efedf081ce9174
 var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -55,7 +52,7 @@ var searchTraceLongitudeUrl = baseUrl + "order/query_trace_longitude.action";
 var queryIndexOrderCountUrl = baseUrl + "order/queryIndexOrderCount.action";
 var searchOrderFromIndexUrl = baseUrl + "order/queryIndexOrderList.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
-
+var updateSelfInfoUrl = baseUrl + "base/updateSelfInfo.action";
 var queryAdList = baseUrl + "base/query_ad_Version.action";
 //event target ID
 var ETID = null;
@@ -79,7 +76,7 @@ var myLocationFlag = false;
 var lOCATIONID='currentlocation';
 var taskTabStatus = 0;
 var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接页面
-
+var lastPage='';//上以页面PageId   做路由用
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】
 
 

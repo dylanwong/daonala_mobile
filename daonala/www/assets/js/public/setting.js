@@ -52,7 +52,7 @@ var searchTraceLongitudeUrl = baseUrl + "order/query_trace_longitude.action";
 var queryIndexOrderCountUrl = baseUrl + "order/queryIndexOrderCount.action";
 var searchOrderFromIndexUrl = baseUrl + "order/queryIndexOrderList.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
-
+var updateSelfInfoUrl = baseUrl + "base/updateSelfInfo.action";
 var queryAdList = baseUrl + "base/query_ad_Version.action";
 //event target ID
 var ETID = null;
@@ -76,7 +76,7 @@ var myLocationFlag = false;
 var lOCATIONID='currentlocation';
 var taskTabStatus = 0;
 var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接页面
-
+var lastPage='';//上以页面PageId   做路由用
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】
 
 

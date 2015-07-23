@@ -32,3 +32,53 @@ function hideQrDiv() {
     $("#transparentBg").fadeOut(400);
 }
 
+
+function initselfInfo(){
+    var user = JSON.parse(localStorage.getItem('user'))
+    if( user == null ){
+
+    }else{
+
+        $.ui.loadContent("#selfInfo",false,false,false,"slide");
+        $('#s_userName').val(user.obj.userName);
+        if ( user.obj.statusDesc == '1' ){
+            $('#s_userstatus').val('正常');
+        } else if ( user.obj.statusDesc == '0' ){
+            $('#s_userstatus').val('冻结');
+        } else {
+
+        }
+
+       /* $('#s_sex').val(user.obj);*/
+        if ( user.obj.userType == '0' ){
+            $('#s_userType').val('物流商');
+        } else if ( user.obj.userType == '1' ) {
+            $('#s_userType').val('货主');
+        } else if ( user.obj.userType == '2') {
+            $('#s_userType').val('货主客户');
+        }
+
+        $('#s_phone').val(user.obj.phone);
+        $('#s_email').val(user.obj.email);
+
+
+    }
+}
+
+
+function updateSelfInfo(){
+    var option = {
+        userName: $('#s_userName').val(),
+        status : $('#s_userstatus').val(),
+        userType : $('#s_userType').val(),
+        phone : $('#s_phone').val(user.obj.phone),
+        email : $('#s_email').val(user.obj.email)
+    }
+    getAjax( updateSelfInfoUrl , option ,'updateSelfInfoSucc(data)','errorPopup("网络异常")' );
+}
+
+function updateSelfInfoSucc(data){
+    if ( data.isSucc ){
+        errorPopup('保存成功！');
+    }
+}

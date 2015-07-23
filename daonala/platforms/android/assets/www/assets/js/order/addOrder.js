@@ -293,6 +293,19 @@ function saveOrUpdate() {
     var ownerBo = JSON.parse(localStorage.getItem('ownerBo'));
     var custBo = JSON.parse(localStorage.getItem('custBo'));
     var goodBo = JSON.parse(localStorage.getItem('goodBo'));
+    if( ownerBo == null ){
+        errorPopup('请选择发货人信息');
+        return;
+    }
+    if( custBo == null ){
+        errorPopup('请选择收货人信息');
+        return;
+    }
+
+    if( goodBo == null ){
+        errorPopup('请填写商品信息');
+        return;
+    }
     var transOrderM = {
         enterpriseNo : user.obj.logisticNo,
         orderNo :$('#gOrderNo').text(),
