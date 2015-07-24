@@ -93,7 +93,7 @@ function onDeviceReadySettingEvents() {
 //    setTimeout(function () {
 //        getLocation()
 //    }, 3000);
-    initMine();
+//    initMine();
     checkVersion();
    // init_home_ad();
     init_homepage();

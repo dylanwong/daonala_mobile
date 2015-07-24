@@ -267,7 +267,7 @@ function traceSingleInfo33(){
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
     } else if ( lastPage == 'orderlist' ) {
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
-    } else if ( lastPage == 'home2 '){
+    } else if ( lastPage == 'home2'){
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#home2', false, false, 'slide')");
     } else if ( lastPage == 'orderBoard' ){
         $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");

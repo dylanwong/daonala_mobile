@@ -84,13 +84,18 @@ function choiceCustAddr(){
     var option ;
     var owners = JSON.parse(localStorage.getItem("ownerInfo"));
     if(user.obj.userType==1){
+        if( $('#ownerText').attr('o_ownerNo') != ''
+            && $('#ownerText').attr('o_ownerNo') !=null ){
         option = {
             enterpriseno:user.obj.logisticNo,
-            ownerNo:user.obj.ownerNo,
+            ownerNo:$('#ownerText').attr('o_ownerNo'),
             addr:$('#searchAddrText').val()
         };
         getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         $.ui.loadContent("#chocieOwner", false, false, "slide");
+        }else{
+            errorPopup('未选择货主，请填写收货人信息');
+        }
     }else if(user.obj.userType==0){
 
         if( $('#ownerText').attr('o_ownerNo') != ''
@@ -274,12 +279,15 @@ function saveOrUpdate() {
     var user = JSON.parse(localStorage.getItem('user'));
     var owner = JSON.parse(localStorage.getItem('ownerInfo'));
     if( user.obj.userType == '1'){
-        ownerNo_Temp == user.obj.ownerNo;
-        ownerAlias_Temp == user.obj.ownerAlias;
-    }else{
+        ownerNo_Temp = user.obj.ownerNo;
+        ownerAlias_Temp = user.obj.ownerAlias;
+    }else {
         if ( owner != null ) {
             ownerNo_Temp = owner.ownerNo;
             ownerAlias_Temp = owner.ownerAlias;
+        } else {
+//            ownerNo_Temp = owner.ownerNo;
+//            ownerAlias_Temp = owner.ownerAlias;
         }
     }
 
@@ -306,10 +314,14 @@ function saveOrUpdate() {
         errorPopup('请填写商品信息');
         return;
     }
+//    if($('#gOrderNo').text() == '' || $('#gOrderNo').text() == null){
+//
+//    }
     var transOrderM = {
         enterpriseNo : user.obj.logisticNo,
         orderNo :$('#gOrderNo').text(),
         ownerNo : ownerNo_Temp,
+        ownerAlias : ownerAlias_Temp,
         /*ownerName : $("#o_ownername").val(),
         // ownerCompany:$("#ownerCompany").val(),
         ownerAddr : $("#o_addr").val(),// owner.ownerAddr,

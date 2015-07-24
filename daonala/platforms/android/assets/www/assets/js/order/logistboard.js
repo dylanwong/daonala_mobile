@@ -397,7 +397,7 @@ function orderlist_panel(statustype){
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,
             'enterpriseText':enterpriseText,
-            'ownerText':user.obj.ownerNo,'custText':custText,
+            'ownerText':ownerText,'custText':custText,
             'userNo':getUserNo(),'userType':getUserTypeFromsession()}, true), true);
     $('#orderlist_ul').empty();
 }

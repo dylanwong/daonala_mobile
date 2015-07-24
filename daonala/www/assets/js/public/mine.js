@@ -3,20 +3,20 @@
  */
 
 //初始化我的界面
-function init_mine(){
-
-    var user = JSON.parse( localStorage.getItem('user') );
-    if(user!=null){
-        $('#user_img').attr('src','assets/img/person.png');
-        $('#user_img').attr('onclick','');
-   //     $('#user_img').
-        $('#userAlias').text(user.obj.userName+" 用户");
-    }else{
-        //$('#user_img').attr('click');
-        $('#user_img').attr('onclick','login_panel()');
-    }
-
-}
+//function init_mine(){
+//
+//    var user = JSON.parse( localStorage.getItem('user') );
+//    if(user!=null){
+//        $('#user_img').attr('src','assets/img/person.png');
+//        $('#user_img').attr('onclick','');
+//   //     $('#user_img').
+//        $('#userAlias').text(user.obj.userName+" 用户");
+//    }else{
+//        //$('#user_img').attr('click');
+//        $('#user_img').attr('onclick','login_panel()');
+//    }
+//
+//}
 
 function showQrDiv() {
     $("#transparentBg").fadeIn(200);
@@ -42,20 +42,19 @@ function initselfInfo(){
         $.ui.loadContent("#selfInfo",false,false,false,"slide");
         $('#s_userCName').val(user.obj.userCName);
         if ( user.obj.statusDesc == '1' ){
-            $('#s_userstatus').val('1');
+            $('#s_userstatus').val('正常');
         } else if ( user.obj.statusDesc == '0' ){
-            $('#s_userstatus').val('0');
+            $('#s_userstatus').val('禁用');
         } else {
-
         }
 
        /* $('#s_sex').val(user.obj);*/
         if ( user.obj.userType == '0' ){
-            $('#s_userType').val('0');
+            $('#s_userType').val('物流商');
         } else if ( user.obj.userType == '1' ) {
-            $('#s_userType').val('1');
+            $('#s_userType').val('货主');
         } else if ( user.obj.userType == '2') {
-            $('#s_userType').val('2');
+            $('#s_userType').val('货主客户');
         }
 
         $('#s_phone').val(user.obj.phone);

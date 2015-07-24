@@ -76,7 +76,7 @@
     <br>
     <br><br>
     <br>
-    到哪啦
+    e订单
     <br>
     <br>    <span class='ui-icon ui-icon-loading spin'></span>
     <h1>正在加载应用..</h1>
@@ -133,7 +133,7 @@ data-defer:加载一个html进来
 
 <div class="panel p0"
      title="我" id="mine" data-defer="assets/panel/mine2.html"
-     data-load="init_mine"
+     data-load="initMine"
      data-header=""
      data-unload=""
      data-tab="navbar_mine">
@@ -153,8 +153,8 @@ data-defer:加载一个html进来
      data-load=""
      data-header="orderlistHeader"
      data-unload=""
-     data-footer="none"
-     >
+     data-footer="none">
+
 </div>
 
 
@@ -164,7 +164,7 @@ data-defer:加载一个html进来
      data-load=""
      data-header="allHeader"
      data-footer="none">
-        >
+
 </div>
 
 
@@ -173,7 +173,7 @@ data-defer:加载一个html进来
      data-load=""
      data-header="allHeader"
      data-footer="none">
-     >
+
 </div>
 
 <div class="panel p0"
@@ -181,7 +181,7 @@ data-defer:加载一个html进来
      data-load=""
      data-header="allHeader"
      data-footer="none">
-    >
+
 </div>
 
 <div class="panel p0"
@@ -189,7 +189,7 @@ data-defer:加载一个html进来
      data-load=""
      data-header="allHeader"
      data-footer="none">
-    >
+
 </div>
 
 <div class="panel p0"
@@ -363,7 +363,7 @@ data-defer:加载一个html进来
      data-load=""
      data-unload=""
      data-header="addOrderHeader"
-     data-footer="none">
+     data-footer="addDetailFooter">
 </div>
 <div class="panel p0"
      title="确认发货人" id="confirmowner" data-defer="assets/panel/order/confirmOwner.html"
@@ -783,6 +783,13 @@ data-defer:加载一个html进来
     <a onclick="mine_panel()" id='navbar_mine' class="icon icon-account-circle"
        style="height:100%;">我</a>
 </div>
+
+
+<footer id="addDetailFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button" id="loginButton"
+            style="width:80%;background:#ef8305;font-size:x-large;" onclick="saveOrUpdate()"
+            class="btn  btn-block">提交订单</button>
+</footer>
 
 </div>
 
