@@ -22,7 +22,7 @@ function initTraceInfo(){
 function initTraceInfoAgain(elm){
     var sendno = $(elm).attr('sendno');
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    var user = JSON.parse(localStorage.getItem("user"));
+    var user = JSON.parse(localStorage.getItem("e_user"));
     var todoFun ;
     if(user!=null){
         //$('#topdeliverNo_d').html(data.topsendNo);
@@ -52,7 +52,7 @@ function initTraceInfo2forAgain(elm){
     $('#trace_sender').html(data.ownerName);
     $('#trace_reciever').html(data.custName);
 
-    var user = JSON.parse(localStorage.getItem("user"));
+    var user = JSON.parse(localStorage.getItem("e_user"));
     var todoFun ;
     if(user!=null){
         $('#topdeliverNo_d').html(data.topsendNo);

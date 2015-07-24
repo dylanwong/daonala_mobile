@@ -36,8 +36,8 @@ function cust_orderlist_panel(tdStatus){
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
  //   var searchText = $('#searchText').val();
-    var user =  JSON.parse( localStorage.getItem("user") );
-    if ( localStorage.getItem("user")==null ) {
+    var user =  JSON.parse( localStorage.getItem("e_user") );
+    if ( localStorage.getItem("e_user")==null ) {
  /*       getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
                 'ownerText':'','custText':''},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");

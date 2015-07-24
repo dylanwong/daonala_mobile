@@ -13,10 +13,13 @@
 
         <div class="input-box input-bot  icon-local-shipping username" id="select_city_div">
             <input name="" id="select_city" readonly type="text" placeholder="请选择分公司..." >
-                <span class="select_icon"   >
+            <!--    <span class="select_icon"   >
                 <img src="assets/img/select_icon.png" class="arrow f32 width10"
                      data-selete="select_city_panel" />
-                </span>
+                </span>-->
+            <div data-selete="select_city_panel" class="phone-code arrow f32 width10">
+                <span class="phone-code unit-box icon-keyboard-arrow-down f32"></span>
+            </div>
         </div>
         <div class="input-box input-top input-bot icon-attach-money username">
                 <input id="product_search" onkeyup="removeInputIds();" type="text" data-provide="typeahead"  placeholder="请选择货主..."

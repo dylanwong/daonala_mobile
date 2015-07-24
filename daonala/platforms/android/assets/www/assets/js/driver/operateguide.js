@@ -83,7 +83,7 @@ function querydeliverchioceorderlist(){
     $.ui.showMask("我们正在拼命的加载数据...");
     var data = JSON.parse(localStorage.getItem("currenttask"));
     var url = baseUrl+"order/query_orderbytraceorder.action";
-    var user = JSON.parse( localStorage.getItem('user') );
+    var user = JSON.parse( localStorage.getItem('e_user') );
     var option = {
         enterpriseNo:data.enterpriseNo,
         /*systemNo:data.systemNo,

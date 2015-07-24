@@ -48,7 +48,7 @@ function save_login_succ(data)
         setCacheData("myFilter",mergeJson(JSON.parse(localStorage.getItem("myFilter")),filter,true),true);
         setCacheData("locationFilter",mergeJson(JSON.parse(localStorage.getItem("locationFilter")),filter,true),true);
         isLogin = true;
-        setCacheData('user',data,1);
+        setCacheData('e_user',data,1);
         loginStatus = 1;
         roleID = data.obj.userType;
         visitor=false;
@@ -95,7 +95,7 @@ function logoutSucc()
 {
     var url = baseUrl + "account/logout.action";
     loginStatus = 0;
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var userNo = user.obj.userNo;
     var deviceNo = getDeviceNo();
     var os = getOs();
@@ -106,7 +106,7 @@ function logoutSucc()
     };
     getAjax(url,option);
     bing_login_dom_data();
-    localStorage.removeItem('user');
+    localStorage.removeItem('e_user');
     sessionStorage.removeItem("mainList");
     sessionStorage.removeItem("myList");
     $('#user_img').attr('src','assets/img/user1.png');
@@ -229,7 +229,7 @@ function updatePwd(){
         return;
     }
     var url = baseUrl + "account/updatePwdLogin.action";
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var option =
     {
         userNo:user.obj.userNo,
@@ -244,7 +244,7 @@ function updatePwdLoginsucc(data){
     if( data.isSucc ){
         if( data.msg.split("-")[0] == 'S0001' ){
             errorPopup(data.msg.split("-")[1]);
-            localStorage.removeItem('user');
+            localStorage.removeItem('e_user');
             login_panel();
             $('#oldPwd').val('');
             $('#newPwd').val('');

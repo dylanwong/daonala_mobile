@@ -51,7 +51,7 @@ function uploadPhoto_tooms() {
     options.fileName=picUrl.substr(picUrl.lastIndexOf('/')+1);
 
     options.mimeType="image/jpeg";
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var params = new Object();
     params.fileContentType = 'DaonalaImg';
     //params.workerNo = user.obj.workerNo;

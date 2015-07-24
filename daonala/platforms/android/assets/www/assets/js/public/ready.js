@@ -21,7 +21,7 @@ $(document).ready(function(){
     }
 
 
-//    if(localStorage.getItem("user")){
+//    if(localStorage.getItem("e_user")){
 //        setCacheData("myFilter",mergeJson(JSON.parse(localStorage.getItem("myFilter")),{'start':'1'},true),true);
 //        getAjax(queryMyOrderList,JSON.parse(localStorage.getItem("myFilter")),"setCacheData('myList',data,false)");
 //    }else{
@@ -588,7 +588,7 @@ $.ui.ready(function(){
 function getAjax(ajaxURL,option,successFunction,failFunction){
     console.log("getAjax")
 
-    var user = localStorage.getItem('user');
+    var user = localStorage.getItem('e_user');
     var args = option ;
     if(user!=null)
     {
@@ -865,13 +865,13 @@ function setCacheData(key,value,ever){
 }
 
 function getUserNo(){
-    return JSON.parse(localStorage.getItem("user")).obj.userNo ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.userNo ;
 }
 function getEnterpriseNo(){
-    return JSON.parse(localStorage.getItem("user")).obj.enterpriseNo ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.enterpriseNo ;
 }
 function getUserTypeFromsession(){
-    return JSON.parse(localStorage.getItem("user")).obj.userType ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.userType ;
 }
 function mergeJson(jsonbject1, jsonbject2,needString)
 {

@@ -32,7 +32,7 @@ function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }
 function message_panel(){
-    var user = localStorage.getItem('user');
+    var user = localStorage.getItem('e_user');
     user = JSON.parse(user);
 
     if(user!=null){
@@ -52,7 +52,7 @@ function mine_panel()
     //$("#mine_module").height($("#mine").height()-$("#userpart").height());
 
 
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
 
     if ( user == null){
         login_panel();
@@ -70,7 +70,8 @@ function adDetail_panel() {
 
 function main_panel()
 {
-    if ( localStorage.getItem('user') == null){
+
+    if ( localStorage.getItem('e_user') == null){
         login_panel();
     }else{
         $.ui.loadContent("#main", false, false, "slide");
@@ -84,7 +85,7 @@ function home_panel()
 
 function login_panel()
 {
-    //var user = JSON.parse(localStorage.getItem('user'));
+    //var user = JSON.parse(localStorage.getItem('e_user'));
     //$('#userNameMine').text(user.obj.userName);
     $.ui.loadContent("#login", false, false, "slide");
 }
@@ -168,7 +169,7 @@ function ownerboard_panel(){
 }
 function custboard_panel(elm){
 
-    if(localStorage.getItem('user')==null){
+    if(localStorage.getItem('e_user')==null){
         $.ui.loadContent("#portal", false, false, "slide");
     }else
     {
@@ -192,7 +193,7 @@ function driverboard_panel(){
    // $.ui.loadContent("#driverboard", false, false, "slide");
 
 
-    if(localStorage.getItem('user')==null){
+    if(localStorage.getItem('e_user')==null){
         $.ui.loadContent("#portal", false, false, "slide");
     }else
     {
@@ -250,7 +251,7 @@ function traceInfo33(){
      "$.ui.loadContent('#orderlist', false, false, 'slide')");*/
 
 
- //   var user = JSON.parse(localStorage.getItem('user'));
+ //   var user = JSON.parse(localStorage.getItem('e_user'));
 //    if(user.obj.userType == 2){
 //        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
 //        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
@@ -276,7 +277,7 @@ function traceSingleInfo33(){
     } else {
         $('#orderdetailBackId').attr('onclick',"$.ui.goBack()" );
     }
-//    var user = JSON.parse(localStorage.getItem('user'));
+//    var user = JSON.parse(localStorage.getItem('e_user'));
 //    if(user.obj.userType == 2){
 //        //$('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#custboard', false, false, 'slide')");
 //        if ($("#orderdetailBackId").attr('onclick')=="$.ui.loadContent('#orderlist', false, false, 'slide')"){
@@ -303,7 +304,7 @@ function traceSingleInfo33(){
 }
 
 function traceSingleInfo(){
-//    var user = JSON.parse(localStorage.getItem('user'));
+//    var user = JSON.parse(localStorage.getItem('e_user'));
 //    if(user.obj.userType == 2){
 //        $('#orderdetailBackId').attr('onclick',"custboard_panel();");
 //
@@ -355,8 +356,8 @@ function init_search_panel(){
     localStorage.removeItem('searchFilter');
    // localStorage.removeItem('routeList');
     $('#searchText').val('');
-    if(localStorage.getItem("user")!=null) {
-        var user = JSON.parse(localStorage.getItem("user"));
+    if(localStorage.getItem("e_user")!=null) {
+        var user = JSON.parse(localStorage.getItem("e_user"));
         if(user.obj.userType=='0'){
             $('#searchText').attr("placeholder", "请输入单号/货主名称模糊查找");
         }else if(user.obj.userType=='1'){
@@ -535,7 +536,7 @@ function qrcode_panel() {
 //初始化首页看板
 function initHomeModuleTable(){
    // userType,  userNo,enterpriseNo,ownerNo,custNo
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     getAjax(queryIndexOrderCountUrl ,{'enterpriseno':user.obj.logisticNo,
             'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo
            },
@@ -563,35 +564,42 @@ function queryIndexOrderCountSucc(data){
     if( data.isSucc ){
 
     $('#home-module-table').html('');
-    var user = JSON.parse(localStorage.getItem("user"));
+    var user = JSON.parse(localStorage.getItem("e_user"));
     var userType = user.obj.userType;
     var result = '';
 
     if(userType == 0 || userType == 1) {
         result =
-        '<tr ><td onclick = "searchOrderFromIndex(0);"style="width:20%;">'+
+        '<tr ><td count = "'+data.obj.deliveryCount+'" ' +
+            'onclick = "searchOrderFromIndex(0,'+data.obj.deliveryCount+');"style="width:20%;">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.deliveryCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">今日送</div>'+
-        '</td><td onclick = "searchOrderFromIndex(1);"style="width:20%;border-left:1px solid #e6e6e6;'+
+        '</td><td count = "'+data.obj.onwayCount+'" ' +
+            'onclick = "searchOrderFromIndex(1,'+data.obj.onwayCount+');"style="width:20%;border-left:1px solid #e6e6e6;'+
         'border-right: 1px solid #e6e6e6">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">在途中</div>'+
-        '</td><td onclick = "searchOrderFromIndex(4);" style="width:20%;border-right: 1px solid #e6e6e6">'+
+        '</td><td count = "'+data.obj.outTimeCount+'" ' +
+            'onclick = "searchOrderFromIndex(4,'+data.obj.outTimeCount+');" style="width:20%;border-right: 1px solid #e6e6e6">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">逾期</div>'+
-        '</td><td onclick = "searchOrderFromIndex(3);" style="width:20%;">'+
+        '</td><td  count = "'+data.obj.exceptionCount+'" ' +
+            'onclick = "searchOrderFromIndex(3,'+data.obj.exceptionCount+');" style="width:20%;">'+
         '<div style="color:#ef8305;font-size:24px;">'+data.obj.exceptionCount+'</div>'+
         '<div style="color:#636363;font-size:18px;">异常</div></td></tr>';
     }  else if (userType == 2){
         result =
-            '<tr><td onclick = "searchOrderFromIndex(2);"style="width:33%;">'+
+            '<tr><td count = "'+data.obj.arriviedCount+'" ' +
+                'onclick = "searchOrderFromIndex(2,'+data.obj.arriviedCount+' );"style="width:33%;">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.arriviedCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">今日达</div>'+
-            '</td><td onclick = "searchOrderFromIndex(1);" style="width:33%;border-left:1px solid #e6e6e6;'+
+            '</td><td count = "'+data.obj.onwayCount+'" ' +
+                'onclick = "searchOrderFromIndex(1, '+data.obj.onwayCount+');" style="width:33%;border-left:1px solid #e6e6e6;'+
             'border-right: 1px solid #e6e6e6">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.onwayCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">在途中</div>'+
-            '</td><td onclick = "searchOrderFromIndex(4);" style="width:33%;">'+
+            '</td><td count = "'+data.obj.outTimeCount+'" ' +
+                'onclick = "searchOrderFromIndex(4,'+data.obj.outTimeCount+' );" style="width:33%;">'+
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">逾期</div>'+
             '</td></tr>';
@@ -660,13 +668,13 @@ function postion_change(){
 
 function idinfo_panel(flag)
 {
-    if(localStorage.getItem('user')==null)
+    if(localStorage.getItem('e_user')==null)
     {
         $.ui.loadContent("#portal", false, false, "slide");
     }else
     {
         verify_flag = flag;
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = JSON.parse(localStorage.getItem('e_user'));
         if(user.obj.workerType == 2)
         {
             if(verify_flag == 0)
@@ -828,7 +836,8 @@ function init_orderBoard(data)
 function init_lightbox(objectNo) {
     /*lightbox = baguetteBox.run('.baguetteBoxOne', {
     });*/
-    $('.swipebox' ).swipebox();
+    $('.img'+objectNo).swipebox();
+    //$('.swipebox .el').swipebox();
 }
 
 /*获取消息列表*/

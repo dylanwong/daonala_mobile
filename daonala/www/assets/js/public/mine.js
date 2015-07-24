@@ -5,7 +5,7 @@
 //初始化我的界面
 //function init_mine(){
 //
-//    var user = JSON.parse( localStorage.getItem('user') );
+//    var user = JSON.parse( localStorage.getItem('e_user') );
 //    if(user!=null){
 //        $('#user_img').attr('src','assets/img/person.png');
 //        $('#user_img').attr('onclick','');
@@ -34,7 +34,7 @@ function hideQrDiv() {
 
 
 function initselfInfo(){
-    var user = JSON.parse(localStorage.getItem('user'))
+    var user = JSON.parse(localStorage.getItem('e_user'))
     if( user == null ){
 
     }else{
@@ -66,7 +66,7 @@ function initselfInfo(){
 
 
 function updateSelfInfo(){
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
 
     if ( $("#s_phone").val()!='' && !$("#s_phone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
         errorPopup("手机号码格式不正确！");
@@ -88,7 +88,7 @@ function updateSelfInfo(){
 function updateSelfInfoSucc(data){
     if ( data.isSucc ){
         errorPopup('保存成功！');
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = JSON.parse(localStorage.getItem('e_user'));
         user.obj.userCName = $('#s_userCName').val();
         user.obj.phone = $('#s_phone').val();
         user.obj.email = $('#s_email').val();

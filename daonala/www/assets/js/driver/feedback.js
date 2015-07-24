@@ -28,7 +28,7 @@ function deliveryorder() {
 
             var data = JSON.parse(localStorage.getItem("currenttask"));
             var url = baseUrl + "driver/update_trace_status.action";
-            var user = JSON.parse(localStorage.getItem('user'));
+            var user = JSON.parse(localStorage.getItem('e_user'));
             var option = {
                 operator: $("#deliveroperater").val(),
                 enterpriseNo: data.enterpriseNo,
@@ -84,7 +84,7 @@ function confirmfolloworder(){
 
         var data = JSON.parse(localStorage.getItem("currenttask"));
         var url = baseUrl + "driver/update_trace_status.action";
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = JSON.parse(localStorage.getItem('e_user'));
         var option = {
             operator: '',
             enterpriseno: data.enterpriseNo,
@@ -125,7 +125,7 @@ function confirmhandoverorder(){
     var data = JSON.parse(localStorage.getItem("currenttask"));
     //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
     var url = baseUrl+"driver/update_trace_status.action";
-    var user = JSON.parse( localStorage.getItem('user') );
+    var user = JSON.parse( localStorage.getItem('e_user') );
     var option = {
         operator:$('#handoveroperater').val(),
         enterpriseNo:data.enterpriseNo,
@@ -164,7 +164,7 @@ function confirmsignorder(){
         var data = JSON.parse(localStorage.getItem("currenttask"));
         //operator,  enterpriseno, consignno, ordernos,imgurls, status, location, remarks, type
         var url = baseUrl+"driver/sign_order_status.action";
-        var user = JSON.parse( localStorage.getItem('user') );
+        var user = JSON.parse( localStorage.getItem('e_user') );
         var option = {
             operator:$('#signoperater').val(),
             enterpriseNo:data.enterpriseNo,
@@ -411,7 +411,7 @@ function show_photooms(element)
 
 function get_imgsoms()
 {
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var workType = user.obj.workerType;
     var workerNo = user.obj.workerNo;
     get_img_ajax(workerNo,workType);
@@ -428,7 +428,7 @@ function get_img_ajax_succ_oms(data)
 
     if(data.isSucc)
     {
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = JSON.parse(localStorage.getItem('e_user'));
         var workType = user.obj.workerType;
         var baseUrlImg = fileUrl;
         var oldImgUrl = "assets/img/demo/no_photo.png";
@@ -465,7 +465,7 @@ function get_img_ajax_fail_oms()
 
 function idinfo_next_oms()
 {
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var workerType = user.obj.workerType;
     var flag = false;
     if(workerType == 1)

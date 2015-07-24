@@ -94,13 +94,6 @@ function onDeviceReadySettingEvents() {
 //        getLocation()
 //    }, 3000);
 //    initMine();
-    checkVersion();
-   // init_home_ad();
-    init_homepage();
-    navigator.splashscreen.hide();
-    androidQueryInstallId();
-}
-function initMine(){
     var height = $("#mine").height();
     $("#mineContent").css('height', height-$("#navbar").height());
 
@@ -109,9 +102,17 @@ function initMine(){
     var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
     $("#headContentDiv").css('top',headContentDivTop);
     $("#headLogoImageDiv").css('top',headLogoImageDivTop);
+    checkVersion();
+   // init_home_ad();
+    init_homepage();
+    navigator.splashscreen.hide();
+    androidQueryInstallId();
+}
+function initMine(){
+
 }
 function init_homepage(){
-    var user =  localStorage.getItem('user');
+    var user =  localStorage.getItem('e_user');
     user = JSON.parse(user);
     if(user==null)
     {

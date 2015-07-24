@@ -23,7 +23,7 @@ function search(){
          {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
     if( searchText != '' && searchText != null){
-        var user = JSON.parse( localStorage.getItem("user") );
+        var user = JSON.parse( localStorage.getItem("e_user") );
         if ( user==null ) {
             getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
             'userType':'' },
@@ -110,7 +110,7 @@ function updateOrderlistPanel(data,flag){
             //   $("#orderdetailBackId").attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
             //  $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
                 $.ui.loadContent("#orderlist", false, false, "slide");
-//            if(localStorage.getItem('user')==null){
+//            if(localStorage.getItem('e_user')==null){
 //                $('#orderlist').attr('data-header','home2Header');
 //            }else{
 //                $('#orderlist').attr('data-header','orderlistHeader');
@@ -340,13 +340,16 @@ function getRequestFromOrderListinite(self) {
 }
 
 
-function searchOrderFromIndex(type){
+function searchOrderFromIndex(type,count){
+    if(count == '0' || count == 0){
+        return;
+    }
     searchFlag = 1;
     $('#orderlist_ul').empty();
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     lastPage='home2';
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = JSON.parse(localStorage.getItem('e_user'));
     getAjax(searchOrderFromIndexUrl,{'start': '1', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
         'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo},'updateOrderlistPanel(data)','errorPopup("网络异常")');
 

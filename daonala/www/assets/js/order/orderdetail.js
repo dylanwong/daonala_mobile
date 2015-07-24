@@ -378,7 +378,7 @@ function setSmallImgListSuc(data,objectNo){
             result += containHead;
             for( var i = 0; i < len; i++ ){
                // for ( var k = 0; k < 3; k++ ){
-                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''){
+                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''&&jqueryResult[i].filePath!=null){
                 count++;
                 var fileUrl = jqueryResult[i].filePath;
                 var fileName = jqueryResult[i].fileName;
@@ -400,6 +400,7 @@ function setSmallImgListSuc(data,objectNo){
               //  }
 
             result += containEnd;
+            $('#'+objectNo).empty();
             $('#'+objectNo).html(result);
                // }
             init_lightbox(objectNo);
@@ -435,17 +436,17 @@ function queryEvalute(){
 
 function updateEvalute(datas){
     var evaluteResult = '';
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     $('#reviewsItem1').empty();
     $('#reviewsItem2').empty();
     $('#reviewsItem3').empty();
     if(datas.isSucc){
 
 
-        var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
-            '<div class="fl width80" align="right"'+
-            'style="border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;' +
-            'padding-top:15px;padding-left:10px;">' +
+        var info = '<div class="width95"><ul><li style="">'+
+            '<div class="fl " align=""'+
+            'style="width:100%;border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;' +
+            'padding-top:15px;padding-left:10px;padding-bottom: 10px;">' +
             '<span >评价</span></div>'+
             '<div class="fr width20" align="right"'+
             'style="color:#5b5b5b;font-size:16px;"> <a href="#evaluate" >'+
@@ -453,7 +454,7 @@ function updateEvalute(datas){
             'style="width:60px;height:24px;font-size:14px;'+
             'text-align:center;line-height:24px;padding:0px 12px;">去评价</button>'+
             '</a></div></li></ul>' +
-            '<div align="left" style="padding-left:10px;padding-top: 30px;" id="evaluteInfo">'+
+            '<div align="left" style="padding-left:10px;padding-top: 50px;" id="evaluteInfo">'+
             '  <p id="evaluteName"></p><p style="color:#06ABD4" id="reviewsDemo"></p>'+
             ' <div><div class="overflowHidden"><p class="fl width30" align="right">商品完好度：</p>'+
             ' <p class="fl" id="reviewsItem1"></p></div><div class="overflowHidden">'+
@@ -461,9 +462,9 @@ function updateEvalute(datas){
             '     <p class="fl" id="reviewsItem2"></p> </div>'+
             ' <div class="overflowHidden"><p class="fl width30" align="right">送货人态度：</p>'+
             ' <p class="fl"  id="reviewsItem3"></p></div></div>'+
-            '</div><ul><li style="border-bottom: 1px dashed #09ACD4;" >'+
-            '    <div class="fl width80" align="right" '+
-            '  style="color:#5b5b5b;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
+            '</div><ul><li style="" >'+
+            '    <div class="fl " align="" '+
+            '  style="padding-top: 30px;padding-left: 10px;padding-bottom: 10px;width:100%;border-bottom: 1px solid #ededed;color:#5b5b5b;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
             '  <div class="fr width20" align="right"'+
             ' style="color:#5b5b5b;font-size:16px;">'+
             ' <a href="#reply"> <button type="button" id="replyBtn"'+
@@ -471,7 +472,7 @@ function updateEvalute(datas){
             '   style="border-bottom:1px solid #ededed;width:60px;height:24px;font-size:14px;'+
             '            text-align:center;line-height:24px;padding:0px 12px;">回复</button>'+
             '</a></div></li></ul>'+
-            '<div align="left" style="padding-left:10px;" id="replyInfo"></div>';
+            '<div align="left" style="padding-top: 30px;padding-left:10px;" id="replyInfo"></div>';
         if(datas.obj.length == 0){
             if(cuser.obj.userType==2){
                 $('#orderDetailEvaluate').empty();
@@ -608,7 +609,7 @@ function showStar(star){
 
 function saveReply(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     var savereplyUrl = baseUrl + 'order/submit_evaluate_reply.action';
     if( $('#reply_Info').val() !='' && $('#reply_Info').val() != undefined ){
         getAjax(savereplyUrl, {'enterpriseNo':data.enterpriseNo, 'systemNo':data.systemNo,
@@ -624,7 +625,7 @@ function saveReply(){
 function saveEvalute(){
     var saveevaluteUrl = baseUrl + 'order/submit_evaluate.action';
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     var savereplyUrl = 'order/submit_evaluate_reply.action';
   /*  enterpriseNo, systemNo,
         dispatchNo, ownerNo, reviewsItem1, reviewsItem2,
