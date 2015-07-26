@@ -79,7 +79,7 @@ var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接�
 var lastPage='';//上以页面PageId   做路由用
 var scrollFlag =0; //回到最上面
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】
-
+var swiper;
 
 
 document.addEventListener("deviceready", onDeviceReadySettingEvents, false);

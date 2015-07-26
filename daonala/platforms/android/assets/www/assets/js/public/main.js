@@ -443,19 +443,20 @@ function queryAdListSucc(data) {
             html += '</div><div class="swiper-pagination"></div>';
 
         //先注释
-            $("#home_ad").empty();
-            $("#home_ad").append(html);
-            var swiper = new Swiper('#home_ad', {
-                pagination: '.swiper-pagination',
-                paginationClickable: true,
-                spaceBetween: 30,
-                centeredSlides: true,
-                autoplay: 5000,
-                parallax: true,
-                autoplayDisableOnInteraction: false
+            if(swiper==null){
+                $("#home_ad").empty();
+                $("#home_ad").append(html);
+                swiper = new Swiper('#home_ad', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: 5000,
+                    parallax: true,
+                    autoplayDisableOnInteraction: false
+                });
+            }
 
-
-            });
         }else{
             ifAdNull();
         }
