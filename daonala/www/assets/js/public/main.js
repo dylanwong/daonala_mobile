@@ -402,6 +402,7 @@ function searchRoute(elm){
 }
 
 function queryAd() {
+    try{
     var os = 'android';
     if (window.OSInfo != null) {
         os = window.OSInfo.os;
@@ -412,8 +413,11 @@ function queryAd() {
         os: os,
         type: 1
     };
-    getAjax(queryAdList, options, 'queryAdListSucc(data)');
 
+    getAjax(queryAdList, options, 'queryAdListSucc(data)');
+    }catch(e){
+        ifAdNull();
+    }
     init_homepage();
 }
 
@@ -421,8 +425,10 @@ function queryAd() {
  * 渲染广告到页面
  */
 function queryAdListSucc(data) {
+    try{
     var html = '';
     if(data.isSucc){
+
         if (data.obj.length > 0) {
             html = '<div id="" class="swiper-wrapper">';
             var img = '';
@@ -461,6 +467,9 @@ function queryAdListSucc(data) {
             ifAdNull();
         }
     }else{
+        ifAdNull();
+    }
+    }catch(e){
         ifAdNull();
     }
 
