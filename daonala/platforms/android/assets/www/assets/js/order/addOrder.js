@@ -224,10 +224,10 @@ function confirmOwnerAddr(elm){
     localStorage.setItem('confirmProvince',data.province);
     localStorage.setItem('confirmCity',data.city);
     localStorage.setItem('confirmZone',data.county);
-
-
-
 }
+
+
+
 function confirmCustAddr(elm){
     var data = eval('(' +$(elm).attr('data-order-detail')+ ')');
     $('#c_custname').val(data.custName);
@@ -468,6 +468,11 @@ function backToOwnerAddOrderPage(){
             flag = false;
         }else*/
         var reg = /^\\d+$/;
+        if ( $("#o_linkPhone").val()!='' && !$("#o_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+            errorPopup("手机号码格式不正确！");
+            flag = false;
+            return;
+        }
         if ( $('#o_ownername').val() == "" ) {
             //parent.art.dialog.alert("企业编码未选择！");
             errorPopup('企业编码未选择!');
@@ -518,16 +523,38 @@ function backToOwnerAddOrderPage(){
                 ownerCounty : localStorage.getItem('confirmZone')
             }
             localStorage.setItem('ownerBo',JSON.stringify(ownerBo) );
+            var tempownerinfo = JSON.parse( localStorage.getItem("ownerInfo") );
+            if ( tempownerinfo!=null && tempownerinfo.ownerNo != null ) {
+                clearCustAddr();
+            }
+
             $.ui.loadContent("#addorder", false, false, "slide");
         }
     } catch(e){
         errorPopup(e.name + ": " + e.message);
     }
 }
+
+function clearCustAddr(){
+    $('#addOrderCustInfo').show();
+    $('#updateOrderCustInfo').hide();
+    $('#custText').text('');
+    $('#ccityText').text('');
+    $('#caddrText').text('');
+    $('#clinkerText').text('');
+    $('#cphoneText').text('')
+    localStorage.removeItem('custBo');
+}
+
 function backToCustAddOrderPage(){
 
     //$.ui.loadContent("#chocieOwner", false, false, "slide");
     try {
+        if ( $("#c_linkPhone").val()!='' && !$("#c_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+            errorPopup("手机号码格式不正确！");
+            flag = false;
+            return;
+        }
         if ($('#c_custname').val() == "") {
             //parent.art.dialog.alert("收货人名称未填写！");
             errorPopup('收货人名称未填写!');
