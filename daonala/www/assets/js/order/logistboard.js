@@ -34,7 +34,7 @@ function initBoardSearchPage(){
 }
 function clearSearchText(){
     $('#select_city').val('');
-    $('#product_search').val();
+    $('#product_search').val('');
     // $('#boardowner').attr('value','');
   //  $('#product_search').attr('productid','');
 }
@@ -50,12 +50,13 @@ function removeInputIds(){
 function confirmSearch(){
 
    // $(".close").show();
+    $('#subCompany').empty();
     $('#subCompany').attr('value','');
     var subcompany = $('#select_city').attr('selectid');
     var subcompanyName = $('#select_city').val();
     var searchFlag = false;
     var searchFlag2 = false;
-    $('#subCompany').empty();
+
     if( subcompany != undefined && subcompany != '' && subcompanyName != undefined && subcompanyName != ''){
         $('#subCompany').append('<b class="">分公司：</b>'+subcompanyName);
         $('#subCompany').attr('value',subcompany);
@@ -63,6 +64,7 @@ function confirmSearch(){
     } else {
         searchFlag = false;
     }
+    $('#boardowner').empty();
     $('#boardowner').attr('value','');
     var owner = $('#product_search').attr('productid');
     var ownerName = $('#product_search').val();
@@ -86,6 +88,10 @@ function confirmSearch(){
     }
     // var ownerOrCustText = $('#ownerText').val();
     initLogisticBoardAgain();
+    $('#select_city').attr('selectid','')
+    $('#select_city').val('');
+    $('#product_search').attr('productid','');
+    $('#product_search').val('');
 }
 
 function updateBoardSearchPage(data){
@@ -342,6 +348,7 @@ function toggleBoardBtn(type) {
 }
 
 function orderlist_panel(statustype){
+    scrollFlag = 0;
     searchFlag = 0;
     lastPage = 'orderBoard';
 
