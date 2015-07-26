@@ -393,8 +393,7 @@ function saveOrderFromPhoneSucc(data){
     if(data.isSucc){
         errorPopup('下单成功');
         clearConfirmData();
-
-       // $.ui.loadContent("#home", false, false, "slide");
+        $.ui.loadContent("#home2", false, false, "slide");
     }else{
         clearConfirmData();
         errorPopup('下单失败');

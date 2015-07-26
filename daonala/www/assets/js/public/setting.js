@@ -27,7 +27,7 @@ var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 var smsManageUrl = "http://192.168.16.98:8082/sms_manage/uploadFiles/";
-var baseUrl = "http://192.168.16.91:8080/oms_mobile/";
+var baseUrl = "http://192.168.16.98/daonala_mobile/";
 var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -95,23 +95,14 @@ function onDeviceReadySettingEvents() {
 //        getLocation()
 //    }, 3000);
 //    initMine();
-    var height = $("#mine").height();
-    $("#mineContent").css('height', height-$("#navbar").height());
 
-    var headDivHeihgt = ($("#mineContent").height() * 0.4);
-    var headContentDivTop = headDivHeihgt - 37;
-    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
-    $("#headContentDiv").css('top',headContentDivTop);
-    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
     checkVersion();
    // init_home_ad();
     init_homepage();
     navigator.splashscreen.hide();
     androidQueryInstallId();
 }
-function initMine(){
 
-}
 function init_homepage(){
     var user =  localStorage.getItem('e_user');
     user = JSON.parse(user);
@@ -201,34 +192,43 @@ function onBackKeyDown(e) {
 }
 
 function exitAppPopup(e) {
-    if(window.location.href.indexOf('#') == -1 || window.location.href.indexOf('#home') > 0)
+
+   //dwb-e是 mobiscroll 取消按钮的class 如果显示着 点击返回先取消该组件
+   if($(".dwb-e")!=null && $(".dwb-e").length > 0)
     {
-        e.preventDefault();
-        af.ui.popup({
-            title: "温馨提示",
-            message: "您要关闭程序吗?",
-            cancelText: "取消",
-            cancelCallback: function () {
-            },
-            cancelClass: 'popup-btn',
-            doneText: "确定",
-            doneClass: 'popup-btn',
-            doneCallback: function () {
-                if (navigator.app) {
-                    navigator.app.exitApp();
-                } else if (navigator.device) {
-                    navigator.device.exitApp();
-                }
-            },
-            cancelOnly: false
-        });
-    }else if($("#swipebox-slider").css('display') != undefined)
+        $(".dwb-e").trigger('click');
+    }else
     {
-        $.swipebox.close();
+        if(window.location.href.indexOf('#') == -1 || window.location.href.indexOf('#home') > 0)
+        {
+            e.preventDefault();
+            af.ui.popup({
+                title: "温馨提示",
+                message: "您要关闭程序吗?",
+                cancelText: "取消",
+                cancelCallback: function () {
+                },
+                cancelClass: 'popup-btn',
+                doneText: "确定",
+                doneClass: 'popup-btn',
+                doneCallback: function () {
+                    if (navigator.app) {
+                        navigator.app.exitApp();
+                    } else if (navigator.device) {
+                        navigator.device.exitApp();
+                    }
+                },
+                cancelOnly: false
+            });
+        }else if($("#swipebox-slider").css('display') != undefined)
+        {
+            $.swipebox.close();
+        }
+        else
+        {
+            $.ui.goBack();
+        }
     }
-    else
-    {
-        $.ui.goBack();
-    }
+
 
 }

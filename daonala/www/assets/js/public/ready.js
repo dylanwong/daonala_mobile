@@ -91,8 +91,9 @@ $.ui.ready(function(){
         /*timeFormat:'hh ii A',*/
         //defaultValue: new Date(new Date().setFullYear(currYear)),
         //maxDate: new Date(),
-        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-        invalid: [ 'w0', 'w6', '5/1', '12/24', '12/25']
+        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() ,
+        now.getHours() , now.getMinutes()),
+        invalid: ['w6', '5/1', '12/24', '12/25']
     });
     $('#showdeliveryDateDate').click(function(){
         $('#deliveryDate').mobiscroll('show');

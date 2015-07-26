@@ -95,3 +95,15 @@ function updateSelfInfoSucc(data){
         localStorage.setItem('user', JSON.stringify(user) );
     }
 }
+
+function initMine(){
+
+    var height = $("#mine").height();
+    $("#mineContent").css('height', height);
+
+    var headDivHeihgt = ($("#mineContent").height() * 0.4);
+    var headContentDivTop = headDivHeihgt - 37;
+    var headLogoImageDivTop = (headContentDivTop - 120) / 2 ;
+    $("#headContentDiv").css('top',headContentDivTop);
+    $("#headLogoImageDiv").css('top',headLogoImageDivTop);
+}

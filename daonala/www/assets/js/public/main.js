@@ -51,7 +51,6 @@ function mine_panel()
     //$("#userpart").height($("#mine").height()/2);
     //$("#mine_module").height($("#mine").height()-$("#userpart").height());
 
-
     var user = JSON.parse(localStorage.getItem('e_user'));
 
     if ( user == null){
