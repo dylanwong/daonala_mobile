@@ -26,8 +26,10 @@ var searchFlag = 0;//0     1为首页查询条件
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var smsManageUrl = "http://192.168.16.98:8082/sms_manage/uploadFiles/";
+var smsManageUrl = "http://www.gongsuda.com:8070/sms_manage/uploadFiles/";
 var baseUrl = "http://www.gongsuda.com:8070/oms_mobile/";
+//var baseUrl = "http://192.168.16.91:8081/oms_mobile/";
+
 var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
