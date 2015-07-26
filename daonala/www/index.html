@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>到哪啦</title>
+    <title>e订单</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -370,21 +370,21 @@ data-defer:加载一个html进来
      data-load=""
      data-unload=""
      data-header=""
-     data-footer="none">
+     data-footer="confirmOwnerFooter">
 </div>
 <div class="panel p0"
      title="确认收货人" id="confirmcust" data-defer="assets/panel/order/confirmCust.html"
      data-load=""
      data-unload=""
      data-header=""
-     data-footer="none">
+     data-footer="confirmCustFooter">
 </div>
 <div class="panel p0"
      title="确认货物" id="confirmgood" data-defer="assets/panel/order/confirmGoods.html"
      data-load=""
      data-unload=""
      data-header=""
-     data-footer="none">
+     data-footer="confirmGoodFooter">
 </div>
 <div class="panel p0"
      title="" id="chocieOwner" data-defer="assets/panel/order/choiceOwner.html"
@@ -790,7 +790,26 @@ data-defer:加载一个html进来
             style="width:80%;background:#ef8305;font-size:x-large;" onclick="saveOrUpdate()"
             class="btn  btn-block">提交订单</button>
 </footer>
+<footer id="confirmGoodFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button" id=""
+            style="width:80%;background:#ef8305;font-size:x-large;"
+            onclick="backToGoodOrderPage()"
+            class="btn  btn-block">确认返回</button>
+</footer>
 
+<footer id="confirmOwnerFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button" id="comfirmOwnerFooterBtn"
+            style="width:80%;background:#ef8305;font-size:x-large;"
+            onclick="backToOwnerAddOrderPage()"
+            class="btn  btn-block">确认返回</button>
+</footer>
+
+<footer id="confirmCustFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button" id="confirmCustFooterBtn"
+            style="width:80%;background:#ef8305;font-size:x-large;"
+            onclick="backToCustAddOrderPage()"
+            class="btn  btn-block">确认返回</button>
+</footer>
 </div>
 
 <div style="display: none">
