@@ -27,7 +27,7 @@ var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 var smsManageUrl = "http://192.168.16.98:8082/sms_manage/uploadFiles/";
-var baseUrl = "http://192.168.16.98/daonala_mobile/";
+var baseUrl = "http://192.168.16.91:8080/oms_mobile/";
 var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
@@ -77,6 +77,7 @@ var lOCATIONID='currentlocation';
 var taskTabStatus = 0;
 var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接页面
 var lastPage='';//上以页面PageId   做路由用
+var scrollFlag =0; //回到最上面
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】
 
 

@@ -593,22 +593,19 @@ function backToGoodOrderPage(){
             errorPopup('货物名不能为空！',1);
             return;
         }
+
         if ( qty > 0) {
             $("#c_quantity").val(qty);
-        } else if ($("#c_quantity").val() == ""
-            || parseInt($("#c_quantity").val()) == 0) {
+        } else if (!isNaN(qty) && qty == ""
+            || parseInt(qty) == 0) {
             //errorPopup("总件数应为正整数！");
             errorPopup('总件数不能为空或为零！',1);
             //parent.art.dialog.alert("总件数不能为空或为零！");
             flag = false;return;
-        }else if (parseInt($("#c_quantity").val()) < 0) {
+        }else if (!isNaN(qty) && parseInt($("#c_quantity").val()) < 0) {
             //parent.art.dialog.alert("总件数小于零！");
             errorPopup('总件数不能小于零');
             flag = false;return;
-        }else if (transOrderM.articleName == "") {
-            //parent.art.dialog.alert("货物总称未填写!");
-            errorPopup('货物总称未填写!');
-            flag = false;
         }else{
             errorPopup('总件数应为正整数！');
             flag = false;return;
@@ -616,12 +613,12 @@ function backToGoodOrderPage(){
 
         if ( vol > 0) {
             $("#c_volume").val(vol);
-        } else if ($("#c_volume").val() == ""
+        } else if (!isNaN(vol) && vol == ""
             || parseFloat($("#c_volume").val()) == 0) {
             errorPopup('总体积不能为空或为零！');
             //parent.art.dialog.alert("总体积不能为空或为零！");
             flag = false;return;
-        }else if (parseFloat($("#c_volume").val()) < 0) {
+        }else if (!isNaN(vol) && parseFloat(vol) < 0) {
             errorPopup('总体积不能小于零！！');
             //parent.art.dialog.alert("总体积小于零！");
             flag = false;return;
@@ -632,12 +629,12 @@ function backToGoodOrderPage(){
 
         if (  wt > 0) {
             $("#c_weight").val(wt);
-        } else if ($("#c_weight").val() == ""
+        } else if (!isNaN(wt) && wt == ""
             || parseFloat($("#c_weight").val()) == 0) {
             errorPopup('总重量不能为空或为零！！');
             //parent.art.dialog.alert("总重量不能为空或为零！");
             flag = false;return;
-        }else if (parseFloat($("#c_weight").val()) < 0) {
+        }else if (!isNaN(wt) && parseFloat(wt) < 0) {
             //parent.art.dialog.alert("总重量小于零！");
             errorPopup('总重量不能小于零！');
             flag = false;return;

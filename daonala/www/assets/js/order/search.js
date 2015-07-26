@@ -10,6 +10,7 @@
 function search(){
     try{
     searchFlag = 0;
+    scrollFlag =0;
     lastPage = 'search';
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
@@ -34,12 +35,13 @@ function search(){
                     'timeType':'N','userNo':user.obj.userNo,
                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo ,'custText':user.obj.custNo,
                 'userType':user.obj.userType },
-            "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            "updateOrderlistPanel(data,true)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
         }
         if( user!=null ){
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
             {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo ,'custText':user.obj.custNo,
                 'userType':user.obj.userType }, true), true);
         }else{
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
@@ -135,6 +137,7 @@ function updateOrderlistPanel(data,flag){
         }
         if(flag){
 
+
             $("#orderlist_ul").append(result);
         }else {
             if (data.obj.data.length < (oldmyFilter.length -= 0)) {
@@ -161,7 +164,13 @@ function updateOrderlistPanel(data,flag){
     }else{
         errorPopup(data.msg);
     }
+
     mainLoaded();
+
+    if(scrollFlag == 0){
+        mainScroll.scrollTo(0,0,1000);
+    }
+    scrollFlag =1;
 
     mainPullUpEl['class'] = mainPullDownEl.attr('class');
     mainPullUpEl.attr('class','').hide();
@@ -231,7 +240,7 @@ function querySingleOrderSuc(data){
 
 function getOrderListPullToRefresh(that){
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':0},true),true);
+        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':1},true),true);
     if( searchFlag == 0){
         searchUrls = baseUrl +"order/query_suborderlist.action";
     }else if( searchFlag == 1){
@@ -344,6 +353,7 @@ function searchOrderFromIndex(type,count){
     if(count == '0' || count == 0){
         return;
     }
+    scrollFlag = 0;
     searchFlag = 1;
     $('#orderlist_ul').empty();
     $.ui.blockUI(.3);
