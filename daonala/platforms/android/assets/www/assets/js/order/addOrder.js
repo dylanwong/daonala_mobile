@@ -93,9 +93,20 @@ function choiceCustAddr(){
         };
         getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
         $.ui.loadContent("#chocieOwner", false, false, "slide");
-        }else{
-            errorPopup('未选择货主，请填写收货人信息');
-        }
+        }else if($('#ownerText').attr('o_ownerNo') == ''
+            || $('#ownerText').attr('o_ownerNo') ==null) {
+            option = {
+                enterpriseno:user.obj.logisticNo,
+                ownerNo:user.obj.ownerNo,
+                addr:$('#searchAddrText').val()
+            };
+            getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            $.ui.loadContent("#chocieOwner", false, false, "slide");
+        } else
+            {
+                errorPopup('未选择货主，请填写收货人信息');
+            }
+
     }else if(user.obj.userType==0){
 
         if( $('#ownerText').attr('o_ownerNo') != ''

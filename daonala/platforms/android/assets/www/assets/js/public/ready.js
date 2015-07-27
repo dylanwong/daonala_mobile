@@ -41,7 +41,7 @@ $(document).ready(function(){
     if(localStorageVersion<currentVersion|| isNaN(localStorageVersion) ){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
-        var buttonBottom = $("#splashscreen").height()-200;
+        var buttonBottom = $("#splashscreen").height()-50;//'+buttonBottom+'
         var swiperDiv = $.create("div", {
             className: "swiper-container",
             id: "screenWrapper",
@@ -52,7 +52,7 @@ $(document).ready(function(){
                 '<div class="swiper-slide"><div class="slide4 text-center" >' +
                 '<a onclick="goMainFormSlider()" class="btn btn-lg" ' +
                 'style="padding: 5px 40px;background: #fff;' +
-                'margin-top:'+buttonBottom+'px;">' +
+                'margin-top:-10px;">' +
                 '<span class="icon-local-shipping" style="font-size: 40px"></span>' +
                 '<P class="f32">立即体验</P></a></div></div></div>' +
                 '<div class="pagination"></div>'

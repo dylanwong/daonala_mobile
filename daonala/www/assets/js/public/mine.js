@@ -92,7 +92,7 @@ function updateSelfInfoSucc(data){
         user.obj.userCName = $('#s_userCName').val();
         user.obj.phone = $('#s_phone').val();
         user.obj.email = $('#s_email').val();
-        localStorage.setItem('user', JSON.stringify(user) );
+        localStorage.setItem('e_user', JSON.stringify(user) );
         $.ui.goBack();
     }
 }
