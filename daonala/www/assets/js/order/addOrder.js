@@ -468,11 +468,11 @@ function backToOwnerAddOrderPage(){
             flag = false;
         }else*/
         var reg = /^\\d+$/;
-        if ( $("#o_linkPhone").val()!='' && !$("#o_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+     /*   if ( $("#o_linkPhone").val()!='' && !$("#o_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
             errorPopup("手机号码格式不正确！");
             flag = false;
             return;
-        }
+        }*/
         if ( $('#o_ownername').val() == "" ) {
             //parent.art.dialog.alert("企业编码未选择！");
             errorPopup('企业编码未选择!');
@@ -550,11 +550,12 @@ function backToCustAddOrderPage(){
 
     //$.ui.loadContent("#chocieOwner", false, false, "slide");
     try {
-        if ( $("#c_linkPhone").val()!='' && !$("#c_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+        /*if ( $("#c_linkPhone").val()!='' && !$("#c_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
             errorPopup("手机号码格式不正确！");
             flag = false;
             return;
-        }
+        }*/
+
         if ($('#c_custname').val() == "") {
             //parent.art.dialog.alert("收货人名称未填写！");
             errorPopup('收货人名称未填写!');

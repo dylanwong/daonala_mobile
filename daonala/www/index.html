@@ -369,22 +369,22 @@ data-defer:加载一个html进来
      title="确认发货人" id="confirmowner" data-defer="assets/panel/order/confirmOwner.html"
      data-load=""
      data-unload=""
-     data-header=""
-     data-footer="confirmOwnerFooter">
+     data-header="confirmownerHeader"
+     data-footer="">
 </div>
 <div class="panel p0"
      title="确认收货人" id="confirmcust" data-defer="assets/panel/order/confirmCust.html"
      data-load=""
      data-unload=""
-     data-header=""
-     data-footer="confirmCustFooter">
+     data-header="confirmCustHeader"
+     data-footer="">
 </div>
 <div class="panel p0"
      title="确认货物" id="confirmgood" data-defer="assets/panel/order/confirmGoods.html"
      data-load=""
      data-unload=""
-     data-header=""
-     data-footer="confirmGoodFooter">
+     data-header="confirmGoodHeader"
+     data-footer="">
 </div>
 <div class="panel p0"
      title="" id="chocieOwner" data-defer="assets/panel/order/choiceOwner.html"
@@ -760,6 +760,34 @@ data-defer:加载一个html进来
 
 </header>
 
+
+<header id="confirmownerHeader">
+    <a class="headerBack" onclick="$.ui.loadContent('#addorder', false, false, 'slide')" >
+        <img src="assets/img/backPage.png" height="32" />
+    </a>
+    <h1 id="confirmownerHeaderTitle" class="">货主信息</h1>
+    <div><a class="searchButton" style="margin-right: 0px;  top: 12px;
+  right: -25px;"
+            onclick="backToOwnerAddOrderPage();" >保存</a></div>
+</header>
+<header id="confirmGoodHeader">
+    <a class="headerBack" onclick="$.ui.loadContent('#addorder', false, false, 'slide')" >
+        <img src="assets/img/backPage.png" height="32" />
+    </a>
+    <h1 id="confirmGoodHeaderTitle" class="">货物信息</h1>
+    <div><a class="searchButton" style="margin-right: 0px;  top: 12px;
+  right: -25px;"
+            onclick="backToGoodOrderPage();" >保存</a></div>
+</header>
+<header id="confirmCustHeader">
+    <a class="headerBack" onclick="$.ui.loadContent('#addorder', false, false, 'slide')" >
+        <img src="assets/img/backPage.png" height="32" />
+    </a>
+    <h1 id="confirmCustTitle" class="">货主信息</h1>
+    <div><a class="searchButton"  style="margin-right: 0px;  top: 12px;
+  right: -25px;"
+            onclick="backToCustAddOrderPage();" >保存</a></div>
+</header>
 <header id="biddingRecodeHeader">
 
 </header>
