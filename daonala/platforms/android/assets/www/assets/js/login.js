@@ -218,14 +218,14 @@ function updatePwdsucc(data)
 function updatePwd(){
     var oldPwd = $('#oldPwd').val();
     var newPwd = $('#newPwd').val();
-    if(oldPwd.trim().length<1 || oldPwd.trim().length>15)
+    if(oldPwd.trim().length<6 || oldPwd.trim().length>15)
     {
-        errorPopup('请填写合法的原密码(1-15英文数字)!');
+        errorPopup('请填写合法的原密码(6-15英文数字)!');
         return;
     }
-    if(newPwd.trim().length<1 || newPwd.trim().length>15)
+    if(newPwd.trim().length<6 || newPwd.trim().length>15)
     {
-        errorPopup('请填写合法的原密码(1-15英文数字)!');
+        errorPopup('请填写合法的原密码(6-15英文数字)!');
         return;
     }
     var url = baseUrl + "account/updatePwdLogin.action";

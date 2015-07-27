@@ -220,14 +220,14 @@ data-defer:加载一个html进来
      data-load=""
      data-unload=""
      data-header=""
-     data-footer="none">
+     data-footer="selfInfoFooter">
 </div>
 <div class="panel p0"
     title="修改密码" id="updtPwd" data-defer="assets/panel/updtPwd.html"
     data-load=""
     data-unload=""
     data-header=""
-    data-footer="none">
+    data-footer="updtPwdFooter">
 </div>
 
 <div class="panel"
@@ -809,6 +809,18 @@ data-defer:加载一个html进来
             style="width:80%;background:#ef8305;font-size:x-large;"
             onclick="backToCustAddOrderPage()"
             class="btn  btn-block">确认返回</button>
+</footer>
+<footer id="updtPwdFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button" id=""
+            style="width:80%;background:#ef8305;font-size:x-large;color:#fff"
+            onclick="updatePwd()"
+            class="btn  btn-block">确认修改</button>
+</footer>
+<footer id="selfInfoFooter" align="center" style="  padding-left: 15%;background: white;">
+    <button role="button"
+            style="width:80%;background:#ef8305;font-size:x-large;color:#fff"
+            onclick="updateSelfInfo()"
+            class="btn  btn-block">确认修改</button>
 </footer>
 </div>
 

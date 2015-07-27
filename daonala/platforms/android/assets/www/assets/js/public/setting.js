@@ -228,7 +228,7 @@ function exitAppPopup(e) {
         }
         else
         {
-            $.ui.goBack();
+            $($($("#afui").find('header')[0]).find('a')[0]).trigger('click');
         }
     }
 

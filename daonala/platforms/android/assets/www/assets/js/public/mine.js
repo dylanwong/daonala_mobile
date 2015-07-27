@@ -87,12 +87,13 @@ function updateSelfInfo(){
 
 function updateSelfInfoSucc(data){
     if ( data.isSucc ){
-        errorPopup('保存成功！');
+        toastrTip('','修改个人信息成功！','success');
         var user = JSON.parse(localStorage.getItem('e_user'));
         user.obj.userCName = $('#s_userCName').val();
         user.obj.phone = $('#s_phone').val();
         user.obj.email = $('#s_email').val();
         localStorage.setItem('user', JSON.stringify(user) );
+        $.ui.goBack();
     }
 }
 
