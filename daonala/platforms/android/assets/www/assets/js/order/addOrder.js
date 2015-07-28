@@ -397,17 +397,24 @@ function saveOrUpdate() {
 }
 
 function saveOrder(param){
+    $.ui.blockUI(.3);
+    $.ui.showMask("正在订单..");
     var saveUrl = baseUrl + "order/save_or_update.action";
     getAjax(saveUrl,param,"saveOrderFromPhoneSucc(data)","errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 function saveOrderFromPhoneSucc(data){
     if(data.isSucc){
+
         errorPopup('下单成功');
+        $.ui.unblockUI();
+        $.ui.hideMask();
         clearConfirmData();
         $.ui.loadContent("#home2", false, false, "slide");
     }else{
         clearConfirmData();
         errorPopup('下单失败');
+        $.ui.unblockUI();
+        $.ui.hideMask();
     }
 }
 
