@@ -156,9 +156,12 @@ function initLogisticBoard(){
     clearboard();
     $.ui.blockUI(.3);
     //$.ui.showMask("获取看板数据..");
+    localStorage.removeItem("searchFilter");
     var user =  JSON.parse( localStorage.getItem('e_user') );
     $('#subCompany').empty();
     $('#boardowner').empty();
+    $('#boardowner').attr('value','');
+
     var option ={
         enterpriseno : user.obj.logisticNo,
         ownerNo :user.obj.ownerNo,

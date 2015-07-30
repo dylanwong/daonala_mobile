@@ -66,9 +66,9 @@ function linkSource(products){
             return product.name;
 
         },
-        updater: function (id) {
+        updater: function ( name) {
             var product = _.find(products, function (p) {
-                return p.id == id;
+                return p.name == name;
             });
             that.setSelectedProduct(product);
             return product.name;

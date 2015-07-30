@@ -109,6 +109,15 @@ function logoutSucc()
     localStorage.removeItem('e_user');
     sessionStorage.removeItem("mainList");
     sessionStorage.removeItem("myList");
+    localStorage.removeItem("searchFilter");
+    localStorage.removeItem("locationFilter");
+    localStorage.removeItem("myFilter");
+    localStorage.removeItem("list1");
+    localStorage.removeItem("list7");
+    localStorage.removeItem("list30");
+    localStorage.removeItem("allCount_1");
+    localStorage.removeItem("allCount_7");
+    localStorage.removeItem("allCount_30");
     $('#user_img').attr('src','assets/img/user1.png');
     $('#user_img').attr('onclick','login_panel()');
     $('#userAlias').text('');

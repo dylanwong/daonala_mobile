@@ -104,7 +104,7 @@ function initTraceInfo2(){
     //onclick="productPanel();"
 
     $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.orderNo);
+    $('#ownerNo_d').html(data.subOrderNo);
     $('#custNo_d').html(data.custOrderNo);
     $('#orderDate_d').html(data.orderDate);
     queryDeliverordertraceList(data.enterpriseNo,data.systemNo,data.orderNo,data.dispatchNo);
@@ -140,13 +140,13 @@ function queryDeliverordertraceListUrlSuc(data){
             result = template('traceListTemp2',data);
             $('#detailTraceListContent').html(result);
 
-            var len = obj.length;
+            var len = data.obj.length;
             var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
             //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
             for(var i = 0; i < len; i++ ) {
-                if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
-                    console.log(i+' '+obj[i].fileNo);
-                    setSmallImgList( obj[i].fileNo,'0'.deliveryNo );
+                if( data.obj[i].fileNo != undefined && data.obj[i].fileNo != null && data.obj[i].fileNo != ''){
+                    console.log(i+' '+data.obj[i].fileNo);
+                    setSmallImgList2( data.obj[i].fileNo );
                 }
             };
         }
@@ -204,7 +204,7 @@ function updataDetailPanel(data){
         for (var i = 0; i < len; i++) {
              products +=
                     '<div style="padding-top:10px;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:none;  height: 30px;">' +
-                    '<div class="fl width30" align="" style="padding-left:30px;color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
+                    '<div class="fl " align="" style="padding-left:30px;color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
@@ -381,6 +381,62 @@ function init_tracemap(longitudes,latitudes) {
 }
 
 
+function setSmallImgList2(fileNo){
+    var objectNo = fileNo;
+    var deliveryNo = deliveryNo;
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var url = baseUrl + "order/queryImgUrl.action";
+
+    getAjax(url, {'orderNo':data.orderNo,'deliveryNo':'0',
+            'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
+            "setSmallImgListSuc2(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+
+function setSmallImgListSuc2(data,objectNo){
+    if(data.isSucc){
+        jqueryResult = data.obj;
+        var len = jqueryResult.length;
+        if(len>0){
+            var count = 0;
+            var result = '';
+            var containHead = '';
+            var containContent = '';
+            var containEnd = '';
+            result += containHead;
+            for( var i = 0; i < len; i++ ){
+                // for ( var k = 0; k < 3; k++ ){
+                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''&&jqueryResult[i].filePath!=null){
+                    count++;
+                    var fileUrl = jqueryResult[i].filePath;
+                    var fileName = jqueryResult[i].fileName;
+                    containContent = ' <div style="float:left;width:30%;"><a target="_blank" ' +
+                        'href="'+fileUrl+'" class="swipebox img'+objectNo+'" >'+
+                        '<img name="realImg" style="margin:5px 0px;width:80px;height:70px;"  '+
+                        ' src="'+fileUrl+'" '+
+                        ' fileno="" id=""></a> '+
+                        '</div> ';
+                    result += containContent;
+                }
+            }
+            // if( count == 3 ) {
+            count = 0;
+            //containPNodes =+ '</tr>'
+            //result =+ containContent;
+            // result =+ containPNodes;
+            //containContent = '';
+            //  }
+
+            result += containEnd;
+            $('#'+objectNo).empty();
+            $('#'+objectNo).html(result);
+            // }
+            init_lightbox(objectNo);
+        }
+    }
+
+}
+
 
 function setSmallImgList(fileNo,deliveryNo)
 {
@@ -388,6 +444,7 @@ function setSmallImgList(fileNo,deliveryNo)
     var deliveryNo = deliveryNo;
     var data = JSON.parse(localStorage.getItem("currentorder"));
     var url = baseUrl + "order/queryImgUrl.action";
+
     getAjax(url, {'orderNo':data.orderNo,'deliveryNo':deliveryNo,
             'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
         "setSmallImgListSuc(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
