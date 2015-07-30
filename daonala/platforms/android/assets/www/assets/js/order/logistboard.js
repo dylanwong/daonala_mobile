@@ -126,10 +126,10 @@ function updateBoardSearchPage(data){
 function updateBoardSearchPage2(data){
     if(data.isSucc){
         var products = new Array();
-        for( var k in data.obj ){
+        for( var i = 0 ; i < data.obj.length ; i++ ){
             var a ={
-                "id": data.obj[k].enterpriseNo,
-                "name": data.obj[k].enterpriseName
+                "id": data.obj[i].enterpriseNo,
+                "name": data.obj[i].enterpriseName
             };
             products.push(a);
         }

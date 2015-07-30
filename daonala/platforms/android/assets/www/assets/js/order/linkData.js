@@ -41,20 +41,26 @@ function linkSource(products){
     $('#product_search').typeahead({
 
         source: function (query, process) {
+
             $('#product').hide();
             var results = _.map(products, function (product) {
-                return product.id+"";
+                return product.name+"";
             });
             process(results);
         },
         matcher: function (item) {
-            return true;
+            if(item.indexOf(this.query.toLowerCase()) > -1)
+            {
+                return true;
+            }
+            return false;
         },
 
-        highlighter: function (id) {
+        highlighter: function (name) {
+
             var product = _.find(products, function (p) {
                 //$('#product_search').attr('productid',p.id);
-                return p.id == id;
+                return p.name == name;
             });
 
             return product.name;
