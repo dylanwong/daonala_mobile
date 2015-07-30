@@ -126,7 +126,7 @@ function updateBoardSearchPage(data){
 function updateBoardSearchPage2(data){
     if(data.isSucc){
         var products = new Array();
-        for( var k in data.obj ){
+        for( var k = 0,len = data.obj.length; k < len ; k++ ){
             var a ={
                 "id": data.obj[k].enterpriseNo,
                 "name": data.obj[k].enterpriseName
