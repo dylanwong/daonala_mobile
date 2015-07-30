@@ -47,6 +47,10 @@ function linkSource(products){
             });
             process(results);
         },
+        matcher: function (item) {
+            return true;
+        },
+
         highlighter: function (id) {
             var product = _.find(products, function (p) {
                 //$('#product_search').attr('productid',p.id);
@@ -55,12 +59,8 @@ function linkSource(products){
 
             return product.name;
 
-//            $('#product_search').attr('productid',item.split('|')[1]);
-//            return product.name;
         },
         updater: function (id) {
-//            console.log("----" + item.split('|')[0] + "-----");
-//            return item.split('|')[0];
             var product = _.find(products, function (p) {
                 return p.id == id;
             });

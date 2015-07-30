@@ -305,7 +305,7 @@ function saveOrUpdate() {
     var custer = JSON.parse(localStorage.getItem('custerInfo'));
     if ( custer != null ) {
         custer_Temp = custer.custNo;
-       // custerAlias_Temp = owner.custName;
+        custerAlias_Temp = custer.custAlias;
     }
 
     var owners = JSON.parse(localStorage.getItem("owners"));
@@ -332,7 +332,7 @@ function saveOrUpdate() {
         enterpriseNo : user.obj.logisticNo,
         orderNo :$('#gOrderNo').text(),
         ownerNo : ownerNo_Temp,
-        ownerAlias : ownerAlias_Temp,
+      //  ownerAlias : ownerAlias_Temp,
         /*ownerName : $("#o_ownername").val(),
         // ownerCompany:$("#ownerCompany").val(),
         ownerAddr : $("#o_addr").val(),// owner.ownerAddr,
@@ -340,8 +340,8 @@ function saveOrUpdate() {
         ownerContacts : $("#o_linker").val(),*/
         custNo : custer_Temp,
 
-        /*custAlias : custerAlias_Temp,
-        custName : $("#c_custname").val(),
+        custAlias : custerAlias_Temp,
+        /*custName : $("#c_custname").val(),
         custAddr : $("#c_addr").val(),
         custContacts : $("#c_linker").val(),
         custPhone : $("#c_linkPhone").val(),*/
@@ -516,6 +516,26 @@ function backToOwnerAddOrderPage(){
             errorPopup('发货联系电话未填写!');
             flag = false;
         } else {
+
+            var ownerAlias_Temp = '';
+
+            var user = JSON.parse(localStorage.getItem('e_user'));
+            var owner = JSON.parse(localStorage.getItem('ownerInfo'));
+            if( user.obj.userType == '1'){
+                ownerNo_Temp = user.obj.ownerNo;
+                ownerAlias_Temp = user.obj.ownerAlias;
+            }else {
+                if ( owner != null ) {
+                    ownerNo_Temp = owner.ownerNo;
+                    ownerAlias_Temp = owner.ownerAlias;
+                } else {
+                   // ownerNo_Temp = owner.ownerNo;
+                    ownerAlias_Temp = $("#o_ownername").val();
+                }
+            }
+
+
+
             $('#addOrderOwnerInfo').hide();
             $('#updateOrderOwnerInfo').show();
             $('#ownerText').text($('#o_ownername').val());
@@ -531,7 +551,7 @@ function backToOwnerAddOrderPage(){
                 o_addr:$('#o_addr').val(),
                 o_linker:$('#o_linker').val(),
                 o_linkPhone:$('#o_linkPhone').val(),*/
-                ownerAlias : $("#o_ownername").val(),
+                ownerAlias : ownerAlias_Temp,
                 ownerName : $("#o_ownername").val(),
                 ownerAddr : $("#o_addr").val(),
                 ownerPhone : $("#o_linkPhone").val(),
@@ -603,11 +623,18 @@ function backToCustAddOrderPage(){
             $('#clinkerText').text($('#c_linker').val());
             $('#cphoneText').text($('#c_linkPhone').val());
             $.ui.loadContent("#addorder", false, false, "slide");
-
+            var custer_Temp;
+            var custer = JSON.parse(localStorage.getItem('custerInfo'));
+            if ( custer != null ) {
+                custer_Temp = custer.custNo;
+                custerAlias_Temp = custer.custAlias;
+            } else {
+                custerAlias_Temp = $("#c_custname").val()
+            }
            // var custAlias = $('#')
             var custBo = {
                 custName : $("#c_custname").val(),
-                custAlias : $("#c_custname").val(),
+                custAlias : custerAlias_Temp,
                 custAddr : $("#c_addr").val(),
                 custContacts : $("#c_linker").val(),
                 custPhone : $("#c_linkPhone").val(),

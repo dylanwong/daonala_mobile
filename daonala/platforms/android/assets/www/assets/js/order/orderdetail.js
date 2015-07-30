@@ -139,6 +139,16 @@ function queryDeliverordertraceListUrlSuc(data){
         } else {
             result = template('traceListTemp2',data);
             $('#detailTraceListContent').html(result);
+
+            var len = obj.length;
+            var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+            //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
+            for(var i = 0; i < len; i++ ) {
+                if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
+                    console.log(i+' '+obj[i].fileNo);
+                    setSmallImgList( obj[i].fileNo,'0'.deliveryNo );
+                }
+            };
         }
         $.ui.hideMask();
     } else {
@@ -298,13 +308,20 @@ function init_LogisticMap(deliveryNo,sendNo){
 //        dispatchNo : order.dispatchNo,
 //        sendNo:order.sendNo
 //    };
+    try{
     getAjax(searchTraceLongitudeUrl, {'systemNo':order.systemNo,'enterpriseno':order.enterpriseNo,
             'dispatchNo':order.dispatchNo,
             'sendNo':sendNo },
         "inittracemapsSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+    }catch(e){
+        errorPopup(' 2 '+e.message);
+        errorPopup(e.description);
+    }
 }
 
 function inittracemapsSucc(data){
+    try{
     if(data.isSucc){
         $.ui.loadContent("#traceMap", false, false, "slide");
         var jindu = [];
@@ -317,13 +334,21 @@ function inittracemapsSucc(data){
     }else{
         errorPopup('未上传经纬度信息');
     }
+
+    }catch(e){
+        errorPopup(' 2 '+e.message);
+        errorPopup(e.description);
+    }
 }
 // 百度地图API功能
 function init_tracemap(longitudes,latitudes) {
+    try{
     var points = [];
-    var len = longitudes;
+    var len = longitudes.length;
+   // alert(len);
     for ( var i = 0; i < longitudes.length; i++) {
         points[i] = new BMap.Point(longitudes[i],latitudes[i]);
+    //    alert(longitudes[i]+'   '+latitudes[i]);
     }
     $("#tracecontainerMap").height($("#traceMap").height()
         -$('#header').height());
@@ -349,6 +374,10 @@ function init_tracemap(longitudes,latitudes) {
     var marker = new BMap.Marker(new BMap.Point(longitudes[len-1],latitudes[len-1]),{icon:myIcon});  // 创建标注
     map.addOverlay(marker);               // 将标注添加到地图中
     marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }catch(e){
+        errorPopup(e.message);
+        errorPopup(e.description);
+    }
 }
 
 
