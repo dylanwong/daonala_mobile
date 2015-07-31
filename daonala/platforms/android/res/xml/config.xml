@@ -46,5 +46,5 @@
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="wechatappid" value="wx6dad58d163286c60" />
+    <preference name="wechatappid" value="wx698db989e73cb314" />
 </widget>
