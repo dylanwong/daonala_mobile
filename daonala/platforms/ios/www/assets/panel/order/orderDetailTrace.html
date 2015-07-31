@@ -2,15 +2,20 @@
 
 
     <div class="clearfix"  style="width: 100%;border-bottom:1px solid #ededed;" >
-          <div class="fl width80" align="right"
-          style="color:#333;font-size:16px;padding-bottom: 10px;padding-top: 10px;padding-left:10px;">
+          <div class="fl " id = "toTrace" onclick="toTrace();"
+          style="width: 70%;color:#333;font-size:16px;padding-bottom: 10px;padding-top: 10px;padding-left:10px;">
           <i class="iconfont icon-genzong "
           style="color:#333;;font-size:20px;line-height:30px"></i>
-          物流跟踪
+          <span>物流跟踪</span>
           </div>
-        <div class="fr" style="line-height:30px;color:#ef8305;font-size:16px;
-        padding-right:15px;padding-bottom: 10px;padding-top: 10px;" >
-            <span  id="tracestatus"></span></div>
+
+        <div class="fr" id = "toMap" onclick="toMap();"
+             style="width:30%;color:#333;font-size:16px;padding-bottom: 10px;padding-top: 10px;" >
+            <a><i class="icon icon-place"
+               style="text-align: right;color:#333;;font-size:20px;line-height:30px"></i>
+            地图轨迹</a>
+        </div>
+            <!--<span  id="tracestatus"></span>--></div>
     </div>
     <div id="orderDetailTraceContent" >
         <div id="trace_list_div" style=""></div>
@@ -33,6 +38,9 @@
             {{/each}}
         </script>
     </div>
+
+
+
 </div>
 
 <!--

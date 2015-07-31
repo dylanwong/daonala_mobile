@@ -36,16 +36,18 @@ function cust_orderlist_panel(tdStatus){
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
      {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
  //   var searchText = $('#searchText').val();
-    var user =  JSON.parse( localStorage.getItem("user") );
-    if ( localStorage.getItem("user")==null ) {
+    var user =  JSON.parse( localStorage.getItem("e_user") );
+    if ( localStorage.getItem("e_user")==null ) {
  /*       getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':timeType,'status':status,'enterpriseText':'10001',
                 'ownerText':'','custText':''},
             "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 */        // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
     } else {
         getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':'','timeType':'N',
-                'status':status,'enterpriseNo':'10001','enterpriseText':'',
-                'ownerText':'','custText':'','userNo':getUserNo(),'userType':user.obj.userType},
+                'status':status,'enterpriseNo':user.obj.enterpriseNo,
+                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo,
+                'custText':user.obj.custNo,
+                'userNo':getUserNo(),'userType':user.obj.userType},
             "updateCustOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }
 
@@ -69,85 +71,20 @@ function updateCustOrderlistPanel(data,flag){
     if(data.isSucc) {
         var result = '';
         var list = data.obj.data;
-
+        lastPage = 'custboard';
         var traceFuc = '';
-        //loginStatus == 0 ? traceFuc = 'traceInfo(this);' : traceFuc = 'traceInfo33(this);';
         if (data.obj.recordsTotal > 0) {
             //$.ui.loadContent("#custboard", false, false, "slide");
             /*for (var k in data.obj.data) {*/
                 $.ui.showMask("我们正在拼命的加载数据...");
                 var result = template('custorderListTemp',data);
-                /*if (data.obj.data[k].occurPlace == '') {
-                    result = $('<li class="f2" style="margin-top:4px;" onclick="' + traceFuc + '" ' +
-                        'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
-                        '<div ><div style="float:left;">' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
-                        '</div>' +
-                        '<div align="center"><hr style="width:95%;margin-top:0px;margin-bottom:0px;border: 0;border-top:1px solid #BFBFBF;">' +
-                        '</div> <div class="f2" style="height: 80px;"><div class="leftslide">' +
-                        '<div style="width:40px;height:40px;background:white;border: 4px solid #fffff;border-radius:60px;' +
-                        'font-size:16px;color:coral;font-weight:bold;text-align:center;line-height:40px;margin:0px auto;">' + showstatus(data.obj.data[k].status) + '</div>' +
-                        '</div><div class="rightslide">' +
-                        '<div style="float:left;width:30%;">' +
-                        '<span class="orderNo  f12 fco rs"  >货主单号:</span><br>' +
-                        '<span class="ownerName f12 fco rs" >发货人:</span><br>' +
-                        '<span class="enterPriseNo f12 fco rs">收货人:</span><br>' +
-                        '<span class="enterPriseNo f12 fco rs">预计到货时间:</span>' +
-                        '</div> <div style="float:right;width:70%;">' +
-                        '<span class="ownerName f12 fco p0-6" style="position: absolute;" >' + data.obj.data[k].orderNo + '</span><br>' +
-                        '<span class="ownerName f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].ownerName + '</span><br>' +
-                        '<span class="ownerNo f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].custName + '</span><br>' +
-                        '<span class="wnerNo f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].deliveryDate + '</span>' +
-                        '</div> <div style="clear:both;"></div></div><div style="clear:both;"></div></div></li>');
-
-                }else{
-                    result = $('<li class="f2" style="margin-top:4px;" onclick="' + traceFuc + '" ' +
-                        'data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>' +
-                        '<div ><div style="float:left;">' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >物流商单号:</span>' +
-                        '<span class="orderNo f1 f14  p0-6 fd" >' + data.obj.data[k].dispatchNo + '</span>' +
-                        '</div><div style="float:right;width:40%;">' +
-                        '<span id="occurPlaceimg_' + k + '" class="orderNo"><img src="assets/img/location.png"/></span>' +
-                        '<span id="occurPlace_' + k + '" class="occurPlace f12" style="color:#F6842B;">' + data.obj.data[k].occurPlace + '</span>' +
-                        '</div></div>' +
-                        '<div align="center"><hr style="width:95%;margin-top:0px;margin-bottom:0px;border: 0;border-top:1px solid #BFBFBF;">' +
-                        '</div> <div class="f2" style="height: 80px;"><div class="leftslide">' +
-                        '<div style="width:40px;height:40px;background:white;border: 4px solid #fffff;border-radius:60px;' +
-                        'font-size:16px;color:coral;font-weight:bold;text-align:center;line-height:40px;margin:0px auto;">' + showstatus(data.obj.data[k].status) + '</div>' +
-                        '</div><div class="rightslide">' +
-                        '<div style="float:left;width:30%;">' +
-                        '<span class="orderNo  f12 fco rs"  >货主单号:</span><br>' +
-                        '<span class="ownerName f12 fco rs" >发货人:</span><br>' +
-                        '<span class="enterPriseNo f12 fco rs">收货人:</span><br>' +
-                        '<span class="enterPriseNo f12 fco rs">预计到货时间:</span>' +
-                        '</div> <div style="float:right;width:70%;">' +
-                        '<span class="ownerName f12 fco p0-6" style="position: absolute;" >' + data.obj.data[k].orderNo + '</span><br>' +
-                        '<span class="ownerName f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].ownerName + '</span><br>' +
-                        '<span class="ownerNo f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].custName + '</span><br>' +
-                        '<span class="wnerNo f12 fco p0-6" style="position: absolute;">' + data.obj.data[k].deliveryDate + '</span>' +
-                        '</div> <div style="clear:both;"></div></div><div style="clear:both;"></div></div></li>');
-                }
-*/
-                /*$(result).appendTo(containNode);*/
-           /* }*/
         } else{
-           // result = ''
+
         }
 
         if(flag){
             $("#cust_orderlist_ul").append(result);
         }else {
-//            if (data.obj.data.length < (oldmyFilter.length -= 0)) {
-//                $("<div id='nullTodoSelf' class='nullOrder'>" +
-//                    "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
-//                    "</div>").appendTo(cust_orderlist_ul);
-//            }
-//            $("#cust_orderlist_ul").append(result);
-            //$(containNode).appendTo("#cust_orderlist_ul");
-//            result = nullTrace;
-//            $(result).appendTo(containNode);
-
             if (data.obj.data.length < (oldmyFilter.length -= 0)) {
                 if($("#nullCustOrderSelf").length>0){
                     $("#cust_orderlist_ul").append(result);
@@ -161,15 +98,11 @@ function updateCustOrderlistPanel(data,flag){
                 $("#cust_orderlist_ul").append(result);
             }
         }
-
-
-
        }else{
         errorPopup(data.msg);
     }
 
     custLoaded();
-
     custPullUpEl['class'] = custPullDownEl.attr('class');
     custPullUpEl.attr('class','').hide();
     custPullDownEl.attr('class','').hide();

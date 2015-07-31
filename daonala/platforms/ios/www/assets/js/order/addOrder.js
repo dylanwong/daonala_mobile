@@ -2,22 +2,70 @@
  * Created by wyy on 2015-06-23.
  */
 
-//选择发货人信息
-function choiceOwnerAddr(){
+//搜索地址信息
+function searchOwnerAddr(){
+    //$.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
-    var user = JSON.parse(localStorage.getItem("user"));
+    var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
     if(user.obj.userType==1){
         option = {
-            enterpriseno:'10001',
-            ownerNo:user.obj.enterpriseNo
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:user.obj.ownerNo,
+            addr:$('#searchAddrText').val()
         };
     }else if(user.obj.userType==0){
         option = {
-            enterpriseno:user.obj.enterpriseNo,
-            ownerNo:''
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:user.obj.ownerNo,
+            addr:$('#searchAddrText').val()
         };
     }
+    getAjax(choiceOwnerAddrUrl,option,"showOwnerAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+function searchCustAddr(){
+    //$.ui.loadContent("#chocieOwner", false, false, "slide");
+    var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
+    var user = JSON.parse(localStorage.getItem("e_user"));
+    var option ;
+    if(user.obj.userType==1){
+        option = {
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:user.obj.enterpriseNo,
+            addr:$('#searchAddrText').val()
+        };
+    }else if(user.obj.userType==0){
+        option = {
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:$('#o_ownername').attr('o_ownerNo'),
+            addr:$('#searchAddrText').val()
+        };
+
+    }
+    getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+//选择发货人地址信息
+function choiceOwnerAddr(){
+    $('#choiceOwnerOrCust_ul').empty();
+    $.ui.loadContent("#chocieOwner", false, false, "slide");
+    var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
+    var user = JSON.parse(localStorage.getItem("e_user"));
+    var option ;
+//    if(user.obj.userType==1){
+//        option = {
+//            enterpriseno:user.obj.logisticNo,
+//            ownerNo:user.obj.ownerNo,
+//            addr:$('#searchAddrText').val()
+//        };
+//    }else if(user.obj.userType==0){
+        option = {
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:user.obj.ownerNo,
+            addr:$('#searchAddrText').val()
+        };
+ //   }
 
     getAjax(choiceOwnerAddrUrl, option,
         "showOwnerAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
@@ -27,30 +75,54 @@ function choiceOwnerAddr(){
 }
 
 
-//选择收货人信息
+//选择收货人地址信息
 function choiceCustAddr(){
-    $.ui.loadContent("#chocieOwner", false, false, "slide");
+    $('#choiceOwnerOrCust_ul').empty();
+
     var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
-    var user = JSON.parse(localStorage.getItem("user"));
+    var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
     var owners = JSON.parse(localStorage.getItem("ownerInfo"));
-    if(user.userType==1){
+    if(user.obj.userType==1){
+        if( $('#ownerText').attr('o_ownerNo') != ''
+            && $('#ownerText').attr('o_ownerNo') !=null ){
         option = {
-            enterpriseno:'10001',
-            ownerNo:user.obj.enterpriseNo
+            enterpriseno:user.obj.logisticNo,
+            ownerNo:$('#ownerText').attr('o_ownerNo'),
+            addr:$('#searchAddrText').val()
         };
-    }else if(user.obj.userType==0){
-        option = {
-            enterpriseno:user.obj.enterpriseNo,
-            ownerNo:owners.ownerNo
-        };
-    }
+        getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        $.ui.loadContent("#chocieOwner", false, false, "slide");
+        }else if($('#ownerText').attr('o_ownerNo') == ''
+            || $('#ownerText').attr('o_ownerNo') ==null) {
+            option = {
+                enterpriseno:user.obj.logisticNo,
+                ownerNo:user.obj.ownerNo,
+                addr:$('#searchAddrText').val()
+            };
+            getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            $.ui.loadContent("#chocieOwner", false, false, "slide");
+        } else
+            {
+                errorPopup('未选择货主，请填写收货人信息');
+            }
 
-//    var option = {
-//        enterpriseno:'10001',
-//        ownerNo:user.obj.enterpriseNo
-//    };
-    getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    }else if(user.obj.userType==0){
+
+        if( $('#ownerText').attr('o_ownerNo') != ''
+            && $('#ownerText').attr('o_ownerNo') !=null ){
+            option = {
+                enterpriseno:user.obj.logisticNo,
+                ownerNo:$('#ownerText').attr('o_ownerNo'),
+                addr:$('#searchAddrText').val()
+            };
+            getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            $.ui.loadContent("#chocieOwner", false, false, "slide");
+        }else{
+            errorPopup('请选择发货人信息，或填写收货人信息');
+        }
+
+    }
 
 }
 
@@ -64,8 +136,8 @@ function showOwnerAddrList(data){
         var nextFuc = 'confirmOwnerAddr(this);';
         if (data.obj.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
-            $.ui.loadContent("#chocieOwner", false, false, "slide");
-            for (var k in data.obj) {
+
+            for (var k= 0,len = data.obj.length; k < len; k++) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
                     ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
@@ -79,7 +151,7 @@ function showOwnerAddrList(data){
                     '<span class=" f12 fco" >'+data.obj[k].ownerContact+'</span>'+
                     '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>'+
                     '<span class=" f12 fco">'+data.obj[k].ownerPhone+'</span>'+
-                    '<br><span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>'+
+                    '<br><span class="ownerName f12 fco p0-6"  >地址:</span>'+
                     '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj[k].unionAddr+'</span><br>'+
                     '</div></div><div style="float:right;">'+
                     '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">'+
@@ -91,7 +163,7 @@ function showOwnerAddrList(data){
             $.ui.hideMask();
         } else {
             result = nullTrace;
-            errorPopup(data.msg);
+           // errorPopup(data.msg);
         }
         $(containNode).appendTo("#choiceOwnerOrCust_ul");
 
@@ -113,7 +185,7 @@ function showCustAddrList(data){
         if (data.obj.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
             $.ui.loadContent("#chocieOwner", false, false, "slide");
-            for (var k in data.obj) {
+            for ( var k= 0,len = data.obj.length; k < len; k++ ) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
                     ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
@@ -127,7 +199,7 @@ function showCustAddrList(data){
                     '<span class=" f12 fco" >'+data.obj[k].custContact+'</span>'+
                     '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>'+
                     '<span class=" f12 fco">'+data.obj[k].custPhone+'</span>'+
-                    '<br><span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>'+
+                    '<br><span class="ownerName f12 fco p0-6"  >地址:</span>'+
                     '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj[k].unionAddr+'</span><br>'+
                     '</div></div><div style="float:right;">'+
                     '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">'+
@@ -152,17 +224,21 @@ function confirmOwnerAddr(elm){
     //o_ownername  o_addr o_linker o_linkPhone
     var data = eval('(' +$(elm).attr('data-order-detail')+ ')');
     $('#o_ownername').val(data.ownerName);
+    $('#o_ownername').attr('o_ownerNo',data.ownerNo);
     $('#o_provice').val(data.province+data.city+data.county);
     $('#o_linker').val(data.ownerContact);
     $('#o_linkPhone').val(data.ownerPhone);
     $('#o_addr').val(data.unionAddr);
-    queryOwnerInfo(data.ownerNo);
+    //queryOwnerInfo(data.ownerNo);
     $.ui.goBack();
+    localStorage.setItem("ownerInfo",JSON.stringify(data));
     localStorage.setItem('confirmProvince',data.province);
     localStorage.setItem('confirmCity',data.city);
     localStorage.setItem('confirmZone',data.county);
-
 }
+
+
+
 function confirmCustAddr(elm){
     var data = eval('(' +$(elm).attr('data-order-detail')+ ')');
     $('#c_custname').val(data.custName);
@@ -177,31 +253,6 @@ function confirmCustAddr(elm){
     localStorage.setItem('confirmCZone',data.county);
 }
 
-function submitOrderInfo(){
-   // c_goodname c_weight c_volume c_quantity c_mark
-
-//    $('#o_ownername').val();
-//    $('#o_city').val();
-//    $('#o_linker').val();
-//    $('#o_linkPhone').val();
-//    $('#o_addr').val();
-//
-//    $('#c_custname').val();
-//    $('#c_city').val();
-//    $('#c_linker').val();
-//    $('#c_linkPhone').val();
-//    $('#c_addr').val();
-    $('#c_goodname').val();
-    $('#c_weight').val();
-    $('#c_volume').val();
-    $('#c_quantity').val();
-    $('#c_mark').val();
-
-    
-    
-    
-
-}
 
 
 function queryOwnerInfo(pram){
@@ -232,193 +283,109 @@ function saveOrUpdate() {
     var vol = 0;
     var wt = 0;
     var flag = true;
+    var ownerNo_Temp = '';
+    var ownerAlias_Temp = '';
+    var custer_Temp = '';
+    var custerAlias_Temp = '';
+    var user = JSON.parse(localStorage.getItem('e_user'));
     var owner = JSON.parse(localStorage.getItem('ownerInfo'));
+    if( user.obj.userType == '1'){
+        ownerNo_Temp = user.obj.ownerNo;
+        ownerAlias_Temp = user.obj.ownerAlias;
+    }else {
+        if ( owner != null ) {
+            ownerNo_Temp = owner.ownerNo;
+            ownerAlias_Temp = owner.ownerAlias;
+        } else {
+//            ownerNo_Temp = owner.ownerNo;
+//            ownerAlias_Temp = owner.ownerAlias;
+        }
+    }
+
     var custer = JSON.parse(localStorage.getItem('custerInfo'));
-    var user = JSON.parse(localStorage.getItem('user'));
+    if ( custer != null ) {
+        custer_Temp = custer.custNo;
+        custerAlias_Temp = custer.custAlias;
+    }
+
     var owners = JSON.parse(localStorage.getItem("owners"));
+    var ownerBo = JSON.parse(localStorage.getItem('ownerBo'));
+    var custBo = JSON.parse(localStorage.getItem('custBo'));
+    var goodBo = JSON.parse(localStorage.getItem('goodBo'));
+    if( ownerBo == null ){
+        errorPopup('请选择发货人信息');
+        return;
+    }
+    if( custBo == null ){
+        errorPopup('请选择收货人信息');
+        return;
+    }
+
+    if( goodBo == null ){
+        errorPopup('请填写商品信息');
+        return;
+    }
+//    if($('#gOrderNo').text() == '' || $('#gOrderNo').text() == null){
+//
+//    }
     var transOrderM = {
-        enterpriseNo : owner.enterpriseNo,
-        ownerAlias : owner.ownerAlias,
-        ownerNo : owner.ownerNo,
-        ownerName : owner.ownerName,
+        enterpriseNo : user.obj.logisticNo,
+        orderNo :$('#gOrderNo').text(),
+        ownerNo : ownerNo_Temp,
+      //  ownerAlias : ownerAlias_Temp,
+        /*ownerName : $("#o_ownername").val(),
         // ownerCompany:$("#ownerCompany").val(),
         ownerAddr : $("#o_addr").val(),// owner.ownerAddr,
         ownerPhone : $("#o_linkPhone").val(),
-        ownerContacts : $("#o_linker").val(),
-        custNo : custer.custNo,
-        custAlias : custer.custAlias,
-        custName : custer.custName,
+        ownerContacts : $("#o_linker").val(),*/
+        custNo : custer_Temp,
+
+        custAlias : custerAlias_Temp,
+        /*custName : $("#c_custname").val(),
         custAddr : $("#c_addr").val(),
         custContacts : $("#c_linker").val(),
-        custPhone : $("#c_linkPhone").val(),
-        ownerProvince : localStorage.getItem('confirmProvince'),
+        custPhone : $("#c_linkPhone").val(),*/
+        /*ownerProvince : localStorage.getItem('confirmProvince'),
         ownerCity : localStorage.getItem('confirmCity'),
         ownerCounty : localStorage.getItem('confirmZone'),
         custProvince : localStorage.getItem('confirmCProvince'),
         custCity : localStorage.getItem('confirmCCity'),
-        custCounty : localStorage.getItem('confirmCZone'),
+        custCounty : localStorage.getItem('confirmCZone'),*/
         payType : '1',
         deliveryDateText : $("#deliveryDate").val()+':00'
 
     };
+    $.extend(transOrderM,ownerBo);
+    $.extend(transOrderM,custBo);
     var transOrderD = {
-        enterpriseNo : owner.enterpriseNo,
-        ownerNo : owner.ownerNo,
-        remark : $("#c_mark").val(),
+        enterpriseNo : user.obj.logisticNo,
+        ownerNo : ownerNo_Temp
+        /*remark : $("#c_mark").val(),
         pkqty : $("#c_quantity").val(),
         volumn : $("#c_volume").val(),
         weight : $("#c_weight").val(),
-        articleName : $("#c_goodname").val()
+        articleName : $("#c_goodname").val()*/
     };
+    $.extend(transOrderD,goodBo);
     var reg = /^\\d+$/;
-    if (transOrderM.ownerNo == "") {
-        //parent.art.dialog.alert("请选择发货人！");
-        errorPopup('请选择发货人!');
-        flag = false;
-    }else if (transOrderM.enterpriseNo == "") {
-        //parent.art.dialog.alert("企业编码未选择！");
-        errorPopup('企业编码未选择!');
-        flag = false;
-    }  else if (transOrderM.ownerAlias == "") {
-        //parent.art.dialog.alert("发货主名称未填写！");
-        errorPopup('发货主名称未填写!');
-        flag = false;
-    } else if (transOrderM.ownerName == "") {
-        //parent.art.dialog.alert("发货公司或个人全称未填写！");
-        errorPopup('发货公司或个人全称未填写!');
-        flag = false;
-    } else if (transOrderM.ownerAddr == "") {
-        //parent.art.dialog.alert("发货详细地址未填写！");
-        errorPopup('发货详细地址未填写!');
-        flag = false;
-    } else if (transOrderM.ownerContacts == "") {
-        //parent.art.dialog.alert("发货联系人未填写！");
-        errorPopup('发货联系人未填写!');
-        flag = false;
-    } else if (transOrderM.ownerPhone == "") {
-        //parent.art.dialog.alert("发货联系电话未填写！");
-        errorPopup('发货联系电话未填写!');
-        flag = false;
-    } else if (transOrderM.custNo == "") {
-        //parent.art.dialog.alert("请选择收货人！");
-        errorPopup('请选择收货人!');
-        flag = false;
-    } else if (transOrderM.custAlias == "") {
-        //parent.art.dialog.alert("收货人名称未填写！");
-        errorPopup('收货人名称未填写!');
-        flag = false;
-    } else if (transOrderM.custName == "") {
-        //parent.art.dialog.alert("收货公司或个人全称未填写！");
-        errorPopup('收货公司或个人全称未填写!');
-        flag = false;
-    } else if (transOrderM.custContacts == "") {
-        //parent.art.dialog.alert("收货联系人名称未填写！");
-        errorPopup('收货联系人名称未填写!');
-        flag = false;
-    } else if (transOrderM.custPhone == "") {
-        //parent.art.dialog.alert("收货联系电话不能为空!");
-        errorPopup('收货联系电话不能为空!');
-        flag = false;
-    } else if (transOrderM.custAddr == "") {
-        //parent.art.dialog.alert("收货详细地址未填写!");
-        errorPopup('收货详细地址未填写!');
-        flag = false;
-    } else if (transOrderM.ownerProvince == null
-        || transOrderM.ownerProvince == "") {
-        //parent.art.dialog.alert("发货省份未选择!");
-        errorPopup('发货省份未选择!');
-        flag = false;
-    } else if (transOrderM.ownerCity == null || transOrderM.ownerCity == "") {
-        //parent.art.dialog.alert("发货城市未选择!");
-        errorPopup('发货城市未选择!');
-        flag = false;
-    } else if ((transOrderM.ownerCounty == null || transOrderM.ownerCounty == "")
-        && $('#locZone option').length > 0) {
-        //parent.art.dialog.alert("发货区域未选择!");
-        errorPopup('发货区域未选择!');
-        flag = false;
-    } else if (transOrderM.custProvince == null
-        || transOrderM.custProvince == "") {
-        //parent.art.dialog.alert("收货省份未选择!");
-        errorPopup('收货省份未选择!');
-        flag = false;
-    } else if (transOrderM.custCity == null || transOrderM.custCity == "") {
-        //parent.art.dialog.alert("收货城市未选择!");
-        errorPopup('收货城市未选择!');
-        flag = false;
-    } else if (transOrderM.custCounty == null
-        || transOrderM.custCounty == "") {
-        //parent.art.dialog.alert("收货区域未选择!");
-        errorPopup('收货区域未选择!');
-        flag = false;
-    } else if (transOrderM.orderDate == "" || transOrderM.orderDate == "") {
+//    if ( owner.enterpriseNo == "" ) {
+//        //parent.art.dialog.alert("企业编码未选择！");
+//        errorPopup('企业编码未选择!');
+//        flag = false;
+//    }
+    var param;
+    if ($("#deliveryDate").val() == "") {
         //parent.art.dialog.alert("发货时间未填写!");
         errorPopup('要求发货时间未填写!');
         flag = false;
-    } else if (transOrderM.articleName == "") {
-        //parent.art.dialog.alert("货物总称未填写!");
-        errorPopup('货物总称未填写!');
-        flag = false;
     }
-    qty = $("#c_quantity").val();
-    vol = $("#c_volume").val();
-    wt = $("#c_weight").val();
-    if ( qty > 0) {
-        $("#c_quantity").val(qty);
-    } else if ($("#c_quantity").val() == ""
-        || parseInt($("#c_quantity").val()) == 0) {
-        //errorPopup("总件数应为正整数！");
-         errorPopup('总件数不能为空或为零！',1);
-        //parent.art.dialog.alert("总件数不能为空或为零！");
-        flag = false;return;
-    }else if (parseInt($("#c_quantity").val()) < 0) {
-        //parent.art.dialog.alert("总件数小于零！");
-        errorPopup('总件数不能小于零');
-        flag = false;return;
-    }else{
-        errorPopup('总件数应为正整数！');
-        flag = false;return;
-    }
-
-    if ( vol > 0) {
-        $("#c_volume").val(vol);
-    } else if ($("#c_volume").val() == ""
-        || parseFloat($("#c_volume").val()) == 0) {
-        errorPopup('总体积不能为空或为零！');
-        //parent.art.dialog.alert("总体积不能为空或为零！");
-        flag = false;return;
-    }else if (parseFloat($("#c_volume").val()) < 0) {
-        errorPopup('总体积不能小于零！！');
-        //parent.art.dialog.alert("总体积小于零！");
-        flag = false;return;
-    }else{
-        errorPopup('总体积应为正整数！');
-        flag = false;return;
-    }
-
-    if (  wt > 0) {
-        $("#c_weight").val(wt);
-    } else if ($("#c_weight").val() == ""
-        || parseFloat($("#c_weight").val()) == 0) {
-        errorPopup('总重量不能为空或为零！！');
-        //parent.art.dialog.alert("总重量不能为空或为零！");
-        flag = false;return;
-    }else if (parseFloat($("#c_weight").val()) < 0) {
-        //parent.art.dialog.alert("总重量小于零！");
-        errorPopup('总重量不能小于零！');
-        flag = false;return;
-    }else{
-        errorPopup('总重量应为正整数！');
-        return;
-    }
-    var param;
     // 保存
     if (saveOrUpdateFlag == 0 && flag ==true ) {
         param = {
             transOrderM : JSON.stringify(transOrderM),
             transOrderD : JSON.stringify(transOrderD),
             status : saveOrUpdateFlag,
-            userName :JSON.parse(localStorage.getItem('user')).obj.userName
+            userName :JSON.parse(localStorage.getItem('e_user')).obj.userName
         };
         saveOrder(param);
         // 修改
@@ -430,30 +397,379 @@ function saveOrUpdate() {
 }
 
 function saveOrder(param){
+    $.ui.blockUI(.3);
+    $.ui.showMask("正在订单..");
     var saveUrl = baseUrl + "order/save_or_update.action";
     getAjax(saveUrl,param,"saveOrderFromPhoneSucc(data)","errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 function saveOrderFromPhoneSucc(data){
     if(data.isSucc){
-        errorPopup('下单成功');
-        //    $('#o_ownername').val();
-        $('#o_city').val('');
-        $('#o_linker').val('');
-        $('#o_linkPhone').val('');
-        $('#o_addr').val('');
 
-        $('#c_custname').val('');
-        $('#c_city').val('');
-        $('#c_linker').val('');
-        $('#c_linkPhone').val('');
-        $('#c_addr').val('');
-        $('#c_goodname').val('');
-        $('#c_weight').val('');
-        $('#c_volume').val('');
-        $('#c_quantity').val('');
-        $('#c_mark').val('');
-        $.ui.loadContent("#home", false, false, "slide");
+        errorPopup('下单成功');
+        $.ui.unblockUI();
+        $.ui.hideMask();
+        clearConfirmData();
+        $.ui.loadContent("#home2", false, false, "slide");
     }else{
+        clearConfirmData();
         errorPopup('下单失败');
+        $.ui.unblockUI();
+        $.ui.hideMask();
     }
 }
+
+function clearConfirmData(){
+    $('#addOrderOwnerInfo').show();
+    $('#updateOrderOwnerInfo').hide();
+    $('#addOrderCustInfo').show();
+    $('#updateOrderCustInfo').hide();
+    $('#addOrderGoodInfo').show();
+    $('#updateOrderGoodInfo').hide();
+
+    localStorage.removeItem("ownerInfo");
+    localStorage.removeItem('confirmProvince');
+    localStorage.removeItem('confirmCity');
+    localStorage.removeItem('confirmZone');
+
+    localStorage.removeItem('custerInfo');
+    localStorage.removeItem('confirmCProvince');
+    localStorage.removeItem('confirmCCity');
+    localStorage.removeItem('confirmCZone');
+
+    localStorage.removeItem('ownerBo');
+    localStorage.removeItem('custBo');
+    localStorage.removeItem('goodBo');
+    $('input[name=addOrderText]').val('');
+    $('input[name=ownerInfoInput]').val('');
+    $('input[name=custInfoInput]').val('');
+    $('input[name=goodInfoInput]').val('');
+}
+
+
+
+
+
+
+function initOwnerOrcustSwith() {
+    $('input[name="o-checkbox"]').unbind('switchChange.bootstrapSwitch');
+    $('input[name="o-checkbox"]').on('switchChange.bootstrapSwitch', function (event, state) {
+
+        var data = [];
+        var id = $(this).attr('id');
+        var flag = 0;
+        state == true ? flag = 1 : flag = 0;
+        if (id == 'ownerFlag') {
+            data = [flag, ''];
+        } else if (id == 'custFlag') {
+            data = ['', flag];
+        } else {
+            data = ['', ''];
+        }
+        saveOrUpdateOwnerOrCuster(data);
+    });
+}
+function saveOrUpdateOwnerOrCuster(data){
+        if( data[0] == 0 ) {
+
+        } else if (  data[1] == 0 ) {
+
+        } else {
+
+        }
+
+}
+function backToOwnerAddOrderPage(){
+    try {
+       /* if (transOrderM.ownerNo == "") {
+            //parent.art.dialog.alert("请选择发货人！");
+            errorPopup('请选择发货人!');
+            flag = false;
+        }else*/
+        var reg = /^\\d+$/;
+     /*   if ( $("#o_linkPhone").val()!='' && !$("#o_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+            errorPopup("手机号码格式不正确！");
+            flag = false;
+            return;
+        }*/
+        if ( $('#o_ownername').val() == "" ) {
+            //parent.art.dialog.alert("企业编码未选择！");
+            errorPopup('企业编码未选择!');
+            flag = false;
+        }  else if ( $('#o_ownername').val() == "") {
+            //parent.art.dialog.alert("发货主名称未填写！");
+            errorPopup('发货主名称未填写!');
+            flag = false;
+        } else if ($('#o_provice').val() == "") {
+            //parent.art.dialog.alert("发货公司或个人全称未填写！");
+            errorPopup('发货城市未选择!');
+            flag = false;
+        } else if($('#o_addr').val() == "") {
+            //parent.art.dialog.alert("发货详细地址未填写！");
+            errorPopup('发货详细地址未填写!');
+            flag = false;
+        } else if ($('#o_linker').val() == "") {
+            //parent.art.dialog.alert("发货联系人未填写！");
+            errorPopup('发货联系人未填写!');
+            flag = false;
+        } else if ($('#o_linkPhone').val() == "") {
+            //parent.art.dialog.alert("发货联系电话未填写！");
+            errorPopup('发货联系电话未填写!');
+            flag = false;
+        } else {
+
+            var ownerAlias_Temp = '';
+
+            var user = JSON.parse(localStorage.getItem('e_user'));
+            var owner = JSON.parse(localStorage.getItem('ownerInfo'));
+            if( user.obj.userType == '1'){
+                ownerNo_Temp = user.obj.ownerNo;
+                ownerAlias_Temp = user.obj.ownerAlias;
+            }else {
+                if ( owner != null ) {
+                    ownerNo_Temp = owner.ownerNo;
+                    ownerAlias_Temp = owner.ownerAlias;
+                } else {
+                   // ownerNo_Temp = owner.ownerNo;
+                    ownerAlias_Temp = $("#o_ownername").val();
+                }
+            }
+
+
+
+            $('#addOrderOwnerInfo').hide();
+            $('#updateOrderOwnerInfo').show();
+            $('#ownerText').text($('#o_ownername').val());
+            $('#ownerText').attr('o_ownerNo',
+                $('#o_ownername').attr('o_ownerNo') );
+            $('#ocityText').text($('#o_provice').val());
+            $('#oaddrText').text($('#o_addr').val());
+            $('#olinkerText').text($('#o_linker').val());
+            $('#ophoneText').text($('#o_linkPhone').val());
+            var ownerBo = {
+             /*   o_ownername:$('#o_ownername').val(),
+                o_provice:$('#o_provice').val(),
+                o_addr:$('#o_addr').val(),
+                o_linker:$('#o_linker').val(),
+                o_linkPhone:$('#o_linkPhone').val(),*/
+                ownerAlias : ownerAlias_Temp,
+                ownerName : $("#o_ownername").val(),
+                ownerAddr : $("#o_addr").val(),
+                ownerPhone : $("#o_linkPhone").val(),
+                ownerContacts : $("#o_linker").val(),
+                ownerProvince : localStorage.getItem('confirmProvince'),
+                ownerCity : localStorage.getItem('confirmCity'),
+                ownerCounty : localStorage.getItem('confirmZone')
+            }
+            localStorage.setItem('ownerBo',JSON.stringify(ownerBo) );
+            var tempownerinfo = JSON.parse( localStorage.getItem("ownerInfo") );
+            if ( tempownerinfo!=null && tempownerinfo.ownerNo != null ) {
+                clearCustAddr();
+            }
+
+            $.ui.loadContent("#addorder", false, false, "slide");
+        }
+    } catch(e){
+        errorPopup(e.name + ": " + e.message);
+    }
+}
+
+function clearCustAddr(){
+    $('#addOrderCustInfo').show();
+    $('#updateOrderCustInfo').hide();
+    $('#custText').text('');
+    $('#ccityText').text('');
+    $('#caddrText').text('');
+    $('#clinkerText').text('');
+    $('#cphoneText').text('')
+    localStorage.removeItem('custBo');
+}
+
+function backToCustAddOrderPage(){
+
+    //$.ui.loadContent("#chocieOwner", false, false, "slide");
+    try {
+        /*if ( $("#c_linkPhone").val()!='' && !$("#c_linkPhone").val().match(/^(((13[0-9]{1})|159|153)+\d{8})$/)) {
+            errorPopup("手机号码格式不正确！");
+            flag = false;
+            return;
+        }*/
+
+        if ($('#c_custname').val() == "") {
+            //parent.art.dialog.alert("收货人名称未填写！");
+            errorPopup('收货人名称未填写!');
+            flag = false;
+        }  else if ($('#c_linker').val() == "") {
+            //parent.art.dialog.alert("收货联系人名称未填写！");
+            errorPopup('收货联系人名称未填写!');
+            flag = false;
+        } else if ($('#c_linkPhone').val() == "") {
+            //parent.art.dialog.alert("收货联系电话不能为空!");
+            errorPopup('收货联系电话不能为空!');
+            flag = false;
+        } else if ($('#c_addr').val() == "") {
+            //parent.art.dialog.alert("收货详细地址未填写!");
+            errorPopup('收货详细地址未填写!');
+            flag = false;
+        } else if ($('#c_provice').val() == "") {
+            //parent.art.dialog.alert("收货省份未选择!");
+            errorPopup('收货省市未选择!');
+            flag = false;
+        } else {
+            $('#addOrderCustInfo').hide();
+            $('#updateOrderCustInfo').show();
+            $('#custText').text($('#c_custname').val());
+            $('#ccityText').text($('#c_provice').val());
+            $('#caddrText').text($('#c_addr').val());
+            $('#clinkerText').text($('#c_linker').val());
+            $('#cphoneText').text($('#c_linkPhone').val());
+            $.ui.loadContent("#addorder", false, false, "slide");
+            var custer_Temp;
+            var custer = JSON.parse(localStorage.getItem('custerInfo'));
+            if ( custer != null ) {
+                custer_Temp = custer.custNo;
+                custerAlias_Temp = custer.custAlias;
+            } else {
+                custerAlias_Temp = $("#c_custname").val()
+            }
+           // var custAlias = $('#')
+            var custBo = {
+                custName : $("#c_custname").val(),
+                custAlias : custerAlias_Temp,
+                custAddr : $("#c_addr").val(),
+                custContacts : $("#c_linker").val(),
+                custPhone : $("#c_linkPhone").val(),
+
+               /* c_custname:$('#c_custname').val(),
+                c_provice:$('#c_provice').val(),
+                c_addr:$('#c_addr').val(),
+                c_linker:$('#c_linker').val(),
+                c_linkPhone:$('#c_linkPhone').val(),*/
+                custProvince : localStorage.getItem('confirmCProvince'),
+                custCity : localStorage.getItem('confirmCCity'),
+                custCounty : localStorage.getItem('confirmCZone')
+            }
+            localStorage.setItem( 'custBo',JSON.stringify(custBo) );
+        }
+    } catch(e){
+        errorPopup(e.name + ": " + e.message);
+    }
+}
+function backToGoodOrderPage(){
+
+    try {
+        var goodName = $("#c_goodname").val();
+        var qty = $("#c_quantity").val();
+        var vol = $("#c_volume").val();
+        var wt = $("#c_weight").val();
+        if( goodName == ''){
+            errorPopup('货物名不能为空！',1);
+            return;
+        }
+
+        if ( qty > 0) {
+            $("#c_quantity").val(qty);
+        } else if (!isNaN(qty) && qty == ""
+            || parseInt(qty) == 0) {
+            //errorPopup("总件数应为正整数！");
+            errorPopup('总件数不能为空或为零！',1);
+            //parent.art.dialog.alert("总件数不能为空或为零！");
+            flag = false;return;
+        }else if (!isNaN(qty) && parseInt($("#c_quantity").val()) < 0) {
+            //parent.art.dialog.alert("总件数小于零！");
+            errorPopup('总件数不能小于零');
+            flag = false;return;
+        }else{
+            errorPopup('总件数应为正整数！');
+            flag = false;return;
+        }
+
+        if ( vol > 0) {
+            $("#c_volume").val(vol);
+        } else if (!isNaN(vol) && vol == ""
+            || parseFloat($("#c_volume").val()) == 0) {
+            errorPopup('总体积不能为空或为零！');
+            //parent.art.dialog.alert("总体积不能为空或为零！");
+            flag = false;return;
+        }else if (!isNaN(vol) && parseFloat(vol) < 0) {
+            errorPopup('总体积不能小于零！！');
+            //parent.art.dialog.alert("总体积小于零！");
+            flag = false;return;
+        }else{
+            errorPopup('总体积应为正整数！');
+            flag = false;return;
+        }
+
+        if (  wt > 0) {
+            $("#c_weight").val(wt);
+        } else if (!isNaN(wt) && wt == ""
+            || parseFloat($("#c_weight").val()) == 0) {
+            errorPopup('总重量不能为空或为零！！');
+            //parent.art.dialog.alert("总重量不能为空或为零！");
+            flag = false;return;
+        }else if (!isNaN(wt) && parseFloat(wt) < 0) {
+            //parent.art.dialog.alert("总重量小于零！");
+            errorPopup('总重量不能小于零！');
+            flag = false;return;
+        }else{
+            errorPopup('总重量应为正整数！');
+            return;
+        }
+        if( $('input[name=goodInfoInput]').val() == '' ) {
+            errorPopup('请输入完整信息');
+            return ;
+        } else {
+        $('#addOrderGoodInfo').hide();
+        $('#updateOrderGoodInfo').show();
+        $('#gName').text( $('#c_goodname').val() );
+        $('#gWeigth').text( $('#c_weight').val() );
+        $('#gVolume').text( $('#c_volume').val() );
+        $('#gQty').text( $('#c_quantity').val() );
+        $('#gMark').text( $('#c_mark').val() );
+        $('#gOrderNo').text( $('#goodorderNo').val() );
+        $.ui.loadContent("#addorder", false, false, "slide");
+
+            var goodBo = {
+              //  orderNo:$('#goodorderNo').val(),
+                cremark : $("#c_mark").val(),
+                pkqty : $("#c_quantity").val(),
+                volumn : $("#c_volume").val(),
+                weight : $("#c_weight").val(),
+                articleName : $("#c_goodname").val()
+            }
+            localStorage.setItem('goodBo',JSON.stringify(goodBo) );
+        }
+    } catch(e){
+        errorPopup(e.name + ": " + e.message);
+    }
+}
+
+function updateownerPanel(){
+    $('#o_ownername').attr('o_ownerNo','');
+    $.ui.loadContent("#confirmowner", false, false, "slide");
+}
+function updatecustPanel(){
+
+    $.ui.loadContent("#confirmcust", false, false, "slide");
+}
+function updategoodPanel(){
+    $.ui.loadContent("#confirmgood", false, false, "slide");
+}
+
+
+/*
+
+else if (transOrderM.custProvince == null
+    || transOrderM.custProvince == "") {
+    //parent.art.dialog.alert("收货省份未选择!");
+    errorPopup('收货省份未选择!');
+    flag = false;
+} else if (transOrderM.custCity == null || transOrderM.custCity == "") {
+    //parent.art.dialog.alert("收货城市未选择!");
+    errorPopup('收货城市未选择!');
+    flag = false;
+} else if (transOrderM.custCounty == null
+    || transOrderM.custCounty == "") {
+    //parent.art.dialog.alert("收货区域未选择!");
+    errorPopup('收货区域未选择!');
+    flag = false;
+} */

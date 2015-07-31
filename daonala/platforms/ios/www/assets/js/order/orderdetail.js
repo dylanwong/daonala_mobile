@@ -76,23 +76,36 @@ function initTraceInfo2(){
 
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $('#shipPhone_d').html(data.shipperPhone);
-    $('#shipNo_d').html(data.ownerName);
+    $('#shipNo_d').html(data.shipperNoText);
 
     $('#custAddr_d').html(data.custAddr);
     $('#custName_d').html(data.custName);
     $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
-    $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
-
+   // $('#addrName_d').html(data.addrName);
+    $('#ownerPhone_d').attr('href',"tel:'"+data.ownerPhone+"'");
+    $('#custPhone_d').attr('href',"tel:'"+data.custPhone+"'");
+   // $('#custPhone_d').html("<a href='tel:"+data.custPhone+"'></a>");
     $('#ownerName_d').html(data.ownerName);
     $('#ownerAddr_d').html(data.ownerAddr);
     $('#ownerContacts_d').html(data.ownerContacts+'  '+data.ownerPhone);
 
 
     $('#status_d').html( showstatus(data.status) );
+    if( data.status == '90' ){
+        evalutePanel();
+
+        $('#evalutePanelBtn').unbind('click');
+    }else{
+        $('#evalute_ifNull').text('无');
+        $('#evalutePanelBtn').unbind('click');
+    }
+    queryDetailProduct();
+    $('#productPanelBtn').unbind();
+    //onclick="productPanel();"
+
     $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.orderNo);
-    $('#custNo_d').html(data.custNo);
+    $('#ownerNo_d').html(data.subOrderNo);
+    $('#custNo_d').html(data.custOrderNo);
     $('#orderDate_d').html(data.orderDate);
     queryDeliverordertraceList(data.enterpriseNo,data.systemNo,data.orderNo,data.dispatchNo);
 
@@ -108,36 +121,6 @@ function initTraceInfo2(){
 
 
 
-/*
-function queryDetailInfo(){
-    var data = JSON.parse(localStorage.getItem("currentorder"));
-    $('#shipPhone_d').html(data.shipperPhone);
-    $('#shipNo_d').html(data.ownerName);
-
-    $('#custAddr_d').html(data.custAddr);
-    $('#custName_d').html(data.custName);
-    $('#custContacts_d').html(data.custContacts+'  '+data.custPhone);
-    $('#addrName_d').html(data.addrName);
-    $('#ownerPhone_d').attr('href','tel:'+data.custPhone.trim());
-
-    $('#ownerName_d').html(data.ownerName);
-    $('#ownerAddr_d').html(data.ownerAddr);
-    $('#ownerContacts_d').html(data.orderNo);
-
-    $('#status_d').html('状态： '+ showstatus(data.status));
-    $('#transNo_d').html(data.transNo);
-    $('#ownerNo_d').html(data.orderNo);
-    $('#custNo_d').html(data.custNo);
-    $('#orderDate_d').html(data.orderDate);
-
-    $('#topdeliverNo_d').html(data.topsendNo);
-    $('#topdeliverNo_d').attr('delivery',data.topsendNo);
-    queryDetailProduct();
-    queryDetailTrace_login();
-    queryEvalute();
-}
-*/
-
 //查询最新运输单跟踪记录列表
 function queryDeliverordertraceList(enterpriseNo,systemNo,orderNo,dispatchNo){
     $('#detailTraceListContent').empty();
@@ -149,23 +132,46 @@ function queryDeliverordertraceList(enterpriseNo,systemNo,orderNo,dispatchNo){
 function queryDeliverordertraceListUrlSuc(data){
     if(data.isSucc){
         $.ui.showMask("我们正在拼命的加载数据...");
+        var result = '';
+        if ( data.msg.split('-')[0] == 'S0001' ) {
+            result = template('traceListTemp',data);
+            $('#detailTraceListContent').html(result);
+        } else {
+            result = template('traceListTemp2',data);
+            $('#detailTraceListContent').html(result);
 
-        var result = template('traceListTemp',data);
-        $('#detailTraceListContent').html(result);
+            var len = data.obj.length;
+            var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+            //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
+            for(var i = 0; i < len; i++ ) {
+                if( data.obj[i].fileNo != undefined && data.obj[i].fileNo != null && data.obj[i].fileNo != ''){
+                    console.log(i+' '+data.obj[i].fileNo);
+                    setSmallImgList2( data.obj[i].fileNo );
+                }
+            };
+        }
         $.ui.hideMask();
+    } else {
+        $('#detailTraceListContent').html( data.msg );
     }
 }
 //订单跟踪信息
-function querySingleTraceInfo(sendNo,status){
+function querySingleTraceInfo(deliveryNo,sendNo,status){
  //   $("#orderDetailTraceContent").empty();
     var data = JSON.parse(localStorage.getItem("currentorder"));
     $.ui.blockUI(.3);
     $("#trace_list_div").empty();
     $('#tracestatus').html(showstatus(status));
+    localStorage.removeItem('currentSendInfo');
+    localStorage.setItem( 'currentSendInfo',
+        JSON.stringify( {'deliveryNo':deliveryNo,'sendNo':sendNo,
+    'status':status} ) )
     getAjax(searchTraceUrl, {'orderEnterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
             'dispatchNo':data.dispatchNo,
             'sendNo':sendNo},
         "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+
 }
 
 function queryOrderDoc(){
@@ -186,30 +192,41 @@ function updataDetailPanel(data){
     var products = "";
     if(data.isSucc) {
        // var productNode = $("<div class='productNode'></div>");
-        for (var i in data.obj) {
+        var len = data.obj.length;
+        if ( len > 0 ){
+            $('#good_ifNull').text(len);
+            $('#productPanelBtn').bind('click',function(){
+                $.ui.loadContent("#orderDetailProduct", false, false, "slide");
+            });
+        }else{
+            $('#good_ifNull').text('无');
+        }
+        for (var i = 0; i < len; i++) {
              products +=
-                    '<div style="border-top: 10px solid #EFEFEF;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:square;">' +
-                    '<div class="fl width30" align="right" style="color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
+                    '<div style="padding-top:10px;"><ul><li style="border-bottom:1px solid #ededed;list-style-type:none;  height: 30px;">' +
+                    '<div class="fl " align="" style="padding-left:30px;color:#ef8305;font-size:16px;" id="articleName"> '+ data.obj[i].articleName +' </div>' +
                     '</li><li style="height: 80px;padding-top: 10px;">' +
                     '<div class="fl width33 overflowHidden percent80"' +
                     'style="line-height:60px;" align="center">' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">要货</b>' +
-                    '<span class="fl fs32" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
+                    '<span class="fl fs24" style="color: #ef8305" id="orderQty_d" >' + ifNull(data.obj[i].orderQty) + '</span>' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="border-left: 1px solid #E3E3E3; ' +
                     'border-right: 1px solid #E3E3E3;line-height:60px;" align="center"> ' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">送货</b> ' +
-                    '<span class="fl fs32" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliverQty) + '</span> ' +
+                    '<span class="fl fs24" style="color: #ef8305" id="deliverQty_d" >' + ifNull(data.obj[i].deliveryQty) + '</span> ' +
                     '</div><div class="fl width33 overflowHidden percent80" ' +
                     'style="line-height:60px;" align="center"> ' +
                     '<b class="fl" style="font-size: 16px;padding-left:10px;padding-top:5px;padding-right:5px;">签收</b> ' +
-                    '<span class="fl fs32" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
+                    '<span class="fl fs24" style="color: #ef8305" id="signQty_d" >' + ifNull(data.obj[i].signQty) + '</span></div></li></ul></div>'
             ;
           //  $(products).appendTo(productNode);
         }
+
         $("#orderDetailProduct").html(products);
       //  productNode.appendTo("#Productproducts");
     }else{
+        $('#good_ifNull').text('无');
      /*   productNode=$("<div class='productNode'>暂无产品信息</div>");
         productNode.appendTo("#Productproducts");*/
         $("#orderDetailProduct").html("<div class='productNode'>暂无产品信息</div>");
@@ -218,28 +235,6 @@ function updataDetailPanel(data){
 }
 
 
-
-//function queryDetailTrace_login(){
-//    $("#orderDetailTraceContent").empty();
-//    var data = JSON.parse(localStorage.getItem("currentorder"));
-//    $.ui.blockUI(.3);
-//    getAjax(searchTraceUrl, {'orderEnterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-//            'dispatchNo':data.dispatchNo,
-//            'sendNo':data.topsendNo},
-//        "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-//
-//}
-//
-//function queryDetailTraceAgain_login(){
-//    $("#orderDetailTraceContent").empty();
-//    var data = JSON.parse(localStorage.getItem("currentorder"));
-//    $.ui.blockUI(.3);
-//    getAjax(searchTraceUrl, {'enterpriseNo':data.enterpriseNo,'systemNo':data.systemNo,
-//            'dispatchNo':data.dispatchNo,
-//            'sendNo':$('#topdeliverNo_d').attr('delivery')},
-//        "updateTracePanel2(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-//
-//}
 
 
 
@@ -250,19 +245,26 @@ function updateTracePanel2(data){
     var html = "",height = "";
     if(data.isSucc){
 
+      //  $('#orderDetailTraceContent').show();
+      //  $('#tracecontainerMap').hide();
 
         var obj = data.obj ;
         $.ui.loadContent("#orderDetailTrace", false, false, "slide");
+
         result = template('orderTraceListTemp',data);
 
         $("#trace_list_div").append(result);
         var len = obj.length;
+        var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+        //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
         for(var i = 0; i < len; i++ ) {
             if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
                 console.log(i+' '+obj[i].fileNo);
-                setSmallImgList( obj[i].fileNo,obj[i].deliveryNo );
+                setSmallImgList( obj[i].fileNo,sendinfo.deliveryNo );
             }
         };
+
+
     }else{
         $("#trace_list_div").empty();
         $("#trace_list_div").html("暂无跟踪信息");
@@ -276,12 +278,173 @@ function updateTracePanel2(data){
     $.ui.hideMask();
 }
 
+function toTrace(){
+   // $('#orderDetailTraceContent').show();
+   // $('#tracecontainerMap').hide();
+    $('#toTrace').removeClass('bbc');
+    $('#toMap').addClass('bbc');//border-bottom: 25px solid #ef8305
+
+
+}
+
+function toMap(){
+    var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
+    init_LogisticMap(sendinfo.deliveryNo,sendinfo.sendNo);
+//    $('#toMap').removeClass('bbc');
+//    $('#toTrace').addClass('bbc');
+//    $('#orderDetailTraceContent').hide();
+//    $('#tracecontainerMap').show();
+
+
+    //init_tracemap();
+}
+
+function init_LogisticMap(deliveryNo,sendNo){
+    var order = JSON.parse( localStorage.getItem('currentorder') );
+   // var enterpriseNo =
+//    var pram = {
+//        systemNo : order.systemNo,
+//        enterpriseNo : order.enterpriseNo,
+//        dispatchNo : order.dispatchNo,
+//        sendNo:order.sendNo
+//    };
+    try{
+    getAjax(searchTraceLongitudeUrl, {'systemNo':order.systemNo,'enterpriseno':order.enterpriseNo,
+            'dispatchNo':order.dispatchNo,
+            'sendNo':sendNo },
+        "inittracemapsSucc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+    }catch(e){
+        errorPopup(' 2 '+e.message);
+        errorPopup(e.description);
+    }
+}
+
+function inittracemapsSucc(data){
+    try{
+    if(data.isSucc){
+        $.ui.loadContent("#traceMap", false, false, "slide");
+        var jindu = [];
+        var weidu = [];
+        for ( var i = 0; i < data.obj.length; i++) {
+            jindu[i] = data.obj[i].longitude;
+            weidu[i] = data.obj[i].latitude;
+        }
+        init_tracemap(jindu,weidu);
+    }else{
+        errorPopup('未上传经纬度信息');
+    }
+
+    }catch(e){
+        errorPopup(' 2 '+e.message);
+        errorPopup(e.description);
+    }
+}
+// 百度地图API功能
+function init_tracemap(longitudes,latitudes) {
+    try{
+    var points = [];
+    var len = longitudes.length;
+   // alert(len);
+    for ( var i = 0; i < longitudes.length; i++) {
+        points[i] = new BMap.Point(longitudes[i],latitudes[i]);
+    //    alert(longitudes[i]+'   '+latitudes[i]);
+    }
+    $("#tracecontainerMap").height($("#traceMap").height()
+        -$('#header').height());
+    $("#tracecontainerMap").width($("#traceMap").width());
+    var map = new BMap.Map("tracecontainerMap");
+    map.centerAndZoom(new BMap.Point(118.454, 32.955), 11);
+    map.enableScrollWheelZoom();
+    var beijingPosition=new BMap.Point(116.432045,39.910683),
+        hangzhouPosition=new BMap.Point(120.129721,30.314429),
+        xianPosition=new BMap.Point(114.3162,30.581084),
+        taiwanPosition=new BMap.Point(113.950723,22.558888);
+  //  var points = [beijingPosition,hangzhouPosition,xianPosition,taiwanPosition];
+
+    var curve = new BMapLib.CurveLine(points,
+        {strokeColor:"red", strokeWeight:3, strokeOpacity:0.5,strokeStyle:'solid'}); //创建弧线对象
+    map.addOverlay(curve); //添加到地图中
+    curve.enableEditing(); //开启编辑功能
+
+    map.setViewport(points);//自动适应缩放级别
+
+    var myIcon = new BMap.Icon("assets/img/car.png",
+        new BMap.Size(56,34));
+    var marker = new BMap.Marker(new BMap.Point(longitudes[len-1],latitudes[len-1]),{icon:myIcon});  // 创建标注
+    map.addOverlay(marker);               // 将标注添加到地图中
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }catch(e){
+        errorPopup(e.message);
+        errorPopup(e.description);
+    }
+}
+
+
+function setSmallImgList2(fileNo){
+    var objectNo = fileNo;
+    var deliveryNo = deliveryNo;
+    var data = JSON.parse(localStorage.getItem("currentorder"));
+    var url = baseUrl + "order/queryImgUrl.action";
+
+    getAjax(url, {'orderNo':data.orderNo,'deliveryNo':'0',
+            'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
+            "setSmallImgListSuc2(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
+}
+
+function setSmallImgListSuc2(data,objectNo){
+    if(data.isSucc){
+        jqueryResult = data.obj;
+        var len = jqueryResult.length;
+        if(len>0){
+            var count = 0;
+            var result = '';
+            var containHead = '';
+            var containContent = '';
+            var containEnd = '';
+            result += containHead;
+            for( var i = 0; i < len; i++ ){
+                // for ( var k = 0; k < 3; k++ ){
+                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''&&jqueryResult[i].filePath!=null){
+                    count++;
+                    var fileUrl = jqueryResult[i].filePath;
+                    var fileName = jqueryResult[i].fileName;
+                    containContent = ' <div style="float:left;width:30%;"><a target="_blank" ' +
+                        'href="'+fileUrl+'" class="swipebox img'+objectNo+'" >'+
+                        '<img name="realImg" style="margin:5px 0px;width:80px;height:70px;"  '+
+                        ' src="'+fileUrl+'" '+
+                        ' fileno="" id=""></a> '+
+                        '</div> ';
+                    result += containContent;
+                }
+            }
+            // if( count == 3 ) {
+            count = 0;
+            //containPNodes =+ '</tr>'
+            //result =+ containContent;
+            // result =+ containPNodes;
+            //containContent = '';
+            //  }
+
+            result += containEnd;
+            $('#'+objectNo).empty();
+            $('#'+objectNo).html(result);
+            // }
+            init_lightbox(objectNo);
+        }
+    }
+
+}
+
+
 function setSmallImgList(fileNo,deliveryNo)
 {
     var objectNo = fileNo;
     var deliveryNo = deliveryNo;
     var data = JSON.parse(localStorage.getItem("currentorder"));
     var url = baseUrl + "order/queryImgUrl.action";
+
     getAjax(url, {'orderNo':data.orderNo,'deliveryNo':deliveryNo,
             'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
         "setSmallImgListSuc(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
@@ -301,7 +464,7 @@ function setSmallImgListSuc(data,objectNo){
             result += containHead;
             for( var i = 0; i < len; i++ ){
                // for ( var k = 0; k < 3; k++ ){
-                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''){
+                if( jqueryResult[i].filePath!=undefined && jqueryResult[i].filePath!=''&&jqueryResult[i].filePath!=null){
                 count++;
                 var fileUrl = jqueryResult[i].filePath;
                 var fileName = jqueryResult[i].fileName;
@@ -323,6 +486,7 @@ function setSmallImgListSuc(data,objectNo){
               //  }
 
             result += containEnd;
+            $('#'+objectNo).empty();
             $('#'+objectNo).html(result);
                // }
             init_lightbox(objectNo);
@@ -350,7 +514,7 @@ function queryEvalute(){
     }else{
 //        $('evalutePanelId').unbind()
 
-        errorPopup('该单未签收，暂无评价信息');
+      //  errorPopup('该单未签收，暂无评价信息');
 //        $('#orderDetailEvaluate').empty();
 //        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
     }
@@ -358,16 +522,17 @@ function queryEvalute(){
 
 function updateEvalute(datas){
     var evaluteResult = '';
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     $('#reviewsItem1').empty();
     $('#reviewsItem2').empty();
     $('#reviewsItem3').empty();
     if(datas.isSucc){
 
-        var info = '<div class="width95"><ul><li style="border-bottom: 1px dashed #09ACD4;">'+
-            '<div class="fl width80" align="right"'+
-            'style="border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;' +
-            'padding-top:15px;padding-left:10px;">' +
+
+        var info = '<div class="width95"><ul><li style="">'+
+            '<div class="fl " align=""'+
+            'style="width:100%;border-bottom:1px solid #ededed;color:#5b5b5b;font-size:16px;' +
+            'padding-top:15px;padding-left:10px;padding-bottom: 10px;">' +
             '<span >评价</span></div>'+
             '<div class="fr width20" align="right"'+
             'style="color:#5b5b5b;font-size:16px;"> <a href="#evaluate" >'+
@@ -375,7 +540,7 @@ function updateEvalute(datas){
             'style="width:60px;height:24px;font-size:14px;'+
             'text-align:center;line-height:24px;padding:0px 12px;">去评价</button>'+
             '</a></div></li></ul>' +
-            '<div align="left" style="padding-left:10px;padding-top: 30px;" id="evaluteInfo">'+
+            '<div align="left" style="padding-left:10px;padding-top: 50px;" id="evaluteInfo">'+
             '  <p id="evaluteName"></p><p style="color:#06ABD4" id="reviewsDemo"></p>'+
             ' <div><div class="overflowHidden"><p class="fl width30" align="right">商品完好度：</p>'+
             ' <p class="fl" id="reviewsItem1"></p></div><div class="overflowHidden">'+
@@ -383,9 +548,9 @@ function updateEvalute(datas){
             '     <p class="fl" id="reviewsItem2"></p> </div>'+
             ' <div class="overflowHidden"><p class="fl width30" align="right">送货人态度：</p>'+
             ' <p class="fl"  id="reviewsItem3"></p></div></div>'+
-            '</div><ul><li style="border-bottom: 1px dashed #09ACD4;" >'+
-            '    <div class="fl width80" align="right" '+
-            '  style="color:#5b5b5b;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
+            '</div><ul><li style="" >'+
+            '    <div class="fl " align="" '+
+            '  style="padding-top: 30px;padding-left: 10px;padding-bottom: 10px;width:100%;border-bottom: 1px solid #ededed;color:#5b5b5b;font-size:16px;padding-top: 5px;" ><span id="replyspan">回复</span></div>'+
             '  <div class="fr width20" align="right"'+
             ' style="color:#5b5b5b;font-size:16px;">'+
             ' <a href="#reply"> <button type="button" id="replyBtn"'+
@@ -393,7 +558,7 @@ function updateEvalute(datas){
             '   style="border-bottom:1px solid #ededed;width:60px;height:24px;font-size:14px;'+
             '            text-align:center;line-height:24px;padding:0px 12px;">回复</button>'+
             '</a></div></li></ul>'+
-            '<div align="left" style="padding-left:10px;" id="replyInfo"></div>';
+            '<div align="left" style="padding-top: 30px;padding-left:10px;" id="replyInfo"></div>';
         if(datas.obj.length == 0){
             if(cuser.obj.userType==2){
                 $('#orderDetailEvaluate').empty();
@@ -407,15 +572,24 @@ function updateEvalute(datas){
                 $(".star2 li img").attr("src","assets/img/star.png");
                 $(".star3 li img").attr("src","assets/img/star.png");
                 $("#evaluteContent").val('');
-                $.ui.loadContent("#evaluate", false, false, "slide");
+                $('#evalute_ifNull').text('有');
+                $('#evalutePanelBtn').bind('click',function(){
+                 //   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+                    $.ui.loadContent("#evaluate", false, false, "slide");
+                });
+              //  $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
-                errorPopup('暂无评价信息');
+                $('#evalute_ifNull').text('无');
+               // errorPopup('暂无评价信息');
 //                $('#orderDetailEvaluate').empty();
 //                evaluteResult = '<div><p>无评论信息</p></div>';
             }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-            $.ui.loadContent("#orderDetailEvalute", false, false, "slide");
+            $('#evalute_ifNull').text('有');
+            $('#evalutePanelBtn').bind('click',function(){
+                $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+            });
             if(datas.obj[0].bodmEvaluate != null){
                 $('#orderDetailEvaluate').empty();
                 $('#orderDetailEvaluate').append(info);
@@ -521,7 +695,7 @@ function showStar(star){
 
 function saveReply(){
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     var savereplyUrl = baseUrl + 'order/submit_evaluate_reply.action';
     if( $('#reply_Info').val() !='' && $('#reply_Info').val() != undefined ){
         getAjax(savereplyUrl, {'enterpriseNo':data.enterpriseNo, 'systemNo':data.systemNo,
@@ -537,7 +711,7 @@ function saveReply(){
 function saveEvalute(){
     var saveevaluteUrl = baseUrl + 'order/submit_evaluate.action';
     var data = JSON.parse(localStorage.getItem("currentorder"));
-    var cuser = JSON.parse(localStorage.getItem("user"));
+    var cuser = JSON.parse(localStorage.getItem("e_user"));
     var savereplyUrl = 'order/submit_evaluate_reply.action';
   /*  enterpriseNo, systemNo,
         dispatchNo, ownerNo, reviewsItem1, reviewsItem2,

@@ -2,48 +2,90 @@
  * Created by wyy on 2015-05-27.
  */
 
-
+//function initSearchPage(){
+//    var arr_v = [];
+//    arr_v = JSON.parse( localStorage.getItem('routeList') );
+//
+//}
 function search(){
-
+    try{
+    searchFlag = 0;
+    scrollFlag =0;
+    lastPage = 'search';
     $.ui.blockUI(.3);
     $.ui.showMask("获取查询的订单..");
     $("ul#todoList").empty();
     $("#orderlistHeaderId").attr('onclick',
         "$.ui.loadContent('#search', false, false, 'slide')");
-    $("#orderdetailBackId").attr('onclick',
-        "$.ui.loadContent('#search', false, false, 'slide')");//
+    /*$("#orderdetailBackId").attr('onclick',
+        "$.ui.loadContent('#orderlist', false, false, 'slide')");*///
 
     /* setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
          {'start': '1', 'length':'10', 'queryDate': '', 'status': ''}, true), true);*/
     var searchText = $('#searchText').val();
     if( searchText != '' && searchText != null){
-        var user = JSON.parse( localStorage.getItem("user") );
+        var user = JSON.parse( localStorage.getItem("e_user") );
         if ( user==null ) {
-            getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
+            getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':'',
             'userType':'' },
         "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
    // getAjax(searchUrl,options,searchSuc(data),searchFail(data));
             } else {
-            getAjax(searchUrl, {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+            getAjax(searchUrl, {'start': '1', 'length':'10','orderNo':searchText,
+                    'timeType':'N','userNo':user.obj.userNo,
+               'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo ,'custText':user.obj.custNo,
                 'userType':user.obj.userType },
-            "updateOrderlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            "updateOrderlistPanel(data,true)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+
         }
         if( user!=null ){
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N','userNo':user.obj.userNo,
+                'enterpriseText':user.obj.logisticNo, 'ownerText':user.obj.ownerNo ,'custText':user.obj.custNo,
                 'userType':user.obj.userType }, true), true);
         }else{
             setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-            {'start': '0', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
+            {'start': '1', 'length':'10','orderNo':searchText,'timeType':'N'}, true), true);
 
         }
         $('#orderlist_ul').empty();
+     //   mainScroll.scrollToTop(100);
     }else{
         $.ui.unblockUI();
         $.ui.hideMask();
         errorPopup('请输入搜索条件');
     }
+    }catch(e){
+        errorPopup(e.mes);
+    }
 }
+
+function setRounteListCache(){
+    $('#searchHistory').show();
+    var searchValue = $('#searchText').val();
+    var arr_v = [];
+    arr_v = JSON.parse( localStorage.getItem('routeList') );
+    if( searchValue != null && searchValue != ''){
+    if (null!=arr_v) {
+        if (arr_v.contains(searchValue)) {
+            ////alert("1");
+            //arr_v = JSON.parse(localStorage.getItem('routeList'));
+            ;
+        } else {
+            arr_v = JSON.parse(localStorage.getItem('routeList'));
+            arr_v.push(searchValue);
+            if (arr_v.length > 5) {
+                arr_v.remove(0);
+            }
+        }
+    } else {
+        arr_v = new Array();
+        arr_v.push(searchValue);
+    }
+    localStorage.setItem('routeList',JSON.stringify( arr_v ) );
+    }
+}
+
 
 function updateOrderlistPanel(data,flag){
     var prependFlag = arguments[1] ? arguments[1] : false;
@@ -53,31 +95,40 @@ function updateOrderlistPanel(data,flag){
     var nullTrace = "<div align='center' style='margin: 10px;'>查无订单...</div>";
     if(data.isSucc) {
         var result = '';
+
         if(flag){$("#orderlist_ul").empty();}
         var traceFuc = '';
         if (data.obj.recordsTotal >= 1 ){
+            if ( lastPage == 'search') {
+                $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
+            } else if ( lastPage == 'orderBoard'){
+                $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#orderBoard', false, false, 'slide')");
+            } else if ( lastPage == 'home2'){
+                $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#home2', false, false, 'slide')");
 
+            }
+            setRounteListCache();
             if (data.obj.data.length > 1) {
-            //    $("#orderdetailBackId").attr('onclick',"$.ui.goback(-1)");
+            //   $("#orderdetailBackId").attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
             //  $("#orderlistHeaderId").attr('onclick',"$.ui.loadContent('#search', false, false, 'slide')");
                 $.ui.loadContent("#orderlist", false, false, "slide");
-            if(localStorage.getItem('user')==null){
-                $('#orderlist').attr('data-header','home2Header');
-            }else{
-                $('#orderlist').attr('data-header','orderlistHeader');
-            }
+//            if(localStorage.getItem('e_user')==null){
+//                $('#orderlist').attr('data-header','home2Header');
+//            }else{
+//                $('#orderlist').attr('data-header','orderlistHeader');
+//            }
             //for (var k in data.obj.data) {
-                $.ui.showMask("我们正在拼命的加载数据...");
-                var result = template('orderListTemp',data);
+            $.ui.showMask("我们正在拼命的加载数据...");
+            var result = template('orderListTemp',data);
 
-        } else if (data.obj.data.length == 1) {
+        } else if (data.obj.recordsTotal == 1) {
             setCacheData("currentorder", data.obj[0], 1);
             if( loginStatus==0 || loginStatus== '0' ){
                 setCacheData("currentorder",data.obj.data[0] ,1);
-
                // JSON.stringify(data.obj.data[k])
                 traceSingleInfo();
             }else{
+                //$("#orderdetailBackId").attr('onclick',"$.ui.loadContent('#orderlist', false, false, 'slide')");
                 setCacheData("currentorder",data.obj.data[0] ,1);
                 traceSingleInfo33();
             }
@@ -85,6 +136,8 @@ function updateOrderlistPanel(data,flag){
             //result = nullTrace;
         }
         if(flag){
+
+
             $("#orderlist_ul").append(result);
         }else {
             if (data.obj.data.length < (oldmyFilter.length -= 0)) {
@@ -92,21 +145,32 @@ function updateOrderlistPanel(data,flag){
                     $("#orderlist_ul").append(result);
                 }else{
                     $("#orderlist_ul").append(result);
-                $("<div id='nullOrderListSelf' class='nullOrder'>" +
+                  //  $("#orderlist_ul").removeChild($('#nullOrderListSelf'))
+                  //  $('#nullOrderListSelf').empty();
+               /* $("<div id='nullOrderListSelf' class='nullOrder'>" +
                 "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
-                "</div>").appendTo(orderlist_ul);
+                "</div>").appendTo(orderlist_ul);*/
                 }
             }else{
                 $("#orderlist_ul").append(result);
             }
         }
     }else{
-            errorPopup('无更多订单');
+            if( lastPage == 'search' ){
+                errorPopup('查无订单');
+            }
+
     }
     }else{
         errorPopup(data.msg);
     }
+
     mainLoaded();
+
+    if(scrollFlag == 0){
+        mainScroll.scrollTo(0,0,1000);
+    }
+    scrollFlag =1;
 
     mainPullUpEl['class'] = mainPullDownEl.attr('class');
     mainPullUpEl.attr('class','').hide();
@@ -115,10 +179,13 @@ function updateOrderlistPanel(data,flag){
     mainLoadingStep = 0;
     $.ui.unblockUI();
     $.ui.hideMask();
+
 }
 
 //点击订单列表事件
 function querySingleOrder(enterpriseNo,systemNo,orderNo,dispatchNo){
+
+
     //var enterpriseNo = getEnterpriseNo();
     getAjax(querySingleOrderUrl, {'orderEnterpriseNo': enterpriseNo, 'systemNo':systemNo,
             'orderNo':orderNo,'dispatchNo':dispatchNo },
@@ -127,11 +194,16 @@ function querySingleOrder(enterpriseNo,systemNo,orderNo,dispatchNo){
 }
 
 function querySingleOrderSuc(data){
+    if( lastPage == 'custboard'){
+        ;
+    }else{
+        lastPage = 'orderlist';
+    }
     localStorage.setItem("currentorder",  JSON.stringify(data.obj)  );
     if(loginStatus == 0) {
-        traceInfo();
+        traceSingleInfo();
     }else {
-        traceInfo33();
+        traceSingleInfo33();
     }
 }
 
@@ -167,12 +239,17 @@ function querySingleOrderSuc(data){
 
 
 function getOrderListPullToRefresh(that){
-
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
-        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':0},true),true);
-
+        {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':1},true),true);
+    if( searchFlag == 0){
+        searchUrls = baseUrl +"order/query_suborderlist.action";
+    }else if( searchFlag == 1){
+        searchUrls = baseUrl + "order/queryIndexOrderList.action";
+    }else{
+        searchUrls = searchUrl;
+    }
     jQuery.ajax({
-        url: searchUrl,
+        url: searchUrls,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("searchFilter"))
@@ -219,11 +296,24 @@ function getOrderListPullToRefresh(that){
 
 function getRequestFromOrderListinite(self) {
     var searchFilter =  JSON.parse(localStorage.getItem("searchFilter"));
-    var start = parseInt(searchFilter.start) + 10;
+    var start = '';
+//    if(searchFilter.start == '1'){
+//        start = parseInt(searchFilter.start) + 10;
+//    } else {
+//        start = parseInt(searchFilter.start) + 10;
+//    }
+    start = parseInt(searchFilter.start) + 10;
     setCacheData("searchFilter",mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
         {'queryType':'1','enterpriseNo':getEnterpriseNo(),'start':start},true),true);
+    if( searchFlag == 0){
+        searchUrls = baseUrl +"order/query_suborderlist.action";
+    }else if( searchFlag == 1){
+        searchUrls = baseUrl + "order/queryIndexOrderList.action";
+    }else{
+        searchUrls = searchUrl;
+    }
     jQuery.ajax({
-        url: searchUrl,
+        url: searchUrls,
         timeout: 20000, //超时X秒
         dataType: 'jsonp',
         data:JSON.parse(localStorage.getItem("searchFilter"))
@@ -255,5 +345,43 @@ function getRequestFromOrderListinite(self) {
             mainLoadingStep = 0;
             ajaxFlag = true;
         });
+
+}
+
+
+function searchOrderFromIndex(type,count){
+    if(count == '0' || count == 0){
+        return;
+    }
+    scrollFlag = 0;
+    searchFlag = 1;
+    $('#orderlist_ul').empty();
+    $.ui.blockUI(.3);
+    $.ui.showMask("获取查询的订单..");
+    lastPage='home2';
+    var user = JSON.parse(localStorage.getItem('e_user'));
+    getAjax(searchOrderFromIndexUrl,{'start': '1', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
+        'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo},'updateOrderlistPanel(data)','errorPopup("网络异常")');
+
+    $("#orderlistHeaderId").attr('onclick',
+        "$.ui.loadContent('#home2', false, false, 'slide')");
+    $('#orderdetailBackId').attr('onclick',"$.ui.loadContent('#home2', false, false, 'slide')");
+   /* $("#orderdetailBackId").attr('onclick',
+        "$.ui.loadContent('#search', false, false, 'slide')");*/
+
+    if( user!=null ){
+        setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+            {'start': '1', 'length':'10','type':type,'enterpriseno':user.obj.logisticNo,
+                'ownerNo':user.obj.ownerNo, 'custNo':user.obj.custNo,'userNo':user.obj.userNo,
+                'userType':user.obj.userType }, true), true);
+    }else {
+        setCacheData("searchFilter", mergeJson(JSON.parse(localStorage.getItem("searchFilter")),
+            {'start': '1', 'length': '10', 'type': type, 'enterpriseno': user.obj.logisticNo,
+                'ownerNo': user.obj.ownerNo, 'custNo': user.obj.custNo}, true), true);
+    }
+
+}
+
+function updateIndexOrderlistPanel(){
 
 }

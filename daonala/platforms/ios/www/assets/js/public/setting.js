@@ -16,6 +16,7 @@ $.ui.blockPageScroll();
 var myScroller;
 var loginStatus = 0;//0未登录1登陆界面登陆2注册登陆
 var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面打开页面
+var searchFlag = 0;//0     1为首页查询条件
 //var fileUrl ="http://app.gongsuda.com:8051/smsfile/";
 
 
@@ -25,8 +26,11 @@ var verify_flag = 0;//验证标志 0:未验证通过跳转页面 1:我的页面�
 var fileUrl ="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
 //var omsUrl="http://192.168.16.79:8081/oms1.0/";
 var omsUrl="http://192.168.16.98:8080/fileserver/struts_uploadReturnUrl.action";
-var baseUrl = "http://192.168.16.98/daonala_mobile/";
+var smsManageUrl = "http://www.gongsuda.com:8070/sms_manage/uploadFiles/";
+var baseUrl = "http://www.gongsuda.com:8070/oms_mobile/";
+//var baseUrl = "http://192.168.60.37:8080/oms_mobile/";
 
+var omsManageUrl = "";
 
 var saveFeedbackUrl = baseUrl + "base/saveFeedback.action";
 var queryMySet = baseUrl + "base/query_device_set.action";
@@ -46,7 +50,12 @@ var queryDeliverordertraceListUrl = baseUrl + "order/queryDeliverordertraceList.
 var evaluteUrl = baseUrl + "order/view_evaluate.action";
 var searchSubCompanyUrl = baseUrl + "order/query_subcompany.action";
 var searchOwnerOrCustUrl = baseUrl + "order/getLinkDataList.action";
+var searchTraceLongitudeUrl = baseUrl + "order/query_trace_longitude.action";
+var queryIndexOrderCountUrl = baseUrl + "order/queryIndexOrderCount.action";
+var searchOrderFromIndexUrl = baseUrl + "order/queryIndexOrderList.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
+var updateSelfInfoUrl = baseUrl + "base/updateSelfInfo.action";
+var queryAdList = baseUrl + "base/query_ad_Version.action";
 //event target ID
 var ETID = null;
 //选中的任务ID
@@ -69,9 +78,10 @@ var myLocationFlag = false;
 var lOCATIONID='currentlocation';
 var taskTabStatus = 0;
 var imgLocation='';//反馈图片所在页面 0提取页面1跟踪页面2交接页面
-
+var lastPage='';//上以页面PageId   做路由用
+var scrollFlag =0; //回到最上面
 // 全局变量已经在原生里面就赋值好了———— EX:【window.OSInfo={os:'iOS',push:'xxxx'}】
-
+var swiper;
 
 
 document.addEventListener("deviceready", onDeviceReadySettingEvents, false);
@@ -86,18 +96,21 @@ function onDeviceReadySettingEvents() {
 //    setTimeout(function () {
 //        getLocation()
 //    }, 3000);
+//    initMine();
+
     checkVersion();
-    init_home_ad();
+   // init_home_ad();
     init_homepage();
     navigator.splashscreen.hide();
     androidQueryInstallId();
 }
 
 function init_homepage(){
-    var user =  localStorage.getItem('user');
+    var user =  localStorage.getItem('e_user');
     user = JSON.parse(user);
     if(user==null)
     {
+        initUnloginHomeTable();
         $('#myboard').unbind('click');
         $('#myboard').attr('click','login_panel()');
         $('#myboard').bind('click',function(){
@@ -109,41 +122,30 @@ function init_homepage(){
         $('#boardPanel').bind('click',function(){
             login_panel(); //绑定物流看板
         });
-//        $('#myFirstboard').unbind('click');
-//        $('#myFirstboard').bind('click',function(){
-//            searchorder_panel();
-//        });
-//        $('#myFirstboardText').html('订单跟踪');
-        //initHomeModuleTable();
 
+        $('#addOrderPanel').unbind('click');
+        $('#addOrderPanel').empty();
+        $('#addOrderPanel').append('<div style="width:80px;'+
+            'height:80px;border-radius:80px;background-color:#01cd88;">'+
+            '<a href="tel:4001110005" >'+
+            '<i class="iconfont icon-kefu "  style="color:#fff;font-size:56px;line-height:80px">'+
+            '</i></a></div>'+
+            '<div  id="addOrderPanelText" style="color:#4d4d4d;font-size:18px;width:100px;padding-top: 10px;">'+
+            '客服</div>');
 
     }else{
-        queryIndexOrderCountSucc();
+        initHomeModuleTable();
+        //queryIndexOrderCountSucc();
         initHomeFooter(user.obj.userType);
         loginStatus=1;
         var result = '';
         if(user.obj.userType=='0'){
-//            $('#myboard').unbind('click');
-//            $('#myboard').bind('click',function(){
-//                logisticboard_panel();
-//            });
-//            $('#myboardText').html('看板');
 
             $('#boardPanel').unbind('click');
             $('#boardPanel').bind('click',function(){
                 logisticboard_panel(); //绑定物流看板
             });
-//            $('#myFirstboard').unbind('click');
-//            $('#myFirstboard').bind('click',function(){
-//                addorder_panel();
-//            });
-//            $('#myFirstboardText').html('我要下单');
         }else if(user.obj.userType=='1'){
-//            $('#myboard').unbind('click');
-//            $('#myboard').bind('click',function(){
-//                ownerboard_panel();
-//            });
-//            $('#myboardText').html('看板');
 
             $('#boardPanel').unbind('click');
             $('#boardPanel').bind('click',function(){
@@ -192,34 +194,43 @@ function onBackKeyDown(e) {
 }
 
 function exitAppPopup(e) {
-    if(window.location.href.indexOf('#') == -1 || window.location.href.indexOf('#home') > 0)
+
+   //dwb-e是 mobiscroll 取消按钮的class 如果显示着 点击返回先取消该组件
+   if($(".dwb-e")!=null && $(".dwb-e").length > 0)
     {
-        e.preventDefault();
-        af.ui.popup({
-            title: "温馨提示",
-            message: "您要关闭程序吗?",
-            cancelText: "取消",
-            cancelCallback: function () {
-            },
-            cancelClass: 'popup-btn',
-            doneText: "确定",
-            doneClass: 'popup-btn',
-            doneCallback: function () {
-                if (navigator.app) {
-                    navigator.app.exitApp();
-                } else if (navigator.device) {
-                    navigator.device.exitApp();
-                }
-            },
-            cancelOnly: false
-        });
-    }else if($("#swipebox-slider").css('display') != undefined)
+        $(".dwb-e").trigger('click');
+    }else
     {
-        $.swipebox.close();
+        if(window.location.href.indexOf('#') == -1 || window.location.href.indexOf('#home') > 0)
+        {
+            e.preventDefault();
+            af.ui.popup({
+                title: "温馨提示",
+                message: "您要关闭程序吗?",
+                cancelText: "取消",
+                cancelCallback: function () {
+                },
+                cancelClass: 'popup-btn',
+                doneText: "确定",
+                doneClass: 'popup-btn',
+                doneCallback: function () {
+                    if (navigator.app) {
+                        navigator.app.exitApp();
+                    } else if (navigator.device) {
+                        navigator.device.exitApp();
+                    }
+                },
+                cancelOnly: false
+            });
+        }else if($("#swipebox-slider").css('display') != undefined)
+        {
+            $.swipebox.close();
+        }
+        else
+        {
+            $($($("#afui").find('header')[0]).find('a')[0]).trigger('click');
+        }
     }
-    else
-    {
-        $.ui.goBack();
-    }
+
 
 }

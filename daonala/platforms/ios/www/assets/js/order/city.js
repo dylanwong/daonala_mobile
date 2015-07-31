@@ -64,7 +64,7 @@ function init_provices_suc(datas){
         $('#provice_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++  ){
             city_list += "<li><a href='javascript:;' city='' " +
             "province='"+datas.obj[i].codeId+"'  provinceName='"+datas.obj[i].cityName+"'" +
             " onclick='init_city(this)' >" +
@@ -81,7 +81,7 @@ function init_city_suc(datas){
         $('#city_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++  ){
             city_list += "<li><a href='javascript:;' city='"+datas.obj[i].codeId+"' " +
                 "cityName='"+datas.obj[i].cityName+"'  province='' onclick='init_zone(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
@@ -97,25 +97,9 @@ function init_zone_suc(datas){
         $('#zone_list').empty();
         var data = datas.obj;
         var city_list = '';
-        for( var i  in datas.obj ){
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
             city_list += "<li><a href='javascript:;' zone='"+datas.obj[i].codeId+"' city='' " +
                 "zoneName='"+datas.obj[i].cityName+"' province='' onclick='confirm_addr(this)' >" +
-                "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
-        }
-        $('#zone_list').html(city_list);
-    }else{
-        $('#zone_list').html('数据错误！');
-    }
-}
-function init_Czone_suc(datas){
-    if(datas.isSucc){
-        $.ui.loadContent("#zones", false, false, "slide");
-        $('#zone_list').empty();
-        var data = datas.obj;
-        var city_list = '';
-        for( var i  in datas.obj ){
-            city_list += "<li><a href='javascript:;' zone='"+datas.obj[i].codeId+"' city='' " +
-                "zoneName='"+datas.obj[i].cityName+"' province='' onclick='confirm_Caddr(this)' >" +
                 "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
         }
         $('#zone_list').html(city_list);
@@ -145,35 +129,84 @@ function init_Cprovices(){
     };
     var province = JSON.parse( localStorage.getItem("provice") );
     if( province == null ){
-        getAjax(queryAddrUrl,option,"init_provices_suc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        getAjax(queryAddrUrl,option,"init_Cprovices_suc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
     }else{
         init_provices_suc(province);
     }
 }
+function init_Cprovices_suc(datas){
+    if( datas.isSucc ){
+
+        $('#provice_list').empty();
+        var data = datas.obj;
+        var city_list = '';
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
+            city_list += "<li><a href='javascript:;' Ccity='' " +
+                "Cprovince='"+datas.obj[i].codeId+"'  CprovinceName='"+datas.obj[i].cityName+"'" +
+                " onclick='init_Ccity(this)' >" +
+                "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
+        }
+        $('#provice_list').html(city_list);
+    }else{
+        $('#provice_list').html('数据错误！');
+    }
+}
 function init_Ccity(elm){
-    localStorage.setItem('confirmCProvince',$(elm).attr('provinceCName') );
-    var provinceName = $(elm).attr('provinceCName');
+    localStorage.setItem('confirmCProvince',$(elm).attr('CprovinceName') );
+    var provinceName = $(elm).attr('CprovinceName');
     sel_Caddr=provinceName;
     var option = {
-        parentId : $(elm).attr('province'),
+        parentId : $(elm).attr('Cprovince'),
         type :'1'
     };
-    getAjax(queryAddrUrl,option,"init_city_suc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+    getAjax(queryAddrUrl,option,"init_Ccity_suc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+}
+function init_Ccity_suc(datas){
+    if( datas.isSucc ){
+        $.ui.loadContent("#citys", false, false, "slide");
+        $('#city_list').empty();
+        var data = datas.obj;
+        var city_list = '';
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
+            city_list += "<li><a href='javascript:;' Ccity='"+datas.obj[i].codeId+"' " +
+                "CcityName='"+datas.obj[i].cityName+"'  Cprovince='' onclick='init_Czone(this)' >" +
+                "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
+        }
+        $('#city_list').html(city_list);
+    }else{
+        $('#city_list').html('数据错误！');
+    }
 }
 function init_Czone(elm){
-    localStorage.setItem('confirmCCity',$(elm).attr('cityCName') );
-    var cityName = $(elm).attr('cityCName');
+    localStorage.setItem('confirmCCity',$(elm).attr('CcityName') );
+    var cityName = $(elm).attr('CcityName');
     sel_Caddr += cityName;
     var option = {
-        parentId : $(elm).attr('city'),
+        parentId : $(elm).attr('Ccity'),
         type :'2'
     };
     getAjax(queryAddrUrl,option,"init_Czone_suc(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
+function init_Czone_suc(datas){
+    if(datas.isSucc){
+        $.ui.loadContent("#zones", false, false, "slide");
+        $('#zone_list').empty();
+        var data = datas.obj;
+        var city_list = '';
+        for( var i = 0,len = datas.obj.length; i < len; i++   ){
+            city_list += "<li><a href='javascript:;' Czone='"+datas.obj[i].codeId+"' Ccity='' " +
+                "CzoneName='"+datas.obj[i].cityName+"' Cprovince='' onclick='confirm_Caddr(this)' >" +
+                "<span class='icon-head'>&nbsp;</span>"+datas.obj[i].cityName+"</a>"
+        }
+        $('#zone_list').html(city_list);
+    }else{
+        $('#zone_list').html('数据错误！');
+    }
+}
 
 function confirm_Caddr(elm){
-    localStorage.setItem('confirmCZone',$(elm).attr('zoneCName') );
-    var zoneName = $(elm).attr('zoneCName');
+    localStorage.setItem('confirmCZone',$(elm).attr('CzoneName') );
+    var zoneName = $(elm).attr('CzoneName');
     sel_Caddr +=zoneName;
     $('#c_provice').val(sel_Caddr);
     $.ui.goBack(-3);

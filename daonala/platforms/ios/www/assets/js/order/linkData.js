@@ -37,20 +37,47 @@ function linkSource(products){
 //        return ["货主无1", "货主无1", "货主大无1"];
 //    }
 //    });
+    var that = this;
     $('#product_search').typeahead({
+
         source: function (query, process) {
+
+            $('#product').hide();
             var results = _.map(products, function (product) {
-                return product.name+'|'+product.id;
+                return product.name+"";
             });
             process(results);
         },
-        highlighter: function (item) {
-            $('#product_search').attr('productid',item.split('|')[1]);
-            return "" + item.split('|')[0] + "";
+        matcher: function (item) {
+            if(item.indexOf(this.query.toLowerCase()) > -1)
+            {
+                return true;
+            }
+            return false;
         },
-        updater: function (item) {
-            console.log("----" + item.split('|')[0] + "-----");
-            return item.split('|')[0];
+
+        highlighter: function (name) {
+
+            var product = _.find(products, function (p) {
+                //$('#product_search').attr('productid',p.id);
+                return p.name == name;
+            });
+
+            return product.name;
+
+        },
+        updater: function ( name) {
+            var product = _.find(products, function (p) {
+                return p.name == name;
+            });
+            that.setSelectedProduct(product);
+            return product.name;
         }
+
     });
+    $('#product').hide();
+    this.setSelectedProduct = function (product) {
+        $('#product_search').attr('productid',product.id);
+        $('#product').html("Purchase: <strong>" + product.name +"</strong>").show();
+    }
 }

@@ -1,7 +1,9 @@
 #afui.overlayStatusbar{
     margin-top: 20px;
 }
-
+.bbc{
+    border-bottom: 1px solid #ef8305;
+}
 .input-top input,.input-mid input,.input-bot input{-webkit-appearance:none;-webkit-tap-highlight-color: rgba(255,255,255,0);width: 100%;padding-left:38px;-webkit-box-sizing: border-box;text-indent: 0;}
 .input-top input{
     border-radius:3px 3px 0px 0px;
@@ -47,9 +49,10 @@
 .car-info2{margin-top:2px;padding:0 0px;display:inline-block;z-index:20;position: absolute;height:43px;top:0em;line-height: 43px;left:44px;font-size:25px;float: right;text-align: center;border-left: #ccc 1px solid}
 
 .swiper-container{width:100%;height:100%;color:#fff;text-align:center;}
-.slide1{height:100%;width:100%;background:url("../img/a.png");background-size:contain;}
-.slide2{height:100%;width:100%;background:url("../img/b.png");background-size:contain;}
-.slide3{height:100%;width:100%;background:url("../img/c.png");background-size:contain;}
+.slide1{height:100%;width:100%;background:url("../img/loading/a.jpg");background-size:contain;}
+.slide2{height:100%;width:100%;background:url("../img/loading/b.jpg");background-size:contain;}
+.slide3{height:100%;width:100%;background:url("../img/loading/c.jpg");background-size:contain;}
+.slide4{height:100%;width:100%;background:url("../img/loading/d.jpg");background-size:contain;}
 .green-slide{background:#49a430;}
 .pink-slide{background:#973e76;}
 .swiper-slide .title{font-style:italic;font-size:42px;margin-top:80px;margin-bottom:0;line-height:45px;}
@@ -57,6 +60,7 @@
 .swiper-pagination-switch{display:inline-block;width:8px;height:8px;border-radius:8px;background:#222;margin-right:5px;opacity:0.8;border:1px solid #fff;cursor:pointer;}
 .swiper-visible-switch{background:#aaa;}.swiper-active-switch{background:#fff;}
 
+.swiper-pagination-bullet{margin:2px;}
 #afui_modal{background-color: #343F42 !important;}
 #modalHeader.header{border: 0;;height: 100px ;}
 #modalFooter.footer{padding: 0;border: 0}

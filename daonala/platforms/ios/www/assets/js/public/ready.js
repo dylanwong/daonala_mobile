@@ -21,7 +21,7 @@ $(document).ready(function(){
     }
 
 
-//    if(localStorage.getItem("user")){
+//    if(localStorage.getItem("e_user")){
 //        setCacheData("myFilter",mergeJson(JSON.parse(localStorage.getItem("myFilter")),{'start':'1'},true),true);
 //        getAjax(queryMyOrderList,JSON.parse(localStorage.getItem("myFilter")),"setCacheData('myList',data,false)");
 //    }else{
@@ -38,27 +38,31 @@ $(document).ready(function(){
     //queryOrderList
     var localStorageVersion= parseFloat(localStorage.getItem("localStorageVersion"));
 
-
     if(localStorageVersion<currentVersion|| isNaN(localStorageVersion) ){
-    //if(1==1){
         //需要设置currentVersion
         $("#splashscreen").removeClass().empty();
-        $.ui.launch();
+        var buttonBottom = $(document).height()*0.7;//'+buttonBottom+'
+        var swiperDiv = $.create("div", {
+            className: "swiper-container",
+            id: "screenWrapper",
+            html: '<div class="swiper-wrapper">' +
+                '<div class="swiper-slide"><div class="slide1"></div></div>' +
+                '<div class="swiper-slide"><div class="slide2"></div></div>' +
+                '<div class="swiper-slide"><div class="slide3"></div></div>' +
+                '<div class="swiper-slide"><div class="slide4 text-center" >' +
+                '<a onclick="goMainFormSlider()" class="btn btn-lg" ' +
+                'style="padding: 5px 40px;background: #fff;' +
+                'margin-top:'+buttonBottom+'px;">' +
+                '<span class="icon-local-shipping" style="font-size: 40px"></span>' +
+                '<P class="f32">立即体验</P></a></div></div></div>' +
+                '<div class="pagination"></div>'
+        });
+        $(swiperDiv.get(0)).appendTo("#splashscreen");
+        var mySwiper = new Swiper('#screenWrapper', {
+            pagination: '.pagination',
+            paginationClickable: true
+        })
         alertLocationPopup = true;
-//        var swiperDiv = $.create("div", {
-//            className: "swiper-container",
-//            id:"screenWrapper",
-//            html: '<div class="swiper-wrapper">' +
-//            '<div class="swiper-slide"><div class="slide1"></div></div>' +
-//            '<div class="swiper-slide"><div class="slide2"></div></div>' +
-//            '<div class="swiper-slide"><div class="slide3 text-center" ><div class="lh2"></div><a onclick="goMainFormSlider()" class="btn  btn-lg" style="padding: 10px 40px;background: #fff;"><span class="icon-local-shipping" style="font-size: 40px"></span><P class="f32">立即抢单</P></a></div></div></div>' +
-//            '<div class="pagination"></div>'
-//        });
-//        $(swiperDiv.get(0)).appendTo("#splashscreen");
-//        var mySwiper = new Swiper('#screenWrapper',{
-//            pagination: '.pagination',
-//            paginationClickable: true
-//        })
     }else{
         $.ui.launch();
         alertLocationPopup = true;
@@ -87,8 +91,9 @@ $.ui.ready(function(){
         /*timeFormat:'hh ii A',*/
         //defaultValue: new Date(new Date().setFullYear(currYear)),
         //maxDate: new Date(),
-        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-        invalid: [ 'w0', 'w6', '5/1', '12/24', '12/25']
+        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate() ,
+        now.getHours() , now.getMinutes()),
+        invalid: ['w6', '5/1', '12/24', '12/25']
     });
     $('#showdeliveryDateDate').click(function(){
         $('#deliveryDate').mobiscroll('show');
@@ -584,7 +589,7 @@ $.ui.ready(function(){
 function getAjax(ajaxURL,option,successFunction,failFunction){
     console.log("getAjax")
 
-    var user = localStorage.getItem('user');
+    var user = localStorage.getItem('e_user');
     var args = option ;
     if(user!=null)
     {
@@ -861,13 +866,13 @@ function setCacheData(key,value,ever){
 }
 
 function getUserNo(){
-    return JSON.parse(localStorage.getItem("user")).obj.userNo ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.userNo ;
 }
 function getEnterpriseNo(){
-    return JSON.parse(localStorage.getItem("user")).obj.enterpriseNo ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.enterpriseNo ;
 }
 function getUserTypeFromsession(){
-    return JSON.parse(localStorage.getItem("user")).obj.userType ;
+    return JSON.parse(localStorage.getItem("e_user")).obj.userType ;
 }
 function mergeJson(jsonbject1, jsonbject2,needString)
 {

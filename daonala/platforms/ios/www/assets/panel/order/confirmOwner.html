@@ -1,0 +1,154 @@
+<div id="confirmownerContent">
+    <div class="gray10"></div>
+
+    <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+            <div class="fl" style="width: 30%;text-align: right;
+            padding: 10px 10px 10px 10px;">
+                <p style="font-size: 16px;color: #383838">
+                    发货人:
+                </p></div>
+            <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
+                <div class="fl"  class="form-group" style="width:80%;">
+                    <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
+                        <input style="" type="text"  name="ownerInfoInput"
+                               class="form-control" id="o_ownername"
+                           placeholder="请输入或选择发货人">
+                    </div>
+                </div>
+                <div style="width:20%;" class="fr" onclick="choiceOwnerAddr();">
+                    <i class="iconfont icon-tubiao"
+                       style="padding-left:5px;color:#333;;font-size:20px;line-height:30px">
+                    </i>
+                </div>
+            </div>
+    </div>
+
+    <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+
+                <div class="fl" style="width: 30%;text-align: right;padding: 10px 10px 10px 10px;">
+                    <p style="font-size: 16px;color: #383838">
+                        省份城市:
+                    </p></div>
+                <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
+                    <div class="fl"  class="form-group" style="width:90%;">
+                        <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
+                            <input onclick="select_city_panel('o_city')"
+                                   type="text" class="form-control"
+                                   id="o_provice"  name="ownerInfoInput" placeholder="请选择省份城市">
+                            <span
+                              style="width:40px;font-size:30px;" class="phone-code unit-box icon-keyboard-arrow-down" ></span>
+
+                        </div>
+                    </div>
+
+                </div>
+    </div>
+
+     <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+                <div style="">
+                <div class="fl" style="width: 30%;text-align: right;padding: 10px 10px 10px 10px;">
+                    <p style="font-size: 16px;color: #383838">
+                        详细地址:
+                    </p></div>
+                <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
+                    <div class="fl"  class="form-group" style="width:90%;">
+                        <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
+                            <input type="text"  name="ownerInfoInput" class="form-control" id="o_addr"
+                                   placeholder="请输入详细地址">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+    <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+        <div style="">
+            <div class="fl" style="width: 30%;text-align: right;padding: 10px 10px 10px 10px;">
+                <p style="font-size: 16px;color: #383838">
+                        联系人:
+                 </p></div>
+            <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
+                    <div class="fl"  class="form-group" style="width:90%;">
+                        <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
+                            <input type="text" name="ownerInfoInput" class="form-control" id="o_linker"
+                            placeholder="请输入联系人">
+                        </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+        <div style="">
+            <div class="fl" style="width: 30%;text-align: right;padding: 10px 10px 10px 10px;">
+                <p style="font-size: 16px;color: #383838">
+                        联系电话:
+                    </p></div>
+                <div class="fr" style="width: 70%;padding-top:10px;padding-bottom:10px;">
+                    <div class="fl"  class="form-group" style="width:90%;">
+                        <div class="col-sm-10 aform" style="padding-left: 0px;padding-right: 0px;">
+                            <input type="text" name="ownerInfoInput" class="form-control" id="o_linkPhone"
+                                   placeholder="请输入电话">
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+     <!--   <div style="width:100%;border-bottom:1px solid #ededed" class="clearfix">
+            <div style="width:90%;
+                line-height:55px;height:55px; margin:0px 10px;">
+                <div class="fl" style="color:#383838;font-size:16px;">
+                    保存发货人
+                </div>
+                <div class="fr" style="margin-top:10px;margin-right:0px;margin-top:-5px;"
+                     class="switch" data-on-label="SI" data-off-label="NO" >
+                    <input id="ownerFlag" type="checkbox" name="o-checkbox" checked >
+                </div>
+            </div>
+        </div>-->
+
+  <!--  <div  align="center" style="  background: #f2f2f2;padding-top: 40px;
+  padding-bottom: 30px;position: relative;margin-top: 10px;clear: both;" >
+        <button role="button" id="loginButton"
+                style="width:80%;background:#ef8305;font-size:x-large;" onclick="backToOwnerAddOrderPage()"
+                class="btn  btn-block">确认返回</button>
+    </div>-->
+
+</div>
+
+
+<!--<div class="form-group" >
+       <label for="o_provice" class="col-sm-2 control-label">城市</label>
+       <div class="col-sm-10 aform" >
+           <input type="text" class="form-control"
+                  id="o_provice" placeholder="请输入省">
+               <span onclick="select_city_panel('o_city')"
+                     style="width:110px;font-size:30px;" class="phone-code unit-box icon-keyboard-arrow-down" ></span>
+       </div>
+   </div>
+
+   <div class="form-group">
+                <label for="o_addr" class="col-sm-2 control-label">详细地址：</label>
+                <div class="col-sm-10 aform">
+                    <input type="text" class="form-control" id="o_addr"
+                           placeholder="请输入详细地址">
+                </div>
+            </div>
+ <div class="form-group">
+                <label for="o_linker" class="col-sm-2 control-label">联系人：</label>
+                <div class="col-sm-10 aform">
+                    <input type="text" class="form-control" id="o_linker"
+                           placeholder="请输入联系人">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="o_linkPhone" class="col-sm-2 control-label">联系电话：</label>
+                <div class="col-sm-10 aform">
+                    <input type="text" class="form-control" id="o_linkPhone"
+                           placeholder="请输入电话">
+                </div>
+            </div>
+            -->
