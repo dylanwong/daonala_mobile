@@ -1,9 +1,12 @@
 <div>
     <div  class="clearfix" >
+        <div class="gray10"></div>
         <div onclick="" style="overflow:hidden;line-height:30px;
             border-radius:5px;border-bottom:1px solid #ededed;">
             <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
-                <div class="fl"><span style="font-size:16px;padding-left: 5px;">发货信息</span></div>
+                <div class="fl">
+                    <i class="iconfont" style="font-size:24px;padding-left: 5px;">&#xe601;</i>
+                    <span style="font-size:16px;color: black">发货信息</span></div>
             </div>
 
             <div id="addOrderOwnerInfo" class="clearfix" onclick="toconfirmownerPanel();">
@@ -13,14 +16,14 @@
                         <!-- <p class="fl" style="width:10px;height:10px;border-radius:10px;
                          background-color: #089c2e;
                          margin-right: 10px; margin-top: 10px;"></p>-->
-                        <p style="font-size: 16px;color: #383838">
+                        <p style="font-size: 16px;color: #7F7F7F;">
                             请选择发货人
                         </p>
                     </div>
                 </div>
                 <div class="fr" style="padding-top: 10px;" >
                     <a>
-                    <span style="font-size: 14px;color: #383838;padding-right:10px;">
+                    <span style="font-size: 14px;color: #383838;padding-right:20px;">
                             <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
                     </span>
                     </a>
@@ -87,17 +90,17 @@
         <div>
             <form style="  padding-top: 10px;" class="form-horizontal" role="form">
                 <div class="fl" style="width: 30%;padding-left: 10px;">
-                    <p style="font-size: 16px;color: #383838">
+                    <p style="font-size: 16px;color: #7F7F7F">
                     发货时间
                 </p></div>
                 <div class="fr" style="width: 70%;">
                     <div class="form-group" style="margin-left: -50px;">
-                        <div class="col-sm-10 aform" style="padding-right: 20px;">
+                        <div class="col-sm-10 aform" style="padding-right: 30px;">
                             <input style="background-color:#F2F2F2;"  name="addOrderText" type="text" class="form-control" id="deliveryDate"
                                    placeholder="请输入要求发货时间">
                             <!--  <input name="" id="search-end-pay" type="text" placeholder="请选择结算时间.." >-->
                             <!--  <div  class="phone-code arrow f32 width10">-->
-                        <span id="showdeliveryDateDate"  style="width:70px;font-size:30px;"
+                        <span id="showdeliveryDateDate"  style="width:70px;font-size:30px;right:8px;"
                               class="phone-code unit-box icon-keyboard-arrow-down f32"></span>
                             <!-- </div>-->
                         </div>
@@ -116,7 +119,10 @@
              style="line-height:30px;
             border-radius:5px;">
             <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
-                <div class="fl"><span style="font-size:16px;padding-left: 5px;">收货信息</span></div>
+                <div class="fl">
+                    <i class="iconfont" style="font-size:24px;padding-left: 5px;">&#xe60c;</i>
+                    <span style="font-size:16px;color: black">收货信息</span>
+                </div>
             </div>
             <div id="addOrderCustInfo" class="clearfix"  onclick="toconfirmcustPanel();">
                 <div class="fl" style="width: 70%;">
@@ -124,13 +130,13 @@
                         <!--<p class="fl" style="width:10px;height:10px;border-radius:10px;
                         background-color: #089c2e;
                         margin-right: 10px; margin-top: 10px;"></p>-->
-                        <p style="font-size: 16px;color: #383838">
+                        <p style="font-size: 16px;color: #7F7F7F">
                             请选择收货人
                         </p>
                     </div>
                 </div>
                 <div class="fr" style="padding-top: 5px;" ><!--onclick="choiceCustAddr();"-->
-               <span style="font-size: 14px;color: #383838;padding-right:10px;">
+               <span style="font-size: 14px;color: #383838;padding-right:20px;">
                             <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
                             </span></div>
             </div>
@@ -204,7 +210,10 @@
              style=" line-height:30px;
             border-radius:5px;">
             <div class="clearfix" style="border-bottom:1px solid #F5F5F5;" >
-                <div class="fl"><span style="font-size:16px;padding-left: 5px;">货物信息</span></div>
+                <div class="fl">
+                    <i class="iconfont" style="font-size:24px;padding-left: 5px;">&#xe607;</i>
+                    <span style="font-size:16px;color: black">货物信息</span>
+                </div>
             </div>
             <div id="addOrderGoodInfo" class="clearfix"  onclick="choiceGood();">
                 <div class="fl" style="width: 70%;">
@@ -212,17 +221,18 @@
                         <!--<p class="fl" style="width:10px;height:10px;border-radius:10px;
                         background-color: #089c2e;
                         margin-right: 10px; margin-top: 10px;"></p>-->
-                        <p style="font-size: 16px;color: #383838">
+                        <p style="font-size: 16px;color: #7F7F7F">
                             请输入货物信息
                         </p>
                     </div>
                 </div>
                 <div class="fr" style="padding-top: 5px;" >
-                    <span style="font-size: 14px;color: #383838;padding-right:10px;">
+                    <span style="font-size: 14px;color: #383838;padding-right:20px;">
                         <img src="assets/img/detail-icon.png" style="margin-top: 0px;" />
                     </span>
                 </div>
             </div>
+            <div class="gray10"></div>
 
 
             <div id="updateOrderGoodInfo" style="display:none;" class="clearfix"

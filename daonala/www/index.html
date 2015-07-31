@@ -285,10 +285,10 @@ data-defer:加载一个html进来
 </div>
 
 <div class="panel p0"
-     title="" id="logisticboardsearch" data-defer="assets/panel/board/logisticboardsearch.html"
+     title="过滤条件" id="logisticboardsearch" data-defer="assets/panel/board/logisticboardsearch.html"
      data-load="init_board"
      data-unload=""
-     data-header="allHeader"
+     data-header=""
      data-footer="none">
 </div>
 
@@ -370,21 +370,21 @@ data-defer:加载一个html进来
      data-load=""
      data-unload=""
      data-header="confirmownerHeader"
-     data-footer="">
+     data-footer="none">
 </div>
 <div class="panel p0"
      title="确认收货人" id="confirmcust" data-defer="assets/panel/order/confirmCust.html"
      data-load=""
      data-unload=""
      data-header="confirmCustHeader"
-     data-footer="">
+     data-footer="none">
 </div>
 <div class="panel p0"
      title="确认货物" id="confirmgood" data-defer="assets/panel/order/confirmGoods.html"
      data-load=""
      data-unload=""
      data-header="confirmGoodHeader"
-     data-footer="">
+     data-footer="none">
 </div>
 <div class="panel p0"
      title="" id="chocieOwner" data-defer="assets/panel/order/choiceOwner.html"
@@ -766,27 +766,60 @@ data-defer:加载一个html进来
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="confirmownerHeaderTitle" class="">货主信息</h1>
-    <div><a class="searchButton" style="margin-right: 0px;  top: 12px;
-  right: -25px;"
-            onclick="backToOwnerAddOrderPage();" >保存</a></div>
+    <div><a class="searchButton" style="  margin-right: 0px;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  border: 1px solid #f2f2f2;
+  background-color: #fff;
+  color: #EF8305;
+  height: 30px;
+  width: 60px;
+  text-align: left;
+  border-radius: 5px;
+  line-height: 30px;
+  padding-left: 15px;"
+            onclick="backToOwnerAddOrderPage();" >确定</a></div>
 </header>
 <header id="confirmGoodHeader">
     <a class="headerBack" onclick="$.ui.loadContent('#addorder', false, false, 'slide')" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="confirmGoodHeaderTitle" class="">货物信息</h1>
-    <div><a class="searchButton" style="margin-right: 0px;  top: 12px;
-  right: -25px;"
-            onclick="backToGoodOrderPage();" >保存</a></div>
+    <div><a class="searchButton" style="  margin-right: 0px;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  border: 1px solid #f2f2f2;
+  background-color: #fff;
+  color: #EF8305;
+  height: 30px;
+  width: 60px;
+  text-align: left;
+  border-radius: 5px;
+  line-height: 30px;
+  padding-left: 15px;"
+            onclick="backToGoodOrderPage();" >确定</a></div>
 </header>
 <header id="confirmCustHeader">
     <a class="headerBack" onclick="$.ui.loadContent('#addorder', false, false, 'slide')" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="confirmCustTitle" class="">货主信息</h1>
-    <div><a class="searchButton"  style="margin-right: 0px;  top: 12px;
-  right: -25px;"
-            onclick="backToCustAddOrderPage();" >保存</a></div>
+    <div><a class="searchButton"  style="  margin-right: 0px;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  border: 1px solid #f2f2f2;
+  background-color: #fff;
+  color: #EF8305;
+  height: 30px;
+  width: 60px;
+  text-align: left;
+  border-radius: 5px;
+  line-height: 30px;
+  padding-left: 15px;"
+            onclick="backToCustAddOrderPage();" >确定</a></div>
 </header>
 <header id="biddingRecodeHeader">
 
@@ -815,7 +848,7 @@ data-defer:加载一个html进来
 
 <footer id="addDetailFooter" align="center" style="  padding-left: 15%;background: white;">
     <button role="button" id="loginButton"
-            style="width:80%;background:#ef8305;font-size:x-large;" onclick="saveOrUpdate()"
+            style="width:80%;background:#ef8305;font-size:x-large;color:#fff;" onclick="saveOrUpdate()"
             class="btn  btn-block">提交订单</button>
 </footer>
 <footer id="confirmGoodFooter" align="center" style="  padding-left: 15%;background: white;">
