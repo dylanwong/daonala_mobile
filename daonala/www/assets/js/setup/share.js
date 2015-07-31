@@ -24,8 +24,8 @@ function shareFunc()
         });
     }else
     {
-        window.plugins.socialsharing.share('共速达货源通,货源就是那么简单. 立即加入吧!',
-            null,null,'http://www.gongsuda.com:8050/sms_mobile/m.html');
+        window.plugins.socialsharing.share('共速达e订单,可视化您的订单交付,立即加入吧!',
+            null,null,'http://gsdoms.gongsuda.com:8080/gsd_oms/m.html');
     }
 }
 
@@ -35,14 +35,14 @@ function shareSession(flag)
     var shares = ['TIMELINE','SESSION'];
     Wechat.share({
         message: {
-            title: "共速达货源通",
-            description: "货源就是那么简单,立即加入吧!",
-            mediaTagName:'货源通',
+            title: "共速达e订单",
+            description: "可视化您的订单交付,立即加入吧!",
+            mediaTagName:'共速达e订单',
             media: {
-                title: "共速达货源通",
-                description: "抢单就是那么简单!",
+                title: "共速达e订单",
+                description: "可视化您的订单交付!",
                 type: Wechat.Type.LINK,
-                webpageUrl: "http://www.gongsuda.com:8050/sms_mobile/m.html"
+                webpageUrl: "http://gsdoms.gongsuda.com:8080/gsd_oms/m.html"
             }
         },
         scene: Wechat.Scene[shares[flag]]  // share to Timeline
