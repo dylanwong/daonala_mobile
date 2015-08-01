@@ -1,89 +1,77 @@
-<div >
-    <div  align="center">
-        <div align="center" style="width:95%;border: 1px solid #e6e6e6;
-                background-color: #f9fafb;border-radius:5px;overflow:hidden;">
-            <div class="fl" style="width:86%;padding-left: 5px;font-size:16px;padding-top: 5px;padding-bottom: 5px;color:#b8b8b8;">
-                <input type="text" id="searchAddrText"  autofocus="autofocus"
-                       style="border:1px solid #ccc;" class="form-control"
-                       placeholder="请输入货主或收货地址查询...">
+
+
+<div>
+    <div class="gray10"></div>
+    <div id="ownerAddrWrapper" class="wrapperContent">
+        <div id="scroller">
+            <div id="pullDown" align="center" class="pullDown ownerAddrpullDown">
+                <span class="ownerAddrPullDownLabel">下拉刷新...</span>
             </div>
-            <div onclick="searchOwnerAddr()"
-                 class="fl" style="padding-left: 5px;padding-right: 5px;padding-top: 5px;">
-                <span class="icon-search" style="font-size:32px;color:#bbbbbb;"></span>
+            <div class="gray10"></div>
+            <div  align="center">
+                <div align="center" style="width:95%;border: 1px solid #e6e6e6;
+                background-color: #f9fafb;border-radius:5px;overflow:hidden;">
+                    <div class="fl" style="width:86%;padding-left: 5px;font-size:16px;padding-top: 5px;padding-bottom: 5px;color:#b8b8b8;">
+                        <input type="text" id="searchOwnerAddrText"  autofocus="autofocus"
+                               style="border:1px solid #ccc;" class="form-control"
+                               placeholder="请输入客户或发货地址查询...">
+                    </div>
+                    <div onclick="searchOwnerAddr()"
+                         class="fl" style="padding-left: 5px;padding-right: 5px;padding-top: 5px;">
+                        <span class="icon-search" style="font-size:32px;color:#bbbbbb;"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="gray10"></div>
+    <div id="">
+        <ul id="choiceOwnerOrCust_ul">
+
+         </ul>
+    </div>
+            <div id="pullUp" align="center" class="pullUp ownerAddrpullUp">
+                <span class="ownerAddrPullUpLabel">上拉加载更多...</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--<li href="#" class="f2" style="margin-top:4px;">
+    <div class="f2" style="height: 70px;">
+        <div class="" style="float:left;width: 90%">
+            <div >
+                <div style="float:left;">
+                    <span class="fontCb f1 f14  p0-6 fd" >发货公司名称:</span>
+                    <span class="fontCb f1 f14  p0-6 fd" >徐福记有限公司</span>
+                </div>
+                <div style="float:right;width:40%;">
+
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+            <div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">
+            </div>
+            <div>
+                <span class="f12 fco p0-6"  >联系人:</span>
+                <span class=" f12 fco" >成司机</span>
+                <span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>
+                <span class=" f12 fco">13412341234:</span>
+                <br>
+                <span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>
+                <span class="ownerName f12 fco p0-6" style="position: absolute;">广东省深圳市罗湖区123号</span><br>
             </div>
         </div>
-
+        <div style="float:right;">
+            <div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">
+                <div align="center" style="">
+                    <img style="width:16px;height: 16px;" src="assets/img/right.png" />
+                </div>
+            </div>
+        </div>
+        <div style="clear:both;"></div>
     </div>
-    <ul id="choiceOwnerOrCust_ul">
-        <!--<li href="#" class="f2" style="margin-top:4px;">
-            <div class="f2" style="height: 70px;">
-                <div class="" style="float:left;width: 90%">
-                    <div >
-                        <div style="float:left;">
-                            <span class="fontCb f1 f14  p0-6 fd" >发货公司名称:</span>
-                            <span class="fontCb f1 f14  p0-6 fd" >徐福记有限公司</span>
-                        </div>
-                        <div style="float:right;width:40%;">
+</li>   -->
 
-                        </div>
-                        <div style="clear:both;"></div>
-                    </div>
-                    <div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">
-                    </div>
-                    <div>
-                        <span class="f12 fco p0-6"  >联系人:</span>
-                        <span class=" f12 fco" >成司机</span>
-                        <span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>
-                        <span class=" f12 fco">13412341234:</span>
-                        <br>
-                        <span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>
-                        <span class="ownerName f12 fco p0-6" style="position: absolute;">广东省深圳市罗湖区123号</span><br>
-                    </div>
-                </div>
-                <div style="float:right;">
-                    <div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">
-                        <div align="center" style="">
-                            <img style="width:16px;height: 16px;" src="assets/img/right.png" />
-                        </div>
-                    </div>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-        </li>
-        <li href="#" class="f2" style="margin-top:4px;">
-            <div class="f2" style="height: 70px;">
-                <div class="" style="float:left;width: 90%">
-                    <div >
-                        <div style="float:left;">
-                            <span class="fontCb f1 f14  p0-6 fd" >发货公司名称:</span>
-                            <span class="fontCb f1 f14  p0-6 fd" >徐福记有限公司</span>
-                        </div>
-                        <div style="float:right;">
 
-                        </div>
-                        <div style="clear:both;"></div>
-                    </div>
-                    <div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">
-                    </div>
-                    <div>
-                        <span class="f12 fco p0-6"  >联系人:</span>
-                        <span class=" f12 fco" >成司机</span>
-                        <span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>
-                        <span class=" f12 fco">13412341234:</span>
-                        <br>
-                        <span class="ownerName f12 fco p0-6"  >发货地详细地址:</span>
-                        <span class="ownerName f12 fco p0-6" style="position: absolute;">***省**市**区</span><br>
-                    </div>
-                </div>
-                <div style="float:right;">
-                    <div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">
-                        <div align="center" style="">
-                            <img style="width:16px;height: 16px;" src="assets/img/right.png" />
-                        </div>
-                    </div>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-        </li>-->
-    </ul>
-</div>

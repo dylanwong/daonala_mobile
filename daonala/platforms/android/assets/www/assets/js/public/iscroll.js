@@ -81,7 +81,7 @@ function custLoaded(){
                 }
             }
         });
-        custboardScroll.scrollToTop(100);
+       // custboardScroll.scrollToTop(100);
     }
 }
 

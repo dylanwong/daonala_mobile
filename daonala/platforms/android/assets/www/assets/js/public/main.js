@@ -28,6 +28,7 @@ include("assets/js/order/city.js");
 include("assets/js/public/iscroll.js");
 include("assets/js/setup/share.js");
 include("assets/js/setup/map.js");
+include("assets/js/order/addressScroll.js");
 function mainPanleUnLoad(){
     console.log("mainPanleUnLoad")
 }

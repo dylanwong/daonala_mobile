@@ -1,0 +1,36 @@
+  <div>
+    <div class="gray10"></div>
+    <div id="custAddrWrapper" class="wrapperContent">
+        <div id="scroller">
+            <div id="pullDown" align="center" class="pullDown custAddrpullDown">
+                <span class="ownerAddrPullDownLabel">下拉刷新...</span>
+            </div>
+            <div class="gray10"></div>
+            <div  align="center">
+                <div align="center" style="width:95%;border: 1px solid #e6e6e6;
+                background-color: #f9fafb;border-radius:5px;overflow:hidden;">
+                    <div class="fl" style="width:86%;padding-left: 5px;font-size:16px;padding-top: 5px;padding-bottom: 5px;color:#b8b8b8;">
+                        <input type="text" id="searchCustAddrText"  autofocus="autofocus"
+                               style="border:1px solid #ccc;" class="form-control"
+                               placeholder="请输入客户或发货地址查询...">
+                    </div>
+                    <div onclick="searchCustAddr()"
+                         class="fl" style="padding-left: 5px;padding-right: 5px;padding-top: 5px;">
+                        <span class="icon-search" style="font-size:32px;color:#bbbbbb;"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="gray10"></div>
+            <div >
+                <ul id="choiceCust_ul">
+
+                </ul>
+            </div>
+            <div id="pullUp" align="center" class="pullUp custAddrpullUp">
+                <span class="Label">上拉加载更多...</span>
+            </div>
+
+        </div>
+    </div>
+</div>
