@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>A03FF9F1-F9EA-4922-BE07-687D141CF722</string>
 	<key>IDESourceControlProjectName</key>
-	<string>daonala</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>92C5B86568569B30CEEF76445BB2ED43A5C822C2</key>
@@ -16,7 +16,7 @@
 		<string>https://github.com/shosky/sms_mobile.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>daonala/platforms/ios/daonala.xcodeproj</string>
+	<string>daonala/platforms/ios/daonala.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>92C5B86568569B30CEEF76445BB2ED43A5C822C2</key>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>92C5B86568569B30CEEF76445BB2ED43A5C822C2</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Daonala</string>
+			<string>GsdOms</string>
 		</dict>
 	</array>
 </dict>
