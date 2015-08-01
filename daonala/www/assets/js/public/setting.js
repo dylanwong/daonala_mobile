@@ -56,6 +56,8 @@ var searchOrderFromIndexUrl = baseUrl + "order/queryIndexOrderList.action";
 //var linkDataUrl = baseUrl + "order/getLinkDataList.action";
 var updateSelfInfoUrl = baseUrl + "base/updateSelfInfo.action";
 var queryAdList = baseUrl + "base/query_ad_Version.action";
+var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
+var choiceCustAddrUrl = baseUrl + "order/queryCustAddr.action";
 //event target ID
 var ETID = null;
 //选中的任务ID
