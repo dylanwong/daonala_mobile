@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		097E4F0B22C447BD81818F30 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A32C5D550B848889F28EC63 /* libWeChatSDK.a */; };
+		0F578F591B6C6810006762FE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F578F581B6C6810006762FE /* CoreTelephony.framework */; };
+		0F578F5B1B6C682E006762FE /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F578F5A1B6C682E006762FE /* libicucore.dylib */; };
+		0F578F5D1B6C6841006762FE /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F578F5C1B6C6841006762FE /* libc++.dylib */; };
+		0F578F601B6C69A2006762FE /* AVOSCloud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F578F5F1B6C69A2006762FE /* AVOSCloud.framework */; };
 		0F65A4A42DD74E2ABD75BC9D /* CDVWechat.m in Sources */ = {isa = PBXBuildFile; fileRef = D8701481C4B04FA3B30AA10C /* CDVWechat.m */; };
 		145AA9970C0548D8804B6128 /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7483A6333E4D50B06161BB /* UIImage+CropScaleOrientation.m */; };
 		1A80D5B03A464B8A91B4BD85 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4408AD63F5D64053A188806D /* libstdc++.6.dylib */; };
@@ -87,6 +91,10 @@
 		04E959C5369E4068B0C332AA /* CDVCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVCamera.m; path = org.apache.cordova.camera/CDVCamera.m; sourceTree = "<group>"; };
 		054B3C05B3F140A28D172782 /* CoreLocation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		081869DC1D6F4208AF37384C /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = xu.li.cordova.wechat/WXApi.h; sourceTree = "<group>"; };
+		0F578F581B6C6810006762FE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		0F578F5A1B6C682E006762FE /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		0F578F5C1B6C6841006762FE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		0F578F5F1B6C69A2006762FE /* AVOSCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AVOSCloud.framework; sourceTree = "<group>"; };
 		11DC041981B54685B3BBE600 /* CDVFileTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVFileTransfer.m; path = "org.apache.cordova.file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; };
 		1C7483A6333E4D50B06161BB /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropScaleOrientation.m"; path = "org.apache.cordova.camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -175,20 +183,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F578F5D1B6C6841006762FE /* libc++.dylib in Frameworks */,
+				0F578F5B1B6C682E006762FE /* libicucore.dylib in Frameworks */,
+				46A803FC5F0C46C4AC36D3EF /* CoreLocation.framework in Frameworks */,
+				0F578F591B6C6810006762FE /* CoreTelephony.framework in Frameworks */,
+				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
+				FDEEDDF7B31844E5982F7D0D /* SystemConfiguration.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				4EC1C090637E46FBB7B6A62F /* Social.framework in Frameworks */,
 				B0A4BC0EFD4F441FA143F5A1 /* MessageUI.framework in Frameworks */,
 				DE4B90BF9B274F6EA3C72776 /* ImageIO.framework in Frameworks */,
-				46A803FC5F0C46C4AC36D3EF /* CoreLocation.framework in Frameworks */,
 				097E4F0B22C447BD81818F30 /* libWeChatSDK.a in Frameworks */,
 				8156436A2838448DB776CC9B /* libz.dylib in Frameworks */,
 				D076F53D20AC42D4961EF7B1 /* libsqlite3.0.dylib in Frameworks */,
-				FDEEDDF7B31844E5982F7D0D /* SystemConfiguration.framework in Frameworks */,
 				D59F456786A441E3BF9077EC /* Security.framework in Frameworks */,
 				1A80D5B03A464B8A91B4BD85 /* libstdc++.6.dylib in Frameworks */,
+				0F578F601B6C69A2006762FE /* AVOSCloud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +291,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F578F5F1B6C69A2006762FE /* AVOSCloud.framework */,
+				0F578F5C1B6C6841006762FE /* libc++.dylib */,
+				0F578F5A1B6C682E006762FE /* libicucore.dylib */,
+				0F578F581B6C6810006762FE /* CoreTelephony.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
@@ -432,6 +448,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = KY6T5C4W3Q;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "daonala" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -601,7 +622,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -638,7 +664,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "daonala/daonala-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;

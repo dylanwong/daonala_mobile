@@ -6,9 +6,9 @@
  to you under the Apache License, Version 2.0 (the
  "License"); you may not use this file except in compliance
  with the License.  You may obtain a copy of the License at
-
+ 
  http://www.apache.org/licenses/LICENSE-2.0
-
+ 
  Unless required by applicable law or agreed to in writing,
  software distributed under the License is distributed on an
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -28,9 +28,9 @@
 #import "CDVPlugin.h"
 
 @interface CDVViewController : UIViewController <UIWebViewDelegate, CDVScreenOrientationDelegate>{
-    @protected
+@protected
     id <CDVCommandDelegate> _commandDelegate;
-    @protected
+@protected
     CDVCommandQueue* _commandQueue;
     NSString* _userAgent;
 }
@@ -48,7 +48,18 @@
 @property (nonatomic, readwrite, copy) NSString* startPage;
 @property (nonatomic, readonly, strong) CDVCommandQueue* commandQueue;
 @property (nonatomic, readonly, strong) id <CDVCommandDelegate> commandDelegate;
+
+/**
+ The complete user agent that Cordova will use when sending web requests.
+ */
 @property (nonatomic, readonly) NSString* userAgent;
+
+/**
+ The base user agent data that Cordova will use to build its user agent.  If this
+ property isn't set, Cordova will use the standard web view user agent as its
+ base.
+ */
+@property (nonatomic, readwrite, copy) NSString* baseUserAgent;
 
 + (NSDictionary*)getBundlePlist:(NSString*)plistName;
 + (NSString*)applicationDocumentsDirectory;
@@ -68,5 +79,6 @@
 - (void)registerPlugin:(CDVPlugin*)plugin withPluginName:(NSString*)pluginName;
 
 - (BOOL)URLisAllowed:(NSURL*)url;
+- (void)processOpenUrl:(NSURL*)url;
 
 @end
