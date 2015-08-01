@@ -523,7 +523,7 @@ function backToOwnerAddOrderPage(){
             var owner = JSON.parse(localStorage.getItem('ownerInfo'));
             if( user.obj.userType == '1'){
                 ownerNo_Temp = user.obj.ownerNo;
-                ownerAlias_Temp = user.obj.ownerAlias;
+                ownerAlias_Temp = user.obj.enterpriseAlias;
             }else {
                 if ( owner != null ) {
                     ownerNo_Temp = owner.ownerNo;
