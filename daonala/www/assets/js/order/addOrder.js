@@ -61,9 +61,10 @@ function searchCustAddr(){
 }
 //选择发货人地址信息
 function choiceOwnerAddr(){
+    $('#searchOwnerAddrText').val('');
     $('#choiceOwnerOrCust_ul').empty();
     $.ui.loadContent("#chocieOwner", false, false, "slide");
-    $('#searchOwnerAddrText').val();
+
     scrollFlag =0;
     var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
