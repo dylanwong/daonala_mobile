@@ -264,7 +264,7 @@ function updateTracePanel2(data){
             }
         };
 
-        traceScroll();
+      // traceScroll();
     }else{
         $("#trace_list_div").empty();
         $("#trace_list_div").html("暂无跟踪信息");

@@ -929,7 +929,6 @@ function checkVersion() {
 
 //flag 1：后台发起获取版本
 function iosUpdatePlugin(flag) {
-    alert(currentVersion);
     $.ajax({
         type: "GET",
         url: queryVersion,
@@ -940,7 +939,6 @@ function iosUpdatePlugin(flag) {
         },
         dataType: "jsonp",
         success: function (data) {
-            alert(JSON.stringify(data));
             if (data.isSucc) {
                 $.ui.hideMask();
                 $.ui.popup({
