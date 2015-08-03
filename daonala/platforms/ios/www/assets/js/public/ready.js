@@ -929,7 +929,7 @@ function checkVersion() {
 
 //flag 1：后台发起获取版本
 function iosUpdatePlugin(flag) {
-    alert(queryVersion);
+    alert(currentVersion);
     $.ajax({
         type: "GET",
         url: queryVersion,
