@@ -478,8 +478,9 @@ function queryAdListSucc(data) {
 
 function init_home_ad()
 {
-    $("#ad").height($("#home").height()*0.32);
-    $("#home-module").height($("#home").height()-$("#ad").height());
+
+    $("#ad").height($("#home2").height()*0.32);
+    $("#home-module").height($("#home2").height()-$("#ad").height());
     $("#home-module-total-num").height($("#home-module-total").height()-60);
     $("#home-module-buttons-button").height($("#home-module-buttons").height()-60);
 
@@ -616,6 +617,7 @@ function queryIndexOrderCountSucc(data){
     }
     $('#home-module-table').empty();
     $('#home-module-table').append(result);
+
     }
 
 }
