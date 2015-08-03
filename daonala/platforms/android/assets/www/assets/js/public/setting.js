@@ -105,6 +105,18 @@ function onDeviceReadySettingEvents() {
     init_homepage();
     navigator.splashscreen.hide();
     androidQueryInstallId();
+
+  //  toTestPage();
+}
+function toTestPage(){
+    var testwrapper = new IScroll('#wrapper', {
+        hScroll: false, //是否水平滚动
+        vScroll: true, //是否垂直滚动
+        y: 10, //滚动垂直初始位置
+        bounce : false
+    });
+
+    $.ui.loadContent('#scrollTest', false, false, 'slide');
 }
 
 function init_homepage(){

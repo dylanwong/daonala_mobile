@@ -669,6 +669,16 @@ li {list-style-type:none;}
 
 
 /*iscroll*/
+.wrapper {
+    position:absolute; z-index:1;
+    top:40px; bottom:0px; left:0;
+    width:100%;
+    background:#fff;
+    overflow:hidden;
+}
+
+
+
 .wrapperContent
 {
     position:absolute; z-index:1;
