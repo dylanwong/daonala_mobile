@@ -25,7 +25,7 @@ function shareFunc()
     }else
     {
         window.plugins.socialsharing.share('共速达e订单,可视化您的订单交付,立即加入吧!',
-            null,null,'http://gsdoms.gongsuda.com:8080//m.html');
+            null,null,'http://gsdoms.gongsuda.com:8080/gsd_oms/m.html');
     }
 }
 
@@ -42,7 +42,7 @@ function shareSession(flag)
                 title: "共速达e订单",
                 description: "可视化您的订单交付!",
                 type: Wechat.Type.LINK,
-                webpageUrl: "http://gsdoms.gongsuda.com:8080/m.html"
+                webpageUrl: "http://gsdoms.gongsuda.com:8080/gsd_oms/m.html"
             }
         },
         scene: Wechat.Scene[shares[flag]]  // share to Timeline

@@ -227,7 +227,6 @@ function historyLoaded() {
 
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
-/*
 var traceScroll;
 function traceScroll(){
     if(traceScroll==undefined || traceScroll == null) {
@@ -248,5 +247,4 @@ function traceScroll(){
         });
     }
 }
-*/
 
