@@ -6,12 +6,12 @@ function shareFunc()
     if ($.os.ios) {
         $.ui.popup({
             title: "请选择要分享社交平台",
-            message: "<div >" +
-                "<div style='padding: 10px;'>" +
+            message: "<div style='padding: 20px;'>" +
+                "<div class=''>" +
                 "<a href='javascript:;' onclick=shareSession(1) " +
                 "class='poupShareTypeDiv' title='A1' >微信好友</a>" +
                 "</div>" +
-                "<div style='padding: 10px;'>" +
+                "<div class=''>" +
                 "<a href='javascript:;' onclick=shareSession(0) " +
                 "class='poupShareTypeDiv' title='A1' >微信朋友圈</a>" +
                 "</div>" +

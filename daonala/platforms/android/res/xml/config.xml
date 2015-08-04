@@ -30,6 +30,9 @@
     <feature name="Wechat">
         <param name="android-package" value="xu.li.cordova.wechat.Wechat" />
     </feature>
+    <feature name="CheckUpdatePlugin">
+        <param name="android-package" value="com.sealinkin.daonala.CheckUpdatePlugin"/>
+    </feature>
     <preference name="WechatAppId" value="$WechatAppId" />
     <name>共速达e订单</name>
     <description>

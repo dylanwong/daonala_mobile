@@ -4,53 +4,68 @@
 
 //搜索地址信息
 function searchOwnerAddr(){
+    $('#choiceOwnerOrCust_ul').empty();
     //$.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
     var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
     if(user.obj.userType==1){
-        option = {
+        option = { start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:user.obj.ownerNo,
-            addr:$('#searchAddrText').val()
+            addr:$('#searchOwnerAddrText').val()
         };
     }else if(user.obj.userType==0){
         option = {
+            start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:user.obj.ownerNo,
-            addr:$('#searchAddrText').val()
+            addr:$('#searchOwnerAddrText').val()
         };
     }
+    setCacheData("searchOwnerAddrFilter", mergeJson(JSON.parse(localStorage.getItem("searchOwnerAddrFilter")),
+        option , true), true);
     getAjax(choiceOwnerAddrUrl,option,"showOwnerAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
 }
 function searchCustAddr(){
+    $('#choiceCust_ul').empty();
     //$.ui.loadContent("#chocieOwner", false, false, "slide");
     var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
     var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
     if(user.obj.userType==1){
         option = {
+            start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:user.obj.enterpriseNo,
-            addr:$('#searchAddrText').val()
+            addr:$('#searchCustAddrText').val()
         };
     }else if(user.obj.userType==0){
         option = {
+            start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:$('#o_ownername').attr('o_ownerNo'),
-            addr:$('#searchAddrText').val()
+            addr:$('#searchCustAddrText').val()
         };
 
     }
+    setCacheData("searchCustAddrFilter", mergeJson(JSON.parse(localStorage.getItem("searchOwnerAddrFilter")),
+        option , true), true);
     getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
 }
 //选择发货人地址信息
 function choiceOwnerAddr(){
+    $('#searchOwnerAddrText').val('');
     $('#choiceOwnerOrCust_ul').empty();
     $.ui.loadContent("#chocieOwner", false, false, "slide");
-    var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
+
+    scrollFlag =0;
     var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
 //    if(user.obj.userType==1){
@@ -61,12 +76,16 @@ function choiceOwnerAddr(){
 //        };
 //    }else if(user.obj.userType==0){
         option = {
+            start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:user.obj.ownerNo,
-            addr:$('#searchAddrText').val()
+            addr:$('#searchOwnerAddrText').val()
         };
  //   }
 
+    setCacheData("searchOwnerAddrFilter", mergeJson(JSON.parse(localStorage.getItem("searchOwnerAddrFilter")),
+        option , true), true);
     getAjax(choiceOwnerAddrUrl, option,
         "showOwnerAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 
@@ -78,8 +97,9 @@ function choiceOwnerAddr(){
 //选择收货人地址信息
 function choiceCustAddr(){
     $('#choiceOwnerOrCust_ul').empty();
+    $('#searchCustAddrText').val('');
+    scrollFlag =0;
 
-    var choiceOwnerAddrUrl = baseUrl + "order/queryCustAddr.action";
     var user = JSON.parse(localStorage.getItem("e_user"));
     var option ;
     var owners = JSON.parse(localStorage.getItem("ownerInfo"));
@@ -87,21 +107,25 @@ function choiceCustAddr(){
         if( $('#ownerText').attr('o_ownerNo') != ''
             && $('#ownerText').attr('o_ownerNo') !=null ){
         option = {
+            start:1,
+            length:10,
             enterpriseno:user.obj.logisticNo,
             ownerNo:$('#ownerText').attr('o_ownerNo'),
-            addr:$('#searchAddrText').val()
+            addr:$('#searchCustAddrText').val()
         };
-        getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-        $.ui.loadContent("#chocieOwner", false, false, "slide");
+        getAjax(choiceCustAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+        $.ui.loadContent("#chocieCust", false, false, "slide");
         }else if($('#ownerText').attr('o_ownerNo') == ''
             || $('#ownerText').attr('o_ownerNo') ==null) {
             option = {
+                start:1,
+                length:10,
                 enterpriseno:user.obj.logisticNo,
                 ownerNo:user.obj.ownerNo,
-                addr:$('#searchAddrText').val()
+                addr:$('#searchCustAddrText').val()
             };
-            getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-            $.ui.loadContent("#chocieOwner", false, false, "slide");
+            getAjax(choiceCustAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            $.ui.loadContent("#chocieCust", false, false, "slide");
         } else
             {
                 errorPopup('未选择货主，请填写收货人信息');
@@ -112,47 +136,51 @@ function choiceCustAddr(){
         if( $('#ownerText').attr('o_ownerNo') != ''
             && $('#ownerText').attr('o_ownerNo') !=null ){
             option = {
+                start:1,
+                length:10,
                 enterpriseno:user.obj.logisticNo,
                 ownerNo:$('#ownerText').attr('o_ownerNo'),
-                addr:$('#searchAddrText').val()
+                addr:$('#searchCustAddrText').val()
             };
-            getAjax(choiceOwnerAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
-            $.ui.loadContent("#chocieOwner", false, false, "slide");
+            getAjax(choiceCustAddrUrl,option,"showCustAddrList(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
+            $.ui.loadContent("#chocieCust", false, false, "slide");
         }else{
             errorPopup('请选择发货人信息，或填写收货人信息');
         }
 
     }
-
+    setCacheData("searchCustAddrFilter", mergeJson(JSON.parse(localStorage.getItem("searchCustAddrFilter")),
+        option , true), true);
 }
 
-function showOwnerAddrList(data){
-
+function showOwnerAddrList(data,flag){
+    var oldmyFilter = JSON.parse(localStorage.getItem("searchOwnerAddrFilter"));
     var containNode = $("<div class='ownerNode'></div>");
     var nullTrace = "<div align='center' style='margin: 10px;'>查无发货地信息...</div>";
     if(data.isSucc) {
         var result = '';
-        $('#choiceOwnerOrCust_ul').empty();
+        if(flag){$("#choiceOwnerOrCust_ul").empty();}
+       // $('#choiceOwnerOrCust_ul').empty();
         var nextFuc = 'confirmOwnerAddr(this);';
-        if (data.obj.length > 0) {
+        if (data.obj.data.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
 
-            for (var k= 0,len = data.obj.length; k < len; k++) {
+            for (var k= 0,len = data.obj.data.length; k < len; k++) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
-                    ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
+                    ' data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
                     '<div ><div style="float:left;">'+
                     '<span class="fontCb f1 f14  p0-6 fd" >发货公司名称:</span>'+
-                    '<span class="fontCb f1 f14  p0-6 fd" >'+data.obj[k].ownerName+'</span>'+
+                    '<span class="fontCb f1 f14  p0-6 fd" >'+data.obj.data[k].ownerName+'</span>'+
                     '</div><div style="float:right;width:40%;"></div>'+
                     '<div style="clear:both;"></div></div>'+
                     '<div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">'+
                     '</div><div><span class="f12 fco p0-6"  >联系人:</span>'+
-                    '<span class=" f12 fco" >'+data.obj[k].ownerContact+'</span>'+
+                    '<span class=" f12 fco" >'+data.obj.data[k].ownerContact+'</span>'+
                     '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>'+
-                    '<span class=" f12 fco">'+data.obj[k].ownerPhone+'</span>'+
+                    '<span class=" f12 fco">'+data.obj.data[k].ownerPhone+'</span>'+
                     '<br><span class="ownerName f12 fco p0-6"  >地址:</span>'+
-                    '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj[k].unionAddr+'</span><br>'+
+                    '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj.data[k].unionAddr+'</span><br>'+
                     '</div></div><div style="float:right;">'+
                     '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">'+
                     '<div align="center" style="">'+
@@ -160,12 +188,50 @@ function showOwnerAddrList(data){
                     '</div></div></div><div style="clear:both;"></div></div></li>');
                 $(result).appendTo(containNode);
             }
+
+            if(flag){
+
+                $(containNode).appendTo("#choiceOwnerOrCust_ul");
+               // $("#choiceOwnerOrCust_ul").append(result);
+            }else {
+                if (data.obj.data.length < (oldmyFilter.length -= 0)) {
+                    if($("#nullOrderListSelf").length>0){
+                       // $("#choiceOwnerOrCust_ul").append(result);
+                        $(containNode).appendTo("#choiceOwnerOrCust_ul");
+                    }else{
+                      //  $("#choiceOwnerOrCust_ul").append(result);
+                        $(containNode).appendTo("#choiceOwnerOrCust_ul");
+                        //  $("#orderlist_ul").removeChild($('#nullOrderListSelf'))
+                        //  $('#nullOrderListSelf').empty();
+                        /* $("<div id='nullOrderListSelf' class='nullOrder'>" +
+                         "<p style='text-align: center;text-color:orange;'>暂无剩余订单..</p>" +
+                         "</div>").appendTo(orderlist_ul);*/
+                    }
+                }else{
+                   // $("#choiceOwnerOrCust_ul").append(result);
+                    $(containNode).appendTo("#choiceOwnerOrCust_ul");
+                }
+            }
+
+            ownerAddrLoaded();
+            if(scrollFlag == 0){
+                ownerAddrScroll.scrollTo(0,0,1000);
+            }
+            scrollFlag =1;
+
+
+            ownerAddrPullUpEl['class'] = ownerAddrPullDownEl.attr('class');
+            ownerAddrPullUpEl.attr('class','').hide();
+            ownerAddrPullDownEl.attr('class','').hide();
+            ownerAddrScroll.refresh();
+            ownerAddrLoadingStep = 0;
+            $.ui.unblockUI();
             $.ui.hideMask();
         } else {
             result = nullTrace;
            // errorPopup(data.msg);
         }
-        $(containNode).appendTo("#choiceOwnerOrCust_ul");
+
 
     }else{
         errorPopup(data.msg);
@@ -174,33 +240,33 @@ function showOwnerAddrList(data){
 
 
 
-function showCustAddrList(data){
-
+function showCustAddrList(data,flag){
+    var oldmyFilter = JSON.parse(localStorage.getItem("searchCustAddrFilter"));
     var containNode = $("<div class='ownerNode'></div>");
     var nullTrace = "<div align='center' style='margin: 10px;'>查无收货地信息...</div>";
     if(data.isSucc) {
         var result = '';
-        $('#choiceOwnerOrCust_ul').empty();
+        $('#choiceCust_ul').empty();
         var nextFuc = 'confirmCustAddr(this);';
-        if (data.obj.length > 0) {
+        if (data.obj.data.length > 0) {
             $.ui.showMask("我们正在拼命的加载数据...");
-            $.ui.loadContent("#chocieOwner", false, false, "slide");
-            for ( var k= 0,len = data.obj.length; k < len; k++ ) {
+           // $.ui.loadContent("#chocieCust", false, false, "slide");
+            for ( var k= 0,len = data.obj.data.length; k < len; k++ ) {
                 result = $('<li href="#" class="f2" style="margin-top:4px;" onclick="'+nextFuc+'"' +
-                    ' data-order-detail=\'' + JSON.stringify(data.obj[k]) + '\'>'+
+                    ' data-order-detail=\'' + JSON.stringify(data.obj.data[k]) + '\'>'+
                     '<div class="f2" style="height: 80px;"><div class="" style="float:left;width: 90%">'+
                     '<div ><div style="float:left;">'+
                     '<span class="fontCb f1 f14  p0-6 fd" >发货公司名称:</span>'+
-                    '<span class="fontCb f1 f14  p0-6 fd" >'+data.obj[k].custName+'</span>'+
+                    '<span class="fontCb f1 f14  p0-6 fd" >'+data.obj.data[k].custName+'</span>'+
                     '</div><div style="float:right;width:40%;"></div>'+
                     '<div style="clear:both;"></div></div>'+
                     '<div align=""><hr style="margin-left:5px;width:85%;margin-top:0px;margin-bottom:5px;border: 0;border-top:1px solid #BFBFBF;">'+
                     '</div><div><span class="f12 fco p0-6"  >联系人:</span>'+
-                    '<span class=" f12 fco" >'+data.obj[k].custContact+'</span>'+
+                    '<span class=" f12 fco" >'+data.obj.data[k].custContact+'</span>'+
                     '<span class=" f12 fco">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话:</span>'+
-                    '<span class=" f12 fco">'+data.obj[k].custPhone+'</span>'+
+                    '<span class=" f12 fco">'+data.obj.data[k].custPhone+'</span>'+
                     '<br><span class="ownerName f12 fco p0-6"  >地址:</span>'+
-                    '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj[k].unionAddr+'</span><br>'+
+                    '<span class="ownerName f12 fco p0-6" style="position: absolute;">'+data.obj.data[k].unionAddr+'</span><br>'+
                     '</div></div><div style="float:right;">'+
                     '<div class="" style="right: 20px;position:absolute;padding-top:15px;width:10%;">'+
                     '<div align="center" style="">'+
@@ -208,12 +274,43 @@ function showCustAddrList(data){
                     '</div></div></div><div style="clear:both;"></div></div></li>');
                 $(result).appendTo(containNode);
             }
+
+
+            if(flag){
+
+                $(containNode).appendTo("#choiceCust_ul");
+                // $("#choiceOwnerOrCust_ul").append(result);
+            }else {
+                if (data.obj.data.length < (oldmyFilter.length -= 0)) {
+                    if($("#nullOrderListSelf").length>0){
+                        // $("#choiceOwnerOrCust_ul").append(result);
+                        $(containNode).appendTo("#choiceCust_ul");
+                    }else{
+                        //  $("#choiceOwnerOrCust_ul").append(result);
+                        $(containNode).appendTo("#choiceCust_ul");
+
+                    }
+                }else{
+                    // $("#choiceOwnerOrCust_ul").append(result);
+                    $(containNode).appendTo("#choiceCust_ul");
+                }
+            }
+            custAddrLoaded();
+            if(scrollFlag == 0){
+                custAddrScroll.scrollTo(0,0,1000);
+            }
+            scrollFlag =1;
+            custAddrPullUpEl['class'] = custAddrPullDownEl.attr('class');
+            custAddrPullUpEl.attr('class','').hide();
+            custAddrPullDownEl.attr('class','').hide();
+            custAddrScroll.refresh();
+            custAddrLoadingStep = 0;
+            $.ui.unblockUI();
             $.ui.hideMask();
         } else {
             result = nullTrace;
             errorPopup(data.msg);
         }
-        $(containNode).appendTo("#choiceOwnerOrCust_ul");
 
     }else{
         errorPopup(data.msg);
@@ -523,7 +620,7 @@ function backToOwnerAddOrderPage(){
             var owner = JSON.parse(localStorage.getItem('ownerInfo'));
             if( user.obj.userType == '1'){
                 ownerNo_Temp = user.obj.ownerNo;
-                ownerAlias_Temp = user.obj.ownerAlias;
+                ownerAlias_Temp = user.obj.enterpriseAlias;
             }else {
                 if ( owner != null ) {
                     ownerNo_Temp = owner.ownerNo;
