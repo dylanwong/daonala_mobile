@@ -340,7 +340,12 @@ function tracePanel(){
     $.ui.loadContent("#orderDetailTrace", false, false, "slide");
 }
 
+function backorderMaindetail(){
 
+  //  traceScroll.destroy();
+    $.ui.loadContent('#orderMaindetail', false, false, 'slide');
+
+}
 
 /**/
 function signorderslist_panel(){

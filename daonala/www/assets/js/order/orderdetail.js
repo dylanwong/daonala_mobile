@@ -239,15 +239,18 @@ function updataDetailPanel(data){
 
 
 function updateTracePanel2(data){
+    if( traceScroll !=undefined){
+       // traceScroll.destroy();
+       // traceScroll.refresh();
+    }else{
+        ;
+    }
+
     $("#trace-timeline").empty();
     var result = '';
     var color,alert,title,time,desc,file;
     var html = "",height = "";
     if(data.isSucc){
-
-      //  $('#orderDetailTraceContent').show();
-      //  $('#tracecontainerMap').hide();
-
         var obj = data.obj ;
         $.ui.loadContent("#orderDetailTrace", false, false, "slide");
 
@@ -257,28 +260,44 @@ function updateTracePanel2(data){
         var len = obj.length;
         var sendinfo = JSON.parse(localStorage.getItem('currentSendInfo') );
         //init_LogisticMap(sendinfo.deliveryNo,data.sendNo);
+
+        IMG_COUNT=0;
         for(var i = 0; i < len; i++ ) {
-            if( obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != ''){
-                console.log(i+' '+obj[i].fileNo);
-                setSmallImgList( obj[i].fileNo,sendinfo.deliveryNo );
+            if (obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != '') {
+                IMG_COUNT++;
             }
-        };
-
-
-//        traceScroll();
-
+        }
+        if(IMG_COUNT == 0){
+            traceScroll();
+        }
+        $.when
+        (
+            showImg(obj,sendinfo.deliveryNo)
+        ).done(function(data){
+            console.log('success');
+        //    traceScroll();
+        }).fail(function(){
+            console.log('something went wrong!');
+        });
     }else{
         $("#trace_list_div").empty();
         $("#trace_list_div").html("暂无跟踪信息");
 
     }
     $('.gj_cn:first').addClass('juhong12');
-
-
-
     $.ui.unblockUI();
     $.ui.hideMask();
 }
+function showImg(obj,deliveryNo){
+    var len = obj.length;
+    for(var i = 0; i < len; i++ ) {
+        if (obj[i].fileNo != undefined && obj[i].fileNo != null && obj[i].fileNo != '') {
+                setSmallImgList(obj[i].fileNo, deliveryNo);
+        }
+    }
+}
+
+
 
 function toTrace(){
    // $('#orderDetailTraceContent').show();
@@ -421,13 +440,6 @@ function setSmallImgListSuc2(data,objectNo){
                     result += containContent;
                 }
             }
-            // if( count == 3 ) {
-            count = 0;
-            //containPNodes =+ '</tr>'
-            //result =+ containContent;
-            // result =+ containPNodes;
-            //containContent = '';
-            //  }
 
             result += containEnd;
             $('#'+objectNo).empty();
@@ -446,7 +458,6 @@ function setSmallImgList(fileNo,deliveryNo)
     var deliveryNo = deliveryNo;
     var data = JSON.parse(localStorage.getItem("currentorder"));
     var url = baseUrl + "order/queryImgUrl.action";
-
     getAjax(url, {'orderNo':data.orderNo,'deliveryNo':deliveryNo,
             'dispatchNo':data.dispatchNo,'systemNo':data.systemNo,'objectNo':objectNo},
         "setSmallImgListSuc(data,"+objectNo+")", "errorPopup('网络请求超时,请检查网络后再尝试..')");
@@ -479,26 +490,24 @@ function setSmallImgListSuc(data,objectNo){
                 result += containContent;
                 }
             }
-               // if( count == 3 ) {
-                    count = 0;
-                    //containPNodes =+ '</tr>'
-                    //result =+ containContent;
-                   // result =+ containPNodes;
-                    //containContent = '';
-              //  }
-
             result += containEnd;
             $('#'+objectNo).empty();
             $('#'+objectNo).html(result);
                // }
             init_lightbox(objectNo);
+
             }
+
+        IMG_COUNT = IMG_COUNT-1;
+        if(IMG_COUNT == 0){
+            inittraceScroll();
+        }
     }
 
 
-
-
 }
+
+
 
 
 function queryEvalute(){
