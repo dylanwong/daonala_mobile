@@ -38,6 +38,10 @@
     <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
         深圳市海联天下科技有限公司
     </author>
+    <feature name="CheckUpdatePlugin">
+        <param name="android-package" value="com.sealink.daonala.CheckUpdatePlugin"/>
+    </feature>
+
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
