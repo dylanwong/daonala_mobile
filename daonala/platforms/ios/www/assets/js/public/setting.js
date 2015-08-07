@@ -70,7 +70,7 @@ var ISSELROLE = "2";
 
 // 用来判断是否展示启动引导页
 // 变量为数字
-var currentVersion='1.1';
+var currentVersion='1.2';
 var iOSInHouse=true;
 
 var ajaxFlag=true;

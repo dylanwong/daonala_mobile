@@ -268,7 +268,7 @@ function updateTracePanel2(data){
             }
         }
         if(IMG_COUNT == 0){
-            traceScroll();
+            inittraceScroll();
         }
         $.when
         (
