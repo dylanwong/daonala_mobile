@@ -321,7 +321,7 @@ data-defer:加载一个html进来
      data-header="evalutegobackHeader"
      data-footer="none">
 </div>
-<div class="panel p0"
+<div class="panel p0 no-scroll"
      title="物流轨迹" id="orderDetailTrace" data-defer="assets/panel/order/orderDetailTrace.html"
      data-load="init_orderdetail"
      data-unload=""
@@ -646,7 +646,7 @@ data-defer:加载一个html进来
         <span id="mineTitle" class="" style=""><a  class="backButton button" >我</a></span>
     </div>
     <div style="padding-top:10px;padding-left:10px;display:table-cell;">
-        <img  style="height:25px;width:90px;" src="assets/img/demo/logo_3.png"/></div>
+        <img  style="height:25px;width:90px;" /></div>
 
 </header>
 
@@ -684,7 +684,7 @@ data-defer:加载一个html进来
     <div></div>
 </header>
 <header id="tracegobackHeader">
-    <a  class="headerBack"  onclick="$.ui.loadContent('#orderMaindetail', false, false, 'slide')" >
+    <a  class="headerBack"  onclick="backorderMaindetail();" >
         <img src="assets/img/backPage.png" height="32" />
     </a>
     <h1 id="tracegobackTitle" class="">物流轨迹</h1>
