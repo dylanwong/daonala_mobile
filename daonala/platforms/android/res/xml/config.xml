@@ -30,6 +30,9 @@
     <feature name="Wechat">
         <param name="android-package" value="xu.li.cordova.wechat.Wechat" />
     </feature>
+    <feature name="CheckUpdatePlugin">
+        <param name="android-package" value="com.sealinkin.daonala.CheckUpdatePlugin"/>
+    </feature>
     <preference name="WechatAppId" value="$WechatAppId" />
     <name>共速达e订单</name>
     <description>
@@ -38,10 +41,6 @@
     <author email="wangyay@sealinkin.com" href="http://www.sealinkin.com">
         深圳市海联天下科技有限公司
     </author>
-    <feature name="CheckUpdatePlugin">
-        <param name="android-package" value="com.sealink.daonala.CheckUpdatePlugin"/>
-    </feature>
-
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
