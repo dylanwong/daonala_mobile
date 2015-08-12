@@ -630,7 +630,7 @@ function queryIndexOrderCountSucc(data){
 //初始化首页底部panel 和 绑定事件
 function initHomeFooter(userType){
 
-    if(userType == 2 ){
+    if(userType == 2 || userType == 3){
 //        $('#addOrderPanel').find('i').removeClass('icon-songhuo icon-kefu').addClass('icon-kefu');
 //        $('#addOrderPanelText').text('客服');
         $('#addOrderPanel').unbind('click');
