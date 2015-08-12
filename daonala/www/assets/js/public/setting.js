@@ -26,7 +26,7 @@ var searchFlag = 0;//0     1为首页查询条件
 var smsManageUrl = "http://www.gongsuda.com:8070/sms_manage/uploadFiles/";
 //var smsManageUrl = "http://app.gongsuda.com:8051/smsfile/";
 //var baseUrl = "http://www.gongsuda.com:8070/oms_mobile/";
-var baseUrl = "http://192.168.16.100:8080/daonala_mobile/";
+var baseUrl = "http://localhost:8080/daonala_mobile/";
 
 //var baseUrl = "http://gsdoms.gongsuda.com:8888/oms_mobile/";
 
