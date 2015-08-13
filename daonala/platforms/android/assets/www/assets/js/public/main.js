@@ -619,6 +619,22 @@ function queryIndexOrderCountSucc(data){
             '<div style="color:#ef8305;font-size:24px;">'+data.obj.outTimeCount+'</div>'+
             '<div style="color:#636363;font-size:18px;">逾期</div>'+
             '</td></tr>';
+    }else if (userType == 3){
+        result =
+            '<tr><td count = "'+data.obj.missionCount+'" ' +
+            'onclick = "searchOrderFromIndex(6,'+data.obj.missionCount+' );"style="width:33%;">'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.missionCount+'</div>'+
+            '<div style="color:#636363;font-size:18px;">任务</div>'+
+            '</td><td count = "'+data.obj.finishedCount+'" ' +
+            'onclick = "searchOrderFromIndex(7, '+data.obj.finishedCount+');" style="width:33%;border-left:1px solid #e6e6e6;'+
+            'border-right: 1px solid #e6e6e6">'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.finishedCount+'</div>'+
+            '<div style="color:#636363;font-size:18px;">已配送</div>'+
+            '</td><td count = "'+data.obj.unfinishedCount+'" ' +
+            'onclick = "searchOrderFromIndex(8,'+data.obj.unfinishedCount+' );" style="width:33%;">'+
+            '<div style="color:#ef8305;font-size:24px;">'+data.obj.unfinishedCount+'</div>'+
+            '<div style="color:#636363;font-size:18px;">未配送</div>'+
+            '</td></tr>';
     }
     $('#home-module-table').empty();
     $('#home-module-table').append(result);
@@ -630,7 +646,7 @@ function queryIndexOrderCountSucc(data){
 //初始化首页底部panel 和 绑定事件
 function initHomeFooter(userType){
 
-    if(userType == 2 ){
+    if(userType == 2 || userType == 3){
 //        $('#addOrderPanel').find('i').removeClass('icon-songhuo icon-kefu').addClass('icon-kefu');
 //        $('#addOrderPanelText').text('客服');
         $('#addOrderPanel').unbind('click');
