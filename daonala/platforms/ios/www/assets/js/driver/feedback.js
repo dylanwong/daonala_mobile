@@ -327,7 +327,7 @@ function querygoodlist(){
 //    }
     var enterpriseNo = datas[0].enterpriseNo;
     var dispatchNo = datas[0].dispatchNo;
-        getAjax(goodSearchUrl, {'enterpriseNo':enterpriseNo,'dispatchNo':dispatchNo},
+        getAjax(goodSearchUrl, {'orderEnterpriseNo':enterpriseNo,'dispatchNo':dispatchNo},
         "updategoodlistPanel(data)", "errorPopup('网络请求超时,请检查网络后再尝试..')");
 }
 

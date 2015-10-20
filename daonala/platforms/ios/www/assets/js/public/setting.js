@@ -25,10 +25,10 @@ var searchFlag = 0;//0     1为首页查询条件
 
 //var smsManageUrl = "http://www.gongsuda.com:8070/sms_manage/uploadFiles/";
 var smsManageUrl = "http://app.gongsuda.com:8051/smsfile/";
-//var baseUrl = "http://www.gongsuda.com:8070/oms_mobile/";
-//var baseUrl = "http://192.168.16.66:8080/oms_mobile/";
-
-var baseUrl = "http://gsdoms.gongsuda.com:8888/oms_mobile/";
+var baseUrl = "http://www.gongsuda.com:8070/oms_mobile/";
+//var baseUrl = "http://localhost:8080/oms_mobile/";
+//var baseUrl = "http://192.168.16.98:8090/oms_mobile/";
+//var baseUrl = "http://gsdoms.gongsuda.com:8888/oms_mobile/";
 
 
 var omsManageUrl = "";
@@ -43,7 +43,7 @@ var searchTraceUrl = baseUrl+"order/query_deliverordertrace.action";
 var choicedeliverOrdersUrl = baseUrl+"order/query_deliverorderlist.action";
 var taskqueryUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
 var queryTaskUrl = baseUrl+"order/query_deliverorderlistfordirver.action";
-//var goodSearchUrl = baseUrl+"order/query_goodslist.action";
+var goodSearchUrl = baseUrl+"order/query_goodslist.action";
 var ordercount = baseUrl +"order/order_count.action";
 var queryVersion = baseUrl + "base/queryNew_version.action";
 var searchProductUrl = baseUrl + "order/query_order_detail.action";
@@ -59,6 +59,9 @@ var updateSelfInfoUrl = baseUrl + "base/updateSelfInfo.action";
 var queryAdList = baseUrl + "base/query_ad_Version.action";
 var choiceOwnerAddrUrl = baseUrl + "order/queryOwnerAddr.action";
 var choiceCustAddrUrl = baseUrl + "order/queryCustAddr.action";
+
+
+
 //event target ID
 var ETID = null;
 //选中的任务ID
@@ -167,37 +170,30 @@ function init_homepage(){
                 ownerboard_panel();
             });
 
-            $('#myFirstboard').unbind('click');
-            $('#myFirstboard').bind('click',function(){
-                addorder_panel();
-            });
-            $('#myFirstboardText').html('我要下单');
+//            $('#myFirstboard').unbind('click');
+//            $('#myFirstboard').bind('click',function(){
+//                addorder_panel();
+//            });
+//            $('#myFirstboardText').html('我要下单');
         }else if(user.obj.userType=='2'){
-            $('#myboard').unbind('click');
-            $('#myboard').bind('click',function(){
-                custboard_panel();
-            });
-
             $('#boardPanel').unbind('click');
             $('#boardPanel').bind('click',function(){
                 custboard_panel();
             });
-
-
-            $('#myboard').attr('statusType','0');
-            $('#myboardText').html('看板');
-
-            $('#myFirstboard').unbind('click');
-            $('#myFirstboard').bind('click',function(){
-                searchorder_panel();
-            });
-            $('#myFirstboardText').html('订单跟踪');
+//            $('#myboard').attr('statusType','0');
+//            $('#myboardText').html('看板');
+//
+//            $('#myFirstboard').unbind('click');
+//            $('#myFirstboard').bind('click',function(){
+//                searchorder_panel();
+//            });
+//            $('#myFirstboardText').html('订单跟踪');
         }else if(user.obj.userType=='3'){
-            $('#myboard').unbind('click');
-            $('#myboard').bind('click',function(){
+            $('#boardPanel').unbind('click');
+            $('#boardPanel').bind('click',function(){
                 driverboard_panel();
             });
-            $('#myboardText').html('我的任务');
+            $('#boardPanelText').html('任务');
 
 
         }

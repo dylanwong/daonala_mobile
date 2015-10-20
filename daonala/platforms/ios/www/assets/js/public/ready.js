@@ -708,33 +708,48 @@ function updateLocationData(data){
 }
 
 
-function getCurrentPositionAddress()
-{
-    navigator.geolocation.getCurrentPosition(getCurrentPositionAddressSuccess,null);
+function getCurrentPositionAddress() {
+    if($.os.android)
+    {
+        window.LocationPlugin.getLocation(getCurrentPositionAddressSuccess, null);
+    }else
+    {
+        navigator.geolocation.getCurrentPosition(getCurrentPositionAddressSuccess, null);
+    }
 }
-function getCurrentPositionAddressSuccess(position)
-{
+function getCurrentPositionAddressSuccess(position) {
     $.ui.unblockUI();
     $.ui.showMask("我们正在定位...");
-    var url = baseUrl + "base/query_address_info.action";
-    var option =
+    var url = baseUrl + "register/query_address_info.action";
+    var option = {};
+    if($.os.android)
     {
-        latitude:position.coords.latitude,
-        longitude:position.coords.longitude
-    };
+        option =
+        {
+            latitude: position.latitude,
+            longitude: position.longitude
+        };
+    }else
+    {
+        option =
+        {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        };
+    }
 
+    $("#" + lOCATIONID).attr('latitude',option.latitude);
+    $("#" + lOCATIONID).attr('longitude',option.longitude);
     //alert(position.coords.latitude);
-    getAjax(url,option,'getCurrentPositionAddressSuccessSucc(data)'
-        ,'getCurrentPositionAddressSuccessError()');
+    getAjax(url, option, 'getCurrentPositionAddressSuccessSucc(data)'
+        , 'getCurrentPositionAddressSuccessError()');
 }
-function getCurrentPositionAddressSuccessSucc(data)
-{
-    setCacheData('location',data.obj.address,1);
-    $("#"+lOCATIONID).val(data.obj.address);
+function getCurrentPositionAddressSuccessSucc(data) {
+    setCacheData('location', data.obj.address, 1);
+    $("#" + lOCATIONID).val(data.obj.address);
     $.ui.hideMask();
 }
-function getCurrentPositionAddressSuccessError()
-{
+function getCurrentPositionAddressSuccessError() {
 
 }
 

@@ -226,6 +226,8 @@ function querySingleOrderSuc(data){
            return '交接';
        }else if(status=='90'){
            return '签收';
+       }else if(status=='99'){
+           return '自动终止';
        }else {
            return status;
        }
