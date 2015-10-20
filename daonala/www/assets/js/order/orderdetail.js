@@ -96,8 +96,13 @@ function initTraceInfo2(){
 
         $('#evalutePanelBtn').unbind('click');
     }else{
-        $('#evalute_ifNull').text('无');
+       // $('#evalute_ifNull').text('无');
         $('#evalutePanelBtn').unbind('click');
+        $('#evalute_ifNull').text('暂无评论信息');
+        $('#evalutePanelBtn').bind('click',function(){
+            //   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+            errorPopup('物流商尚未确认货物送达，不能做评价');
+        });
     }
     queryDetailProduct();
     $('#productPanelBtn').unbind();
@@ -524,7 +529,11 @@ function queryEvalute(){
 
     }else{
 //        $('evalutePanelId').unbind()
-
+        $('#evalute_ifNull').text('暂无评论信息');
+        $('#evalutePanelBtn').bind('click',function(){
+            //   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+            errorPopup('物流商尚未确认货物送达，不能做评价');
+        });
       //  errorPopup('该单未签收，暂无评价信息');
 //        $('#orderDetailEvaluate').empty();
 //        $('#orderDetailEvaluate').html('<div><p>无评论信息</p></div>');
@@ -590,14 +599,22 @@ function updateEvalute(datas){
                 });
               //  $.ui.loadContent("#evaluate", false, false, "slide");
             }else{
-                $('#evalute_ifNull').text('无');
-               // errorPopup('暂无评价信息');
+                $('#evalute_ifNull').text('暂无评论信息');
+                $('#evalutePanelBtn').bind('click',function(){
+                    //   $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
+                    errorPopup('物流商尚未确认货物送达，不能做评价');
+                });
+               //
 //                $('#orderDetailEvaluate').empty();
 //                evaluteResult = '<div><p>无评论信息</p></div>';
             }
             $('#orderDetailEvaluate').append(evaluteResult);
         }else{
-            $('#evalute_ifNull').text('有');
+            var averageVal =  ( parseInt(datas.obj[0].bodmEvaluate.reviewsItem2 )
+                + parseInt( datas.obj[0].bodmEvaluate.reviewsItem2 )
+                + parseInt( datas.obj[0].bodmEvaluate.reviewsItem3 ) )/3;
+            $('#evalute_ifNull').text(fomatFloat(averageVal,1)+'分');
+           // $('#evalute_ifNull').text('有');
             $('#evalutePanelBtn').bind('click',function(){
                 $.ui.loadContent("#orderDetailEvalute", false, false, "slide");//绑定物流看板
             });
